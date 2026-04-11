@@ -76,7 +76,24 @@ git push origin feature/ten-cua-ban_tinh-nang
 
 ## 📂 Cấu Trúc Thư Mục
 - `/backend`: Toàn bộ mã nguồn Java Spring Boot.
+  - `src/main/java/com/example/demo/`
+    - `config/`: Các file cấu hình (Security, CORS, Bean).
+    - `controller/`: Nơi tiếp nhận các Request từ Frontend (API endpoints).
+    - `service/`: Nơi xử lý Logic nghiệp vụ (Business Logic).
+    - `repository/`: Nơi thực hiện các câu lệnh truy vấn Database (Data Access).
+    - `entity/`: Các Object đại diện cho bảng trong Database.
+    - `dto/`: Các Object dùng để truyền tải dữ liệu giữa các lớp.
+    - `exception/`: Xử lý các lỗi ngoại lệ của ứng dụng.
 - `/frontend`: Toàn bộ mã nguồn React và cấu hình Tailwind v4.
+  - `src/`
+    - `assets/`: Hình ảnh, icons, fonts...
+    - `components/`: Các component dùng chung (Button, Card, Input...).
+    - `pages/`: Các trang chính của ứng dụng (Home, Login, Dashboard...).
+    - `layouts/`: Các khung giao diện (Navbar, Sidebar wrappers).
+    - `services/`: Xử lý gọi API (Axios, Fetch).
+    - `hooks/`: Các Custom Hooks tự định nghĩa.
+    - `context/`: Quản lý State toàn cục (Context API).
+    - `utils/`: Các hàm tiện ích bổ trợ.
 - `.gitignore`: Đã được cấu hình để bỏ qua `node_modules` và `target/`.
 
 ---
