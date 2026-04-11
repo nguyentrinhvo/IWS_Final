@@ -5,7 +5,7 @@
 ## 🚀 Công Nghệ Sử Dụng
 - **Frontend**: React (Vite) + **Tailwind CSS v4** (Engine mới nhất)
 - **Backend**: **Spring Boot 3.2** (Java 17, Maven)
-- **Database**: [Điền tên DB bạn dùng, ví dụ: MySQL/PostgreSQL]
+- **Database**: **PostgreSQL (Supabase)**
 
 ---
 
@@ -65,6 +65,16 @@ git push origin feature/ten-cua-ban_tinh-nang
 1. Di chuyển vào thư mục backend: `cd backend`
 2. Chạy lệnh: `mvn spring-boot:run`
 *Mặc định chạy tại: http://localhost:8080*
+
+#### 🔑 Cấu hình Environment Variables (Quan trọng)
+Trong thư mục `backend`, bạn cần có file `.env` với các thông số sau để kết nối Database:
+```env
+DB_URL=jdbc:postgresql://db.ircvbdskqkvhtimvjhph.supabase.co:5432/postgres
+DB_USERNAME=postgres
+DB_PASSWORD=your_password_here
+```
+> [!IMPORTANT]
+> Đừng bao giờ push file `.env` chứa mật khẩu thực tế lên GitHub. Hãy copy file `.env.example` (nếu có) và điền thông tin cá nhân.
 
 ### 🔵 Chạy Frontend (React + Tailwind v4)
 1. Di chuyển vào thư mục frontend: `cd frontend`
