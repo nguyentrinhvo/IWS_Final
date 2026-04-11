@@ -1,0 +1,13 @@
+# IDEs
+.idea/
+.vscode/
+
+# Project specific
+backend/target/
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# OS files
+.DS_Store
+Thumbs.db
