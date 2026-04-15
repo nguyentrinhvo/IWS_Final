@@ -28,7 +28,8 @@
 		<url />
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
+		<jjwt.version>0.12.5</jjwt.version>
 	</properties>
 	<dependencies>
 		<!-- ── CORE ── -->
@@ -98,7 +99,7 @@
 
 		<!-- ── RATE LIMITING ── -->
 		<dependency>
-			<groupId>com.github.vladimir-bukhtoyarov</groupId>
+			<groupId>com.bucket4j</groupId>
 			<artifactId>bucket4j-core</artifactId>
 			<version>8.10.1</version>
 		</dependency>

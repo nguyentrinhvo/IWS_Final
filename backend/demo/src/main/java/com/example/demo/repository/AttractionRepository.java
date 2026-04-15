@@ -18,8 +18,8 @@ public interface AttractionRepository extends MongoRepository<AttractionDocument
         String location, Pageable pageable);
 
     @Query("{ 'isActive': true, " +
-           "'ticketTypes': { '$elemMatch': { " +
-           "'price': { '$gte': ?0, '$lte': ?1 }, 'isAvailable': true } } }")
+            "'ticketTypes': { '$elemMatch': { " +
+            "'price': { '$gte': ?0, '$lte': ?1 }, 'isAvailable': true } } }")
     Page<AttractionDocument> findByPriceRange(Double minPrice, Double maxPrice, Pageable pageable);
 
     @Query("{ '$text': { '$search': ?0 }, 'isActive': true }")
