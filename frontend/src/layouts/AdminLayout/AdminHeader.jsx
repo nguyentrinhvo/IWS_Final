@@ -1,9 +1,26 @@
 import React from 'react';
 import { Search, Bell } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 const AdminHeader = () => {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
+
+  // Map paths to breadcrumb labels
+  const getBreadcrumbLabel = () => {
+    const path = location.pathname;
+    
+    if (path.includes('/admin/dashboard')) {
+      return t('dashboard.breadcrumb', 'Dashboard');
+    }
+    if (path.includes('/admin/users')) {
+      return t('pages.users.title', 'User Management');
+    }
+    
+    // Default fallback
+    return t('dashboard.breadcrumb', 'Dashboard');
+  };
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'vi' : 'en');
@@ -15,7 +32,7 @@ const AdminHeader = () => {
       <div className="text-sm">
         <span className="text-gray-500">{t('header.admin', 'Admin')}</span>
         <span className="mx-2 text-gray-400">{'>'}</span>
-        <span className="text-[#3a2b8e] font-medium">{t('dashboard.breadcrumb', 'Dashboard')}</span>
+        <span className="text-[#3a2b8e] font-medium">{getBreadcrumbLabel()}</span>
       </div>
 
       {/* Right controls */}
