@@ -1,0 +1,31 @@
+{
+  "dashboard": {
+    "title": "Bảng Điều Khiển",
+    "breadcrumb": "Bảng Điều Khiển"
+  },
+  "sidebar": {
+    "dashboard": "BẢNG ĐIỀU KHIỂN",
+    "users": "NGƯỜI DÙNG",
+    "tours": "CÁC CHUYẾN ĐI",
+    "bookings": "ĐẶT CHỖ",
+    "payments": "THANH TOÁN",
+    "flights": "CHUYẾN BAY",
+    "hotels": "KHÁCH SẠN",
+    "transport": "PHƯƠNG TIỆN",
+    "attractions": "ĐIỂM ĐẾN",
+    "categories": "DANH MỤC",
+    "reviews": "ĐÁNH GIÁ",
+    "chat": "TIN NHẮN",
+    "reports": "BÁO CÁO"
+  },
+  "header": {
+    "admin": "Quản trị",
+    "search": "Tìm kiếm thống kê hoặc đặt chỗ..."
+  },
+  "pages": {
+    "users": {
+      "title": "Quản lý Người Dùng",
+      "description": "Đây là trang quản lý người dùng."
+    }
+  }
+}

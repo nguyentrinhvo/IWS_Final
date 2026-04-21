@@ -1,0 +1,31 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "breadcrumb": "Dashboard"
+  },
+  "sidebar": {
+    "dashboard": "DASHBOARD",
+    "users": "USERS",
+    "tours": "TOURS",
+    "bookings": "BOOKINGS",
+    "payments": "PAYMENTS",
+    "flights": "FLIGHTS",
+    "hotels": "HOTELS",
+    "transport": "TRANSPORT",
+    "attractions": "ATTRACTIONS",
+    "categories": "CATEGORIES",
+    "reviews": "REVIEWS",
+    "chat": "CHAT",
+    "reports": "REPORTS"
+  },
+  "header": {
+    "admin": "Admin",
+    "search": "Search analytics or bookings..."
+  },
+  "pages": {
+    "users": {
+      "title": "Users Management",
+      "description": "This is the users management page."
+    }
+  }
+}
