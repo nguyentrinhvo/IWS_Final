@@ -110,6 +110,7 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+		<!-- spring-dotenv removed: conflicts with dotenv-java manual loading -->
 
 		<!-- ── TEST ── -->
 		<dependency>
@@ -137,6 +138,15 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- d:\study_materials\IWS_InternetAndWebService\final\backend\demo\pom.xml -->
+
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
