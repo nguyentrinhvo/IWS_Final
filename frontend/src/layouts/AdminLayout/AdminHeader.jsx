@@ -1,22 +1,69 @@
 import React from 'react';
 import { Search, Bell } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, Link } from 'react-router-dom';
 
 const AdminHeader = () => {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
+
+  const getBreadcrumbs = () => {
+    const path = location.pathname;
+    const breadcrumbs = [
+      { label: t('header.admin', 'Admin'), path: '/admin/dashboard' }
+    ];
+
+    if (path === '/admin/dashboard' || path === '/admin') {
+      breadcrumbs.push({ label: t('dashboard.breadcrumb', 'Dashboard') });
+    } else if (path.includes('/admin/users')) {
+      breadcrumbs.push({ label: t('pages.users.title', 'User Management') });
+    } else if (path.includes('/admin/tours')) {
+      // Add Tours Management as intermediate if it's a sub-page
+      if (path === '/admin/tours') {
+        breadcrumbs.push({ label: t('pages.tours.title', 'Tours Management') });
+      } else {
+        breadcrumbs.push({ label: t('pages.tours.title', 'Tours Management'), path: '/admin/tours' });
+        
+        if (path === '/admin/tours/create') {
+          breadcrumbs.push({ label: 'Create Tour' });
+        } else if (path.includes('/admin/tours/edit/')) {
+          breadcrumbs.push({ label: 'Edit Tour' });
+        }
+      }
+    }
+
+    return breadcrumbs;
+  };
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'vi' : 'en');
   };
 
+  const breadcrumbs = getBreadcrumbs();
+
   return (
-    <header className="bg-[#fcfaf9] h-20 px-8 flex items-center justify-between">
+    <header className="bg-[#fcfaf9] h-20 px-8 flex items-center justify-between border-b border-gray-100">
       {/* Breadcrumb */}
-      <div className="text-sm">
-        <span className="text-gray-500">{t('header.admin', 'Admin')}</span>
-        <span className="mx-2 text-gray-400">{'>'}</span>
-        <span className="text-[#3a2b8e] font-medium">{t('dashboard.breadcrumb', 'Dashboard')}</span>
-      </div>
+      <nav className="flex text-sm" aria-label="Breadcrumb">
+        {breadcrumbs.map((crumb, index) => (
+          <div key={index} className="flex items-center">
+            {index > 0 && <span className="mx-2 text-gray-400 font-normal">{'>'}</span>}
+            {crumb.path && index < breadcrumbs.length - 1 ? (
+              <Link 
+                to={crumb.path} 
+                className="text-gray-500 hover:text-[#7C4A4A] transition-colors"
+                title={`Back to ${crumb.label}`}
+              >
+                {crumb.label}
+              </Link>
+            ) : (
+              <span className="text-[#3a2b8e] font-bold">
+                {crumb.label}
+              </span>
+            )}
+          </div>
+        ))}
+      </nav>
 
       {/* Right controls */}
       <div className="flex items-center space-x-6">
