@@ -26,6 +26,10 @@
     "users": {
       "title": "Quản lý Người Dùng",
       "description": "Đây là trang quản lý người dùng."
+    },
+    "tours": {
+      "title": "Quản lý Chuyến đi",
+      "description": "Đây là trang quản lý chuyến đi."
     }
   }
 }

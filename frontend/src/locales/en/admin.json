@@ -26,6 +26,10 @@
     "users": {
       "title": "Users Management",
       "description": "This is the users management page."
+    },
+    "tours": {
+      "title": "Tours Management",
+      "description": "This is the tour management page."
     }
   }
 }
