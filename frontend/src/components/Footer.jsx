@@ -19,16 +19,12 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-[#7C4A4A] mt-auto">
-      <div className="w-full min-h-[570px] flex justify-center pb-[70px]">
-        <div className="w-full max-w-[1320px] mx-auto px-4 flex pt-[40px] gap-[140px] items-start">
+      <div className="w-full h-[570px] flex justify-center">
+        <div className="w-full max-w-[1320px] mx-auto px-4 flex pt-[40px] gap-[140px]">
           
-          <div className="w-[330px] flex flex-col items-start">
-            <img 
-              src="/images/logo_web.png" 
-              alt="Logo" 
-              className="w-[204px] h-[204px] object-contain block -mt-2" 
-            />
-            <div className="flex gap-4 mt-[10px]">
+          <div className="w-[330px] flex flex-col">
+            <img src="/images/logo_web.png" alt="Logo" className="w-[204px] h-[204px] object-contain" />
+            <div className="flex gap-4 mt-4">
               <img src="/icons/iata.svg" alt="IATA" className="h-12 w-auto" />
               <img src="/icons/bocongthuong.svg" alt="Bo Cong Thuong" className="h-12 w-auto" />
             </div>
@@ -47,17 +43,17 @@ export default function Footer() {
           <div className="w-[168px] flex flex-col">
             <div>
               <h3 className="font-bold text-white text-[18px] mb-6">{t('aboutHanuvivu')}</h3>
-              <ul className="flex flex-col gap-3 text-white">
-                <li className="cursor-pointer hover:underline transition-all duration-200">{t('contactUs')}</li>
-                <li className="cursor-pointer hover:underline transition-all duration-200">{t('helpCenter')}</li>
-                <li className="cursor-pointer hover:underline transition-all duration-200">{t('aboutUs')}</li>
+              <ul className="flex flex-col gap-3 text-white/80">
+                <li className="cursor-pointer hover:text-white transition-colors">{t('contactUs')}</li>
+                <li className="cursor-pointer hover:text-white transition-colors">{t('helpCenter')}</li>
+                <li className="cursor-pointer hover:text-white transition-colors">{t('aboutUs')}</li>
               </ul>
             </div>
             <div className="mt-[70px]">
               <h3 className="font-bold text-white text-[18px] mb-6">{t('followUsOn')}</h3>
-              <ul className="flex flex-col gap-3 text-white">
+              <ul className="flex flex-col gap-3 text-white/80">
                 {socialLinks.map((social) => (
-                  <li key={social.name} className="flex items-center gap-3 cursor-pointer hover:underline transition-all duration-200">
+                  <li key={social.name} className="flex items-center gap-3 cursor-pointer hover:text-white transition-colors">
                     <img src={`/icons/${social.icon}.svg`} alt={social.name} className="w-5 h-5" />
                     <span>{social.name}</span>
                   </li>
@@ -70,27 +66,27 @@ export default function Footer() {
             <div className="flex gap-[140px]">
               <div className="w-[140px] flex flex-col">
                 <h3 className="font-bold text-white text-[18px] mb-6">{t('followUsOn')}</h3>
-                <ul className="flex flex-col gap-3 text-white">
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('tours')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('hotels')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('flights')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('carsTrains')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('thingsToDo')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('villas')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('apartments')}</li>
+                <ul className="flex flex-col gap-3 text-white/80">
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('tours')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('hotels')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('flights')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('carsTrains')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('thingsToDo')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('villas')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('apartments')}</li>
                 </ul>
               </div>
 
               <div className="w-[180px] flex flex-col">
                 <h3 className="font-bold text-white text-[18px] mb-6">{t('others')}</h3>
-                <ul className="flex flex-col gap-3 text-white">
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('hanuvivuAffiliate')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('blog')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('privacyNotice')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('termsConditions')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('news')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('travelMagazine')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('help')}</li>
+                <ul className="flex flex-col gap-3 text-white/80">
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('hanuvivuAffiliate')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('blog')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('privacyNotice')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('termsConditions')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('news')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('travelMagazine')}</li>
+                  <li className="cursor-pointer hover:text-white transition-colors">{t('help')}</li>
                 </ul>
               </div>
             </div>
@@ -106,7 +102,7 @@ export default function Footer() {
                   placeholder={t('yourEmailAddress')}
                   className="flex-1 bg-transparent outline-none px-3 text-gray-700 placeholder-gray-400 text-[15px]"
                 />
-                <button className="bg-[#CD6F1E] hover:bg-[#b8631b] transition-colors text-white font-bold h-full px-6 rounded-md cursor-pointer">
+                <button className="bg-[#CD6F1E] hover:bg-[#b8631b] transition-colors text-white font-bold h-full px-6 rounded-md">
                   {t('send')}
                 </button>
               </div>
@@ -117,8 +113,8 @@ export default function Footer() {
       </div>
 
       <div className="w-full h-[100px] border-t border-white/20 flex flex-col items-center justify-center">
-        <p className="text-white text-[14px] font-medium">{t('copyright')}</p>
-        <p className="text-white text-[14px] font-medium mt-1">{t('websiteOperator')}</p>
+        <p className="text-white/80 text-[14px] font-medium">{t('copyright')}</p>
+        <p className="text-white/80 text-[14px] font-medium mt-1">{t('websiteOperator')}</p>
       </div>
     </footer>
   );
