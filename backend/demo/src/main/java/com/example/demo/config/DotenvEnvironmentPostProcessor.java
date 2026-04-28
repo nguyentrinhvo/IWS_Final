@@ -38,7 +38,7 @@ public class DotenvEnvironmentPostProcessor
         String mongoUri = dotenv.get("MONGODB_URI", null);
         if (mongoUri != null) {
             props.put("spring.data.mongodb.uri", mongoUri);
-            System.out.println(">>> [DotenvLoader] MongoDB URI set: " + mongoUri.substring(0, 10) + "...");
+            System.out.println(">>> [DotenvLoader] MongoDB URI set: " + mongoUri.substring(0, 30) + "...");
         } else {
             System.out.println(">>> [DotenvLoader] WARNING: MONGODB_URI not found in .env!");
         }
