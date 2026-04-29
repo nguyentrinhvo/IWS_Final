@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useGlobal } from '../context/GlobalContext';
+import { useGlobal } from '../../context/GlobalContext';
 
 export default function AdditionalInfo({ isOpen, onClose, onSkip }) {
   const { t } = useGlobal();

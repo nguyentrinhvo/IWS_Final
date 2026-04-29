@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useGlobal } from '../context/GlobalContext';
-import { mockData } from '../data/mockData';
+import { useGlobal } from '../../context/GlobalContext';
+import { mockData } from '../../data/mockData';
 
 export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToForgotPassword, onLoginSuccess }) {
   const { t } = useGlobal();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useGlobal } from '../context/GlobalContext';
+import { useGlobal } from '../../context/GlobalContext';
 
 export default function OtpVerification({ isOpen, onClose, onBackToLogin }) {
   const { t } = useGlobal();

@@ -1,0 +1,284 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { useGlobal } from '../../context/GlobalContext';
+
+const CustomDropdown = ({ label, options, value, onChange, widthClass, icon }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const { t } = useGlobal();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className={`relative ${widthClass}`}>
+      <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1 capitalize">{label}</label>
+      <div 
+        ref={dropdownRef}
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-between px-3 py-2 bg-white border border-gray-200 rounded-md cursor-pointer hover:border-[#0194F3] transition-all"
+      >
+        <span className="text-sm font-medium text-gray-700">{value || "\u00A0"}</span>
+        <div 
+          className={`text-[#0194F3] transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+          dangerouslySetInnerHTML={{ __html: icon }} 
+        />
+      </div>
+
+      <div className={`absolute left-0 right-0 z-50 mt-1 bg-white border border-gray-100 rounded-md shadow-xl transition-all duration-300 overflow-hidden ${
+        isOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className="overflow-y-auto max-h-60 py-1">
+          {options.map((opt, idx) => (
+            <div 
+              key={idx}
+              onClick={() => { onChange(opt); setIsOpen(false); }}
+              className="px-4 py-2 text-sm text-gray-600 hover:bg-[#0194F3] hover:text-white cursor-pointer transition-colors"
+            >
+              {opt}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function EditProfile() {
+  const { t, currentUser } = useGlobal();
+  const [activeSubTab, setActiveSubTab] = useState('info');
+  const [fullName, setFullName] = useState('New Member');
+  const [gender, setGender] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthYear, setBirthYear] = useState('');
+  const [city, setCity] = useState('');
+
+  const [originalFullName, setOriginalFullName] = useState('New Member');
+  const [originalGender, setOriginalGender] = useState('');
+  const [originalBirthDay, setOriginalBirthDay] = useState('');
+  const [originalBirthMonth, setOriginalBirthMonth] = useState('');
+  const [originalBirthYear, setOriginalBirthYear] = useState('');
+  const [originalCity, setOriginalCity] = useState('');
+
+  useEffect(() => {
+    const name = currentUser?.fullName || 'New Member';
+    setFullName(name);
+    setOriginalFullName(name);
+    setGender('');
+    setOriginalGender('');
+    setBirthDay('');
+    setOriginalBirthDay('');
+    setBirthMonth('');
+    setOriginalBirthMonth('');
+    setBirthYear('');
+    setOriginalBirthYear('');
+    setCity('');
+    setOriginalCity('');
+  }, [currentUser]);
+
+  const isDirty = fullName !== originalFullName ||
+    gender !== originalGender ||
+    birthDay !== originalBirthDay ||
+    birthMonth !== originalBirthMonth ||
+    birthYear !== originalBirthYear ||
+    city !== originalCity;
+
+  const handleReset = () => {
+    setFullName(originalFullName);
+    setGender(originalGender);
+    setBirthDay(originalBirthDay);
+    setBirthMonth(originalBirthMonth);
+    setBirthYear(originalBirthYear);
+    setCity(originalCity);
+  };
+
+  const handleSave = () => {
+    setOriginalFullName(fullName);
+    setOriginalGender(gender);
+    setOriginalBirthDay(birthDay);
+    setOriginalBirthMonth(birthMonth);
+    setOriginalBirthYear(birthYear);
+    setOriginalCity(city);
+  };
+
+  const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+  const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
+  const years = Array.from({ length: 127 }, (_, i) => (2026 - i).toString());
+  
+  const chevronIcon = '<svg width="16px" height="16px" viewBox="0 0 1024 1024" fill="currentColor"><path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z"></path></svg>';
+
+  return (
+    <div className="w-full">
+      <div className="flex justify-between items-end mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">{t('user_setting')}</h2>
+      </div>
+
+      <div className="relative mb-8">
+        <div className="flex gap-8 border-b border-gray-200">
+          <button 
+            onClick={() => setActiveSubTab('info')}
+            className={`pb-3 text-sm font-semibold transition-all relative z-10 ${
+              activeSubTab === 'info' ? 'text-[#0194F3]' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {t('user_accountInfo')}
+            {activeSubTab === 'info' && <div className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-[#0194F3]" />}
+          </button>
+          <button 
+            onClick={() => setActiveSubTab('security')}
+            className={`pb-3 text-sm font-semibold transition-all relative z-10 ${
+              activeSubTab === 'security' ? 'text-[#0194F3]' : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {t('user_passwordSecurity')}
+            {activeSubTab === 'security' && <div className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-[#0194F3]" />}
+          </button>
+        </div>
+      </div>
+
+      {activeSubTab === 'info' && (
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100">
+            <div className="px-6 py-4 border-b border-gray-100">
+              <h3 className="font-bold text-gray-800">{t('user_personalData')}</h3>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              <div className="w-full">
+                <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_fullName')}</label>
+                <input 
+                  type="text" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-[#0194F3] text-sm font-medium transition-all"
+                />
+                <p className="text-[10px] text-gray-400 mt-1 ml-1 italic">{t('user_fullNameDesc')}</p>
+              </div>
+
+              <div className="flex gap-4 items-end">
+                <CustomDropdown 
+                  label={t('user_gender')}
+                  options={[t('user_female'), t('user_male')]}
+                  value={gender}
+                  onChange={setGender}
+                  widthClass="flex-[3]"
+                  icon={chevronIcon}
+                />
+                <CustomDropdown 
+                  label={t('user_birthdate')}
+                  options={days}
+                  value={birthDay}
+                  onChange={setBirthDay}
+                  widthClass="flex-[2]"
+                  icon={chevronIcon}
+                />
+                <CustomDropdown 
+                  label=""
+                  options={months}
+                  value={birthMonth}
+                  onChange={setBirthMonth}
+                  widthClass="flex-[2]"
+                  icon={chevronIcon}
+                />
+                <CustomDropdown 
+                  label=""
+                  options={years}
+                  value={birthYear}
+                  onChange={setBirthYear}
+                  widthClass="flex-[2]"
+                  icon={chevronIcon}
+                />
+              </div>
+
+              <div className="w-full">
+                <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_city')}</label>
+                <input 
+                  type="text" 
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-[#0194F3] text-sm font-medium transition-all"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <button 
+                  onClick={handleReset}
+                  className={`px-6 py-2 bg-gray-100 text-[#0194F3] text-sm font-bold rounded-md hover:bg-gray-200 transition-colors cursor-pointer ${isDirty ? 'opacity-100' : 'opacity-50'}`}
+                >
+                  {t('user_maybeLater')}
+                </button>
+                <button 
+                  onClick={handleSave}
+                  className={`px-10 py-2 bg-[#0194F3] text-white text-sm font-bold rounded-md hover:bg-blue-600 transition-colors shadow-md cursor-pointer ${isDirty ? 'opacity-100' : 'opacity-50'}`}
+                >
+                  {t('user_save')}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-6">
+            <div className="flex justify-between items-start mb-2">
+              <div className="space-y-1">
+                <h3 className="font-bold text-gray-800 text-lg">{t('user_email')}</h3>
+                <p className="text-xs text-gray-400 font-medium ml-1">{t('user_emailDesc')}</p>
+              </div>
+              <button className="flex items-center gap-2 px-3 py-1.5 border border-gray-300 rounded-md text-sm font-semibold hover:bg-gray-50 transition-all text-black cursor-pointer">
+                <span className="text-lg font-light leading-none">+</span>
+                <span>{t('user_addEmail')}</span>
+              </button>
+            </div>
+            
+            <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+               <div className="text-sm text-gray-600 font-medium ml-1">1. {currentUser?.email || 'theanh@gmail.com'}</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-6">
+            <div className="flex justify-between items-start mb-2">
+              <div className="space-y-1">
+                <h3 className="font-bold text-gray-800 text-lg">{t('user_mobile')}</h3>
+                <p className="text-xs text-gray-400 font-medium ml-1">{t('user_mobileDesc')}</p>
+              </div>
+              <button className="flex items-center gap-2 px-3 py-1.5 border border-gray-300 rounded-md text-sm font-semibold hover:bg-gray-50 transition-all text-black cursor-pointer">
+                <span className="text-lg font-light leading-none">+</span>
+                <span>{t('user_addMobile')}</span>
+              </button>
+            </div>
+            {/* If there are mobile numbers, render them here under a border-t */}
+          </div>
+
+          <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-6">
+            <div className="space-y-1 mb-4">
+              <h3 className="font-bold text-gray-800 text-lg">{t('user_linkedAccounts')}</h3>
+              <p className="text-xs text-gray-400 font-medium ml-1">{t('user_linkedAccountsDesc')}</p>
+            </div>
+            <div className="mt-4 pt-4 border-t border-gray-100 space-y-4">
+              <div className="flex justify-between items-center ml-1">
+                <div className="flex items-center gap-3">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="fb" className="w-5 h-5" />
+                  <span className="text-sm font-medium text-gray-700">Facebook</span>
+                </div>
+                <button className="text-xs font-bold text-[#0194F3] cursor-pointer">{t('user_connect')}</button>
+              </div>
+              <div className="flex justify-between items-center ml-1">
+                <div className="flex items-center gap-3">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="google" className="w-5 h-5" />
+                  <span className="text-sm font-medium text-gray-700">Google</span>
+                </div>
+                <button className="text-xs font-bold text-[#0194F3] cursor-pointer">{t('user_connect')}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

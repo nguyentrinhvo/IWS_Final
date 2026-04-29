@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import UserLayout from './layouts/UserLayout';
+import HomePage from './pages/HomePage/HomePage';
 import { useGlobal } from './context/GlobalContext';
+import UserAccount from './pages/PersonalProfile/UserAccount';
 
 function App() {
   const [data, setData] = useState(null);
@@ -16,28 +18,17 @@ function App() {
         setLoading(false);
       })
       .catch(err => {
-        console.error("Backend connection failed", err);
+        console.error(err);
         setLoading(false);
       });
   }, []);
-
-  const HomePlaceholder = () => (
-    <div className="py-12">
-      <h1 className="text-4xl font-bold mb-6">{t('welcome')}</h1>
-      <p className="text-gray-600">{t('startEditing')}</p>
-      
-      <div className="mt-10 p-4 bg-gray-100 rounded-xl inline-block font-mono text-sm">
-        {loading ? t('checkingConnection') : (data ? JSON.stringify(data) : t('backendOffline'))}
-      </div>
-    </div>
-  );
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UserLayout />}>
-          <Route index element={<HomePlaceholder />} />
-          {/* Add more routes here for other pages */}
+          <Route index element={<HomePage />} />
+          <Route path="profile/:tab" element={<UserAccount />} />
         </Route>
       </Routes>
     </BrowserRouter>

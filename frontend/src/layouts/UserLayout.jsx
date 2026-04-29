@@ -9,13 +9,11 @@ export default function UserLayout() {
         <Navbar />
       </header>
 
-      <main className="flex-1 w-full">
-        <div className="max-w-[1320px] mx-auto px-4">
-          <Outlet />
-        </div>
+      <main className="flex-1 w-full mb-[150px]">
+        <Outlet />
       </main>
 
-      <footer className="mt-auto pt-[150px] w-full">
+      <footer className="mt-auto w-full">
         <Footer />
       </footer>
     </div>

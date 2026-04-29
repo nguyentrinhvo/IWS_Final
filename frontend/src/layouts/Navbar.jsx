@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGlobal } from '../context/GlobalContext';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import ForgotPassword from '../pages/ForgotPassword';
-import OtpVerification from '../pages/OtpVerification';
-import RegisterOtp from '../pages/RegisterOtp';
-import AdditionalInfo from '../pages/AdditionalInfo';
+import Login from '../pages/LoginRegister/Login';
+import Register from '../pages/LoginRegister/Register';
+import ForgotPassword from '../pages/LoginRegister/ForgotPassword';
+import OtpVerification from '../pages/LoginRegister/OtpVerification';
+import RegisterOtp from '../pages/LoginRegister/RegisterOtp';
+import AdditionalInfo from '../pages/LoginRegister/AdditionalInfo';
 
 const formatDisplayName = (fullName) => {
   if (!fullName) return '';
@@ -17,8 +18,12 @@ const formatDisplayName = (fullName) => {
 
 export default function Navbar() {
   const { currency, language, t, currentUser, setCurrentUser } = useGlobal();
+  const navigate = useNavigate();
+  
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [isSupportClosing, setIsSupportClosing] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isLangClosing, setIsLangClosing] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
@@ -46,12 +51,14 @@ export default function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (supportRef.current && !supportRef.current.contains(event.target)) {
-        setIsSupportOpen(false);
+        if (isSupportOpen && !isSupportClosing) {
+          closeSupportMenu();
+        }
       }
       if (langRef.current && !langRef.current.contains(event.target)) {
-        setIsLangOpen(false);
-        setTempCurrency(currency);
-        setTempLanguage(language);
+        if (isLangOpen && !isLangClosing) {
+          closeLangMenu();
+        }
       }
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
         if (isUserMenuOpen && !isUserMenuClosing) {
@@ -61,13 +68,31 @@ export default function Navbar() {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [currency, language, isUserMenuOpen, isUserMenuClosing]);
+  }, [currency, language, isUserMenuOpen, isUserMenuClosing, isSupportOpen, isSupportClosing, isLangOpen, isLangClosing]);
 
   const closeUserMenu = () => {
     setIsUserMenuClosing(true);
     setTimeout(() => {
       setIsUserMenuOpen(false);
       setIsUserMenuClosing(false);
+    }, 300);
+  };
+
+  const closeSupportMenu = () => {
+    setIsSupportClosing(true);
+    setTimeout(() => {
+      setIsSupportOpen(false);
+      setIsSupportClosing(false);
+    }, 300);
+  };
+
+  const closeLangMenu = () => {
+    setIsLangClosing(true);
+    setTempCurrency(currency);
+    setTempLanguage(language);
+    setTimeout(() => {
+      setIsLangOpen(false);
+      setIsLangClosing(false);
     }, 300);
   };
 
@@ -108,47 +133,85 @@ export default function Navbar() {
     sessionStorage.removeItem('authUser');
     setIsUserMenuOpen(false);
     setIsUserMenuClosing(false);
+    navigate('/'); 
+  };
+
+  const handleUserNavigation = (tabId) => {
+    closeUserMenu();
+    navigate(`/profile/${tabId}`);
+  };
+
+  const handleTopNavNavigation = (tabId) => {
+    navigate(`/profile/${tabId}`);
   };
 
   const userMenuItems = [
     {
       key: 'editProfile',
+      tabId: 'edit-profile',
       icon: (
-        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 24 24">
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+          </g>
         </svg>
       )
     },
     {
       key: 'myCards',
+      tabId: 'my-cards',
       icon: (
-        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+        <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 512 512" enableBackground="new 0 0 512 512" id="Credit_x5F_card" version="1.1" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <g>
+              <path d="M127.633,215.98h215.568c29.315,0,53.166,23.851,53.166,53.166v14.873h38.061c22.735,0,41.166-18.432,41.166-41.167 v-69.608H127.633V215.98z"></path>
+              <path d="M434.428,74.2H168.799c-22.735,0-41.166,18.431-41.166,41.166v17.479h347.961v-17.479 C475.594,92.631,457.163,74.2,434.428,74.2z"></path>
+              <path d="M343.201,227.98H77.572c-22.735,0-41.166,18.431-41.166,41.166v127.487c0,22.735,18.431,41.166,41.166,41.166h265.629 c22.736,0,41.166-18.431,41.166-41.166V269.146C384.367,246.412,365.938,227.98,343.201,227.98z M131.542,329.846 c0,4.92-3.989,8.909-8.909,8.909H75.289c-4.92,0-8.908-3.989-8.908-8.909v-29.098c0-4.921,3.988-8.909,8.908-8.909h47.344 c4.92,0,8.909,3.988,8.909,8.909V329.846z M300.961,413.039c-10.796,0-19.548-8.752-19.548-19.549s8.752-19.549,19.548-19.549 c10.797,0,19.549,8.752,19.549,19.549S311.758,413.039,300.961,413.039z M345.271,413.039c-10.797,0-19.549-8.752-19.549-19.549 s8.752-19.549,19.549-19.549c10.796,0,19.548,8.752,19.548,19.549S356.067,413.039,345.271,413.039z"></path>
+            </g>
+          </g>
         </svg>
       )
     },
     {
-      key: 'transactionHistory',
+      key: 'purchaseList',
+      tabId: 'purchase-list',
       icon: (
-        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8 8a2 2 0 0 0 2.828 0l7.172-7.172a2 2 0 0 0 0-2.828l-8-8zM7 9a2 2 0 1 1 .001-4.001A2 2 0 0 1 7 9z"></path>
+          </g>
         </svg>
       )
     },
     {
       key: 'myBookings',
+      tabId: 'my-bookings',
       icon: (
-        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5v11.25a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V7.5m18 0A2.25 2.25 0 0 0 18.75 5.25h-15A2.25 2.25 0 0 0 1.5 7.5m18 0h-18" />
+        <svg className="w-[22px] h-[22px]" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path d="M704 192h160v736H160V192h160v64h384v-64zM288 512h448v-64H288v64zm0 256h448v-64H288v64zm96-576V96h256v96H384z"></path>
+          </g>
         </svg>
       )
     },
     {
-      key: 'promotions',
+      key: 'savedPassengers',
+      tabId: 'saved-passengers',
       icon: (
-        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+        <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path d="M 38.7232 28.5490 C 43.1399 28.5490 46.9403 24.6047 46.9403 19.4690 C 46.9403 14.3949 43.1193 10.6356 38.7232 10.6356 C 34.3271 10.6356 30.5061 14.4771 30.5061 19.5101 C 30.5061 24.6047 34.3066 28.5490 38.7232 28.5490 Z M 15.0784 29.0215 C 18.8994 29.0215 22.2274 25.5703 22.2274 21.1125 C 22.2274 16.6958 18.8789 13.4294 15.0784 13.4294 C 11.2575 13.4294 7.8885 16.7779 7.9090 21.1536 C 7.9090 25.5703 11.2370 29.0215 15.0784 29.0215 Z M 3.6155 47.5717 L 19.2281 47.5717 C 17.0917 44.4697 19.7006 38.2247 24.1173 34.8146 C 21.8371 33.2944 18.8994 32.1645 15.0579 32.1645 C 5.7931 32.1645 0 39.0053 0 44.6957 C 0 46.5445 1.0271 47.5717 3.6155 47.5717 Z M 25.8018 47.5717 L 51.6241 47.5717 C 54.8493 47.5717 56 46.6472 56 44.8395 C 56 39.5394 49.3644 32.2261 38.7026 32.2261 C 28.0616 32.2261 21.4262 39.5394 21.4262 44.8395 C 21.4262 46.6472 22.5766 47.5717 25.8018 47.5717 Z"></path>
+          </g>
         </svg>
       )
     },
@@ -177,11 +240,11 @@ export default function Navbar() {
       <div className="w-full flex flex-col bg-[#7C4A4A] relative z-50">
         <nav className="w-full h-[80px] border-b border-white/20 flex justify-center">
           <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-between h-full">
-            <div className="flex-shrink-0 cursor-pointer h-full flex items-center">
+            <div className="flex-shrink-0 cursor-pointer h-full flex items-center" onClick={() => navigate('/')}>
               <img src="/images/logo_web.png" alt="Logo" className="max-h-[60px] w-auto object-contain" />
             </div>
 
-            <ul className={`hidden md:flex flex-1 justify-center items-center text-white font-medium text-[19px] ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
+            <ul className={`hidden md:flex flex-1 justify-center items-center text-white font-medium text-[19px] whitespace-nowrap ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('tours')}</li>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('hotels')}</li>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('flights')}</li>
@@ -194,7 +257,7 @@ export default function Navbar() {
                 <div className="relative" ref={userMenuRef}>
                   <button
                     onClick={toggleUserMenu}
-                    className="flex items-center space-x-4 px-4 py-2 rounded-lg hover:bg-black/20 transition-all cursor-pointer"
+                    className="flex items-center space-x-4 px-4 py-2 rounded-lg hover:bg-black/20 transition-all cursor-pointer whitespace-nowrap"
                   >
                     {currentUser.avatar ? (
                       <img
@@ -223,9 +286,9 @@ export default function Navbar() {
                   </button>
 
                   {(isUserMenuOpen || isUserMenuClosing) && (
-                    <div className={`absolute top-full right-0 mt-3 w-[350px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[200] overflow-hidden flex flex-col ${isUserMenuClosing ? 'animate-dropdown-out' : 'animate-dropdown'}`}>
+                    <div className={`absolute top-full right-0 mt-3 min-w-[350px] w-max h-auto max-h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[200] overflow-hidden flex flex-col ${isUserMenuClosing ? 'animate-dropdown-out' : 'animate-dropdown'}`}>
                       <div className="px-6 py-5 border-b border-gray-100 mb-2">
-                        <p className="text-sm text-gray-400 font-medium">{t('loggedInAs')}</p>
+                        <p className="text-sm text-gray-400 font-medium whitespace-nowrap">{t('loggedInAs')}</p>
                         <p className="text-lg font-bold text-[#0B1E43] truncate mt-1">{currentUser.email}</p>
                       </div>
 
@@ -233,7 +296,8 @@ export default function Navbar() {
                         {userMenuItems.map((item) => (
                           <button
                             key={item.key}
-                            className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-orange-50 transition-colors cursor-pointer text-left"
+                            onClick={() => handleUserNavigation(item.tabId)}
+                            className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-orange-50 transition-colors cursor-pointer text-left whitespace-nowrap"
                           >
                             <div className="text-[#F57323] flex-shrink-0">
                               {item.icon}
@@ -246,11 +310,22 @@ export default function Navbar() {
                       <div className="border-t border-gray-100 mt-2 pt-2">
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-red-50 transition-colors cursor-pointer text-left"
+                          className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-red-50 transition-colors cursor-pointer text-left whitespace-nowrap"
                         >
                           <div className="text-red-500 flex-shrink-0">
-                            <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                            <svg fill="currentColor" className="w-[22px] h-[22px]" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.996 511.996" xmlSpace="preserve">
+                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                              <g id="SVGRepo_iconCarrier">
+                                <g>
+                                  <g>
+                                    <g>
+                                      <path d="M349.85,62.196c-10.797-4.717-23.373,0.212-28.09,11.009c-4.717,10.797,0.212,23.373,11.009,28.09 c69.412,30.324,115.228,98.977,115.228,176.035c0,106.034-85.972,192-192,192c-106.042,0-192-85.958-192-192 c0-77.041,45.8-145.694,115.192-176.038c10.795-4.72,15.72-17.298,10.999-28.093c-4.72-10.795-17.298-15.72-28.093-10.999 C77.306,99.275,21.331,183.181,21.331,277.329c0,129.606,105.061,234.667,234.667,234.667 c129.592,0,234.667-105.068,234.667-234.667C490.665,183.159,434.667,99.249,349.85,62.196z"></path>
+                                      <path d="M255.989,234.667c11.782,0,21.333-9.551,21.333-21.333v-192C277.323,9.551,267.771,0,255.989,0 c-11.782,0-21.333,9.551-21.333,21.333v192C234.656,225.115,244.207,234.667,255.989,234.667z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
                             </svg>
                           </div>
                           <span className="text-red-500 font-medium text-[17px]">{t('logout')}</span>
@@ -263,7 +338,7 @@ export default function Navbar() {
                 <>
                   <button
                     onClick={() => setIsLoginOpen(true)}
-                    className="flex items-center space-x-2 bg-[#FADCD9] text-indigo-800 px-6 py-2.5 rounded-full font-semibold hover:bg-pink-100 transition-colors cursor-pointer"
+                    className="flex items-center space-x-2 bg-[#FADCD9] text-indigo-800 px-6 py-2.5 rounded-full font-semibold hover:bg-pink-100 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     <span>{t('logIn')}</span>
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -272,7 +347,7 @@ export default function Navbar() {
                   </button>
                   <button
                     onClick={() => setIsRegisterOpen(true)}
-                    className="bg-[#7978E9] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-indigo-500 transition-colors shadow-md shadow-indigo-500/20 cursor-pointer"
+                    className="bg-[#7978E9] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-indigo-500 transition-colors shadow-md shadow-indigo-500/20 cursor-pointer whitespace-nowrap"
                   >
                     {t('register')}
                   </button>
@@ -284,32 +359,45 @@ export default function Navbar() {
 
         <nav className="hidden md:flex w-full h-[40px] justify-center">
           <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-end h-full">
-            <ul className="flex items-center space-x-4 text-white text-sm">
+            <ul className="flex items-center space-x-4 text-white text-sm whitespace-nowrap">
               <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('partnership')}</li>
               <li className="relative" ref={supportRef}>
-                <button onClick={() => setIsSupportOpen(!isSupportOpen)} className="flex items-center space-x-1 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">
+                <button 
+                  onClick={() => {
+                    if (isSupportOpen && !isSupportClosing) {
+                      closeSupportMenu();
+                    } else if (!isSupportOpen) {
+                      setIsSupportOpen(true);
+                    }
+                  }} 
+                  className="flex items-center space-x-1 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all whitespace-nowrap"
+                >
                   <span>{t('support')}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                   </svg>
                 </button>
-                {isSupportOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-48 bg-white text-gray-800 rounded-xl shadow-xl py-2 z-50 border border-gray-100">
-                    <button className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors font-medium">{t('helpCenter')}</button>
-                    <button className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors font-medium">{t('contactUs')}</button>
-                    <button className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors font-medium">{t('myInbox')}</button>
+                {(isSupportOpen || isSupportClosing) && (
+                  <div className={`absolute top-full left-0 mt-2 w-max min-w-[12rem] bg-white text-gray-800 rounded-xl shadow-xl py-2 z-50 border border-gray-100 flex flex-col ${isSupportClosing ? 'animate-dropdown-out' : 'animate-dropdown'}`}>
+                    <button className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors font-medium whitespace-nowrap block cursor-pointer">{t('helpCenter')}</button>
+                    <button className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors font-medium whitespace-nowrap block cursor-pointer">{t('contactUs')}</button>
+                    <button className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors font-medium whitespace-nowrap block cursor-pointer">{t('myInbox')}</button>
                   </div>
                 )}
               </li>
-              <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('myBookings')}</li>
+              <li onClick={() => handleTopNavNavigation('my-bookings')} className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all whitespace-nowrap">{t('myBookings')}</li>
               <li className="relative" ref={langRef}>
                 <button
                   onClick={() => {
-                    setIsLangOpen(!isLangOpen);
-                    setTempCurrency(currency);
-                    setTempLanguage(language);
+                    if (isLangOpen && !isLangClosing) {
+                      closeLangMenu();
+                    } else if (!isLangOpen) {
+                      setIsLangOpen(true);
+                      setTempCurrency(currency);
+                      setTempLanguage(language);
+                    }
                   }}
-                  className="flex items-center space-x-2 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all"
+                  className="flex items-center space-x-2 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all whitespace-nowrap"
                 >
                   {currency === 'VND' ? (
                     <span className="text-lg leading-none rounded-sm bg-red-500 text-yellow-300 px-1 border border-white/30">★</span>
@@ -325,51 +413,51 @@ export default function Navbar() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                   </svg>
                 </button>
-                {isLangOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-[550px] bg-white text-gray-800 rounded-xl shadow-2xl p-6 z-50 border border-gray-100 flex">
+                {(isLangOpen || isLangClosing) && (
+                  <div className={`absolute top-full right-0 mt-2 w-[550px] bg-white text-gray-800 rounded-xl shadow-2xl p-6 z-50 border border-gray-100 flex ${isLangClosing ? 'animate-dropdown-out' : 'animate-dropdown'}`}>
                     <div className="flex-1 border-r border-gray-200 pr-6">
-                      <h3 className="font-bold text-gray-900 mb-4 text-base">{t('selectCurrency')}</h3>
+                      <h3 className="font-bold text-gray-900 mb-4 text-base whitespace-nowrap">{t('selectCurrency')}</h3>
                       <div className="space-y-1">
                         <button
                           onClick={() => handleCurrencyChange('VND')}
-                          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition ${tempCurrency === 'VND' ? 'bg-gray-100 border border-gray-200' : 'hover:bg-gray-50'}`}
+                          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition cursor-pointer ${tempCurrency === 'VND' ? 'bg-gray-100 border border-gray-200' : 'hover:bg-gray-50'}`}
                         >
                           <div className="flex items-center space-x-3">
                             <span className="text-xs font-bold text-gray-500 bg-gray-200 px-2 py-1 rounded">VND</span>
-                            <span className="text-sm">{t('vietnameseDong')}</span>
+                            <span className="text-sm whitespace-nowrap">{t('vietnameseDong')}</span>
                           </div>
                         </button>
                         <button
                           onClick={() => handleCurrencyChange('USD')}
-                          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition ${tempCurrency === 'USD' ? 'bg-gray-100 border border-gray-200' : 'hover:bg-gray-50'}`}
+                          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition cursor-pointer ${tempCurrency === 'USD' ? 'bg-gray-100 border border-gray-200' : 'hover:bg-gray-50'}`}
                         >
                           <div className="flex items-center space-x-3">
                             <span className="text-xs font-bold text-gray-500 bg-gray-200 px-2 py-1 rounded">USD</span>
-                            <span className="text-sm">{t('usDollar')}</span>
+                            <span className="text-sm whitespace-nowrap">{t('usDollar')}</span>
                           </div>
                         </button>
                       </div>
                     </div>
                     <div className="flex-[0.8] pl-6 flex flex-col">
-                      <h3 className="font-bold text-gray-900 mb-4 text-base">{t('selectLanguage')}</h3>
-                      <div className="space-y-1 flex-1">
+                      <h3 className="font-bold text-gray-900 mb-4 text-base whitespace-nowrap">{t('selectLanguage')}</h3>
+                      <div className="space-y-1 flex-1 flex flex-col">
                         {tempCurrency === 'VND' && (
                           <button
                             onClick={() => setTempLanguage('VI')}
-                            className={`w-full text-left px-3 py-2 rounded-lg transition ${tempLanguage === 'VI' ? 'bg-green-50/50 text-green-700 font-medium border border-green-200' : 'hover:bg-gray-100'}`}
+                            className={`block w-full text-left px-3 py-2 rounded-lg transition cursor-pointer ${tempLanguage === 'VI' ? 'bg-green-50/50 text-green-700 font-medium border border-green-200' : 'hover:bg-gray-100'}`}
                           >
                             Tiếng Việt
                           </button>
                         )}
                         <button
                           onClick={() => setTempLanguage('EN')}
-                          className={`w-full text-left px-3 py-2 rounded-lg transition ${tempLanguage === 'EN' ? 'bg-green-50/50 text-green-700 font-medium border border-green-200' : 'hover:bg-gray-100'}`}
+                          className={`w-full text-left px-3 py-2 rounded-lg transition cursor-pointer ${tempLanguage === 'EN' ? 'bg-green-50/50 text-green-700 font-medium border border-green-200' : 'hover:bg-gray-100'}`}
                         >
                           English
                         </button>
                       </div>
                       <div className="mt-4 flex justify-end">
-                        <button onClick={handleDone} className="bg-[#0095FF] hover:bg-blue-600 text-white px-6 py-2 rounded-full font-medium text-sm transition-colors">
+                        <button onClick={handleDone} className="bg-[#0095FF] hover:bg-blue-600 text-white px-6 py-2 rounded-full font-medium text-sm transition-colors whitespace-nowrap cursor-pointer">
                           {t('done')}
                         </button>
                       </div>

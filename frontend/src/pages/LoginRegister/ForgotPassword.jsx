@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useGlobal } from '../context/GlobalContext';
+import { useGlobal } from '../../context/GlobalContext';
 
 export default function ForgotPassword({ isOpen, onClose, onBackToLogin, onSwitchToOtp }) {
   const { t } = useGlobal();
