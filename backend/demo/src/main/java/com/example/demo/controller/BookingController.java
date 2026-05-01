@@ -41,6 +41,15 @@ public class BookingController {
         return new ResponseEntity<>(booking, HttpStatus.CREATED);
     }
 
+    @PostMapping("/bookings/bus-train")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public ResponseEntity<BookingDTO> createBusTrainBooking(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @Valid @RequestBody BookingRequest request) {
+        BookingDTO booking = bookingService.createBusTrainBooking(userDetails.getId(), request);
+        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+    }
+
     @GetMapping("/bookings/my")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public ResponseEntity<Page<BookingDTO>> getMyBookings(

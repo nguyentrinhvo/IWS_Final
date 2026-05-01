@@ -122,6 +122,27 @@ public class BookingService {
                  }
              });
         }
+        
+        // Refund seats logic for bus_train
+        if ("bus_train".equals(booking.getServiceType()) && booking.getServiceId() != null) {
+            busTrainRouteRepository.findById(booking.getServiceId()).ifPresent(route -> {
+                if (route.getSeatMap() != null) {
+                    // This is a simplified cancel logic. Ideally, we should know which seats were booked.
+                    // If passengers are provided and contain seat numbers, we could free those exact seats.
+                    if (booking.getPassengers() != null && !booking.getPassengers().isEmpty()) {
+                        for (com.example.demo.document.embed.Passenger p : booking.getPassengers()) {
+                            if (p.getSeatPosition() != null) {
+                                route.getSeatMap().stream()
+                                    .filter(s -> p.getSeatPosition().equals(s.getPosition()))
+                                    .findFirst()
+                                    .ifPresent(s -> s.setStatus("available"));
+                            }
+                        }
+                        busTrainRouteRepository.save(route);
+                    }
+                }
+            });
+        }
 
         return mapToDTO(updatedBooking);
     }
@@ -151,6 +172,9 @@ public class BookingService {
 
     @Autowired
     private com.example.demo.repository.FlightRepository flightRepository;
+
+    @Autowired
+    private com.example.demo.repository.BusTrainRouteRepository busTrainRouteRepository;
 
     public BookingDTO createFlightBooking(String userId, BookingRequest request) {
         com.example.demo.document.FlightDocument flight = flightRepository.findById(request.getServiceId())
@@ -198,6 +222,70 @@ public class BookingService {
                 .note(request.getNote())
                 .snapshotName(flight.getAirline() + " - " + flight.getFlightNumber())
                 .snapshotPrice(flight.getBasePrice())
+                .snapshotDetail(snapshotDetail)
+                .payment(payment)
+                .passengers(request.getPassengers())
+                .createdAt(new Date())
+                .build();
+
+        BookingDocument savedBooking = bookingRepository.save(booking);
+        return mapToDTO(savedBooking);
+    }
+
+    public BookingDTO createBusTrainBooking(String userId, BookingRequest request) {
+        com.example.demo.document.BusTrainRouteDocument route = busTrainRouteRepository.findById(request.getServiceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Bus/Train route not found"));
+
+        if (route.getIsActive() != null && !route.getIsActive()) {
+            throw new ResourceNotFoundException("Bus/Train route is not active");
+        }
+
+        int numPassengers = (request.getNumAdults() != null ? request.getNumAdults() : 1) 
+                          + (request.getNumChildren() != null ? request.getNumChildren() : 0);
+
+        // Deduct seats if seat map exists and passengers specify seats
+        if (route.getSeatMap() != null && request.getPassengers() != null && !request.getPassengers().isEmpty()) {
+            for (com.example.demo.document.embed.Passenger p : request.getPassengers()) {
+                if (p.getSeatPosition() != null) {
+                    route.getSeatMap().stream()
+                        .filter(s -> p.getSeatPosition().equals(s.getPosition()))
+                        .findFirst()
+                        .ifPresent(s -> {
+                            if (!"available".equals(s.getStatus())) {
+                                throw new com.example.demo.exception.BadRequestException("Seat " + s.getPosition() + " is already booked");
+                            }
+                            s.setStatus("booked");
+                        });
+                }
+            }
+            busTrainRouteRepository.save(route);
+        }
+
+        double totalPrice = numPassengers * route.getPrice();
+
+        Map<String, Object> snapshotDetail = new HashMap<>();
+        snapshotDetail.put("operatorName", route.getOperatorName());
+        snapshotDetail.put("vehicleType", route.getVehicleType());
+        snapshotDetail.put("departureCity", route.getDepartureCity());
+        snapshotDetail.put("arrivalCity", route.getArrivalCity());
+        snapshotDetail.put("vehicleClass", route.getVehicleClass());
+
+        PaymentEmbed payment = PaymentEmbed.builder()
+                .provider(request.getPaymentProvider())
+                .paymentStatus("pending")
+                .build();
+
+        BookingDocument booking = BookingDocument.builder()
+                .userId(userId)
+                .serviceId(request.getServiceId())
+                .serviceType("bus_train")
+                .numAdults(request.getNumAdults() != null ? request.getNumAdults() : 1)
+                .numChildren(request.getNumChildren() != null ? request.getNumChildren() : 0)
+                .totalPrice(totalPrice)
+                .status("pending")
+                .note(request.getNote())
+                .snapshotName(route.getOperatorName() + " - " + route.getDepartureCity() + " to " + route.getArrivalCity())
+                .snapshotPrice(route.getPrice())
                 .snapshotDetail(snapshotDetail)
                 .payment(payment)
                 .passengers(request.getPassengers())

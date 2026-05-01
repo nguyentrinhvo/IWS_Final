@@ -13,4 +13,5 @@ public class Passenger {
     private String fullName;
     private String identityNumber; // CMND/Hộ chiếu
     private String nationality;
+    private String seatPosition; // Optional: Seat position if applicable (e.g. "A1")
 }
