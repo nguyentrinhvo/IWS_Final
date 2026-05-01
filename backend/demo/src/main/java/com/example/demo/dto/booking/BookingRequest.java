@@ -3,6 +3,8 @@ package com.example.demo.dto.booking;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
+import com.example.demo.document.embed.Passenger;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,7 @@ public class BookingRequest {
 
     private Integer numChildren;
     private String note;
+    private List<Passenger> passengers;
     
     @NotBlank(message = "Payment provider is required")
     private String paymentProvider; // e.g., "vnpay", "paypal", "cash"

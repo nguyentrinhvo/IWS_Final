@@ -3,6 +3,8 @@ package com.example.demo.dto.booking;
 import com.example.demo.document.embed.PaymentEmbed;
 import java.util.Date;
 import java.util.Map;
+import java.util.List;
+import com.example.demo.document.embed.Passenger;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,5 +31,6 @@ public class BookingDTO {
     private Double snapshotPrice;
     private Map<String, Object> snapshotDetail;
     private PaymentEmbed payment;
+    private List<Passenger> passengers;
     private Date createdAt;
 }
