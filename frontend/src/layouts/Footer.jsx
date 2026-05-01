@@ -70,7 +70,9 @@ export default function Footer() {
             <div className="flex gap-[140px]">
               <div className="w-[140px] flex flex-col">
                 <h3 className="font-bold text-white text-[18px] mb-6">{t('followUsOn')}</h3>
-                <ul className="flex flex-col gap-3 text-white">
+                <ul className="flex flex-col gap-3 
+                
+                text-white">
                   <li className="cursor-pointer hover:underline transition-all duration-200">{t('tours')}</li>
                   <li className="cursor-pointer hover:underline transition-all duration-200">{t('hotels')}</li>
                   <li className="cursor-pointer hover:underline transition-all duration-200">{t('flights')}</li>
