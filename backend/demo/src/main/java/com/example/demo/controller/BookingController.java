@@ -32,6 +32,15 @@ public class BookingController {
         return new ResponseEntity<>(booking, HttpStatus.CREATED);
     }
 
+    @PostMapping("/bookings/flight")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public ResponseEntity<BookingDTO> createFlightBooking(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @Valid @RequestBody BookingRequest request) {
+        BookingDTO booking = bookingService.createFlightBooking(userDetails.getId(), request);
+        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+    }
+
     @GetMapping("/bookings/my")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public ResponseEntity<Page<BookingDTO>> getMyBookings(
@@ -52,6 +61,15 @@ public class BookingController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BookingDTO> confirmBooking(@PathVariable String id) {
         BookingDTO booking = bookingService.confirmBooking(id);
+        return ResponseEntity.ok(booking);
+    }
+
+    @PutMapping("/bookings/{id}/cancel")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public ResponseEntity<BookingDTO> cancelBooking(
+            @PathVariable String id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        BookingDTO booking = bookingService.cancelBooking(id, userDetails.getId());
         return ResponseEntity.ok(booking);
     }
 }

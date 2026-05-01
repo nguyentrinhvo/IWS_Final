@@ -3,6 +3,8 @@ package com.example.demo.document;
 import com.example.demo.document.embed.PaymentEmbed;
 import java.util.Date;
 import java.util.Map;
+import java.util.List;
+import com.example.demo.document.embed.Passenger;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +51,7 @@ public class BookingDocument {
 
     // EMBEDDED
     private PaymentEmbed payment;
+    private List<Passenger> passengers;
 
     @Indexed
     private Date createdAt;
