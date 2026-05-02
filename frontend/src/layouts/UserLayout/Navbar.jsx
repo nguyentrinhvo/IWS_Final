@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
 import Login from '../../pages/Login';
 import Register from '../../pages/Register';
@@ -16,6 +17,7 @@ const formatDisplayName = (fullName) => {
 };
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const { currency, language, t, currentUser, setCurrentUser } = useGlobal();
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -113,6 +115,7 @@ export default function Navbar() {
   const userMenuItems = [
     {
       key: 'editProfile',
+      path: '/',
       icon: (
         <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -121,6 +124,7 @@ export default function Navbar() {
     },
     {
       key: 'myCards',
+      path: '/',
       icon: (
         <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
@@ -129,6 +133,7 @@ export default function Navbar() {
     },
     {
       key: 'transactionHistory',
+      path: '/',
       icon: (
         <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -137,6 +142,7 @@ export default function Navbar() {
     },
     {
       key: 'myBookings',
+      path: '/hotels/manage',
       icon: (
         <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
@@ -146,6 +152,7 @@ export default function Navbar() {
     },
     {
       key: 'promotions',
+      path: '/',
       icon: (
         <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
@@ -177,16 +184,16 @@ export default function Navbar() {
       <div className="w-full flex flex-col bg-[#7C4A4A] relative z-50">
         <nav className="w-full h-[80px] border-b border-white/20 flex justify-center">
           <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-between h-full">
-            <div className="flex-shrink-0 cursor-pointer h-full flex items-center">
+            <Link to="/" className="flex-shrink-0 cursor-pointer h-full flex items-center">
               <img src="/images/logo_web.png" alt="Logo" className="max-h-[60px] w-auto object-contain" />
-            </div>
+            </Link>
 
             <ul className={`hidden md:flex flex-1 justify-center items-center text-white font-medium text-[19px] ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
-              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('tours')}</li>
-              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('hotels')}</li>
-              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('flights')}</li>
-              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('carsTrains')}</li>
-              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('thingsToDo')}</li>
+              <li><Link to="/" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('tours')}</Link></li>
+              <li><Link to="/hotels" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('hotels')}</Link></li>
+              <li><Link to="/flights" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('flights')}</Link></li>
+              <li><Link to="/transport" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('carsTrains')}</Link></li>
+              <li><Link to="/" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('thingsToDo')}</Link></li>
             </ul>
 
             <div className="hidden md:flex flex-shrink-0 items-center space-x-4">
@@ -231,15 +238,19 @@ export default function Navbar() {
 
                       <div className="flex-1 overflow-y-auto">
                         {userMenuItems.map((item) => (
-                          <button
-                            key={item.key}
-                            className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-orange-50 transition-colors cursor-pointer text-left"
-                          >
-                            <div className="text-[#F57323] flex-shrink-0">
-                              {item.icon}
-                            </div>
-                            <span className="text-[#0B1E43] font-medium text-[17px]">{t(item.key)}</span>
-                          </button>
+                            <button
+                             key={item.key}
+                             onClick={() => {
+                               navigate(item.path);
+                               closeUserMenu();
+                             }}
+                             className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-orange-50 transition-colors cursor-pointer text-left"
+                           >
+                             <div className="text-[#F57323] flex-shrink-0">
+                               {item.icon}
+                             </div>
+                             <span className="text-[#0B1E43] font-medium text-[17px]">{t(item.key)}</span>
+                           </button>
                         ))}
                       </div>
 
@@ -285,7 +296,7 @@ export default function Navbar() {
         <nav className="hidden md:flex w-full h-[40px] justify-center">
           <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-end h-full">
             <ul className="flex items-center space-x-4 text-white text-sm">
-              <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('partnership')}</li>
+              <li><Link to="/" className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all block">{t('partnership')}</Link></li>
               <li className="relative" ref={supportRef}>
                 <button onClick={() => setIsSupportOpen(!isSupportOpen)} className="flex items-center space-x-1 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">
                   <span>{t('support')}</span>
@@ -301,7 +312,7 @@ export default function Navbar() {
                   </div>
                 )}
               </li>
-              <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('myBookings')}</li>
+              <li><Link to="/hotels/manage" className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all block">{t('myBookings')}</Link></li>
               <li className="relative" ref={langRef}>
                 <button
                   onClick={() => {

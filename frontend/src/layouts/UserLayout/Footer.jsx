@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
 
 export default function Footer() {
@@ -23,11 +24,13 @@ export default function Footer() {
         <div className="w-full max-w-[1320px] mx-auto px-4 flex pt-[40px] gap-[140px] items-start">
           
           <div className="w-[330px] flex flex-col items-start">
-            <img 
-              src="/images/logo_web.png" 
-              alt="Logo" 
-              className="w-[204px] h-[204px] object-contain block -mt-2" 
-            />
+            <Link to="/">
+              <img 
+                src="/images/logo_web.png" 
+                alt="Logo" 
+                className="w-[204px] h-[204px] object-contain block -mt-2" 
+              />
+            </Link>
             <div className="flex gap-4 mt-[10px]">
               <img src="/icons/iata.svg" alt="IATA" className="h-12 w-auto" />
               <img src="/icons/bocongthuong.svg" alt="Bo Cong Thuong" className="h-12 w-auto" />
@@ -48,9 +51,9 @@ export default function Footer() {
             <div>
               <h3 className="font-bold text-white text-[18px] mb-6">{t('aboutHanuvivu')}</h3>
               <ul className="flex flex-col gap-3 text-white">
-                <li className="cursor-pointer hover:underline transition-all duration-200">{t('contactUs')}</li>
-                <li className="cursor-pointer hover:underline transition-all duration-200">{t('helpCenter')}</li>
-                <li className="cursor-pointer hover:underline transition-all duration-200">{t('aboutUs')}</li>
+                <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('contactUs')}</Link></li>
+                <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('helpCenter')}</Link></li>
+                <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('aboutUs')}</Link></li>
               </ul>
             </div>
             <div className="mt-[70px]">
@@ -73,13 +76,13 @@ export default function Footer() {
                 <ul className="flex flex-col gap-3 
                 
                 text-white">
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('tours')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('hotels')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('flights')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('carsTrains')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('thingsToDo')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('villas')}</li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200">{t('apartments')}</li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('tours')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/hotels">{t('hotels')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/flights">{t('flights')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/transport">{t('carsTrains')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('thingsToDo')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('villas')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('apartments')}</Link></li>
                 </ul>
               </div>
 
