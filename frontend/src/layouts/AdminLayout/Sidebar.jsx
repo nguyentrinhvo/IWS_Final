@@ -13,12 +13,14 @@ import {
   Star,
   MessageSquare,
   BarChart3,
-  CreditCard
+  CreditCard,
+  Menu,
+  ChevronLeft
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const Sidebar = () => {
+const Sidebar = ({ isMobileOpen, setIsMobileOpen, isCollapsed, setIsCollapsed }) => {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -39,19 +41,35 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 min-h-screen bg-[#7C4A4A] text-white flex flex-col">
+    <aside className={`fixed lg:relative z-50 min-h-screen bg-[#7C4A4A] text-white flex flex-col transition-all duration-300 ease-in-out shrink-0
+      ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      ${isCollapsed ? 'w-20' : 'w-64'}
+    `}>
       {/* Logo */}
-      <div className="p-6 pb-8 flex justify-center items-center">
-        <div className="text-center">
-          <div className="flex items-center justify-center space-x-1">
-             {/* Logo graphic */}
-             <img src="/logo_web.png" alt="HANU vivu Logo" className="h-10 w-auto object-contain" />
-          </div>
+      <div className={`p-6 pb-8 flex justify-center items-center ${isCollapsed ? 'px-2' : ''}`}>
+        <div className="text-center w-full flex items-center justify-between">
+          {!isCollapsed && <img src="/logo_web.png" alt="HANU vivu Logo" className="h-10 w-auto object-contain" />}
+          
+          {/* Desktop Collapse Toggle */}
+          <button 
+            className="hidden lg:block p-1 text-white/70 hover:text-white transition-colors"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+
+          {/* Mobile Close Button */}
+          <button 
+            className="lg:hidden p-1 text-white/70 hover:text-white absolute right-4 top-6"
+            onClick={() => setIsMobileOpen(false)}
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto w-full px-2">
+      <nav className="flex-1 overflow-y-auto w-full px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <ul className="space-y-1">
           {navItems.map((item) => {
             const isActive = location.pathname.includes(item.path) || (item.path === '/admin/dashboard' && location.pathname === '/admin');
@@ -59,7 +77,9 @@ const Sidebar = () => {
               <li key={item.label}>
                 <Link
                   to={item.path}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors group relative ${
+                  onClick={() => setIsMobileOpen(false)}
+                  title={isCollapsed ? item.label : undefined}
+                  className={`flex items-center ${isCollapsed ? 'justify-center px-0' : 'space-x-3 px-4'} py-3 rounded-lg transition-colors group relative ${
                     isActive 
                       ? 'bg-white/10 text-white font-medium' 
                       : 'text-gray-300 hover:bg-white/5 hover:text-white'
@@ -68,8 +88,8 @@ const Sidebar = () => {
                   {isActive && (
                     <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-orange-400 rounded-r-full"></div>
                   )}
-                  <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
-                  <span className="text-sm tracking-wide">{item.label}</span>
+                  <item.icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
+                  {!isCollapsed && <span className="text-sm tracking-wide truncate">{item.label}</span>}
                 </Link>
               </li>
             );

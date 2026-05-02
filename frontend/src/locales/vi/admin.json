@@ -30,6 +30,14 @@
     "tours": {
       "title": "Quản lý Chuyến đi",
       "description": "Đây là trang quản lý chuyến đi."
+    },
+    "payments": {
+      "title": "Quản lý Thanh Toán",
+      "description": "Theo dõi, quản lý và đối soát tất cả các giao dịch thanh toán."
+    },
+    "flights": {
+      "title": "Quản lý Chuyến Bay",
+      "description": "Quản lý hãng hàng không, chuyến bay, tuyến đường và chỗ ngồi."
     }
   }
 }
