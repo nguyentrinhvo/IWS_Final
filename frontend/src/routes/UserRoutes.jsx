@@ -23,6 +23,11 @@ import HotelBooking from '../pages/user/hotel/HotelBooking';
 import HotelPayment from '../pages/user/hotel/HotelPayment';
 import HotelBookingSuccess from '../pages/user/hotel/HotelBookingSuccess';
 import ManageHotelBooking from '../pages/user/hotel/ManageHotelBooking';
+import ToursPage from '../pages/ToursPage/ToursPage';
+import Tour from '../pages/ToursDetailPage/Tour';
+import ToursBooking from '../pages/ToursBookingPage/ToursBooking';
+import TourPayments from '../pages/TourPayments/TourPayments';
+import UserAccount from '../pages/PersonalProfile/UserAccount';
 
 const UserRoutes = () => {
   return (
@@ -51,7 +56,12 @@ const UserRoutes = () => {
         <Route path="/flights/payment" element={<FlightPayment />} />
         <Route path="/flights/success" element={<FlightBookingSuccess />} />
         <Route path="/flights/manage" element={<ManageBooking />} />
+        <Route path="/profile/:tab" element={<UserAccount />} />
       </Route>
+      <Route path="/tours" element={<ToursPage />} />
+      <Route path="/tour/:id" element={<Tour />} />
+      <Route path="/tours-booking" element={<ToursBooking />} />
+      <Route path="/tours-payment" element={<TourPayments />} />
     </Routes>
   );
 };

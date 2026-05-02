@@ -82,7 +82,7 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/categories").permitAll()
                 .requestMatchers("/api/tours/**").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions").permitAll()
