@@ -26,6 +26,12 @@ public class BookingRequest {
     private String note;
     private List<Passenger> passengers;
     
+    // Hotel specific fields
+    private java.util.Date checkInDate;
+    private java.util.Date checkOutDate;
+    private Integer quantity; // number of rooms
+    private String roomTypeName;
+    
     @NotBlank(message = "Payment provider is required")
     private String paymentProvider; // e.g., "vnpay", "paypal", "cash"
 }

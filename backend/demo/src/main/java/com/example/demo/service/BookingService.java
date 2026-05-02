@@ -144,6 +144,25 @@ public class BookingService {
             });
         }
 
+        // Refund rooms logic for hotels
+        if ("hotel".equals(booking.getServiceType()) && booking.getServiceId() != null) {
+            hotelRepository.findById(booking.getServiceId()).ifPresent(hotel -> {
+                if (hotel.getRoomTypes() != null && booking.getSnapshotDetail() != null) {
+                    String roomTypeName = (String) booking.getSnapshotDetail().get("roomTypeName");
+                    if (roomTypeName != null) {
+                        hotel.getRoomTypes().stream()
+                            .filter(r -> r.getTypeName().equals(roomTypeName))
+                            .findFirst()
+                            .ifPresent(r -> {
+                                int q = booking.getQuantity() != null ? booking.getQuantity() : 1;
+                                r.setAvailableRooms(r.getAvailableRooms() + q);
+                            });
+                        hotelRepository.save(hotel);
+                    }
+                }
+            });
+        }
+
         return mapToDTO(updatedBooking);
     }
     
@@ -175,6 +194,9 @@ public class BookingService {
 
     @Autowired
     private com.example.demo.repository.BusTrainRouteRepository busTrainRouteRepository;
+
+    @Autowired
+    private com.example.demo.repository.HotelRepository hotelRepository;
 
     public BookingDTO createFlightBooking(String userId, BookingRequest request) {
         com.example.demo.document.FlightDocument flight = flightRepository.findById(request.getServiceId())
@@ -286,6 +308,87 @@ public class BookingService {
                 .note(request.getNote())
                 .snapshotName(route.getOperatorName() + " - " + route.getDepartureCity() + " to " + route.getArrivalCity())
                 .snapshotPrice(route.getPrice())
+                .snapshotDetail(snapshotDetail)
+                .payment(payment)
+                .passengers(request.getPassengers())
+                .createdAt(new Date())
+                .build();
+
+        BookingDocument savedBooking = bookingRepository.save(booking);
+        return mapToDTO(savedBooking);
+    }
+
+    public BookingDTO createHotelBooking(String userId, BookingRequest request) {
+        com.example.demo.document.HotelDocument hotel = hotelRepository.findById(request.getServiceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+
+        if (hotel.getIsActive() != null && !hotel.getIsActive()) {
+            throw new ResourceNotFoundException("Hotel is not active");
+        }
+
+        if (request.getRoomTypeName() == null) {
+            throw new com.example.demo.exception.BadRequestException("Room type name is required for hotel booking");
+        }
+
+        com.example.demo.document.embed.RoomType selectedRoom = null;
+        if (hotel.getRoomTypes() != null) {
+            selectedRoom = hotel.getRoomTypes().stream()
+                .filter(r -> r.getTypeName().equals(request.getRoomTypeName()))
+                .findFirst()
+                .orElse(null);
+        }
+
+        if (selectedRoom == null) {
+            throw new ResourceNotFoundException("Room type not found in hotel");
+        }
+
+        int quantity = request.getQuantity() != null ? request.getQuantity() : 1;
+
+        if (selectedRoom.getAvailableRooms() < quantity) {
+            throw new com.example.demo.exception.BadRequestException("Not enough available rooms");
+        }
+
+        // Deduct available rooms
+        selectedRoom.setAvailableRooms(selectedRoom.getAvailableRooms() - quantity);
+        hotelRepository.save(hotel);
+
+        // Calculate nights
+        long nights = 1;
+        if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {
+            long diff = request.getCheckOutDate().getTime() - request.getCheckInDate().getTime();
+            nights = diff / (1000 * 60 * 60 * 24);
+            if (nights <= 0) nights = 1;
+        }
+
+        double totalPrice = quantity * selectedRoom.getPricePerNight() * nights;
+
+        Map<String, Object> snapshotDetail = new HashMap<>();
+        snapshotDetail.put("hotelName", hotel.getName());
+        snapshotDetail.put("address", hotel.getAddress());
+        snapshotDetail.put("city", hotel.getCity());
+        snapshotDetail.put("starRating", hotel.getStarRating());
+        snapshotDetail.put("roomTypeName", selectedRoom.getTypeName());
+        snapshotDetail.put("nights", nights);
+
+        PaymentEmbed payment = PaymentEmbed.builder()
+                .provider(request.getPaymentProvider())
+                .paymentStatus("pending")
+                .build();
+
+        BookingDocument booking = BookingDocument.builder()
+                .userId(userId)
+                .serviceId(request.getServiceId())
+                .serviceType("hotel")
+                .numAdults(request.getNumAdults() != null ? request.getNumAdults() : 1)
+                .numChildren(request.getNumChildren() != null ? request.getNumChildren() : 0)
+                .quantity(quantity)
+                .checkInDate(request.getCheckInDate())
+                .checkOutDate(request.getCheckOutDate())
+                .totalPrice(totalPrice)
+                .status("pending")
+                .note(request.getNote())
+                .snapshotName(hotel.getName() + " - " + selectedRoom.getTypeName())
+                .snapshotPrice(selectedRoom.getPricePerNight())
                 .snapshotDetail(snapshotDetail)
                 .payment(payment)
                 .passengers(request.getPassengers())
