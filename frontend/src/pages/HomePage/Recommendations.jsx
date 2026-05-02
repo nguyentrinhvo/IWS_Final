@@ -94,7 +94,7 @@ export default function Recommendations() {
       </div>
 
       <div className="w-full bg-white border border-[#D1D3DD] rounded-2xl p-8 shadow-[0_10px_20px_rgba(0,0,0,0.05),-5px_5px_15px_rgba(0,0,0,0.02),5px_5px_15px_rgba(0,0,0,0.02)]">
-        <div className="grid grid-cols-3 gap-x-8 gap-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
           {currentData.map((item, index) => (
             <div
               key={index}

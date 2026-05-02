@@ -29,14 +29,14 @@ const CustomDropdown = ({ label, options, value, onChange, widthClass }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between px-3 py-2 bg-white border border-gray-200 rounded-md cursor-pointer hover:border-[#0194F3] transition-all"
       >
-        <span className="text-sm font-medium text-gray-700">{value || ''}</span>
-        <div className={`text-[#0194F3] transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+        <span className="text-sm font-medium text-gray-700 whitespace-nowrap overflow-hidden text-ellipsis">{value || ''}</span>
+        <div className={`text-[#0194F3] transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
           {CHEVRON_ICON}
         </div>
       </div>
       <div
         className={`absolute left-0 right-0 z-50 mt-1 bg-white border border-gray-100 rounded-md shadow-xl transition-all duration-300 overflow-hidden ${
-          isOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? 'max-h-60 opacity-100 visible pointer-events-auto' : 'max-h-0 opacity-0 invisible pointer-events-none'
         }`}
       >
         <div className="overflow-y-auto max-h-60 py-1">
@@ -207,24 +207,26 @@ export default function SavedPassengerDetails() {
         {passengers.map((p, index) => (
           <div
             key={p.id}
-            className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-5 flex justify-between items-center"
+            className="w-full bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
           >
             <div className="flex items-center gap-3">
               <svg fill="#000000" width="32px" height="32px" viewBox="0 0 32 32">
                 <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path>
               </svg>
-              <span className="font-bold text-gray-800">
+              <span className="font-bold text-gray-800 break-words">
                 {index + 1}. {p.firstName} {p.lastName}
               </span>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 w-full md:w-auto justify-end">
               <button
+                type="button"
                 onClick={() => handleEdit(p)}
                 className="text-[#0194F3] font-bold text-sm hover:no-underline cursor-pointer"
               >
                 {t('user_edit')}
               </button>
               <button
+                type="button"
                 onClick={() => handleDeleteClick(p.id)}
                 className="text-red-500 font-bold text-sm hover:no-underline cursor-pointer"
               >
@@ -236,6 +238,7 @@ export default function SavedPassengerDetails() {
       </div>
 
       <button
+        type="button"
         onClick={handleAddNew}
         className="mt-6 w-full py-3 bg-[#0194F3] text-white font-bold rounded-md hover:bg-blue-600 transition-colors shadow-md cursor-pointer"
       >
@@ -251,16 +254,16 @@ export default function SavedPassengerDetails() {
         <p className="text-sm text-gray-500 mt-1">{t('user_passengerLimit')}</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-6 space-y-6">
-        <div className="flex gap-4">
+      <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 p-6 space-y-6 w-full">
+        <div className="flex flex-col md:flex-row gap-4">
           <CustomDropdown
             label={t('user_title')}
             options={['Mr', 'Mrs', 'Ms']}
             value={formData.title}
             onChange={(val) => updateFormField('title', val)}
-            widthClass="w-[20%]"
+            widthClass="w-full md:w-[20%]"
           />
-          <div className="w-[40%]">
+          <div className="w-full md:w-[40%]">
             <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_firstName')}</label>
             <input
               type="text"
@@ -269,7 +272,7 @@ export default function SavedPassengerDetails() {
               className="w-full px-4 py-2 border border-gray-200 rounded-md focus:border-[#0194F3] focus:outline-none"
             />
           </div>
-          <div className="w-[40%]">
+          <div className="w-full md:w-[40%]">
             <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_lastName')}</label>
             <input
               type="text"
@@ -280,8 +283,8 @@ export default function SavedPassengerDetails() {
           </div>
         </div>
 
-        <div className="flex gap-4">
-          <div className="flex-1">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full md:flex-1">
             <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">Email</label>
             <input
               type="email"
@@ -290,7 +293,7 @@ export default function SavedPassengerDetails() {
               className="w-full px-4 py-2 border border-gray-200 rounded-md focus:border-[#0194F3] focus:outline-none"
             />
           </div>
-          <div className="flex-1">
+          <div className="w-full md:flex-1">
             <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">Phone</label>
             <input
               type="text"
@@ -301,41 +304,43 @@ export default function SavedPassengerDetails() {
           </div>
         </div>
 
-        <div className="flex gap-4 items-end">
+        <div className="flex flex-col md:flex-row gap-4 md:items-end">
           <CustomDropdown
             label={t('user_nationality')}
             options={countries}
             value={formData.nationality}
             onChange={(val) => updateFormField('nationality', val)}
-            widthClass="flex-[3]"
+            widthClass="w-full md:flex-[3]"
           />
-          <CustomDropdown
-            label="Day"
-            options={days}
-            value={formData.birthDay}
-            onChange={(val) => updateFormField('birthDay', val)}
-            widthClass="flex-[2]"
-          />
-          <CustomDropdown
-            label="Month"
-            options={months}
-            value={formData.birthMonth}
-            onChange={(val) => updateFormField('birthMonth', val)}
-            widthClass="flex-[2]"
-          />
-          <CustomDropdown
-            label="Year"
-            options={years}
-            value={formData.birthYear}
-            onChange={(val) => updateFormField('birthYear', val)}
-            widthClass="flex-[2]"
-          />
+          <div className="flex gap-2 w-full md:flex-[6]">
+            <CustomDropdown
+              label="Day"
+              options={days}
+              value={formData.birthDay}
+              onChange={(val) => updateFormField('birthDay', val)}
+              widthClass="flex-1 md:flex-[2]"
+            />
+            <CustomDropdown
+              label="Month"
+              options={months}
+              value={formData.birthMonth}
+              onChange={(val) => updateFormField('birthMonth', val)}
+              widthClass="flex-1 md:flex-[2]"
+            />
+            <CustomDropdown
+              label="Year"
+              options={years}
+              value={formData.birthYear}
+              onChange={(val) => updateFormField('birthYear', val)}
+              widthClass="flex-1 md:flex-[2]"
+            />
+          </div>
         </div>
 
         <div className="pt-4 border-t border-gray-100">
           <h3 className="font-bold text-gray-800 mb-4">{t('user_passportDetails')}</h3>
-          <div className="flex gap-4 items-end mb-4">
-            <div className="flex-[3]">
+          <div className="flex flex-col md:flex-row gap-4 md:items-end mb-4">
+            <div className="w-full md:flex-[3]">
               <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_docNumber')}</label>
               <input
                 type="text"
@@ -344,35 +349,37 @@ export default function SavedPassengerDetails() {
                 className="w-full px-4 py-2 border border-gray-200 rounded-md focus:border-[#0194F3] focus:outline-none"
               />
             </div>
-            <CustomDropdown
-              label={t('user_expiryDate')}
-              options={days}
-              value={formData.passportExpiryDay}
-              onChange={(val) => updateFormField('passportExpiryDay', val)}
-              widthClass="flex-[2]"
-            />
-            <CustomDropdown
-              label=""
-              options={months}
-              value={formData.passportExpiryMonth}
-              onChange={(val) => updateFormField('passportExpiryMonth', val)}
-              widthClass="flex-[2]"
-            />
-            <CustomDropdown
-              label=""
-              options={years}
-              value={formData.passportExpiryYear}
-              onChange={(val) => updateFormField('passportExpiryYear', val)}
-              widthClass="flex-[2]"
-            />
+            <div className="flex gap-2 w-full md:flex-[6]">
+              <CustomDropdown
+                label={t('user_expiryDate')}
+                options={days}
+                value={formData.passportExpiryDay}
+                onChange={(val) => updateFormField('passportExpiryDay', val)}
+                widthClass="flex-1 md:flex-[2]"
+              />
+              <CustomDropdown
+                label=""
+                options={months}
+                value={formData.passportExpiryMonth}
+                onChange={(val) => updateFormField('passportExpiryMonth', val)}
+                widthClass="flex-1 md:flex-[2]"
+              />
+              <CustomDropdown
+                label=""
+                options={years}
+                value={formData.passportExpiryYear}
+                onChange={(val) => updateFormField('passportExpiryYear', val)}
+                widthClass="flex-1 md:flex-[2]"
+              />
+            </div>
           </div>
-          <div className="flex gap-4 items-end">
+          <div className="flex flex-col md:flex-row gap-4 md:items-end">
             <CustomDropdown
               label={t('user_countryOfIssue')}
               options={countries}
               value={formData.passportCountry}
               onChange={(val) => updateFormField('passportCountry', val)}
-              widthClass="flex-[3]"
+              widthClass="w-full md:flex-[3]"
             />
           </div>
         </div>
@@ -392,12 +399,12 @@ export default function SavedPassengerDetails() {
             </div>
           </div>
           <div
-            className={`transition-all duration-300 ${
-              isCmndOpen ? 'max-h-[500px] mt-4 opacity-100' : 'max-h-0 opacity-0'
+            className={`transition-all duration-300 overflow-hidden ${
+              isCmndOpen ? 'max-h-[500px] mt-4 opacity-100 visible' : 'max-h-0 opacity-0 invisible'
             }`}
           >
-            <div className="flex gap-4 items-end mb-4">
-              <div className="flex-[3]">
+            <div className="flex flex-col md:flex-row gap-4 md:items-end mb-4">
+              <div className="w-full md:flex-[3]">
                 <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_docNumber')}</label>
                 <input
                   type="text"
@@ -406,57 +413,61 @@ export default function SavedPassengerDetails() {
                   className="w-full px-4 py-2 border border-gray-200 rounded-md focus:border-[#0194F3] focus:outline-none"
                 />
               </div>
-              <CustomDropdown
-                label={t('user_dateOfIssue')}
-                options={days}
-                value={formData.idIssueDay}
-                onChange={(val) => updateFormField('idIssueDay', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={months}
-                value={formData.idIssueMonth}
-                onChange={(val) => updateFormField('idIssueMonth', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={years}
-                value={formData.idIssueYear}
-                onChange={(val) => updateFormField('idIssueYear', val)}
-                widthClass="flex-[2]"
-              />
+              <div className="flex gap-2 w-full md:flex-[6]">
+                <CustomDropdown
+                  label={t('user_dateOfIssue')}
+                  options={days}
+                  value={formData.idIssueDay}
+                  onChange={(val) => updateFormField('idIssueDay', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={months}
+                  value={formData.idIssueMonth}
+                  onChange={(val) => updateFormField('idIssueMonth', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={years}
+                  value={formData.idIssueYear}
+                  onChange={(val) => updateFormField('idIssueYear', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+              </div>
             </div>
-            <div className="flex gap-4 items-end">
+            <div className="flex flex-col md:flex-row gap-4 md:items-end">
               <CustomDropdown
                 label={t('user_countryOfIssue')}
                 options={countries}
                 value={formData.idCountry}
                 onChange={(val) => updateFormField('idCountry', val)}
-                widthClass="flex-[3]"
+                widthClass="w-full md:flex-[3]"
               />
-              <CustomDropdown
-                label={t('user_expiryDate')}
-                options={days}
-                value={formData.idExpiryDay}
-                onChange={(val) => updateFormField('idExpiryDay', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={months}
-                value={formData.idExpiryMonth}
-                onChange={(val) => updateFormField('idExpiryMonth', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={years}
-                value={formData.idExpiryYear}
-                onChange={(val) => updateFormField('idExpiryYear', val)}
-                widthClass="flex-[2]"
-              />
+              <div className="flex gap-2 w-full md:flex-[6]">
+                <CustomDropdown
+                  label={t('user_expiryDate')}
+                  options={days}
+                  value={formData.idExpiryDay}
+                  onChange={(val) => updateFormField('idExpiryDay', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={months}
+                  value={formData.idExpiryMonth}
+                  onChange={(val) => updateFormField('idExpiryMonth', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={years}
+                  value={formData.idExpiryYear}
+                  onChange={(val) => updateFormField('idExpiryYear', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -476,12 +487,12 @@ export default function SavedPassengerDetails() {
             </div>
           </div>
           <div
-            className={`transition-all duration-300 ${
-              isLicenseOpen ? 'max-h-[500px] mt-4 opacity-100' : 'max-h-0 opacity-0'
+            className={`transition-all duration-300 overflow-hidden ${
+              isLicenseOpen ? 'max-h-[500px] mt-4 opacity-100 visible' : 'max-h-0 opacity-0 invisible'
             }`}
           >
-            <div className="flex gap-4 items-end mb-4">
-              <div className="flex-[3]">
+            <div className="flex flex-col md:flex-row gap-4 md:items-end mb-4">
+              <div className="w-full md:flex-[3]">
                 <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">{t('user_docNumber')}</label>
                 <input
                   type="text"
@@ -490,71 +501,77 @@ export default function SavedPassengerDetails() {
                   className="w-full px-4 py-2 border border-gray-200 rounded-md focus:border-[#0194F3] focus:outline-none"
                 />
               </div>
-              <CustomDropdown
-                label={t('user_dateOfIssue')}
-                options={days}
-                value={formData.licenseIssueDay}
-                onChange={(val) => updateFormField('licenseIssueDay', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={months}
-                value={formData.licenseIssueMonth}
-                onChange={(val) => updateFormField('licenseIssueMonth', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={years}
-                value={formData.licenseIssueYear}
-                onChange={(val) => updateFormField('licenseIssueYear', val)}
-                widthClass="flex-[2]"
-              />
+              <div className="flex gap-2 w-full md:flex-[6]">
+                <CustomDropdown
+                  label={t('user_dateOfIssue')}
+                  options={days}
+                  value={formData.licenseIssueDay}
+                  onChange={(val) => updateFormField('licenseIssueDay', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={months}
+                  value={formData.licenseIssueMonth}
+                  onChange={(val) => updateFormField('licenseIssueMonth', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={years}
+                  value={formData.licenseIssueYear}
+                  onChange={(val) => updateFormField('licenseIssueYear', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+              </div>
             </div>
-            <div className="flex gap-4 items-end">
+            <div className="flex flex-col md:flex-row gap-4 md:items-end">
               <CustomDropdown
                 label={t('user_countryOfIssue')}
                 options={countries}
                 value={formData.licenseCountry}
                 onChange={(val) => updateFormField('licenseCountry', val)}
-                widthClass="flex-[3]"
+                widthClass="w-full md:flex-[3]"
               />
-              <CustomDropdown
-                label={t('user_expiryDate')}
-                options={days}
-                value={formData.licenseExpiryDay}
-                onChange={(val) => updateFormField('licenseExpiryDay', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={months}
-                value={formData.licenseExpiryMonth}
-                onChange={(val) => updateFormField('licenseExpiryMonth', val)}
-                widthClass="flex-[2]"
-              />
-              <CustomDropdown
-                label=""
-                options={years}
-                value={formData.licenseExpiryYear}
-                onChange={(val) => updateFormField('licenseExpiryYear', val)}
-                widthClass="flex-[2]"
-              />
+              <div className="flex gap-2 w-full md:flex-[6]">
+                <CustomDropdown
+                  label={t('user_expiryDate')}
+                  options={days}
+                  value={formData.licenseExpiryDay}
+                  onChange={(val) => updateFormField('licenseExpiryDay', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={months}
+                  value={formData.licenseExpiryMonth}
+                  onChange={(val) => updateFormField('licenseExpiryMonth', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+                <CustomDropdown
+                  label=""
+                  options={years}
+                  value={formData.licenseExpiryYear}
+                  onChange={(val) => updateFormField('licenseExpiryYear', val)}
+                  widthClass="flex-1 md:flex-[2]"
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-6 border-t border-gray-100 mt-6">
+        <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-gray-100 mt-6 relative z-10">
           <button
+            type="button"
             onClick={() => setView('list')}
-            className="px-6 py-2 bg-gray-100 text-[#0194F3] text-sm font-bold rounded-md hover:bg-gray-200 transition-colors cursor-pointer"
+            className="w-full md:w-auto px-6 py-3 md:py-2 bg-gray-100 text-[#0194F3] text-sm font-bold rounded-md hover:bg-gray-200 transition-colors cursor-pointer"
           >
             Maybe later
           </button>
           <button
+            type="button"
             onClick={handleSave}
-            className="px-10 py-2 bg-[#0194F3] text-white text-sm font-bold rounded-md hover:bg-blue-600 transition-colors shadow-md cursor-pointer"
+            className="w-full md:w-auto px-10 py-3 md:py-2 bg-[#0194F3] text-white text-sm font-bold rounded-md hover:bg-blue-600 transition-colors shadow-md cursor-pointer"
           >
             Save
           </button>
@@ -567,7 +584,6 @@ export default function SavedPassengerDetails() {
     <div className="w-full">
       {view === 'list' ? renderList() : renderForm()}
       
-      {/* Delete confirmation modal với fade-in và nền mờ nhẹ */}
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ${
           deleteModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
@@ -580,16 +596,18 @@ export default function SavedPassengerDetails() {
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6 transform transition-all duration-300 scale-100">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">Confirm Deletion</h3>
           <p className="text-gray-600 mb-6">Are you sure you want to delete this passenger? This action cannot be undone.</p>
-          <div className="flex justify-end gap-3">
+          <div className="flex flex-col-reverse md:flex-row justify-end gap-3">
             <button
+              type="button"
               onClick={cancelDelete}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors cursor-pointer"
+              className="w-full md:w-auto px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors cursor-pointer"
             >
               No
             </button>
             <button
+              type="button"
               onClick={confirmDelete}
-              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors cursor-pointer"
+              className="w-full md:w-auto px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors cursor-pointer"
             >
               Yes
             </button>

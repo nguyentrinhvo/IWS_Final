@@ -17,14 +17,14 @@ const TicketIcon = () => (
 
 const InfoIcon = () => (
   <svg width="24px" height="24px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#180B51">
-    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-    <g id="SVGRepo_iconCarrier">
-      <g id="Layer_2" data-name="Layer 2">
-        <g id="invisible_box" data-name="invisible box">
+    <g strokeWidth="0"></g>
+    <g strokeLinecap="round" strokeLinejoin="round"></g>
+    <g>
+      <g>
+        <g>
           <rect width="48" height="48" fill="none"></rect>
         </g>
-        <g id="icons_Q2" data-name="icons Q2">
+        <g>
           <path d="M24,2A22,22,0,1,0,46,24,21.9,21.9,0,0,0,24,2Zm2,32a2,2,0,0,1-4,0V22a2,2,0,0,1,4,0ZM24,16a2,2,0,1,1,2-2A2,2,0,0,1,24,16Z"></path>
         </g>
       </g>
@@ -44,7 +44,7 @@ const ArrowRight = () => (
   </svg>
 );
 
-const VoucherItem = ({ icon, percent, title, description }) => {
+const VoucherItem = ({ icon, percent, title, description, popupData, onOpenPopup }) => {
   const { t } = useGlobal();
   const [showToast, setShowToast] = useState(false);
 
@@ -54,7 +54,6 @@ const VoucherItem = ({ icon, percent, title, description }) => {
     setTimeout(() => setShowToast(false), 2000);
   };
 
-  // Custom shadow: only left, right, and bottom. Color #D9D9D9, visible but soft.
   const cardShadow = {
     boxShadow: '0 6px 12px -6px rgba(217, 217, 217, 0.6), -6px 0 12px -6px rgba(217, 217, 217, 0.4), 6px 0 12px -6px rgba(217, 217, 217, 0.4)'
   };
@@ -70,19 +69,18 @@ const VoucherItem = ({ icon, percent, title, description }) => {
         </div>
         <span className="text-[22px] font-bold text-[#180B51]">{percent}</span>
         
-        <div className="ml-auto cursor-pointer hover:opacity-80 transition-opacity">
+        <div className="ml-auto cursor-pointer hover:opacity-80 transition-opacity" onClick={() => onOpenPopup(popupData)}>
           <InfoIcon />
         </div>
       </div>
 
-      <div className="flex flex-col gap-0.5">
-        <h4 className="text-[#180B51] text-opacity-60 font-bold text-[17px] whitespace-nowrap">{title}</h4>
-        <p className="text-black text-opacity-50 text-[14px] leading-tight whitespace-nowrap">{description}</p>
+      <div className="flex flex-col gap-0.5 w-full">
+        <h4 className="text-[#180B51] text-opacity-60 font-bold text-[17px] whitespace-nowrap overflow-hidden text-ellipsis w-full">{title}</h4>
+        <p className="text-black text-opacity-50 text-[14px] leading-tight whitespace-nowrap overflow-hidden text-ellipsis w-full">{description}</p>
       </div>
 
       <div className="relative w-full flex items-center my-4">
         <div className="border-t-2 border-dashed border-[#D9D9D9] w-full"></div>
-        {/* These circular decorative elements remain without any shadow */}
         <div className="absolute top-1/2 -translate-y-1/2 -left-[25px] w-[18px] h-[36px] bg-[#fafafa] rounded-r-full border-y border-r border-[#D9D9D9] z-10 hidden lg:block"></div>
         <div className="absolute top-1/2 -translate-y-1/2 -right-[25px] w-[18px] h-[36px] bg-[#fafafa] rounded-l-full border-y border-l border-[#D9D9D9] z-10 hidden lg:block"></div>
       </div>
@@ -102,7 +100,7 @@ const VoucherItem = ({ icon, percent, title, description }) => {
 
       {showToast && (
         <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm px-4 py-2 rounded-lg shadow-lg z-10 whitespace-nowrap">
-          Copied
+          {t('copiedToast')}
         </div>
       )}
     </div>
@@ -112,6 +110,41 @@ const VoucherItem = ({ icon, percent, title, description }) => {
 export default function NewUserExclusive() {
   const { t } = useGlobal();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [activePopupData, setActivePopupData] = useState(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [globalToast, setGlobalToast] = useState(false);
+
+  const getTerms = (type) => {
+    const terms = [];
+    let index = 1;
+    while (true) {
+      const termKey = `${type}Term${index}`;
+      const term = t(termKey);
+      if (!term || term === termKey) break;
+      terms.push(term);
+      index++;
+    }
+    return terms;
+  };
+
+  const openPopup = (data) => {
+    const title = t(data.titleKey);
+    const terms = getTerms(data.type);
+    setActivePopupData({ title, terms });
+    setTimeout(() => setIsPopupVisible(true), 10);
+  };
+
+  const closePopup = () => {
+    setIsPopupVisible(false);
+    setTimeout(() => setActivePopupData(null), 300);
+  };
+
+  const handleGlobalCopy = () => {
+    navigator.clipboard.writeText('TVDKMOI');
+    setGlobalToast(true);
+    closePopup();
+    setTimeout(() => setGlobalToast(false), 2000);
+  };
 
   const vouchers = [
     {
@@ -119,6 +152,7 @@ export default function NewUserExclusive() {
       percent: '5% off',
       title: t('firstFlightBooking'),
       description: t('voucherDesc'),
+      popupData: { type: 'flight', titleKey: 'flightTitlePopup' },
       icon: (
         <svg fill="#180B51" width="35px" height="35px" viewBox="0 0 416.327 416.327">
            <path d="M412.676,157.634l-37.951-37.951c-4.514-4.515-11.707-4.889-16.666-0.869c-17.146,13.902-41.865,12.594-57.503-3.042 c-15.636-15.636-16.941-40.356-3.042-57.502c4.021-4.959,3.646-12.153-0.867-16.667L258.695,3.652c-4.868-4.868-12.764-4.869-17.631,0 L3.651,241.064c-4.869,4.868-4.869,12.763,0,17.631l37.951,37.95c0.004,0.005,0.009,0.01,0.01,0.013c4.868,4.869,12.763,4.869,17.631,0 c0.453-0.454,0.865-0.935,1.235-1.437c0.851-1.021,1.744-2.001,2.663-2.921c16.787-16.786,44.098-16.786,60.884-0.002 c16.785,16.786,16.785,44.1-0.001,60.884c-1.056,1.058-2.194,2.079-3.381,3.042c-2.744,2.227-4.414,5.51-4.599,9.035 c-0.184,3.527,1.138,6.967,3.636,9.464l37.949,37.951c4.869,4.869,12.764,4.869,17.632,0l237.41-237.41 C417.545,170.397,417.544,162.503,412.676,157.634z M334.117,203.36c-5.076,5.077-13.31,5.077-18.385,0L212.968,100.598 c-5.076-5.077-5.076-13.308,0-18.385s13.309-5.077,18.385,0l102.767,102.765C339.194,190.055,339.194,198.286,334.117,203.36z" />
@@ -130,6 +164,7 @@ export default function NewUserExclusive() {
       percent: '10% off',
       title: t('firstCarsTrainsBooking'),
       description: t('voucherDesc'),
+      popupData: { type: 'car', titleKey: 'carTitlePopup' },
       icon: (
         <svg fill="#180B51" width="35px" height="35px" viewBox="0 -15.43 122.88 122.88">
           <path d="M10.17,34.23c-10.98-5.58-9.72-11.8,1.31-11.15l2.47,4.63l5.09-15.83C21.04,5.65,24.37,0,30.9,0H96 c6.53,0,10.29,5.54,11.87,11.87l3.82,15.35l2.2-4.14c11.34-0.66,12.35,5.93,0.35,11.62l1.95,2.99c7.89,8.11,7.15,22.45,5.92,42.48 v8.14c0,2.04-1.67,3.71-3.71,3.71h-15.83c-2.04,0-3.71-1.67-3.71-3.71v-4.54H24.04v4.54c0,2.04-1.67,3.71-3.71,3.71H4.5 c-2.04,0-3.71-1.67-3.71-3.71V78.2c0-0.2,0.02-0.39,0.04-0.58C-0.37,62.25-2.06,42.15,10.17,34.23L10.17,34.23z M30.38,58.7 l-14.06-1.77c-3.32-0.37-4.21,1.03-3.08,3.89l1.52,3.69c0.49,0.95,1.14,1.64,1.9,2.12c0.89,0.55,1.96,0.82,3.15,0.87l12.54,0.1 c3.03-0.01,4.34-1.22,3.39-4C34.96,60.99,33.18,59.35,30.38,58.7L30.38,58.7z M54.38,52.79h14.4c0.85,0,1.55,0.7,1.55,1.55l0,0 c0,0.85-0.7,1.55-1.55,1.55h-14.4c-0.85,0-1.55-0.7-1.55-1.55l0,0C52.82,53.49,53.52,52.79,54.38,52.79L54.38,52.79z M89.96,73.15 h14.4c0.85,0,1.55,0.7,1.55,1.55l0,0c0,0.85-0.7,1.55-1.55,1.55h-14.4c-0.85,0-1.55-0.7-1.55-1.55l0,0 C88.41,73.85,89.1,73.15,89.96,73.15L89.96,73.15z M92.5,58.7l14.06-1.77c3.32-0.37,4.21,1.03,3.08,3.89l-1.52,3.69 c-0.49,0.95-1.14,1.64-1.9,2.12c-0.89,0.55-1.96,0.82-3.15,0.87l-12.54,0.1c-3.03-0.01-4.34-1.22-3.39-4 C87.92,60.99,89.7,59.35,92.5,58.7L92.5,58.7z M18.41,73.15h14.4c0.85,0,1.55,0.7,1.55,1.55l0,0c0,0.85-0.7,1.55-1.55,1.55h-14.4 c-0.85,0-1.55-0.7-1.55-1.55l0,0C16.86,73.85,17.56,73.15,18.41,73.15L18.41,73.15z M19.23,31.2h86.82l-3.83-15.92 c-1.05-4.85-4.07-9.05-9.05-9.05H33.06c-4.97,0-7.52,4.31-9.05,9.05L19.23,31.2v0.75V31.2L19.23,31.2z" />
@@ -141,6 +176,7 @@ export default function NewUserExclusive() {
       percent: '5% off',
       title: t('firstHotelsBooking'),
       description: t('voucherDesc'),
+      popupData: { type: 'hotel', titleKey: 'hotelTitlePopup' },
       icon: (
         <svg fill="#180B51" width="35px" height="35px" viewBox="0 0 24 24">
           <path d="M2,7V21a1,1,0,0,0,1,1H13V6H3A1,1,0,0,0,2,7ZM5,9h5v2H5Zm0,4h5v2H5Zm0,4h5v2H5ZM22,3V21a1,1,0,0,1-1,1H15V4H10V3a1,1,0,0,1,1-1H21A1,1,0,0,1,22,3Z" />
@@ -152,6 +188,7 @@ export default function NewUserExclusive() {
       percent: '10% off',
       title: t('firstTourBooking'),
       description: t('voucherDesc'),
+      popupData: { type: 'tour', titleKey: 'tourTitlePopup' },
       icon: (
         <svg fill="#180B51" width="35px" height="35px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <g>
@@ -175,7 +212,7 @@ export default function NewUserExclusive() {
   };
 
   return (
-    <section className="w-full flex flex-col gap-6">
+    <section className="w-full flex flex-col gap-6 relative">
       <div className="flex items-center gap-3">
         <GiftIcon />
         <h2 className="text-[#180B51] font-bold text-[25px]">
@@ -184,20 +221,21 @@ export default function NewUserExclusive() {
       </div>
 
       <div className="relative w-full group">
-        <div className="overflow-hidden pb-4">
+        <div className="overflow-x-auto lg:overflow-hidden pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div 
-            className="flex transition-transform duration-500 ease-in-out"
+            className="flex transition-transform duration-500 ease-in-out w-max lg:w-full gap-4 lg:gap-[24px]"
             style={{ 
-              transform: `translateX(calc(-${currentIndex} * (calc((100% - 48px) / 3) + 24px)))`,
-              gap: '24px'
+              transform: typeof window !== 'undefined' && window.innerWidth >= 1024 
+                ? `translateX(calc(-${currentIndex} * (calc((100% - 48px) / 3) + 24px)))` 
+                : 'none'
             }}
           >
             {vouchers.map((v) => (
               <div 
                 key={v.id} 
-                className="w-[calc((100%-48px)/3)] shrink-0"
+                className="w-[calc((100vw-48px)/1.5)] md:w-[calc((100vw-80px)/2.5)] lg:w-[calc((100%-48px)/3)] shrink-0 snap-center lg:snap-align-none"
               >
-                <VoucherItem {...v} />
+                <VoucherItem {...v} onOpenPopup={openPopup} />
               </div>
             ))}
           </div>
@@ -206,7 +244,7 @@ export default function NewUserExclusive() {
         {currentIndex > 0 && (
           <button 
             onClick={handlePrev}
-            className="absolute left-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md z-20 hover:bg-gray-100"
+            className="absolute left-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center shadow-md z-20 hover:bg-gray-100 hidden lg:flex"
           >
             <ArrowLeft />
           </button>
@@ -215,12 +253,59 @@ export default function NewUserExclusive() {
         {currentIndex < vouchers.length - 3 && (
           <button 
             onClick={handleNext}
-            className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md z-20 hover:bg-gray-100"
+            className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center shadow-md z-20 hover:bg-gray-100 hidden lg:flex"
           >
             <ArrowRight />
           </button>
         )}
       </div>
+
+      {activePopupData && (
+        <div className="fixed inset-0 z-[99999] flex flex-col justify-end">
+          <div
+            className={`absolute inset-0 bg-black transition-opacity duration-300 ${isPopupVisible ? 'opacity-50' : 'opacity-0'}`}
+            onClick={closePopup}
+          ></div>
+          <div
+            className={`relative w-full bg-white rounded-t-3xl flex flex-col max-h-[85vh] transition-transform duration-300 transform ${isPopupVisible ? 'translate-y-0' : 'translate-y-full'}`}
+          >
+            <div className="flex-1 overflow-y-auto p-6 pb-2">
+              <h3 className="text-center font-bold text-[18px] text-[#180B51] w-full">
+                {activePopupData.title}
+              </h3>
+              <p className="text-center italic text-[13px] text-gray-600 mt-1 w-full">
+                {t('popupSubtitle')}
+              </p>
+              
+              <div className="w-full border-t border-gray-300 my-4"></div>
+              
+              <div className="flex flex-col gap-2 w-full">
+                {activePopupData.terms.map((term, index) => (
+                  <div key={index} className="flex items-start gap-2 text-[14px] text-black w-full">
+                    <span className="shrink-0">{index + 1}.</span>
+                    <span className="flex-1 text-left">{term}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="p-4 w-full bg-white rounded-t-xl" style={{ boxShadow: "0 -4px 6px -1px rgba(0, 0, 0, 0.05)" }}>
+              <button
+                onClick={handleGlobalCopy}
+                className="w-full py-3 bg-[#D1F0FF] text-[#181BAE] font-bold rounded-full text-[16px] hover:bg-opacity-80 transition-all"
+              >
+                {t('copyBtnFull')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {globalToast && (
+        <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm px-4 py-2 rounded-lg shadow-lg z-[100000] whitespace-nowrap">
+          {t('copiedToast')}
+        </div>
+      )}
     </section>
   );
 }

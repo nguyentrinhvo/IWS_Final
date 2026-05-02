@@ -34,12 +34,18 @@ export default function Navbar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isUserMenuClosing, setIsUserMenuClosing] = useState(false);
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileUserMenuOpen, setIsMobileUserMenuOpen] = useState(false);
+  const [mobileSupportExpanded, setMobileSupportExpanded] = useState(false);
+  const [mobileLangExpanded, setMobileLangExpanded] = useState(false);
+
   const [tempCurrency, setTempCurrency] = useState(currency);
   const [tempLanguage, setTempLanguage] = useState(language);
 
   const supportRef = useRef(null);
   const langRef = useRef(null);
   const userMenuRef = useRef(null);
+  const mobileUserMenuRef = useRef(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('authUser') || sessionStorage.getItem('authUser');
@@ -64,6 +70,9 @@ export default function Navbar() {
         if (isUserMenuOpen && !isUserMenuClosing) {
           closeUserMenu();
         }
+      }
+      if (mobileUserMenuRef.current && !mobileUserMenuRef.current.contains(event.target)) {
+        setIsMobileUserMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -104,6 +113,10 @@ export default function Navbar() {
     }
   };
 
+  const toggleMobileUserMenu = () => {
+    setIsMobileUserMenuOpen(!isMobileUserMenuOpen);
+  };
+
   const handleCurrencyChange = (newCurr) => {
     setTempCurrency(newCurr);
     if (newCurr === 'USD') {
@@ -133,15 +146,18 @@ export default function Navbar() {
     sessionStorage.removeItem('authUser');
     setIsUserMenuOpen(false);
     setIsUserMenuClosing(false);
+    setIsMobileUserMenuOpen(false);
     navigate('/'); 
   };
 
   const handleUserNavigation = (tabId) => {
     closeUserMenu();
+    setIsMobileUserMenuOpen(false);
     navigate(`/profile/${tabId}`);
   };
 
   const handleTopNavNavigation = (tabId) => {
+    setIsMobileMenuOpen(false);
     navigate(`/profile/${tabId}`);
   };
 
@@ -151,11 +167,7 @@ export default function Navbar() {
       tabId: 'edit-profile',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 24 24">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-          </g>
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
         </svg>
       )
     },
@@ -163,16 +175,10 @@ export default function Navbar() {
       key: 'myCards',
       tabId: 'my-cards',
       icon: (
-        <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 512 512" enableBackground="new 0 0 512 512" id="Credit_x5F_card" version="1.1" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <g>
-              <path d="M127.633,215.98h215.568c29.315,0,53.166,23.851,53.166,53.166v14.873h38.061c22.735,0,41.166-18.432,41.166-41.167 v-69.608H127.633V215.98z"></path>
-              <path d="M434.428,74.2H168.799c-22.735,0-41.166,18.431-41.166,41.166v17.479h347.961v-17.479 C475.594,92.631,457.163,74.2,434.428,74.2z"></path>
-              <path d="M343.201,227.98H77.572c-22.735,0-41.166,18.431-41.166,41.166v127.487c0,22.735,18.431,41.166,41.166,41.166h265.629 c22.736,0,41.166-18.431,41.166-41.166V269.146C384.367,246.412,365.938,227.98,343.201,227.98z M131.542,329.846 c0,4.92-3.989,8.909-8.909,8.909H75.289c-4.92,0-8.908-3.989-8.908-8.909v-29.098c0-4.921,3.988-8.909,8.908-8.909h47.344 c4.92,0,8.909,3.988,8.909,8.909V329.846z M300.961,413.039c-10.796,0-19.548-8.752-19.548-19.549s8.752-19.549,19.548-19.549 c10.797,0,19.549,8.752,19.549,19.549S311.758,413.039,300.961,413.039z M345.271,413.039c-10.797,0-19.549-8.752-19.549-19.549 s8.752-19.549,19.549-19.549c10.796,0,19.548,8.752,19.548,19.549S356.067,413.039,345.271,413.039z"></path>
-            </g>
-          </g>
+        <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <path d="M127.633,215.98h215.568c29.315,0,53.166,23.851,53.166,53.166v14.873h38.061c22.735,0,41.166-18.432,41.166-41.167 v-69.608H127.633V215.98z"></path>
+          <path d="M434.428,74.2H168.799c-22.735,0-41.166,18.431-41.166,41.166v17.479h347.961v-17.479 C475.594,92.631,457.163,74.2,434.428,74.2z"></path>
+          <path d="M343.201,227.98H77.572c-22.735,0-41.166,18.431-41.166,41.166v127.487c0,22.735,18.431,41.166,41.166,41.166h265.629 c22.736,0,41.166-18.431,41.166-41.166V269.146C384.367,246.412,365.938,227.98,343.201,227.98z M131.542,329.846 c0,4.92-3.989,8.909-8.909,8.909H75.289c-4.92,0-8.908-3.989-8.908-8.909v-29.098c0-4.921,3.988-8.909,8.908-8.909h47.344 c4.92,0,8.909,3.988,8.909,8.909V329.846z M300.961,413.039c-10.796,0-19.548-8.752-19.548-19.549s8.752-19.549,19.548-19.549 c10.797,0,19.549,8.752,19.549,19.549S311.758,413.039,300.961,413.039z M345.271,413.039c-10.797,0-19.549-8.752-19.549-19.549 s8.752-19.549,19.549-19.549c10.796,0,19.548,8.752,19.548,19.549S356.067,413.039,345.271,413.039z"></path>
         </svg>
       )
     },
@@ -181,11 +187,7 @@ export default function Navbar() {
       tabId: 'purchase-list',
       icon: (
         <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8 8a2 2 0 0 0 2.828 0l7.172-7.172a2 2 0 0 0 0-2.828l-8-8zM7 9a2 2 0 1 1 .001-4.001A2 2 0 0 1 7 9z"></path>
-          </g>
+          <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8 8a2 2 0 0 0 2.828 0l7.172-7.172a2 2 0 0 0 0-2.828l-8-8zM7 9a2 2 0 1 1 .001-4.001A2 2 0 0 1 7 9z"></path>
         </svg>
       )
     },
@@ -194,11 +196,7 @@ export default function Navbar() {
       tabId: 'my-bookings',
       icon: (
         <svg className="w-[22px] h-[22px]" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path d="M704 192h160v736H160V192h160v64h384v-64zM288 512h448v-64H288v64zm0 256h448v-64H288v64zm96-576V96h256v96H384z"></path>
-          </g>
+          <path d="M704 192h160v736H160V192h160v64h384v-64zM288 512h448v-64H288v64zm0 256h448v-64H288v64zm96-576V96h256v96H384z"></path>
         </svg>
       )
     },
@@ -207,11 +205,7 @@ export default function Navbar() {
       tabId: 'saved-passengers',
       icon: (
         <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path d="M 38.7232 28.5490 C 43.1399 28.5490 46.9403 24.6047 46.9403 19.4690 C 46.9403 14.3949 43.1193 10.6356 38.7232 10.6356 C 34.3271 10.6356 30.5061 14.4771 30.5061 19.5101 C 30.5061 24.6047 34.3066 28.5490 38.7232 28.5490 Z M 15.0784 29.0215 C 18.8994 29.0215 22.2274 25.5703 22.2274 21.1125 C 22.2274 16.6958 18.8789 13.4294 15.0784 13.4294 C 11.2575 13.4294 7.8885 16.7779 7.9090 21.1536 C 7.9090 25.5703 11.2370 29.0215 15.0784 29.0215 Z M 3.6155 47.5717 L 19.2281 47.5717 C 17.0917 44.4697 19.7006 38.2247 24.1173 34.8146 C 21.8371 33.2944 18.8994 32.1645 15.0579 32.1645 C 5.7931 32.1645 0 39.0053 0 44.6957 C 0 46.5445 1.0271 47.5717 3.6155 47.5717 Z M 25.8018 47.5717 L 51.6241 47.5717 C 54.8493 47.5717 56 46.6472 56 44.8395 C 56 39.5394 49.3644 32.2261 38.7026 32.2261 C 28.0616 32.2261 21.4262 39.5394 21.4262 44.8395 C 21.4262 46.6472 22.5766 47.5717 25.8018 47.5717 Z"></path>
-          </g>
+          <path d="M 38.7232 28.5490 C 43.1399 28.5490 46.9403 24.6047 46.9403 19.4690 C 46.9403 14.3949 43.1193 10.6356 38.7232 10.6356 C 34.3271 10.6356 30.5061 14.4771 30.5061 19.5101 C 30.5061 24.6047 34.3066 28.5490 38.7232 28.5490 Z M 15.0784 29.0215 C 18.8994 29.0215 22.2274 25.5703 22.2274 21.1125 C 22.2274 16.6958 18.8789 13.4294 15.0784 13.4294 C 11.2575 13.4294 7.8885 16.7779 7.9090 21.1536 C 7.9090 25.5703 11.2370 29.0215 15.0784 29.0215 Z M 3.6155 47.5717 L 19.2281 47.5717 C 17.0917 44.4697 19.7006 38.2247 24.1173 34.8146 C 21.8371 33.2944 18.8994 32.1645 15.0579 32.1645 C 5.7931 32.1645 0 39.0053 0 44.6957 C 0 46.5445 1.0271 47.5717 3.6155 47.5717 Z M 25.8018 47.5717 L 51.6241 47.5717 C 54.8493 47.5717 56 46.6472 56 44.8395 C 56 39.5394 49.3644 32.2261 38.7026 32.2261 C 28.0616 32.2261 21.4262 39.5394 21.4262 44.8395 C 21.4262 46.6472 22.5766 47.5717 25.8018 47.5717 Z"></path>
         </svg>
       )
     },
@@ -237,22 +231,24 @@ export default function Navbar() {
           animation: dropDownScaleOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
       `}</style>
-      <div className="w-full flex flex-col bg-[#7C4A4A] relative z-50">
-        <nav className="w-full h-[80px] border-b border-white/20 flex justify-center">
-          <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-between h-full">
+      <div className="w-full flex flex-col bg-[#7C4A4A] relative z-[100]">
+        <nav className="w-full h-[80px] border-b border-white/20 flex justify-center relative z-[100]">
+          <div className="w-full px-[16px] md:px-[24px] lg:px-4 lg:max-w-[1320px] mx-auto flex items-center justify-between h-full">
             <div className="flex-shrink-0 cursor-pointer h-full flex items-center" onClick={() => navigate('/')}>
               <img src="/images/logo_web.png" alt="Logo" className="max-h-[60px] w-auto object-contain" />
             </div>
 
-            <ul className={`hidden md:flex flex-1 justify-center items-center text-white font-medium text-[19px] whitespace-nowrap ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
-              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('tours')}</li>
+            <ul className={`hidden lg:flex flex-1 justify-center items-center text-white font-medium text-[19px] whitespace-nowrap ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
+              <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all" onClick={() => navigate('/tours')}>
+                {t('tours')}
+              </li>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('hotels')}</li>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('flights')}</li>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('carsTrains')}</li>
               <li className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all">{t('thingsToDo')}</li>
             </ul>
 
-            <div className="hidden md:flex flex-shrink-0 items-center space-x-4">
+            <div className="hidden lg:flex flex-shrink-0 items-center space-x-4">
               {currentUser ? (
                 <div className="relative" ref={userMenuRef}>
                   <button
@@ -313,19 +309,9 @@ export default function Navbar() {
                           className="w-full flex items-center space-x-4 px-6 py-4 hover:bg-red-50 transition-colors cursor-pointer text-left whitespace-nowrap"
                         >
                           <div className="text-red-500 flex-shrink-0">
-                            <svg fill="currentColor" className="w-[22px] h-[22px]" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.996 511.996" xmlSpace="preserve">
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                              <g id="SVGRepo_iconCarrier">
-                                <g>
-                                  <g>
-                                    <g>
-                                      <path d="M349.85,62.196c-10.797-4.717-23.373,0.212-28.09,11.009c-4.717,10.797,0.212,23.373,11.009,28.09 c69.412,30.324,115.228,98.977,115.228,176.035c0,106.034-85.972,192-192,192c-106.042,0-192-85.958-192-192 c0-77.041,45.8-145.694,115.192-176.038c10.795-4.72,15.72-17.298,10.999-28.093c-4.72-10.795-17.298-15.72-28.093-10.999 C77.306,99.275,21.331,183.181,21.331,277.329c0,129.606,105.061,234.667,234.667,234.667 c129.592,0,234.667-105.068,234.667-234.667C490.665,183.159,434.667,99.249,349.85,62.196z"></path>
-                                      <path d="M255.989,234.667c11.782,0,21.333-9.551,21.333-21.333v-192C277.323,9.551,267.771,0,255.989,0 c-11.782,0-21.333,9.551-21.333,21.333v192C234.656,225.115,244.207,234.667,255.989,234.667z"></path>
-                                    </g>
-                                  </g>
-                                </g>
-                              </g>
+                            <svg fill="currentColor" className="w-[22px] h-[22px]" viewBox="0 0 511.996 511.996" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M349.85,62.196c-10.797-4.717-23.373,0.212-28.09,11.009c-4.717,10.797,0.212,23.373,11.009,28.09 c69.412,30.324,115.228,98.977,115.228,176.035c0,106.034-85.972,192-192,192c-106.042,0-192-85.958-192-192 c0-77.041,45.8-145.694,115.192-176.038c10.795-4.72,15.72-17.298,10.999-28.093c-4.72-10.795-17.298-15.72-28.093-10.999 C77.306,99.275,21.331,183.181,21.331,277.329c0,129.606,105.061,234.667,234.667,234.667 c129.592,0,234.667-105.068,234.667-234.667C490.665,183.159,434.667,99.249,349.85,62.196z"></path>
+                              <path d="M255.989,234.667c11.782,0,21.333-9.551,21.333-21.333v-192C277.323,9.551,267.771,0,255.989,0 c-11.782,0-21.333,9.551-21.333,21.333v192C234.656,225.115,244.207,234.667,255.989,234.667z"></path>
                             </svg>
                           </div>
                           <span className="text-red-500 font-medium text-[17px]">{t('logout')}</span>
@@ -354,11 +340,74 @@ export default function Navbar() {
                 </>
               )}
             </div>
+
+            <div className="flex lg:hidden items-center space-x-5 text-white">
+              <div className="relative" ref={mobileUserMenuRef}>
+                <button onClick={toggleMobileUserMenu} className="focus:outline-none flex items-center justify-center">
+                  {currentUser ? (
+                    currentUser.avatar ? (
+                      <img src={currentUser.avatar} alt="user" className="w-[30px] h-[30px] rounded-full object-cover border-2 border-white/40" />
+                    ) : (
+                      <div className="w-[30px] h-[30px] rounded-full bg-[#F57323] flex items-center justify-center border-2 border-white/40">
+                        <span className="text-white font-bold text-xs">{formatDisplayName(currentUser.fullName).charAt(0).toUpperCase()}</span>
+                      </div>
+                    )
+                  ) : (
+                    <svg fill="currentColor" width="28px" height="28px" viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg" className="cf-icon-svg">
+                      <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-6.24-.064H6.81a2.528 2.528 0 0 0-2.692 2.303v1.51a.794.794 0 0 0 .792.792h7.166a.794.794 0 0 0 .792-.791V11.82a2.528 2.528 0 0 0-2.692-2.302zM6.14 6.374a2.353 2.353 0 1 0 2.353-2.353A2.353 2.353 0 0 0 6.14 6.374z"></path>
+                    </svg>
+                  )}
+                </button>
+                
+                {isMobileUserMenuOpen && (
+                  <div className="absolute top-full right-0 mt-4 w-max min-w-[200px] bg-white rounded-xl shadow-2xl py-2 z-[200] border border-gray-100 flex flex-col text-black animate-dropdown">
+                    {currentUser ? (
+                      <>
+                        {userMenuItems.map((item) => (
+                          <button key={item.key} onClick={() => handleUserNavigation(item.tabId)} className="flex items-center space-x-3 px-4 py-3 hover:bg-orange-50 w-full text-left transition-colors">
+                            <div className="text-[#F57323] w-5 h-5">{item.icon}</div>
+                            <span className="text-[#0B1E43] font-medium text-sm">{t(item.key)}</span>
+                          </button>
+                        ))}
+                        <div className="border-t border-gray-100 mt-1 pt-1">
+                          <button onClick={handleLogout} className="flex items-center space-x-3 px-4 py-3 hover:bg-red-50 w-full text-left transition-colors">
+                            <div className="text-red-500 w-5 h-5">
+                              <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 511.996 511.996" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M349.85,62.196c-10.797-4.717-23.373,0.212-28.09,11.009c-4.717,10.797,0.212,23.373,11.009,28.09 c69.412,30.324,115.228,98.977,115.228,176.035c0,106.034-85.972,192-192,192c-106.042,0-192-85.958-192-192 c0-77.041,45.8-145.694,115.192-176.038c10.795-4.72,15.72-17.298,10.999-28.093c-4.72-10.795-17.298-15.72-28.093-10.999 C77.306,99.275,21.331,183.181,21.331,277.329c0,129.606,105.061,234.667,234.667,234.667 c129.592,0,234.667-105.068,234.667-234.667C490.665,183.159,434.667,99.249,349.85,62.196z"></path>
+                                <path d="M255.989,234.667c11.782,0,21.333-9.551,21.333-21.333v-192C277.323,9.551,267.771,0,255.989,0 c-11.782,0-21.333,9.551-21.333,21.333v192C234.656,225.115,244.207,234.667,255.989,234.667z"></path>
+                              </svg>
+                            </div>
+                            <span className="text-red-500 font-medium text-sm">{t('logout')}</span>
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex flex-col w-full p-2">
+                        <button onClick={() => { setIsMobileUserMenuOpen(false); setIsLoginOpen(true); }} className="px-4 py-2.5 mx-1 mt-1 bg-[#FADCD9] text-indigo-800 rounded-full font-semibold hover:bg-pink-100 transition-colors text-center text-[15px]">{t('logIn')}</button>
+                        <button onClick={() => { setIsMobileUserMenuOpen(false); setIsRegisterOpen(true); }} className="px-4 py-2.5 mx-1 my-2 bg-[#7978E9] text-white rounded-full font-semibold hover:bg-indigo-500 transition-colors text-center text-[15px]">{t('register')}</button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="focus:outline-none flex items-center justify-center">
+                {isMobileMenuOpen ? (
+                  <svg fill="currentColor" width="28px" height="28px" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg" className="cf-icon-svg">
+                    <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path>
+                  </svg>
+                ) : (
+                  <svg width="28px" height="28px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </nav>
 
-        <nav className="hidden md:flex w-full h-[40px] justify-center">
-          <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-end h-full">
+        <nav className="hidden lg:flex w-full h-[40px] justify-center relative z-40">
+          <div className="w-full px-[16px] md:px-[24px] lg:px-4 lg:max-w-[1320px] mx-auto flex items-center justify-end h-full">
             <ul className="flex items-center space-x-4 text-white text-sm whitespace-nowrap">
               <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('partnership')}</li>
               <li className="relative" ref={supportRef}>
@@ -468,6 +517,64 @@ export default function Navbar() {
             </ul>
           </div>
         </nav>
+      </div>
+
+      <div className={`fixed inset-0 bg-black/50 z-[90] transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMobileMenuOpen(false)} />
+      
+      <div className={`fixed top-0 left-0 h-full w-[80vw] max-w-[320px] bg-white shadow-2xl z-[105] transition-transform duration-300 ease-in-out lg:hidden flex flex-col overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 pt-[80px] flex flex-col space-y-5 text-[#0B1E43]">
+          <div onClick={() => { setIsMobileMenuOpen(false); navigate('/tours'); }} className="cursor-pointer font-medium text-[16px]">{t('tours')}</div>
+          <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('hotels')}</div>
+          <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('flights')}</div>
+          <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('carsTrains')}</div>
+          <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('thingsToDo')}</div>
+          <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('partnership')}</div>
+          
+          <div className="flex flex-col border-b border-gray-100 pb-3">
+            <div className="flex justify-between items-center cursor-pointer font-medium text-[16px]" onClick={() => setMobileSupportExpanded(!mobileSupportExpanded)}>
+              <span>{t('support')}</span>
+              <svg className={`w-4 h-4 transition-transform duration-300 ${mobileSupportExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+            </div>
+            <div className={`flex flex-col overflow-hidden transition-all duration-300 ${mobileSupportExpanded ? 'max-h-[200px] mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div className="pl-4 pb-2 flex flex-col space-y-3">
+                <div className="text-[15px] text-gray-600 cursor-pointer">{t('helpCenter')}</div>
+                <div className="text-[15px] text-gray-600 cursor-pointer">{t('contactUs')}</div>
+                <div className="text-[15px] text-gray-600 cursor-pointer">{t('myInbox')}</div>
+              </div>
+            </div>
+          </div>
+
+          <div onClick={() => handleTopNavNavigation('my-bookings')} className="cursor-pointer font-medium text-[16px]">{t('myBookings')}</div>
+
+          <div className="flex flex-col border-b border-gray-100 pb-3">
+            <div className="flex justify-between items-center cursor-pointer font-medium text-[16px]" onClick={() => setMobileLangExpanded(!mobileLangExpanded)}>
+              <span>{currency} | {language}</span>
+              <svg className={`w-4 h-4 transition-transform duration-300 ${mobileLangExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+            </div>
+            <div className={`flex flex-col overflow-hidden transition-all duration-300 ${mobileLangExpanded ? 'max-h-[500px] mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div className="pl-2 flex flex-col space-y-4 pb-2">
+                <div>
+                  <h4 className="font-bold text-gray-800 text-[14px] mb-2">{t('selectCurrency')}</h4>
+                  <div className="flex flex-col space-y-2">
+                    <button onClick={() => handleCurrencyChange('VND')} className={`text-left px-3 py-2 rounded-lg text-sm transition-colors ${tempCurrency === 'VND' ? 'bg-gray-100 font-semibold' : 'text-gray-600'}`}>VND - {t('vietnameseDong')}</button>
+                    <button onClick={() => handleCurrencyChange('USD')} className={`text-left px-3 py-2 rounded-lg text-sm transition-colors ${tempCurrency === 'USD' ? 'bg-gray-100 font-semibold' : 'text-gray-600'}`}>USD - {t('usDollar')}</button>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-800 text-[14px] mb-2">{t('selectLanguage')}</h4>
+                  <div className="flex flex-col space-y-2">
+                    {tempCurrency === 'VND' && (
+                      <button onClick={() => setTempLanguage('VI')} className={`text-left px-3 py-2 rounded-lg text-sm transition-colors ${tempLanguage === 'VI' ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600'}`}>Tiếng Việt</button>
+                    )}
+                    <button onClick={() => setTempLanguage('EN')} className={`text-left px-3 py-2 rounded-lg text-sm transition-colors ${tempLanguage === 'EN' ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600'}`}>English</button>
+                  </div>
+                </div>
+                <button onClick={() => { handleDone(); setIsMobileMenuOpen(false); }} className="mt-2 w-full bg-[#0095FF] hover:bg-blue-600 text-white py-2.5 rounded-lg text-[15px] font-bold transition-colors">{t('done')}</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
       </div>
 
       <Login

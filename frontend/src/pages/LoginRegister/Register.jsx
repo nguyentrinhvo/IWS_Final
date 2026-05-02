@@ -1,3 +1,4 @@
+// Register.jsx
 import React, { useState, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
 
@@ -87,15 +88,15 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
       `}</style>
 
       <div
-        className={`fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm ${isClosing ? 'backdrop-out' : 'backdrop-in'}`}
+        className={`fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm ${isClosing ? 'backdrop-out' : 'backdrop-in'}`}
         onClick={handleClose}
       >
         <div
-          className={`w-[768px] h-[754px] bg-white rounded-3xl relative flex overflow-hidden shadow-2xl ${isClosing ? 'modal-out' : 'modal-in'}`}
+          className={`w-full max-w-[768px] h-auto max-h-[calc(100vh-2rem)] bg-white rounded-3xl relative flex flex-col md:flex-row overflow-hidden shadow-2xl ${isClosing ? 'modal-out' : 'modal-in'}`}
           onClick={(e) => e.stopPropagation()}
         >
           <div
-            className="w-[300px] h-full flex-shrink-0 relative"
+            className="hidden md:block w-[300px] h-full flex-shrink-0 relative"
             style={{
               backgroundImage: `url('https://png.pngtree.com/background/20241009/original/pngtree-exploring-with-the-golden-compass-and-map-a-journey-of-travel-picture-image_10809502.jpg')`,
               backgroundSize: 'cover',
@@ -109,24 +110,24 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col px-8 py-8 overflow-y-auto">
+          <div className="flex-1 flex flex-col px-6 py-6 sm:px-8 sm:py-8 overflow-y-auto">
             <button
               onClick={handleClose}
-              className="absolute top-6 right-6 text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
 
-            <div className="mb-8">
-              <h2 className="text-[26px] font-extrabold text-[#0B1E43] tracking-tight">{t('joinHanuvivu')}</h2>
-              <p className="mt-1 text-[#6B7280] text-[14px] leading-relaxed">{t('registerSubtitle')}</p>
+            <div className="mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-[26px] font-extrabold text-[#0B1E43] tracking-tight">{t('joinHanuvivu')}</h2>
+              <p className="mt-1 text-[#6B7280] text-xs sm:text-[14px] leading-relaxed">{t('registerSubtitle')}</p>
             </div>
 
-            <div className="flex flex-col space-y-6 flex-1">
+            <div className="flex flex-col space-y-4 sm:space-y-6 flex-1">
               <div>
-                <label className="block text-[#0B1E43] text-xs font-bold mb-1.5 uppercase tracking-wide">
+                <label className="block text-[#0B1E43] text-[10px] sm:text-xs font-bold mb-1.5 uppercase tracking-wide">
                   {t('fullName')}
                 </label>
                 <input
@@ -136,13 +137,13 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                   placeholder={t('fullNamePlaceholder')}
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-[#F4F7FF] rounded-xl py-3 px-4 text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
+                  className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-3">
                 <div>
-                  <label className="block text-[#0B1E43] text-xs font-bold mb-1.5 uppercase tracking-wide">
+                  <label className="block text-[#0B1E43] text-[10px] sm:text-xs font-bold mb-1.5 uppercase tracking-wide">
                     {t('email')}
                   </label>
                   <input
@@ -152,11 +153,11 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                     placeholder={t('emailPlaceholderReg')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-[#F4F7FF] rounded-xl py-3 px-4 text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
+                    className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#0B1E43] text-xs font-bold mb-1.5 uppercase tracking-wide">
+                  <label className="block text-[#0B1E43] text-[10px] sm:text-xs font-bold mb-1.5 uppercase tracking-wide">
                     {t('mobileNumber')}
                   </label>
                   <input
@@ -164,14 +165,14 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                     name="registerPhone"
                     autoComplete="off"
                     placeholder={t('mobilePlaceholder')}
-                    className="w-full bg-[#F4F7FF] rounded-xl py-3 px-4 text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
+                    className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-3">
                 <div>
-                  <label className="block text-[#0B1E43] text-xs font-bold mb-1.5 uppercase tracking-wide">
+                  <label className="block text-[#0B1E43] text-[10px] sm:text-xs font-bold mb-1.5 uppercase tracking-wide">
                     {t('password')}
                   </label>
                   <div className="relative">
@@ -180,7 +181,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                       name="registerPassword"
                       autoComplete="new-password"
                       placeholder="........"
-                      className="w-full bg-[#F4F7FF] rounded-xl py-3 pl-4 pr-10 text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
+                      className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 pl-4 pr-10 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                     />
                     <div
                       className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-700"
@@ -200,7 +201,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[#0B1E43] text-xs font-bold mb-1.5 uppercase tracking-wide">
+                  <label className="block text-[#0B1E43] text-[10px] sm:text-xs font-bold mb-1.5 uppercase tracking-wide">
                     {t('confirmPassword')}
                   </label>
                   <div className="relative">
@@ -209,7 +210,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                       name="registerConfirmPassword"
                       autoComplete="new-password"
                       placeholder="........"
-                      className="w-full bg-[#F4F7FF] rounded-xl py-3 pl-4 pr-10 text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
+                      className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 pl-4 pr-10 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                     />
                     <div
                       className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-700"
@@ -232,7 +233,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
 
               <label className="flex items-start space-x-2.5 cursor-pointer mt-1">
                 <input type="checkbox" className="w-4 h-4 mt-0.5 rounded border-gray-300 text-[#F57323] focus:ring-[#F57323] flex-shrink-0" />
-                <span className="text-sm text-gray-600 leading-relaxed">
+                <span className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {t('agreeTerms1')}{' '}
                   <a href="#" className="font-bold text-[#D05615] hover:underline">{t('agreeTerms2')}</a>
                   {' '}{t('agreeTerms3')}
@@ -241,29 +242,29 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
 
               <button 
                 onClick={handleRegisterClick}
-                className="w-full bg-gradient-to-r from-[#9F4200] to-[#F57323] text-white font-bold py-3.5 rounded-full shadow-lg shadow-orange-500/30 hover:opacity-90 transition-opacity cursor-pointer"
+                className="w-full bg-gradient-to-r from-[#9F4200] to-[#F57323] text-white font-bold py-3 sm:py-3.5 rounded-full shadow-lg shadow-orange-500/30 hover:opacity-90 transition-opacity cursor-pointer text-sm sm:text-base mt-2"
               >
                 {t('registerBtn')}
               </button>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 mt-2">
                 <div className="h-px bg-gray-200 flex-1"></div>
-                <span className="text-[#A0AEC0] text-xs font-bold tracking-wider">{t('orRegisterWith')}</span>
+                <span className="text-[#A0AEC0] text-[10px] sm:text-xs font-bold tracking-wider">{t('orRegisterWith')}</span>
                 <div className="h-px bg-gray-200 flex-1"></div>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <button className="flex-1 border border-gray-200 rounded-full py-2.5 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors cursor-pointer">
-                  <img src="/Logo/google.svg" alt="Google" className="w-5 h-5" />
-                  <span className="font-bold text-[#0B1E43] text-sm">Google</span>
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 sm:space-x-0">
+                <button className="w-full sm:flex-1 border border-gray-200 rounded-full py-2 sm:py-2.5 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors cursor-pointer">
+                  <img src="/Logo/google.svg" alt="Google" className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="font-bold text-[#0B1E43] text-xs sm:text-sm">Google</span>
                 </button>
-                <button className="flex-1 bg-[#1877F2] rounded-full py-2.5 flex items-center justify-center space-x-2 hover:bg-[#166FE5] transition-colors cursor-pointer">
-                  <img src="/Logo/facebook.svg" alt="Facebook" className="w-5 h-5" />
-                  <span className="font-bold text-white text-sm">Facebook</span>
+                <button className="w-full sm:flex-1 bg-[#1877F2] rounded-full py-2 sm:py-2.5 flex items-center justify-center space-x-2 hover:bg-[#166FE5] transition-colors cursor-pointer">
+                  <img src="/Logo/facebook.svg" alt="Facebook" className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="font-bold text-white text-xs sm:text-sm">Facebook</span>
                 </button>
               </div>
 
-              <div className="text-center text-sm">
+              <div className="text-center text-xs sm:text-sm pb-2">
                 <span className="text-[#6B7280] font-medium">{t('alreadyMember')} </span>
                 <button onClick={handleSwitchToLogin} className="font-bold text-[#D05615] hover:underline cursor-pointer bg-transparent border-none p-0">
                   {t('loginNow')}

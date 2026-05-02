@@ -17,17 +17,16 @@ export default function OverseasDestinations() {
   const { t } = useGlobal();
 
   const destinations = [
-    { id: 1, titleKey: 'singapore', hotels: 520, image: 'https://cdn3.ivivu.com/2026/03/du-lich-singapore-ivivu-1.png', gridClass: 'col-span-4' },
-    { id: 2, titleKey: 'bangkok', hotels: 430, image: 'https://www.thailand-reiseprofis.com/wp-content/bilder/wat-arund-bangkok-abend.jpg', gridClass: 'col-span-2' },
-    { id: 3, titleKey: 'seoul', hotels: 380, image: 'https://phuotvivu.com/blog/wp-content/uploads/2024/12/Seoul.webp', gridClass: 'col-span-2' },
-    { id: 4, titleKey: 'tokyo', hotels: 610, image: 'https://res.cloudinary.com/aenetworks/image/upload/c_fill,w_1200,h_630,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-1390815938', gridClass: 'col-span-4' },
-    { id: 5, titleKey: 'shanghai', hotels: 450, image: 'https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt9610c59c9fbe1449/68501f319fd25f2cf6055455/Shanghai_Night-HEADER_MOBILE.jpg?format=webp&quality=60&width=1440', gridClass: 'col-span-3' },
-    { id: 6, titleKey: 'maldives', hotels: 120, image: 'https://i.natgeofe.com/n/86979a5a-d9e7-4b59-8497-fd436fcc889a/huts-maldives-blue-water.jpg', gridClass: 'col-span-3' },
+    { id: 1, titleKey: 'singapore', hotels: 520, image: 'https://cdn3.ivivu.com/2026/03/du-lich-singapore-ivivu-1.png', flexClass: 'basis-[calc(66.66%-8px)] lg:basis-[calc(66.66%-10px)] h-[calc(33.33%-8px)] lg:h-[calc(33.33%-10px)]' },
+    { id: 2, titleKey: 'bangkok', hotels: 430, image: 'https://www.thailand-reiseprofis.com/wp-content/bilder/wat-arund-bangkok-abend.jpg', flexClass: 'basis-[calc(33.33%-8px)] lg:basis-[calc(33.33%-10px)] h-[calc(33.33%-8px)] lg:h-[calc(33.33%-10px)]' },
+    { id: 3, titleKey: 'seoul', hotels: 380, image: 'https://phuotvivu.com/blog/wp-content/uploads/2024/12/Seoul.webp', flexClass: 'basis-[calc(33.33%-8px)] lg:basis-[calc(33.33%-10px)] h-[calc(33.33%-8px)] lg:h-[calc(33.33%-10px)]' },
+    { id: 4, titleKey: 'tokyo', hotels: 610, image: 'https://res.cloudinary.com/aenetworks/image/upload/c_fill,w_1200,h_630,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-1390815938', flexClass: 'basis-[calc(66.66%-8px)] lg:basis-[calc(66.66%-10px)] h-[calc(33.33%-8px)] lg:h-[calc(33.33%-10px)]' },
+    { id: 5, titleKey: 'shanghai', hotels: 450, image: 'https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt9610c59c9fbe1449/68501f319fd25f2cf6055455/Shanghai_Night-HEADER_MOBILE.jpg?format=webp&quality=60&width=1440', flexClass: 'basis-[calc(50%-8px)] lg:basis-[calc(50%-10px)] h-[calc(33.33%-8px)] lg:h-[calc(33.33%-10px)]' },
+    { id: 6, titleKey: 'maldives', hotels: 120, image: 'https://i.natgeofe.com/n/86979a5a-d9e7-4b59-8497-fd436fcc889a/huts-maldives-blue-water.jpg', flexClass: 'basis-[calc(50%-8px)] lg:basis-[calc(50%-10px)] h-[calc(33.33%-8px)] lg:h-[calc(33.33%-10px)]' },
   ];
 
   return (
     <div className="w-full flex flex-col gap-4">
-      {/* Header section */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-3">
           <OverseasIcon />
@@ -35,17 +34,16 @@ export default function OverseasDestinations() {
             {t('overseasTitle')}
           </h2>
         </div>
-        <p className="text-[#180B51] text-[16px] opacity-80 pl-1">
+        <p className="text-[#180B51] text-[16px] opacity-80 pl-1 whitespace-normal break-words">
           {t('overseasDesc')}
         </p>
       </div>
 
-      {/* Grid section - Height set to match ~3 rows of popular destinations */}
-      <div className="w-full h-[728px] grid grid-cols-6 grid-rows-3 gap-[15px] mt-4">
+      <div className="w-full flex flex-wrap h-[500px] md:h-[600px] lg:h-[728px] gap-2 md:gap-3 lg:gap-[15px] mt-4">
         {destinations.map((dest) => (
           <div 
             key={dest.id} 
-            className={`relative rounded-2xl overflow-hidden cursor-pointer group ${dest.gridClass}`}
+            className={`relative rounded-2xl overflow-hidden cursor-pointer group flex-grow ${dest.flexClass}`}
           >
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -54,11 +52,11 @@ export default function OverseasDestinations() {
             
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
             
-            <div className="absolute bottom-5 left-5 flex flex-col gap-0.5">
-              <h3 className="text-white text-[24px] font-bold leading-tight [-webkit-text-stroke:1px_black]">
+            <div className="absolute bottom-5 left-5 flex flex-col gap-0.5 max-w-[90%]">
+              <h3 className="text-white text-[16px] md:text-[20px] lg:text-[24px] font-bold leading-tight [-webkit-text-stroke:1px_black] break-words">
                 {t(dest.titleKey)}
               </h3>
-              <p className="text-white text-[16px] font-medium opacity-90 [-webkit-text-stroke:0.5px_black]">
+              <p className="text-white text-[14px] lg:text-[16px] font-medium opacity-90 [-webkit-text-stroke:0.5px_black] hidden lg:block">
                 {t('hotelCount', { count: dest.hotels })}
               </p>
             </div>
