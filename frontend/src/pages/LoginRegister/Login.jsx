@@ -1,7 +1,7 @@
 // Login.jsx
 import React, { useState, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
-import { mockData } from '../../data/mockData';
+import { login } from '../../services/authService';
 
 export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToForgotPassword, onLoginSuccess }) {
   const { t } = useGlobal();
@@ -52,26 +52,28 @@ export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToF
     }, 300);
   };
 
-  const handleLogin = () => {
-    const user = mockData.users.find(
-      (u) => (u.email === email || u.phone === email) && u.password === password
-    );
-    if (user) {
+  const handleLogin = async () => {
+    try {
       setLoginError('');
-      if (rememberMe) {
-        localStorage.setItem('authUser', JSON.stringify(user));
-      } else {
-        sessionStorage.setItem('authUser', JSON.stringify(user));
-      }
-      if (onLoginSuccess) onLoginSuccess(user);
+      const data = await login(email, password);
+      
+      // Save token and user info
+      const storage = rememberMe ? localStorage : sessionStorage;
+      storage.setItem('token', data.token);
+      storage.setItem('authUser', JSON.stringify(data));
+      
+      if (onLoginSuccess) onLoginSuccess(data);
+      
       setIsClosing(true);
       setTimeout(() => {
         setVisible(false);
         setIsClosing(false);
         onClose();
       }, 300);
-    } else {
-      setLoginError(t('loginError'));
+    } catch (error) {
+      console.error('Login error:', error);
+      const message = error.response?.data?.message || t('loginError');
+      setLoginError(message);
     }
   };
 

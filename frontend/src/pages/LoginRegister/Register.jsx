@@ -1,6 +1,7 @@
 // Register.jsx
 import React, { useState, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
+import { register } from '../../services/authService';
 
 export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToOtp, onRegisterSuccess }) {
   const { t } = useGlobal();
@@ -10,6 +11,9 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
   const [visible, setVisible] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -39,25 +43,35 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
     }, 300);
   };
 
-  const handleRegisterClick = () => {
-    setIsClosing(true);
-    const newUser = {
-      id: Date.now().toString(),
-      fullName: fullName || "New Member",
-      email: email || "member@hanuvivu.com"
-    };
+  const [registerError, setRegisterError] = useState('');
 
-    setTimeout(() => {
-      setVisible(false);
-      setIsClosing(false);
-      onClose();
-      if (onRegisterSuccess) {
-        onRegisterSuccess(newUser);
-      }
-      if (onSwitchToOtp) {
-        onSwitchToOtp();
-      }
-    }, 300);
+  const handleRegisterClick = async () => {
+    try {
+      setRegisterError('');
+      const data = await register({
+        fullName,
+        email,
+        phone,
+        password,
+      });
+
+      setIsClosing(true);
+      setTimeout(() => {
+        setVisible(false);
+        setIsClosing(false);
+        onClose();
+        if (onRegisterSuccess) {
+          onRegisterSuccess(data); // Assuming data contains user info
+        }
+        if (onSwitchToOtp) {
+          onSwitchToOtp();
+        }
+      }, 300);
+    } catch (error) {
+      console.error('Register error:', error);
+      const message = error.response?.data?.message || t('registerError');
+      setRegisterError(message);
+    }
   };
 
   if (!visible) return null;
@@ -165,6 +179,8 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                     name="registerPhone"
                     autoComplete="off"
                     placeholder={t('mobilePlaceholder')}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                   />
                 </div>
@@ -181,6 +197,8 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                       name="registerPassword"
                       autoComplete="new-password"
                       placeholder="........"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 pl-4 pr-10 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                     />
                     <div
@@ -210,6 +228,8 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                       name="registerConfirmPassword"
                       autoComplete="new-password"
                       placeholder="........"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 pl-4 pr-10 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                     />
                     <div
@@ -231,7 +251,11 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                 </div>
               </div>
 
-              <label className="flex items-start space-x-2.5 cursor-pointer mt-1">
+              {registerError && (
+                <p className="text-red-500 text-xs sm:text-sm font-medium mt-2">{registerError}</p>
+              )}
+
+              <label className="flex items-start space-x-2.5 cursor-pointer mt-4">
                 <input type="checkbox" className="w-4 h-4 mt-0.5 rounded border-gray-300 text-[#F57323] focus:ring-[#F57323] flex-shrink-0" />
                 <span className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {t('agreeTerms1')}{' '}
