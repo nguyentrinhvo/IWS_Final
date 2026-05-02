@@ -85,6 +85,8 @@ public class SecurityConfig {
                 .requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/categories").permitAll()
                 .requestMatchers("/api/tours/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions/{id}").permitAll()
                 // Payment gateway callbacks (VNPay / PayPal redirects — no JWT)
                 .requestMatchers("/api/payment/vnpay-return").permitAll()
                 .requestMatchers("/api/payment/paypal/success").permitAll()
