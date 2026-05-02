@@ -211,8 +211,12 @@ public class PaymentService {
         booking.setStatus("confirmed");
         bookingRepository.save(booking);
 
-        // Send confirmation email
-        sendPaymentConfirmationEmail(booking, provider, transactionId);
+        // Send confirmation email (e-ticket for attractions, regular for others)
+        if ("attraction".equals(booking.getServiceType())) {
+            sendETicketEmail(booking, provider, transactionId);
+        } else {
+            sendPaymentConfirmationEmail(booking, provider, transactionId);
+        }
     }
 
     /**
@@ -263,6 +267,51 @@ public class PaymentService {
             mailSender.send(message);
         } catch (Exception e) {
             System.err.println("Failed to send payment confirmation email: " + e.getMessage());
+        }
+    }
+
+    private void sendETicketEmail(BookingDocument booking, String provider, String transactionId) {
+        try {
+            UserDocument user = userRepository.findById(booking.getUserId()).orElse(null);
+            if (user == null) return;
+
+            Map<String, Object> detail = booking.getSnapshotDetail();
+            String ticketTypeName = detail != null ? (String) detail.get("ticketTypeName") : "";
+            String location       = detail != null ? (String) detail.get("location") : "";
+            String openAt         = detail != null ? (String) detail.get("openAt") : "";
+            String closeAt        = detail != null ? (String) detail.get("closeAt") : "";
+            Object qty            = detail != null ? detail.get("quantity") : booking.getQuantity();
+
+            // Generate a simple e-ticket code (bookingId prefix + timestamp)
+            String eTicketCode = "TK-" + booking.getId().substring(0, 8).toUpperCase();
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(user.getEmail());
+            message.setSubject("🎟️ E-Ticket của bạn - " + booking.getSnapshotName());
+            message.setText(
+                "══════════════════════════════════════\n" +
+                "           VÉ ĐIỆN TỬ / E-TICKET\n" +
+                "══════════════════════════════════════\n\n" +
+                "Xin chào " + user.getFullName() + ",\n\n" +
+                "Thanh toán thành công! Vui lòng lưu vé này và xuất trình khi vào cửa.\n\n" +
+                "📍 Điểm tham quan: " + booking.getSnapshotName() + "\n" +
+                "📌 Khu vực:         " + location + "\n" +
+                "🎫 Loại vé:         " + ticketTypeName + "\n" +
+                "🔢 Số lượng:        " + qty + " vé\n" +
+                "💰 Tổng tiền:       " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n" +
+                "⏰ Giờ mở cửa:     " + openAt + " - " + closeAt + "\n\n" +
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+                "  MÃ VÉ: " + eTicketCode + "\n" +
+                "  Mã đặt: " + booking.getId() + "\n" +
+                "  Thanh toán: " + provider.toUpperCase() + " | " +
+                      (transactionId != null ? transactionId : "N/A") + "\n" +
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+                "⚠️  Lưu ý: Vé không thể chuyển nhượng. Xuất trình email này hoặc mã vé tại quầy.\n\n" +
+                "Trân trọng,\nTravel Booking Team"
+            );
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Failed to send e-ticket email: " + e.getMessage());
         }
     }
 
