@@ -24,6 +24,7 @@ public class UserDocument {
     @Indexed
     private String fullName;
     private String passwordHash;
+    private String provider;         // "google" | "facebook" | "local"
     private String phoneNumber;
     private String avatarUrl;
     private String role;             // "customer" | "admin"

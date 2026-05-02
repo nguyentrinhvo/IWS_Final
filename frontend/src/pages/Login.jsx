@@ -225,14 +225,20 @@ export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToF
             </div>
 
             <div className="flex items-center space-x-4">
-              <button className="flex-1 border border-gray-200 rounded-full py-3 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors cursor-pointer">
+              <a 
+                href="http://localhost:8080/oauth2/authorization/google"
+                className="flex-1 border border-gray-200 rounded-full py-3 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors cursor-pointer no-underline"
+              >
                 <img src="/Logo/google.svg" alt="Google" className="w-5 h-5" />
                 <span className="font-bold text-[#0B1E43] text-sm">Google</span>
-              </button>
-              <button className="flex-1 bg-[#1877F2] rounded-full py-3 flex items-center justify-center space-x-2 hover:bg-[#166FE5] transition-colors cursor-pointer">
+              </a>
+              <a 
+                href="http://localhost:8080/oauth2/authorization/facebook"
+                className="flex-1 bg-[#1877F2] rounded-full py-3 flex items-center justify-center space-x-2 hover:bg-[#166FE5] transition-colors cursor-pointer no-underline"
+              >
                 <img src="/Logo/facebook.svg" alt="Facebook" className="w-5 h-5" />
                 <span className="font-bold text-white text-sm">Facebook</span>
-              </button>
+              </a>
             </div>
 
             <div className="mt-8 text-center text-sm">

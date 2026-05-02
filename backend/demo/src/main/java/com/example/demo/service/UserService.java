@@ -99,6 +99,7 @@ public class UserService {
                 .gender(user.getGender())
                 .dateOfBirth(user.getDateOfBirth())
                 .city(user.getCity())
+                .provider(user.getProvider())
                 .build();
     }
 }

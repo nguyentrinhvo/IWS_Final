@@ -21,4 +21,5 @@ public class UserDTO {
     private String gender;
     private Date dateOfBirth;
     private String city;
+    private String provider;
 }

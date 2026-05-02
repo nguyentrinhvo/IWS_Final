@@ -1,6 +1,8 @@
 package com.example.demo.config;
 
+import com.example.demo.security.CustomOAuth2UserService;
 import com.example.demo.security.JwtAuthFilter;
+import com.example.demo.security.OAuth2AuthenticationSuccessHandler;
 import com.example.demo.util.RateLimitFilter;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,8 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final RateLimitFilter rateLimitFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -92,7 +96,14 @@ public class SecurityConfig {
                 .requestMatchers("/api/payment/paypal/success").permitAll()
                 .requestMatchers("/api/payment/paypal/cancel").permitAll()
 
-                        .anyRequest().authenticated());
+                .anyRequest().authenticated())
+                
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                );
 
         // Rate limit filter runs first, then JWT auth
         http.addFilterBefore(rateLimitFilter,
