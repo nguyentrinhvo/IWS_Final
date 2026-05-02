@@ -8,12 +8,21 @@ const ImageUpload = ({ label, name, defaultValue }) => {
     setPreview(e.target.value);
   };
 
+  const isSafeUrl = (url) => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  };
+
   return (
     <div>
       {label && <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{label}</label>}
       <div className="flex gap-4 items-start">
         <div className="w-24 h-24 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
-          {preview ? (
+          {preview && isSafeUrl(preview) ? (
             <img src={preview} alt="Preview" className="w-full h-full object-cover" />
           ) : (
             <ImageIcon className="w-8 h-8 text-gray-300" />

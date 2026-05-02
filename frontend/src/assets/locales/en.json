@@ -513,8 +513,5 @@
   "user_reasonPlaceholder": "Enter reason",
   "user_deleteAccountBtn": "Delete Account",
   "user_oldPasswordIncorrect": "Current password is incorrect",
-  "user_newPasswordMismatch": "New password does not match",
-  "transactionHistory": "Transaction History",
-  "promotions": "Promotions",
-  "logout": "Logout"
+  "user_newPasswordMismatch": "New password does not match"
 }
