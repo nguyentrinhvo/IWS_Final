@@ -3,12 +3,15 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { GlobalProvider } from './context/GlobalContext'
-import './i18n.js' // Added i18n init
+import { AuthProvider } from './context/AuthContext'
+import './i18n.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <GlobalProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </GlobalProvider>
   </StrictMode>,
 )

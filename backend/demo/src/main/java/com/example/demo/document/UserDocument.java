@@ -29,6 +29,9 @@ public class UserDocument {
     private String role;             // "customer" | "admin"
     private Boolean isLocked;
     private String language;         // "vi" | "en"
+    private String gender;           // "Nam" | "Nữ"
+    private Date dateOfBirth;
+    private String city;
     private Date createdAt;
     private Date updatedAt;
 }

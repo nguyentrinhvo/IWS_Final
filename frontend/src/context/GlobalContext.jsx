@@ -14,7 +14,6 @@ export const GlobalProvider = ({ children }) => {
   const [currency, setCurrency] = useState(localStorage.getItem('currency') || 'VND');
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'EN');
   const [rates, setRates] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const getRates = async () => {
@@ -47,7 +46,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ currency, language, rates, t, currentUser, setCurrentUser }}>
+    <GlobalContext.Provider value={{ currency, setCurrency, language, setLanguage, rates, t }}>
       {children}
     </GlobalContext.Provider>
   );

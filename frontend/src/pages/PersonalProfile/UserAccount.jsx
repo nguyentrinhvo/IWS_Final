@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
+import { useAuth } from '../../context/AuthContext';
 import EditProfile from './EditProfile';
 import MyCards from './MyCards';
 import PurchaseList from './PurchaseList';
@@ -11,13 +12,12 @@ import SavedPassengersDetails from './SavedPassengerDetails';
 export default function UserAccount() {
   const { tab } = useParams();
   const navigate = useNavigate();
-  const { t, currentUser, setCurrentUser } = useGlobal();
+  const { t } = useGlobal();
+  const { currentUser, logout, updateUser } = useAuth();
   const fileInputRef = useRef(null);
 
   const handleLogout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('authUser');
-    sessionStorage.removeItem('authUser');
+    logout();
     navigate('/');
   };
 
@@ -35,10 +35,7 @@ export default function UserAccount() {
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64Avatar = reader.result;
-      const updatedUser = { ...currentUser, avatar: base64Avatar };
-      setCurrentUser(updatedUser);
-      localStorage.setItem('authUser', JSON.stringify(updatedUser));
-      sessionStorage.setItem('authUser', JSON.stringify(updatedUser));
+      updateUser({ avatar: base64Avatar });
     };
     reader.readAsDataURL(file);
   };

@@ -10,7 +10,7 @@ export default function UserLayout() {
       </header>
 
       <main className="flex-1 w-full">
-        <div className="max-w-[1320px] mx-auto px-4">
+        <div>
           <Outlet />
         </div>
       </main>

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
+import { useAuth } from '../../context/AuthContext';
 import Login from '../../pages/LoginRegister/Login';
 import Register from '../../pages/LoginRegister/Register';
 import ForgotPassword from '../../pages/LoginRegister/ForgotPassword';
@@ -18,7 +19,8 @@ const formatDisplayName = (fullName) => {
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const { currency, language, t, currentUser, setCurrentUser } = useGlobal();
+  const { currency, language, t } = useGlobal();
+  const { currentUser, login: authLogin, logout: authLogout } = useAuth();
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isSupportClosing, setIsSupportClosing] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -46,12 +48,7 @@ export default function Navbar() {
   const userMenuRef = useRef(null);
   const mobileUserMenuRef = useRef(null);
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem('authUser') || sessionStorage.getItem('authUser');
-    if (savedUser && !currentUser) {
-      setCurrentUser(JSON.parse(savedUser));
-    }
-  }, [currentUser, setCurrentUser]);
+  // AuthContext đã khởi tạo currentUser từ storage — không cần làm lại ở đây
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -130,29 +127,32 @@ export default function Navbar() {
   };
 
   const handleLoginSuccess = (user) => {
-    setCurrentUser(user);
+    // user đã được lưu bởi Login component → AuthContext tự đọc từ storage
+    // Cần gọi lại authLogin để cập nhật state ngay lập tức
+    authLogin(user, user._rememberMe);
     setIsLoginOpen(false);
   };
 
   const handleRegisterSuccess = (user) => {
-    setCurrentUser(user);
-    localStorage.setItem('authUser', JSON.stringify(user));
+    authLogin(user, false);
   };
 
   const handleLogout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('authUser');
-    sessionStorage.removeItem('authUser');
+    authLogout();
     setIsUserMenuOpen(false);
     setIsUserMenuClosing(false);
     setIsMobileUserMenuOpen(false);
-    navigate('/'); 
+    navigate('/');
   };
 
   const handleUserNavigation = (tabId) => {
     closeUserMenu();
     setIsMobileUserMenuOpen(false);
-    navigate(`/profile/${tabId}`);
+    if (tabId === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate(`/profile/${tabId}`);
+    }
   };
 
   const handleTopNavNavigation = (tabId) => {
@@ -226,6 +226,15 @@ export default function Navbar() {
         </svg>
       )
     },
+    ...(currentUser?.role?.toUpperCase() === 'ADMIN' ? [{
+      key: 'adminPanel',
+      tabId: 'admin',
+      icon: (
+        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[22px] h-[22px]">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      )
+    }] : []),
   ];
 
   return (

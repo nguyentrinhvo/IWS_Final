@@ -45,7 +45,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ToursDetailPage from './ToursDetailPage';
-import { mockData } from '../../data/mockData';
+import { getTourById } from '../../services/tourService';
 
 export default function Tour() {
   const { id } = useParams();
@@ -58,24 +58,18 @@ export default function Tour() {
     setLoading(true);
     setError(null);
     
-    try {
-      // Luôn lấy tour có id = "TOUR001" từ mockData, bất kể id trên URL
-      const foundTour = mockData.tours.find(tour => tour.id === 'TOUR001');
-      
-      if (!foundTour) {
-        throw new Error('Không tìm thấy tour mẫu TOUR001');
+    const fetchTour = async () => {
+      try {
+        const data = await getTourById(id);
+        setTourData(data);
+      } catch (err) {
+        setError(err.response?.data?.message || err.message || 'Error fetching tour');
+      } finally {
+        setLoading(false);
       }
-      
-      // Nếu muốn lấy theo id thật từ URL, bỏ comment dòng dưới và comment dòng trên
-      // const foundTour = mockData.tours.find(tour => tour.id === id);
-      
-      setTourData(foundTour);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, [id]); // vẫn có thể theo dõi id nếu muốn, nhưng không dùng
+    };
+    fetchTour();
+  }, [id]);
 
   return (
     <ToursDetailPage

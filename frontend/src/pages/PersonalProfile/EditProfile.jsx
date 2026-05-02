@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { updateMyProfile, changePassword as changePasswordApi } from '../../services/userService';
 
 const CustomDropdown = ({ label, options, value, onChange, widthClass, icon }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -108,7 +110,8 @@ const Toast = ({ message, onClose }) => {
 };
 
 export default function EditProfile() {
-  const { t, currentUser, setCurrentUser } = useGlobal();
+  const { t } = useGlobal();
+  const { currentUser, updateUser, logout } = useAuth();
   const navigate = useNavigate();
   const [activeSubTab, setActiveSubTab] = useState('info');
   const [fullName, setFullName] = useState('New Member');
@@ -137,16 +140,34 @@ export default function EditProfile() {
     const name = currentUser?.fullName || 'New Member';
     setFullName(name);
     setOriginalFullName(name);
-    setGender('');
-    setOriginalGender('');
-    setBirthDay('');
-    setOriginalBirthDay('');
-    setBirthMonth('');
-    setOriginalBirthMonth('');
-    setBirthYear('');
-    setOriginalBirthYear('');
-    setCity('');
-    setOriginalCity('');
+    
+    const g = currentUser?.gender || '';
+    setGender(g);
+    setOriginalGender(g);
+
+    const c = currentUser?.city || '';
+    setCity(c);
+    setOriginalCity(c);
+
+    if (currentUser?.dateOfBirth) {
+      const dob = new Date(currentUser.dateOfBirth);
+      const d = dob.getDate().toString();
+      const m = (dob.getMonth() + 1).toString();
+      const y = dob.getFullYear().toString();
+      setBirthDay(d);
+      setOriginalBirthDay(d);
+      setBirthMonth(m);
+      setOriginalBirthMonth(m);
+      setBirthYear(y);
+      setOriginalBirthYear(y);
+    } else {
+      setBirthDay('');
+      setOriginalBirthDay('');
+      setBirthMonth('');
+      setOriginalBirthMonth('');
+      setBirthYear('');
+      setOriginalBirthYear('');
+    }
   }, [currentUser]);
 
   const isDirty = fullName !== originalFullName ||
@@ -165,53 +186,76 @@ export default function EditProfile() {
     setCity(originalCity);
   };
 
-  const handleSave = () => {
-    setOriginalFullName(fullName);
-    setOriginalGender(gender);
-    setOriginalBirthDay(birthDay);
-    setOriginalBirthMonth(birthMonth);
-    setOriginalBirthYear(birthYear);
-    setOriginalCity(city);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    if (!isDirty) return;
+    setIsSaving(true);
+    try {
+      const payload = { fullName };
+      payload.gender = gender;
+      if (birthDay && birthMonth && birthYear) {
+        payload.dateOfBirth = new Date(birthYear, birthMonth - 1, birthDay);
+      }
+      payload.city = city;
+
+      await updateMyProfile(payload);
+      
+      // Update global auth state to keep sidebar and other parts in sync
+      updateUser({ 
+        fullName, 
+        gender, 
+        dateOfBirth: payload.dateOfBirth, 
+        city 
+      });
+
+      setOriginalFullName(fullName);
+      setOriginalGender(gender);
+      setOriginalBirthDay(birthDay);
+      setOriginalBirthMonth(birthMonth);
+      setOriginalBirthYear(birthYear);
+      setOriginalCity(city);
+      setToastMessage(t('user_profileUpdated') || 'Profile updated successfully!');
+    } catch (err) {
+      console.error('Update profile error:', err);
+      setToastMessage(err.response?.data?.message || 'Failed to update profile.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const isChangePasswordDisabled = () => {
     return !oldPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword;
   };
 
-  const handleChangePassword = () => {
+  const handleChangePassword = async () => {
     setOldPassError(false);
     setPassMismatchError(false);
-
-    if (!currentUser?.password) {
-      setToastMessage('Cannot change password for this account.');
-      return;
-    }
-
-    if (oldPassword !== currentUser.password) {
-      setOldPassError(true);
-      return;
-    }
 
     if (newPassword !== confirmPassword) {
       setPassMismatchError(true);
       return;
     }
 
-    const updatedUser = { ...currentUser, password: newPassword };
-    setCurrentUser(updatedUser);
-    localStorage.setItem('authUser', JSON.stringify(updatedUser));
-    sessionStorage.setItem('authUser', JSON.stringify(updatedUser));
-
-    setOldPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
-    setToastMessage('Password changed successfully!');
+    try {
+      await changePasswordApi(oldPassword, newPassword);
+      setOldPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+      setToastMessage(t('user_passwordChanged') || 'Password changed successfully!');
+    } catch (err) {
+      console.error('Change password error:', err);
+      const msg = err.response?.data?.message || '';
+      if (msg.toLowerCase().includes('incorrect') || msg.toLowerCase().includes('wrong') || err.response?.status === 400) {
+        setOldPassError(true);
+      } else {
+        setToastMessage(msg || 'Failed to change password.');
+      }
+    }
   };
 
   const handleDeleteAccount = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('authUser');
-    sessionStorage.removeItem('authUser');
+    logout();
     setToastMessage('Account deleted successfully!');
     setTimeout(() => {
       navigate('/');
@@ -327,9 +371,10 @@ export default function EditProfile() {
                 </button>
                 <button
                   onClick={handleSave}
-                  className={`px-6 md:px-10 py-2 bg-[#0194F3] text-white text-xs md:text-sm font-bold rounded-md hover:bg-blue-600 transition-colors shadow-md cursor-pointer ${isDirty ? 'opacity-100' : 'opacity-50'}`}
+                  disabled={!isDirty || isSaving}
+                  className={`px-6 md:px-10 py-2 bg-[#0194F3] text-white text-xs md:text-sm font-bold rounded-md transition-colors shadow-md ${isDirty && !isSaving ? 'hover:bg-blue-600 cursor-pointer opacity-100' : 'opacity-50 cursor-not-allowed'}`}
                 >
-                  {t('user_save')}
+                  {isSaving ? 'Saving...' : t('user_save')}
                 </button>
               </div>
             </div>

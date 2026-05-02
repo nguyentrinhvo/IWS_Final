@@ -57,12 +57,10 @@ export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToF
       setLoginError('');
       const data = await login(email, password);
       
-      // Save token and user info
-      const storage = rememberMe ? localStorage : sessionStorage;
-      storage.setItem('token', data.token);
-      storage.setItem('authUser', JSON.stringify(data));
+      // Đính kèm flag để Navbar biết dùng localStorage hay sessionStorage
+      const userData = { ...data, _rememberMe: rememberMe };
       
-      if (onLoginSuccess) onLoginSuccess(data);
+      if (onLoginSuccess) onLoginSuccess(userData);
       
       setIsClosing(true);
       setTimeout(() => {
