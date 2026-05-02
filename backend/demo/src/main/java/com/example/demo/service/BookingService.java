@@ -73,9 +73,30 @@ public class BookingService {
         return mapToDTO(savedBooking);
     }
 
-    public Page<BookingDTO> getUserBookings(String userId, Pageable pageable) {
-        Page<BookingDocument> bookings = bookingRepository.findByUserId(userId, pageable);
+    public Page<BookingDTO> getUserBookings(String userId, String serviceType, String status, Pageable pageable) {
+        Page<BookingDocument> bookings;
+        if (serviceType != null && status != null) {
+            bookings = bookingRepository.findByUserIdAndServiceTypeAndStatus(userId, serviceType, status, pageable);
+        } else if (serviceType != null) {
+            bookings = bookingRepository.findByUserIdAndServiceType(userId, serviceType, pageable);
+        } else if (status != null) {
+            bookings = bookingRepository.findByUserIdAndStatus(userId, status, pageable);
+        } else {
+            bookings = bookingRepository.findByUserId(userId, pageable);
+        }
         return bookings.map(this::mapToDTO);
+    }
+
+    public BookingDTO getBookingById(String id, String userId) {
+        BookingDocument booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+        
+        // Admin or the owner can view
+        if (userId != null && !booking.getUserId().equals(userId)) {
+            throw new com.example.demo.exception.BadRequestException("Cannot view others booking");
+        }
+        
+        return mapToDTO(booking);
     }
 
     public BookingDTO confirmBooking(String id) {
