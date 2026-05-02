@@ -80,6 +80,10 @@ public class SecurityConfig {
                 .requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/categories").permitAll()
                 .requestMatchers("/api/tours/**").permitAll()
+                // Payment gateway callbacks (VNPay / PayPal redirects — no JWT)
+                .requestMatchers("/api/payment/vnpay-return").permitAll()
+                .requestMatchers("/api/payment/paypal/success").permitAll()
+                .requestMatchers("/api/payment/paypal/cancel").permitAll()
 
                 .anyRequest().authenticated()
             );
