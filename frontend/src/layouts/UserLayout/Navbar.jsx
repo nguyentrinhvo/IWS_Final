@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useGlobal } from '../context/GlobalContext';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import ForgotPassword from '../pages/ForgotPassword';
-import OtpVerification from '../pages/OtpVerification';
-import RegisterOtp from '../pages/RegisterOtp';
-import AdditionalInfo from '../pages/AdditionalInfo';
+import { useGlobal } from '../../context/GlobalContext';
+import Login from '../../pages/Login';
+import Register from '../../pages/Register';
+import ForgotPassword from '../../pages/ForgotPassword';
+import OtpVerification from '../../pages/OtpVerification';
+import RegisterOtp from '../../pages/RegisterOtp';
+import AdditionalInfo from '../../pages/AdditionalInfo';
 
 const formatDisplayName = (fullName) => {
   if (!fullName) return '';
