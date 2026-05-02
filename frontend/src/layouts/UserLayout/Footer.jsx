@@ -77,11 +77,11 @@ export default function Footer() {
                 <ul className="flex flex-col gap-3 
                 
                 text-white">
-                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('tours')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/tours">{t('tours')}</Link></li>
                   <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/hotels">{t('hotels')}</Link></li>
                   <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/flights">{t('flights')}</Link></li>
                   <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/transport">{t('carsTrains')}</Link></li>
-                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('thingsToDo')}</Link></li>
+                  <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/things-to-do">{t('thingsToDo')}</Link></li>
                   <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('villas')}</Link></li>
                   <li className="cursor-pointer hover:underline transition-all duration-200"><Link to="/">{t('apartments')}</Link></li>
                 </ul>

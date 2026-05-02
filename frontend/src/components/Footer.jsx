@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGlobal } from '../context/GlobalContext';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const { t } = useGlobal();
@@ -23,7 +24,9 @@ export default function Footer() {
         <div className="w-full max-w-[1320px] mx-auto px-4 flex pt-[40px] gap-[140px]">
           
           <div className="w-[330px] flex flex-col">
-            <img src="/images/logo_web.png" alt="Logo" className="w-[204px] h-[204px] object-contain" />
+            <Link to="/">
+              <img src="/images/logo_web.png" alt="Logo" className="w-[204px] h-[204px] object-contain" />
+            </Link>
             <div className="flex gap-4 mt-4">
               <img src="/icons/iata.svg" alt="IATA" className="h-12 w-auto" />
               <img src="/icons/bocongthuong.svg" alt="Bo Cong Thuong" className="h-12 w-auto" />

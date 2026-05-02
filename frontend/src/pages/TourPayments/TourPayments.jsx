@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Navbar from '../../layouts/Navbar';
+import Navbar from '../../layouts/UserLayout/Navbar';
 import TourPaymentOptions from './TourPaymentOptions';
 import TourSummaries from './TourSummaries';
 import { PAYMENT_METHODS, getMockBookingSummary } from '../../data/mockData';

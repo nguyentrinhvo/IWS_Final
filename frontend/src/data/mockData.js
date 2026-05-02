@@ -464,6 +464,9 @@ export const getMockBookingSummary = (tourId, scheduleId) => {
       hotelUpgrade: false
     }
   };
+};
+
+/*
 export const mockData = {
   users: [
     {
@@ -659,3 +662,4 @@ export const mockData = {
     }
   ]
 };
+*/

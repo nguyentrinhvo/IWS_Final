@@ -1,7 +1,7 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import UserLayout from '../layouts/UserLayout/UserLayout';
-import Home from '../pages/user/Home';
+import HomePage from '../pages/HomePage/HomePage';
 import HomepageFlight from '../pages/user/flight/HomepageFlight';
 import HomepageTransport from '../pages/user/transport/HomepageTransport';
 import TransportSearchResults from '../pages/user/transport/TransportSearchResults';
@@ -28,12 +28,13 @@ import Tour from '../pages/ToursDetailPage/Tour';
 import ToursBooking from '../pages/ToursBookingPage/ToursBooking';
 import TourPayments from '../pages/TourPayments/TourPayments';
 import UserAccount from '../pages/PersonalProfile/UserAccount';
+import ThingsToDoPage from '../pages/ThingsToDo/ThingsToDoPage';
 
 const UserRoutes = () => {
   return (
     <Routes>
       <Route element={<UserLayout />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/flights" element={<HomepageFlight />} />
         <Route path="/transport" element={<HomepageTransport />} />
         <Route path="/transport/search" element={<TransportSearchResults />} />
@@ -57,6 +58,7 @@ const UserRoutes = () => {
         <Route path="/flights/success" element={<FlightBookingSuccess />} />
         <Route path="/flights/manage" element={<ManageBooking />} />
         <Route path="/profile/:tab" element={<UserAccount />} />
+        <Route path="/things-to-do" element={<ThingsToDoPage />} />
       </Route>
       <Route path="/tours" element={<ToursPage />} />
       <Route path="/tour/:id" element={<Tour />} />

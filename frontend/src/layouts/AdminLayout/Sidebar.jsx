@@ -48,7 +48,11 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen, isCollapsed, setIsCollapsed })
       {/* Logo */}
       <div className={`p-6 pb-8 flex justify-center items-center ${isCollapsed ? 'px-2' : ''}`}>
         <div className="text-center w-full flex items-center justify-between">
-          {!isCollapsed && <img src="/logo_web.png" alt="HANU vivu Logo" className="h-10 w-auto object-contain" />}
+          {!isCollapsed && (
+            <Link to="/" className="block shrink-0">
+              <img src="/logo_web.png" alt="HANU vivu Logo" className="h-10 w-auto object-contain" />
+            </Link>
+          )}
           
           {/* Desktop Collapse Toggle */}
           <button 

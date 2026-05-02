@@ -1,7 +1,7 @@
 // ToursDetailPage.jsx
 import React from 'react';
-import Navbar from '../../layouts/Navbar';
-import Footer from '../../layouts/Footer';
+import Navbar from '../../layouts/UserLayout/Navbar';
+import Footer from '../../layouts/UserLayout/Footer';
 import TourHeader from './TourHeader';
 import TourBreadcrumb from './TourBreadcrumb';
 import TourHighlights from './TourHighlights';

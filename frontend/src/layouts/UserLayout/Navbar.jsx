@@ -260,7 +260,7 @@ export default function Navbar() {
               <li><Link to="/hotels" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('hotels')}</Link></li>
               <li><Link to="/flights" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('flights')}</Link></li>
               <li><Link to="/transport" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('carsTrains')}</Link></li>
-              <li><Link to="/" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('thingsToDo')}</Link></li>
+              <li><Link to="/things-to-do" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('thingsToDo')}</Link></li>
             </ul>
 
             <div className="hidden lg:flex flex-shrink-0 items-center space-x-4">

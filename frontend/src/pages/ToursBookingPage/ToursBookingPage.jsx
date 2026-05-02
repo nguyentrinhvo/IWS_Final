@@ -1,7 +1,7 @@
 // File 4: ToursBookingPage.jsx
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../layouts/Navbar';
-import Footer from '../../layouts/Footer';
+import Navbar from '../../layouts/UserLayout/Navbar';
+import Footer from '../../layouts/UserLayout/Footer';
 import ToursSearching from './ToursSearching';
 import TourBreadcrumb from '../ToursDetailPage/TourBreadcrumb';
 import TourHeaderLooking, { SortIcon } from './TourHeaderLooking';
