@@ -199,11 +199,13 @@ public class PaymentService {
      */
     public void markPaymentSuccess(String bookingId, String provider, String transactionId) {
         BookingDocument booking = bookingRepository.findById(bookingId).orElse(null);
-        if (booking == null) return;
+        if (booking == null)
+            return;
 
         // Update payment embed
         PaymentEmbed payment = booking.getPayment();
-        if (payment == null) payment = new PaymentEmbed();
+        if (payment == null)
+            payment = new PaymentEmbed();
         payment.setPaymentStatus("success");
         payment.setTransactionId(transactionId);
         payment.setPaidAt(new Date());
@@ -225,12 +227,15 @@ public class PaymentService {
      */
     public boolean processRefund(String bookingId) {
         BookingDocument booking = bookingRepository.findById(bookingId).orElse(null);
-        if (booking == null) return false;
+        if (booking == null)
+            return false;
 
-        if (!"cancelled".equals(booking.getStatus())) return false;
+        if (!"cancelled".equals(booking.getStatus()))
+            return false;
 
         PaymentEmbed payment = booking.getPayment();
-        if (payment == null || !"success".equals(payment.getPaymentStatus())) return false;
+        if (payment == null || !"success".equals(payment.getPaymentStatus()))
+            return false;
 
         payment.setPaymentStatus("refunded");
         booking.setPayment(payment);
@@ -243,72 +248,72 @@ public class PaymentService {
 
     // ──────────────────────────── EMAIL ────────────────────────────
 
-    private void sendPaymentConfirmationEmail(BookingDocument booking, String provider, String transactionId) {
+    public void sendPaymentConfirmationEmail(BookingDocument booking, String provider, String transactionId) {
         try {
             UserDocument user = userRepository.findById(booking.getUserId()).orElse(null);
-            if (user == null) return;
+            if (user == null)
+                return;
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());
-            message.setSubject("✅ Xác nhận thanh toán thành công - " + booking.getSnapshotName());
+            message.setSubject("Xác nhận thanh toán thành công - " + booking.getSnapshotName());
             message.setText(
-                "Xin chào " + user.getFullName() + ",\n\n" +
-                "Thanh toán của bạn đã được xác nhận thành công.\n\n" +
-                "📋 Chi tiết đơn hàng:\n" +
-                "  - Dịch vụ:       " + booking.getSnapshotName() + "\n" +
-                "  - Mã đặt chỗ:    " + booking.getId() + "\n" +
-                "  - Tổng tiền:     " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n" +
-                "  - Phương thức:   " + provider.toUpperCase() + "\n" +
-                "  - Mã giao dịch:  " + (transactionId != null ? transactionId : "N/A") + "\n" +
-                "  - Thời gian:     " + new Date() + "\n\n" +
-                "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!\n\n" +
-                "Trân trọng,\nTravel Booking Team"
-            );
+                    "Xin chào " + user.getFullName() + ",\n\n" +
+                            "Thanh toán của bạn đã được xác nhận thành công.\n\n" +
+                            "Chi tiết đơn hàng:\n" +
+                            "  - Dịch vụ:       " + booking.getSnapshotName() + "\n" +
+                            "  - Mã đặt chỗ:    " + booking.getId() + "\n" +
+                            "  - Tổng tiền:     " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n" +
+                            "  - Phương thức:   " + provider.toUpperCase() + "\n" +
+                            "  - Mã giao dịch:  " + (transactionId != null ? transactionId : "N/A") + "\n" +
+                            "  - Thời gian:     " + new Date() + "\n\n" +
+                            "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!\n\n" +
+                            "Trân trọng,\nTravel Booking Team");
             mailSender.send(message);
         } catch (Exception e) {
             System.err.println("Failed to send payment confirmation email: " + e.getMessage());
         }
     }
 
-    private void sendETicketEmail(BookingDocument booking, String provider, String transactionId) {
+    public void sendETicketEmail(BookingDocument booking, String provider, String transactionId) {
         try {
             UserDocument user = userRepository.findById(booking.getUserId()).orElse(null);
-            if (user == null) return;
+            if (user == null)
+                return;
 
             Map<String, Object> detail = booking.getSnapshotDetail();
             String ticketTypeName = detail != null ? (String) detail.get("ticketTypeName") : "";
-            String location       = detail != null ? (String) detail.get("location") : "";
-            String openAt         = detail != null ? (String) detail.get("openAt") : "";
-            String closeAt        = detail != null ? (String) detail.get("closeAt") : "";
-            Object qty            = detail != null ? detail.get("quantity") : booking.getQuantity();
+            String location = detail != null ? (String) detail.get("location") : "";
+            String openAt = detail != null ? (String) detail.get("openAt") : "";
+            String closeAt = detail != null ? (String) detail.get("closeAt") : "";
+            Object qty = detail != null ? detail.get("quantity") : booking.getQuantity();
 
             // Generate a simple e-ticket code (bookingId prefix + timestamp)
             String eTicketCode = "TK-" + booking.getId().substring(0, 8).toUpperCase();
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());
-            message.setSubject("🎟️ E-Ticket của bạn - " + booking.getSnapshotName());
+            message.setSubject("E-Ticket của bạn - " + booking.getSnapshotName());
             message.setText(
-                "══════════════════════════════════════\n" +
-                "           VÉ ĐIỆN TỬ / E-TICKET\n" +
-                "══════════════════════════════════════\n\n" +
-                "Xin chào " + user.getFullName() + ",\n\n" +
-                "Thanh toán thành công! Vui lòng lưu vé này và xuất trình khi vào cửa.\n\n" +
-                "📍 Điểm tham quan: " + booking.getSnapshotName() + "\n" +
-                "📌 Khu vực:         " + location + "\n" +
-                "🎫 Loại vé:         " + ticketTypeName + "\n" +
-                "🔢 Số lượng:        " + qty + " vé\n" +
-                "💰 Tổng tiền:       " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n" +
-                "⏰ Giờ mở cửa:     " + openAt + " - " + closeAt + "\n\n" +
-                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-                "  MÃ VÉ: " + eTicketCode + "\n" +
-                "  Mã đặt: " + booking.getId() + "\n" +
-                "  Thanh toán: " + provider.toUpperCase() + " | " +
-                      (transactionId != null ? transactionId : "N/A") + "\n" +
-                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
-                "⚠️  Lưu ý: Vé không thể chuyển nhượng. Xuất trình email này hoặc mã vé tại quầy.\n\n" +
-                "Trân trọng,\nTravel Booking Team"
-            );
+                    "══════════════════════════════════════\n" +
+                            "           VÉ ĐIỆN TỬ / E-TICKET\n" +
+                            "══════════════════════════════════════\n\n" +
+                            "Xin chào " + user.getFullName() + ",\n\n" +
+                            "Thanh toán thành công! Vui lòng lưu vé này và xuất trình khi vào cửa.\n\n" +
+                            "Điểm tham quan: " + booking.getSnapshotName() + "\n" +
+                            "Khu vực:         " + location + "\n" +
+                            "Loại vé:         " + ticketTypeName + "\n" +
+                            "Số lượng:        " + qty + " vé\n" +
+                            "Tổng tiền:       " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n" +
+                            "Giờ mở cửa:     " + openAt + " - " + closeAt + "\n\n" +
+                            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+                            "  MÃ VÉ: " + eTicketCode + "\n" +
+                            "  Mã đặt: " + booking.getId() + "\n" +
+                            "  Thanh toán: " + provider.toUpperCase() + " | " +
+                            (transactionId != null ? transactionId : "N/A") + "\n" +
+                            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+                            "Lưu ý: Vé không thể chuyển nhượng. Xuất trình email này hoặc mã vé tại quầy.\n\n" +
+                            "Trân trọng,\nTravel Booking Team");
             mailSender.send(message);
         } catch (Exception e) {
             System.err.println("Failed to send e-ticket email: " + e.getMessage());
@@ -318,21 +323,21 @@ public class PaymentService {
     private void sendRefundConfirmationEmail(BookingDocument booking) {
         try {
             UserDocument user = userRepository.findById(booking.getUserId()).orElse(null);
-            if (user == null) return;
+            if (user == null)
+                return;
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());
-            message.setSubject("💰 Xác nhận hoàn tiền - " + booking.getSnapshotName());
+            message.setSubject("Xác nhận hoàn tiền - " + booking.getSnapshotName());
             message.setText(
-                "Xin chào " + user.getFullName() + ",\n\n" +
-                "Yêu cầu hoàn tiền của bạn đã được xử lý.\n\n" +
-                "📋 Chi tiết hoàn tiền:\n" +
-                "  - Dịch vụ:    " + booking.getSnapshotName() + "\n" +
-                "  - Mã đặt chỗ: " + booking.getId() + "\n" +
-                "  - Số tiền:    " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n\n" +
-                "Tiền sẽ được hoàn về tài khoản của bạn trong vòng 3-5 ngày làm việc.\n\n" +
-                "Trân trọng,\nTravel Booking Team"
-            );
+                    "Xin chào " + user.getFullName() + ",\n\n" +
+                            "Yêu cầu hoàn tiền của bạn đã được xử lý.\n\n" +
+                            "Chi tiết hoàn tiền:\n" +
+                            "  - Dịch vụ:    " + booking.getSnapshotName() + "\n" +
+                            "  - Mã đặt chỗ: " + booking.getId() + "\n" +
+                            "  - Số tiền:    " + String.format("%,.0f VND", booking.getTotalPrice()) + "\n\n" +
+                            "Tiền sẽ được hoàn về tài khoản của bạn trong vòng 3-5 ngày làm việc.\n\n" +
+                            "Trân trọng,\nTravel Booking Team");
             mailSender.send(message);
         } catch (Exception e) {
             System.err.println("Failed to send refund confirmation email: " + e.getMessage());
@@ -365,7 +370,8 @@ public class PaymentService {
             if (fieldValue != null && !fieldValue.isEmpty()) {
                 sb.append(fieldName).append("=")
                         .append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
-                if (itr.hasNext()) sb.append("&");
+                if (itr.hasNext())
+                    sb.append("&");
             }
         }
         return sb.toString();
