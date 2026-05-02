@@ -27,7 +27,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
     // Max requests per window
     private static final int CAPACITY = 100;
     // Refill window: 1 minute
-    private static final Duration REFILL_DURATION = Duration.ofMinutes(1);
+    private static final Duration REFILL_DURATION = Duration.ofMinutes(10);
 
     // Per-IP bucket store
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
@@ -64,6 +64,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String clientIp = getClientIp(request);
+
+        System.out.println("RateLimitFilter đang kiểm tra IP: " + clientIp);
+
         Bucket bucket = resolveBucket(clientIp);
 
         if (bucket.tryConsume(1)) {
