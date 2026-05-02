@@ -388,9 +388,13 @@ export const bestTourDealsData = [
   { id: "btd2", image: "https://picsum.photos/seed/btd2/800/600", rating: 4.9, reviewsCount: 890, titleTemplate: "Tour Ho Chi Minh 4D3N: HCM + Cu Chi + Mekong Delta", days: 4, departureLocation: "Ho Chi Minh City", price: 6200000, departureDate: "June 02nd" }
 ];
 
+// mockData.js (chỉ sửa phần toursDestinationsData)
 export const toursDestinationsData = [
-  { id: "td1", titleKey: "toursDestHanoi", toursCount: 156, image: "https://picsum.photos/seed/tdhanoi/800/600", gridClass: "col-span-1 row-span-2" },
-  { id: "td2", titleKey: "toursDestSapa", toursCount: 84, image: "https://picsum.photos/seed/tdsapa/800/600", gridClass: "col-span-1 row-span-1" }
+  { id: "td1", titleKey: "toursDestHanoi", toursCount: 156, image: "https://picsum.photos/seed/tdhanoi/800/600" },
+  { id: "td2", titleKey: "toursDestSapa", toursCount: 84, image: "https://picsum.photos/seed/tdsapa/800/600" },
+  { id: "td3", titleKey: "toursDestHanoi", toursCount: 124, image: "https://picsum.photos/seed/tdhanoi/800/600" },
+  { id: "td4", titleKey: "toursDestHanoi", toursCount: 25, image: "https://picsum.photos/seed/tdhanoi/800/600" },
+  { id: "td5", titleKey: "toursDestHanoi", toursCount: 65, image: "https://picsum.photos/seed/tdhanoi/800/600" },
 ];
 
 export const getRelatedTours = (currentTourId, limit = 4) => {

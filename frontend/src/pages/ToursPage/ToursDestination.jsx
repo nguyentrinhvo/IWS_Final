@@ -32,6 +32,10 @@ const TravelIcon = () => (
 
 export default function ToursDestination() {
   const { t } = useGlobal();
+  const destinations = toursDestinationsData;
+  
+  const largeItem = destinations[0];
+  const smallItems = destinations.slice(1, 5);
 
   return (
     <section className="w-full flex flex-col gap-4 max-w-[1320px] mx-auto pt-8 md:pt-12 pb-4 mb-[50px] px-4 md:px-6">
@@ -47,20 +51,36 @@ export default function ToursDestination() {
         </p>
       </div>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-auto gap-[15px] mt-4">
-        {toursDestinationsData.map((dest) => (
+      <div 
+        className="grid grid-cols-3 gap-5 w-full"
+        style={{ gridTemplateRows: 'repeat(2, minmax(220px, auto))' }}
+      >
+        <div className="relative rounded-2xl overflow-hidden cursor-pointer group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300 row-span-2">
           <div 
-            key={dest.id} 
-            className={`relative rounded-2xl overflow-hidden cursor-pointer group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300 ${dest.gridClass}`}
-            style={{ minHeight: '220px' }}
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+            style={{ backgroundImage: `url(${largeItem.image})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+          <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-0.5 pointer-events-none">
+            <h3 className="text-white text-[24px] font-bold leading-tight [-webkit-text-stroke:1px_black] truncate">
+              {t(largeItem.titleKey)}
+            </h3>
+            <p className="text-white text-[16px] font-semibold [-webkit-text-stroke:0.5px_black] hidden sm:block">
+              {largeItem.toursCount} {t('toursCountLabel')}
+            </p>
+          </div>
+        </div>
+
+        {smallItems.map((dest, idx) => (
+          <div 
+            key={`${dest.id}-${idx}`}
+            className="relative rounded-2xl overflow-hidden cursor-pointer group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300"
           >
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
               style={{ backgroundImage: `url(${dest.image})` }}
             />
-            
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-            
             <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-0.5 pointer-events-none">
               <h3 className="text-white text-[24px] font-bold leading-tight [-webkit-text-stroke:1px_black] truncate">
                 {t(dest.titleKey)}
