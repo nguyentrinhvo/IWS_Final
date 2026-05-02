@@ -1,25 +1,23 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../Navbar';
-import { useGlobal } from '../../context/GlobalContext';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
-const UserLayout = () => {
-  const { t } = useGlobal();
+export default function UserLayout() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-cyan-500/30 flex flex-col">
-      <Navbar /> 
+    <div className="min-h-screen flex flex-col bg-white">
+      <header className="sticky top-0 z-50 w-full bg-white">
+        <Navbar />
+      </header>
 
-      <main className="w-full">
-        <Outlet />
+      <main className="flex-1 w-full">
+        <div className="max-w-[1320px] mx-auto px-4">
+          <Outlet />
+        </div>
       </main>
 
-      <footer className="mt-auto py-8 border-t border-gray-200">
-        <div className="max-w-[1920px] mx-auto px-4 lg:px-[300px] text-center text-slate-500 text-sm">
-          &copy; 2026 HANU vivu. {t('footerText')}.
-        </div>
+      <footer className="mt-auto pt-[150px] w-full">
+        <Footer />
       </footer>
     </div>
   );
-};
-
-export default UserLayout;
+}
