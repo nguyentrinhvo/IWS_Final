@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGlobal } from '../context/GlobalContext';
+import { useGlobal } from '../../context/GlobalContext';
 
 export default function Footer() {
   const { t } = useGlobal();
@@ -70,7 +70,9 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row gap-10 md:gap-[60px] lg:gap-[140px]">
               <div className="w-full md:w-[140px] flex flex-col">
                 <h3 className="font-bold text-white text-[18px] mb-6">{t('followUsOn')}</h3>
-                <ul className="flex flex-col gap-3 text-white">
+                <ul className="flex flex-col gap-3 
+                
+                text-white">
                   <li className="cursor-pointer hover:underline transition-all duration-200">{t('tours')}</li>
                   <li className="cursor-pointer hover:underline transition-all duration-200">{t('hotels')}</li>
                   <li className="cursor-pointer hover:underline transition-all duration-200">{t('flights')}</li>

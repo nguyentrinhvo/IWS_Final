@@ -268,16 +268,7 @@ const UserManagement = () => {
         </div>
       </div>
 
-      {/* System Status info at the very bottom */}
-      <div className="flex justify-between items-center px-2">
-        <div className="flex items-center space-x-2 text-[9px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-           <span className="w-1.5 h-1.5 rounded-full bg-[#42b872] animate-pulse"></span>
-           <span>System Status: Optimal</span>
-        </div>
-        <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-           Last Refreshed: {new Date().toLocaleTimeString('en-GB')} GMT
-        </div>
-      </div>
+      
     </div>
   );
 };

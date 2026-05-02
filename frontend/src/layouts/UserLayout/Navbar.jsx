@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGlobal } from '../context/GlobalContext';
-import Login from '../pages/LoginRegister/Login';
-import Register from '../pages/LoginRegister/Register';
-import ForgotPassword from '../pages/LoginRegister/ForgotPassword';
-import OtpVerification from '../pages/LoginRegister/OtpVerification';
-import RegisterOtp from '../pages/LoginRegister/RegisterOtp';
-import AdditionalInfo from '../pages/LoginRegister/AdditionalInfo';
-
+import { useGlobal } from '../../context/GlobalContext';
+import Login from '../../pages/LoginRegister/Login';
+import Register from '../../pages/LoginRegister/Register';
+import ForgotPassword from '../../pages/LoginRegister/ForgotPassword';
+import OtpVerification from '../../pages/LoginRegister/OtpVerification';
+import RegisterOtp from '../../pages/LoginRegister/RegisterOtp';
+import AdditionalInfo from '../../pages/LoginRegister/AdditionalInfo';
 
 const formatDisplayName = (fullName) => {
   if (!fullName) return '';
@@ -275,9 +274,9 @@ export default function Navbar() {
               </li>
       <div className="w-full flex flex-col bg-[#7C4A4A] relative z-50">
         <nav className="w-full h-[80px] border-b border-white/20 flex justify-center">
-          <div className="w-full max-w-[1920px] px-4 lg:px-[300px] flex items-center justify-between h-full">
+          <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-between h-full">
             <div className="flex-shrink-0 cursor-pointer h-full flex items-center">
-              <img src="/logo_web.png" alt="Logo" className="max-h-[60px] w-auto object-contain" />
+              <img src="/images/logo_web.png" alt="Logo" className="max-h-[60px] w-auto object-contain" />
             </div>
 
             <ul className={`hidden md:flex flex-1 justify-center items-center text-white font-medium text-[19px] ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
@@ -478,7 +477,7 @@ export default function Navbar() {
         </nav>
 
         <nav className="hidden md:flex w-full h-[40px] justify-center">
-          <div className="w-full max-w-[1920px] px-4 lg:px-[300px] flex items-center justify-end h-full">
+          <div className="w-full max-w-[1320px] mx-auto px-4 flex items-center justify-end h-full">
             <ul className="flex items-center space-x-4 text-white text-sm">
               <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('partnership')}</li>
               <li className="relative" ref={supportRef}>
