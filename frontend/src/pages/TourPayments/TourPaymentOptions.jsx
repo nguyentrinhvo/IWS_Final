@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../components/button';
+import Button from '../../components/Button';
 
-const TourPaymentOptions = ({ 
-  selectedMethod, 
-  onSelectMethod, 
-  totalAmount = 300000, 
-  onSubmit, 
-  isProcessing, 
+const TourPaymentOptions = ({
+  selectedMethod,
+  onSelectMethod,
+  totalAmount = 300000,
+  onSubmit,
+  isProcessing,
   error,
   tourName = "Selected Tour",
   guestsCount = 1
 }) => {
   const [timeLeft, setTimeLeft] = useState(3600);
   const [showPriceDetails, setShowPriceDetails] = useState(false);
-  const [selectedWallet, setSelectedWallet] = useState('momo');
-  
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvv, setCvv] = useState('');
-  const [name, setName] = useState('');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,23 +26,6 @@ const TourPaymentOptions = ({
     const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${h}:${m}:${s}`;
-  };
-
-  const handleCardNumberChange = (e) => {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 16) setCardNumber(value);
-  };
-
-  const handleExpiryChange = (e) => {
-    let val = e.target.value.replace(/\D/g, '');
-    if (val.length > 4) val = val.slice(0, 4);
-    if (val.length > 2) val = val.substring(0, 2) + '/' + val.substring(2, 4);
-    setExpiry(val);
-  };
-
-  const handleCvvChange = (e) => {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 4) setCvv(value);
   };
 
   const getMethodName = () => {
@@ -113,8 +90,9 @@ const TourPaymentOptions = ({
             </label>
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${selectedMethod?.id === 'paypal' ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
               <div className="px-12 pb-5 space-y-3 text-sm text-gray-600">
-                <p>• Thanh toán nhanh chóng bằng số dư PayPal hoặc thẻ tín dụng quốc tế.</p>
-                <p>• Bạn sẽ được chuyển hướng sang trang của PayPal để đăng nhập và thanh toán.</p>
+                <p>• Fast and secure payment with your PayPal account.</p>
+                <p>• Support international credit/debit cards.</p>
+                <p>• You will be redirected to PayPal website to complete your transaction.</p>
               </div>
             </div>
           </div>
@@ -124,13 +102,13 @@ const TourPaymentOptions = ({
           <h3 className="text-lg font-bold text-gray-800">Apply Coupons</h3>
           <p className="text-sm text-gray-500 mb-3">Enter coupon code or select available coupon(s)</p>
           <div className="flex gap-3">
-            <input 
-              type="text" 
-              placeholder="Enter code" 
+            <input
+              type="text"
+              placeholder="Enter code"
               className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:border-[#0194F3] focus:outline-none"
             />
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               className="!bg-gray-800 hover:!bg-gray-700 !px-6 !py-2 !rounded-md"
             >
               Apply
@@ -139,7 +117,7 @@ const TourPaymentOptions = ({
         </div>
 
         <div className="mt-8 border-t border-gray-200 pt-6">
-          <div 
+          <div
             className="flex justify-between items-center cursor-pointer select-none group"
             onClick={() => setShowPriceDetails(!showPriceDetails)}
           >
@@ -150,12 +128,12 @@ const TourPaymentOptions = ({
               {!showPriceDetails && (
                 <span className="text-xl font-bold text-gray-800">{totalAmount.toLocaleString()} VND</span>
               )}
-              <svg 
-                className={`transform transition-transform duration-300 text-gray-600 ${showPriceDetails ? 'rotate-180' : ''}`} 
-                width="24px" 
-                height="24px" 
-                viewBox="0 0 24 24" 
-                fill="none" 
+              <svg
+                className={`transform transition-transform duration-300 text-gray-600 ${showPriceDetails ? 'rotate-180' : ''}`}
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path fillRule="evenodd" clipRule="evenodd" d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z" fill="currentColor"></path>
@@ -180,7 +158,7 @@ const TourPaymentOptions = ({
           </div>
         </div>
 
-        <Button 
+        <Button
           variant="primary"
           size="lg"
           onClick={onSubmit}
@@ -196,4 +174,4 @@ const TourPaymentOptions = ({
   );
 };
 
-export default TourPaymentOptions;
+export default TourPaymentOptions;
