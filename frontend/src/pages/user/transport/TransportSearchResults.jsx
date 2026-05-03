@@ -1,97 +1,15 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import TransportSearchSummary from '../../../components/user/TransportSearchSummary';
 import TransportFilters from '../../../components/user/TransportFilters';
 import TransportSortBar from '../../../components/user/TransportSortBar';
 import TransportCard from '../../../components/user/TransportCard';
-
-// ─── Mock Data ──────────────────────────────────────────────────────────────
-const MOCK_ROUTES = [
-  {
-    id: 1,
-    ten_nha_xe: 'Hoang Long Bus',
-    loai_phuong_tien: 'Bus (Sleeper)',
-    diem_di: 'Hanoi',
-    diem_den: 'Da Nang',
-    gio_di: '08:00',
-    gio_den: '20:00',
-    gia: 450000,
-    tong_so_ghe: 40,
-    so_ghe_con: 12,
-  },
-  {
-    id: 2,
-    ten_nha_xe: 'Phuong Trang (FUTA)',
-    loai_phuong_tien: 'Bus (Sleeper)',
-    diem_di: 'Hanoi',
-    diem_den: 'Da Nang',
-    gio_di: '10:30',
-    gio_den: '22:45',
-    gia: 480000,
-    tong_so_ghe: 38,
-    so_ghe_con: 5,
-  },
-  {
-    id: 3,
-    ten_nha_xe: 'Vietnam Railways',
-    loai_phuong_tien: 'Train (Soft seat)',
-    diem_di: 'Hanoi',
-    diem_den: 'Da Nang',
-    gio_di: '06:00',
-    gio_den: '21:30',
-    gia: 850000,
-    tong_so_ghe: 64,
-    so_ghe_con: 20,
-  },
-  {
-    id: 4,
-    ten_nha_xe: 'Thanh Binh Bus',
-    loai_phuong_tien: 'Bus (Seat)',
-    diem_di: 'Hanoi',
-    diem_den: 'Da Nang',
-    gio_di: '14:00',
-    gio_den: '02:00',
-    gia: 350000,
-    tong_so_ghe: 45,
-    so_ghe_con: 30,
-  },
-  {
-    id: 5,
-    ten_nha_xe: 'Vietnam Railways',
-    loai_phuong_tien: 'Train (Hard seat)',
-    diem_di: 'Hanoi',
-    diem_den: 'Da Nang',
-    gio_di: '19:00',
-    gio_den: '11:00',
-    gia: 600000,
-    tong_so_ghe: 80,
-    so_ghe_con: 45,
-  },
-];
-
-const MOCK_SEARCH = {
-  from: 'Hanoi',
-  to: 'Da Nang',
-  departDate: '02 May 2026',
-  passengers: '1 Ticket',
-  tripType: 'One-way',
-};
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-const getHour = (timeStr) => parseInt(timeStr.split(':')[0]);
-
-const matchesDepartureTime = (timeStr, slots) => {
-  if (!slots || slots.length === 0) return true;
-  const h = getHour(timeStr);
-  return slots.some(s => {
-    if (s === 'Early Morning') return h >= 0 && h < 6;
-    if (s === 'Morning') return h >= 6 && h < 12;
-    if (s === 'Afternoon') return h >= 12 && h < 18;
-    if (s === 'Evening') return h >= 18;
-    return false;
-  });
-};
+import { searchTransportRoutes } from '../../../services/transportService';
 
 const TransportSearchResults = () => {
+  const [searchParams] = useSearchParams();
+  const [routes, setRoutes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('cheapest');
   const [filters, setFilters] = useState({
     departureTimes: [],
@@ -100,41 +18,48 @@ const TransportSearchResults = () => {
   });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
+  const searchInfo = {
+    from: searchParams.get('from') || 'Hanoi',
+    to: searchParams.get('to') || 'Da Nang',
+    departDate: searchParams.get('date') || '02 May 2026',
+    passengers: '1 Ticket',
+    tripType: 'One-way',
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    const fetchRoutes = async () => {
+      try {
+        setLoading(true);
+        const data = await searchTransportRoutes({
+          departureCity: searchInfo.from,
+          arrivalCity: searchInfo.to
+        });
+        setRoutes(data);
+      } catch (error) {
+        console.error("Failed to fetch transport routes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRoutes();
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
-    return MOCK_ROUTES.filter(r => {
-      if (!matchesDepartureTime(r.gio_di, filters.departureTimes)) return false;
-      if (filters.vehicleTypes.length > 0) {
-        const typeMatch = filters.vehicleTypes.some(t => {
-            if (t === 'bus_sleeper') return r.loai_phuong_tien === 'Bus (Sleeper)';
-            if (t === 'bus_seat') return r.loai_phuong_tien === 'Bus (Seat)';
-            if (t === 'train_soft') return r.loai_phuong_tien === 'Train (Soft seat)';
-            if (t === 'train_hard') return r.loai_phuong_tien === 'Train (Hard seat)';
-            return false;
-        });
-        if (!typeMatch) return false;
-      }
-      if (r.gia > filters.maxPrice) return false;
+    return routes.filter(r => {
+      // Mapping backend field names to what UI expects or keeping them consistent
+      const price = r.price || 0;
+      const type = r.vehicleType; 
+      
+      if (r.price > filters.maxPrice) return false;
       return true;
     });
-  }, [filters]);
+  }, [routes, filters]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
-    if (sort === 'cheapest') return arr.sort((a, b) => a.gia - b.gia);
-    if (sort === 'earliest') return arr.sort((a, b) => a.gio_di.localeCompare(b.gio_di));
-    if (sort === 'fastest') {
-        const getDur = (r) => {
-            const [h1, m1] = r.gio_di.split(':').map(Number);
-            const [h2, m2] = r.gio_den.split(':').map(Number);
-            let d = (h2 * 60 + m2) - (h1 * 60 + m1);
-            return d < 0 ? d + 1440 : d;
-        };
-        return arr.sort((a, b) => getDur(a) - getDur(b));
-    }
+    if (sort === 'cheapest') return arr.sort((a, b) => (a.price || 0) - (b.price || 0));
+    if (sort === 'earliest') return arr.sort((a, b) => (a.departureTime || '').localeCompare(b.departureTime || ''));
     return arr;
   }, [filtered, sort]);
 
@@ -144,10 +69,18 @@ const TransportSearchResults = () => {
     maxPrice: 2000000,
   });
 
+  if (loading) {
+    return (
+      <div className="flex flex-col -mx-4 min-h-screen bg-gray-50 items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col -mx-4 min-h-screen bg-gray-50">
       {/* Search Summary Bar */}
-      <TransportSearchSummary search={MOCK_SEARCH} onEditSearch={() => {}} />
+      <TransportSearchSummary search={searchInfo} onEditSearch={() => {}} />
 
       {/* Main content */}
       <div className="flex-1 max-w-[1200px] mx-auto w-full px-4 py-6">

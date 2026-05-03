@@ -15,8 +15,10 @@ import {
   getMonthName,
   formatDate
 } from '../../utils/SearchUtils';
+import { useNavigate } from 'react-router-dom';
 
 const CarsAndTrainsSearch = ({ t, locale }) => {
+  const navigate = useNavigate();
   const [activeCarTrainFilter, setActiveCarTrainFilter] = useState('bookACar');
   const [isReturnFlight, setIsReturnFlight] = useState(false);
 
@@ -475,7 +477,10 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
               </div>
             </div>
 
-            <div className="w-full h-[56px] xl:w-[65px] xl:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl xl:rounded-none xl:rounded-r-md shrink-0 transition-colors hover:bg-[#b57215] shadow-lg xl:shadow-none gap-2">
+            <div 
+              onClick={() => navigate('/transport/search')}
+              className="w-full h-[56px] xl:w-[65px] xl:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl xl:rounded-none xl:rounded-r-md shrink-0 transition-colors hover:bg-[#b57215] shadow-lg xl:shadow-none gap-2"
+            >
               <svg className="w-7 h-7 text-white font-bold shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
@@ -599,7 +604,10 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
               </div>
             </div>
 
-            <div className="w-full h-[56px] xl:w-[73px] xl:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl xl:rounded-full shrink-0 transition-colors hover:bg-[#b57215] shadow-lg xl:shadow-none gap-2">
+            <div 
+              onClick={() => navigate('/transport/search')}
+              className="w-full h-[56px] xl:w-[73px] xl:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl xl:rounded-full shrink-0 transition-colors hover:bg-[#b57215] shadow-lg xl:shadow-none gap-2"
+            >
               <svg className="w-7 h-7 text-white font-bold shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>

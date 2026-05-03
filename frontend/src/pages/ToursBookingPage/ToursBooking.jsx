@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ToursBookingPage from './ToursBookingPage';
 import { getTours } from '../../services/tourService';
 
 const ToursBooking = () => {
+  const location = useLocation();
+  const searchState = location.state || {};
+  
   const [allTours, setAllTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +14,7 @@ const ToursBooking = () => {
 
   // State bộ lọc
   const [filters, setFilters] = useState({
-    location: 'all',
+    location: searchState.tourDestination || 'all',
     minPrice: 0,
     maxPrice: 20000000,
     minDuration: 0,
@@ -18,6 +22,13 @@ const ToursBooking = () => {
     startDateFrom: '',
     startDateTo: ''
   });
+
+  // Cập nhật filter nếu chuyển hướng từ thanh search
+  useEffect(() => {
+    if (searchState.tourDestination) {
+      setFilters(prev => ({ ...prev, location: searchState.tourDestination }));
+    }
+  }, [searchState.tourDestination]);
   const [sortBy, setSortBy] = useState('price_asc');
 
   // 1. Lấy dữ liệu từ API
@@ -32,9 +43,14 @@ const ToursBooking = () => {
         } else {
           setAllTours(tours);
           // Cập nhật khoảng giá động
-          const minP = Math.min(...tours.map(t => t.price || 0));
-          const maxP = Math.max(...tours.map(t => t.price || 0));
-          setFilters(prev => ({ ...prev, minPrice: minP, maxPrice: maxP }));
+          const prices = tours.map(t => t.priceAdult || 0);
+          const minP = Math.min(...prices);
+          const maxP = Math.max(...prices);
+          setFilters(prev => ({ 
+            ...prev, 
+            minPrice: prev.minPrice === 0 ? minP : prev.minPrice, 
+            maxPrice: prev.maxPrice === 20000000 ? maxP : prev.maxPrice 
+          }));
         }
       } catch (err) {
         console.error('Fetch tours failed:', err);
@@ -50,19 +66,20 @@ const ToursBooking = () => {
   const applyFilters = (tours, currentFilters) => {
     return tours.filter(tour => {
       // Địa điểm
-      if (currentFilters.location !== 'all' && tour.location !== currentFilters.location) return false;
+      if (currentFilters.location !== 'all' && tour.destination !== currentFilters.location) return false;
       // Giá
-      if (tour.price < currentFilters.minPrice || tour.price > currentFilters.maxPrice) return false;
+      const price = tour.priceAdult || 0;
+      if (price < currentFilters.minPrice || price > currentFilters.maxPrice) return false;
       // Số ngày
-      const daysMatch = tour.duration?.match(/\d+/);
-      const days = daysMatch ? parseInt(daysMatch[0], 10) : 0;
+      const days = tour.durationDays || 0;
       if (days < currentFilters.minDuration || days > currentFilters.maxDuration) return false;
       // Ngày khởi hành
       if (currentFilters.startDateFrom || currentFilters.startDateTo) {
-        const hasValid = tour.departureSchedules?.some(s => {
-          if (!s.departure) return false;
-          if (currentFilters.startDateFrom && s.departure < currentFilters.startDateFrom) return false;
-          if (currentFilters.startDateTo && s.departure > currentFilters.startDateTo) return false;
+        const hasValid = tour.departures?.some(s => {
+          if (!s.departureDate) return false;
+          const depDate = new Date(s.departureDate).toISOString().split('T')[0];
+          if (currentFilters.startDateFrom && depDate < currentFilters.startDateFrom) return false;
+          if (currentFilters.startDateTo && depDate > currentFilters.startDateTo) return false;
           return true;
         });
         if (!hasValid) return false;
@@ -75,13 +92,10 @@ const ToursBooking = () => {
   const applySort = (tours, sortType) => {
     const sorted = [...tours];
     switch (sortType) {
-      case 'price_asc': return sorted.sort((a,b) => a.price - b.price);
-      case 'price_desc': return sorted.sort((a,b) => b.price - a.price);
-      case 'rating_desc': return sorted.sort((a,b) => b.rating - a.rating);
-      case 'duration_asc': {
-        const getDays = (d) => parseInt((d.duration || '0').match(/\d+/)?.[0] || 0, 10);
-        return sorted.sort((a,b) => getDays(a) - getDays(b));
-      }
+      case 'price_asc': return sorted.sort((a,b) => (a.priceAdult || 0) - (b.priceAdult || 0));
+      case 'price_desc': return sorted.sort((a,b) => (b.priceAdult || 0) - (a.priceAdult || 0));
+      case 'rating_desc': return sorted.sort((a,b) => (b.avgRating || 0) - (a.avgRating || 0));
+      case 'duration_asc': return sorted.sort((a,b) => (a.durationDays || 0) - (b.durationDays || 0));
       default: return sorted;
     }
   };
@@ -108,11 +122,11 @@ const ToursBooking = () => {
   };
 
   // Danh sách địa điểm unique
-  const uniqueLocations = ['all', ...new Set(allTours.map(t => t.location).filter(Boolean))];
+  const uniqueLocations = ['all', ...new Set(allTours.map(t => t.destination).filter(Boolean))];
   // Khoảng giá thực tế
   const priceRange = {
-    min: allTours.length ? Math.min(...allTours.map(t => t.price)) : 0,
-    max: allTours.length ? Math.max(...allTours.map(t => t.price)) : 20000000
+    min: allTours.length ? Math.min(...allTours.map(t => t.priceAdult || 0)) : 0,
+    max: allTours.length ? Math.max(...allTours.map(t => t.priceAdult || 0)) : 20000000
   };
 
   return (

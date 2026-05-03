@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
-import { toursDestinationsData } from '../../data/mockData';
+import { getTours } from '../../services/tourService';
 
 const TravelIcon = () => (
   <svg 
@@ -10,8 +11,6 @@ const TravelIcon = () => (
     fill="currentColor"
     className="text-[#180B51]"
   >
-    <g strokeWidth="0"></g>
-    <g strokeLinecap="round" strokeLinejoin="round"></g>
     <g> 
       <title>travel</title> 
       <g> 
@@ -32,7 +31,50 @@ const TravelIcon = () => (
 
 export default function ToursDestination() {
   const { t } = useGlobal();
-  const destinations = toursDestinationsData;
+  const navigate = useNavigate();
+  const [destinations, setDestinations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        setLoading(true);
+        const res = await getTours({ size: 100 });
+        const tours = res.content || [];
+        
+        const counts = {};
+        const images = {};
+        tours.forEach(tour => {
+          const loc = tour.destination || 'Vietnam';
+          counts[loc] = (counts[loc] || 0) + 1;
+          if (!images[loc]) images[loc] = tour.images?.[0]?.url;
+        });
+
+        const formatted = Object.keys(counts).map((loc, idx) => ({
+          id: `dest-${idx}`,
+          name: loc,
+          count: counts[loc],
+          image: images[loc] || 'https://picsum.photos/seed/dest/800/600'
+        }));
+
+        setDestinations(formatted);
+      } catch (err) {
+        console.error('Failed to fetch destinations:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDestinations();
+  }, []);
+
+  const handleDestinationClick = (name) => {
+    navigate('/tours-booking', { 
+      state: { tourDestination: name },
+      replace: true
+    });
+  };
+
+  if (loading || destinations.length === 0) return null;
   
   const largeItem = destinations[0];
   const smallItems = destinations.slice(1, 5);
@@ -52,45 +94,52 @@ export default function ToursDestination() {
       </div>
 
       <div 
-        className="grid grid-cols-3 gap-5 w-full"
-        style={{ gridTemplateRows: 'repeat(2, minmax(220px, auto))' }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full min-h-[440px]"
       >
-        <div className="relative rounded-2xl overflow-hidden cursor-pointer group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300 row-span-2">
+        {largeItem && (
           <div 
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-            style={{ backgroundImage: `url(${largeItem.image})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-          <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-0.5 pointer-events-none">
-            <h3 className="text-white text-[24px] font-bold leading-tight [-webkit-text-stroke:1px_black] truncate">
-              {t(largeItem.titleKey)}
-            </h3>
-            <p className="text-white text-[16px] font-semibold [-webkit-text-stroke:0.5px_black] hidden sm:block">
-              {largeItem.toursCount} {t('toursCountLabel')}
-            </p>
-          </div>
-        </div>
-
-        {smallItems.map((dest, idx) => (
-          <div 
-            key={`${dest.id}-${idx}`}
-            className="relative rounded-2xl overflow-hidden cursor-pointer group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300"
+            onClick={() => handleDestinationClick(largeItem.name)}
+            className="relative rounded-2xl overflow-hidden cursor-pointer group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300 md:row-span-2"
           >
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-              style={{ backgroundImage: `url(${dest.image})` }}
+              style={{ backgroundImage: `url(${largeItem.image})` }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
             <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-0.5 pointer-events-none">
-              <h3 className="text-white text-[24px] font-bold leading-tight [-webkit-text-stroke:1px_black] truncate">
-                {t(dest.titleKey)}
+              <h3 className="text-white text-[24px] font-bold leading-tight truncate">
+                {largeItem.name}
               </h3>
-              <p className="text-white text-[16px] font-semibold [-webkit-text-stroke:0.5px_black] hidden sm:block">
-                {dest.toursCount} {t('toursCountLabel')}
+              <p className="text-white text-[16px] font-semibold hidden sm:block">
+                {largeItem.count} {t('toursCountLabel')}
               </p>
             </div>
           </div>
-        ))}
+        )}
+
+        <div className="grid grid-cols-2 md:col-span-2 gap-5">
+          {smallItems.map((dest) => (
+            <div 
+              key={dest.id}
+              onClick={() => handleDestinationClick(dest.name)}
+              className="relative rounded-2xl overflow-hidden cursor-pointer h-[210px] group hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] transition-shadow duration-300"
+            >
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                style={{ backgroundImage: `url(${dest.image})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+              <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-0.5 pointer-events-none">
+                <h3 className="text-white text-[20px] md:text-[24px] font-bold leading-tight truncate">
+                  {dest.name}
+                </h3>
+                <p className="text-white text-[14px] md:text-[16px] font-semibold hidden sm:block">
+                  {dest.count} {t('toursCountLabel')}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

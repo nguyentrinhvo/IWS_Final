@@ -12,8 +12,10 @@ import {
   getMonthName,
   formatDate
 } from '../../utils/SearchUtils';
+import { useNavigate } from 'react-router-dom';
 
 const HotelsSearch = ({ t, locale }) => {
+  const navigate = useNavigate();
   const [activeHotelFilter, setActiveHotelFilter] = useState('all');
   const [hotelDestination, setHotelDestination] = useState('');
   const [isHotelDestOpen, setIsHotelDestOpen] = useState(false);
@@ -540,7 +542,10 @@ const HotelsSearch = ({ t, locale }) => {
             </div>
           </div>
 
-          <div className="w-full h-[56px] md:h-[73px] lg:w-[65px] lg:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl lg:rounded-none lg:rounded-r-md shrink-0 transition-colors hover:bg-[#b57215] shadow-lg lg:shadow-none gap-2">
+          <div 
+            onClick={() => navigate('/hotels/search')}
+            className="w-full h-[56px] md:h-[73px] lg:w-[65px] lg:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl lg:rounded-none lg:rounded-r-md shrink-0 transition-colors hover:bg-[#b57215] shadow-lg lg:shadow-none gap-2"
+          >
             <svg className="w-7 h-7 text-white font-bold shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>

@@ -1,6 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { createTourBooking } from '../../services/bookingService';
+import { createVnPayPayment } from '../../services/paymentService';
 import Button from '../../components/Button';
-import { mockData } from '../../data/mockData';
 
 const RightArrowIcon = () => (
   <svg width="24px" height="24px" viewBox="0 0 1024 1024" fill="#000000">
@@ -37,11 +40,8 @@ const getFormattedDate = (date) => {
   return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(date);
 };
 
-const TourBookNow = ({ tourId = "TOUR001" }) => {
-  const tour = useMemo(() => {
-    return mockData.tours.find(t => t.id === tourId) || mockData.tours[0];
-  }, [tourId]);
-
+const TourBookNow = ({ data }) => {
+  const tour = data || {};
   const departureSchedules = tour?.departureSchedules || [];
 
   const [activeStep, setActiveStep] = useState(1);
@@ -71,8 +71,21 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
       const element = document.getElementById('tour-book-now');
       if (element) element.scrollIntoView({ behavior: 'smooth' });
     };
+    
+    const handleOpenContact = (e) => {
+      if (e.detail) {
+        setSelectedDateId(e.detail.dateId);
+        setGuests(e.detail.guests);
+        setActiveStep(3);
+      }
+    };
+
     window.addEventListener('openDateSelection', handleOpenDate);
-    return () => window.removeEventListener('openDateSelection', handleOpenDate);
+    window.addEventListener('openContactForm', handleOpenContact);
+    return () => {
+      window.removeEventListener('openDateSelection', handleOpenDate);
+      window.removeEventListener('openContactForm', handleOpenContact);
+    };
   }, []);
 
   const selectedDateObj = useMemo(() =>
@@ -129,15 +142,64 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
     if (selectedDateId && activeStep !== 2) setActiveStep(2);
   };
 
-  const handleSubmit = () => {
+  const { currentUser: user } = useAuth();
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!user) {
+      alert("Please login to book a tour");
+      navigate('/login', { state: { from: window.location.pathname } });
+      return;
+    }
+
     const newErrors = {
       fullName: form.fullName.trim() === '',
       phone: form.phone.trim() === ''
     };
     setErrors(newErrors);
 
-    if (!newErrors.fullName && !newErrors.phone) {
-      alert("Booking successful!");
+    if (newErrors.fullName || newErrors.phone) return;
+
+    try {
+      setIsSubmitting(true);
+      
+      // 1. Tạo booking trên backend
+      const bookingRequest = {
+        serviceId: tour.id,
+        numAdults: guests.adult,
+        numChildren: guests.child,
+        note: form.notes,
+        paymentProvider: 'vnpay', // Mặc định dùng VNPay
+        passengers: [
+          {
+            fullName: form.fullName,
+            phone: form.phone,
+            email: form.email || user.email
+          }
+        ]
+      };
+
+      const bookingResponse = await createTourBooking(bookingRequest);
+      
+      // Chuyển hướng sang trang chọn phương thức thanh toán
+      navigate('/tours-payment', { 
+        state: { 
+          bookingId: bookingResponse.id,
+          booking: {
+            tour: tour,
+            schedule: selectedDateObj,
+            passengers: guests,
+            totalPrice: totalPrice
+          }
+        } 
+      });
+
+    } catch (error) {
+      console.error("Booking failed:", error);
+      alert(error.response?.data?.message || "Booking failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -563,6 +625,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
                   onClick={handleSubmit}
                   variant="primary"
                   size="lg"
+                  loading={isSubmitting}
                 >
                   Book Now
                 </Button>

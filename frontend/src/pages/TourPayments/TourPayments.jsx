@@ -4,6 +4,7 @@ import Navbar from '../../layouts/UserLayout/Navbar';
 import TourPaymentOptions from './TourPaymentOptions';
 import TourSummaries from './TourSummaries';
 import { PAYMENT_METHODS, getMockBookingSummary } from '../../data/mockData';
+import { createVnPayPayment, createPayPalPayment } from '../../services/paymentService';
 
 const TourPayments = () => {
   const location = useLocation();
@@ -33,19 +34,27 @@ const TourPayments = () => {
       setError('Vui lòng chọn phương thức thanh toán');
       return;
     }
+    
     setIsProcessing(true);
     setError('');
     
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      navigate('/payment-success', {
-        state: {
-          booking: bookingData,
-          paymentMethod: selectedMethod,
-          transactionId: `TXN_${Date.now()}`
-        }
-      });
+      let response;
+      const id = bookingData.id || location.state?.bookingId;
+
+      if (selectedMethod.id === 'paypal') {
+        response = await createPayPalPayment(id);
+      } else {
+        response = await createVnPayPayment(id);
+      }
+
+      if (response.paymentUrl) {
+          window.location.href = response.paymentUrl;
+      } else {
+          setError("Không thể khởi tạo thanh toán");
+      }
     } catch (err) {
+      console.error(err);
       setError('Thanh toán thất bại, vui lòng thử lại sau');
     } finally {
       setIsProcessing(false);

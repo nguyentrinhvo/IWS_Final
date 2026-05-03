@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BookingStepper from '../../../components/user/BookingStepper';
 import BookingSummary from '../../../components/user/BookingSummary';
 import PaymentMethodSelector from '../../../components/user/PaymentMethodSelector';
-
-const MOCK_TRIP = {
-  id: '1',
-  ten_nha_xe: 'Hoang Long Bus',
-  loai_phuong_tien: 'Bus (Sleeper)',
-  diem_di: 'Hanoi',
-  diem_den: 'Da Nang',
-  gia: 450000,
-  departDate: '02 May 2026',
-};
-
-const MOCK_SELECTED_SEATS = ['A1', 'A3'];
+import { createVnPayPayment, createPayPalPayment } from '../../../services/paymentService';
 
 const TransportPayment = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { bookingId, trip, selectedSeats, totalPrice } = location.state || {};
+
   const [selectedMethod, setSelectedMethod] = useState('');
   const [isAgreed, setIsAgreed] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    if (!bookingId) {
+        navigate('/transport/search');
+    }
+  }, [bookingId, navigate]);
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!selectedMethod) {
       alert('Please select a payment method');
       return;
@@ -36,13 +31,31 @@ const TransportPayment = () => {
       return;
     }
 
-    setIsProcessing(true);
-    
-    // Mock payment processing delay
-    setTimeout(() => {
-      setIsProcessing(false);
-      navigate('/transport/success');
-    }, 2000);
+    if (selectedMethod !== 'vnpay' && selectedMethod !== 'paypal') {
+        alert('Currently we only support VNPAY and PayPal');
+        return;
+    }
+
+    try {
+        setIsProcessing(true);
+        let response;
+        if (selectedMethod === 'paypal') {
+            response = await createPayPalPayment(bookingId);
+        } else {
+            response = await createVnPayPayment(bookingId);
+        }
+
+        if (response.paymentUrl) {
+            window.location.href = response.paymentUrl;
+        } else {
+            alert("Payment failed to initialize");
+        }
+    } catch (error) {
+        console.error("Payment failed:", error);
+        alert(error.response?.data?.message || "Payment failed");
+    } finally {
+        setIsProcessing(false);
+    }
   };
 
   return (
@@ -107,9 +120,10 @@ const TransportPayment = () => {
           <div className="lg:w-[380px]">
             <BookingSummary 
               mode="transport"
-              data={MOCK_TRIP}
-              subData={MOCK_SELECTED_SEATS}
+              data={trip}
+              subData={selectedSeats}
               onContinue={handlePayment}
+              isLoading={isProcessing}
             />
           </div>
 

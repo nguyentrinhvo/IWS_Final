@@ -3,6 +3,7 @@ import HotelSearchSummary from '../../../components/user/HotelSearchSummary';
 import HotelFilters from '../../../components/user/HotelFilters';
 import HotelSort from '../../../components/user/HotelSort';
 import HotelCard from '../../../components/user/HotelCard';
+import { hotelService } from '../../../services/hotelService';
 
 const MOCK_SEARCH = {
   location: 'Da Nang',
@@ -11,72 +12,31 @@ const MOCK_SEARCH = {
   guests: '2 Adults, 1 Room'
 };
 
-const MOCK_HOTELS = [
-  {
-    id: 1,
-    name: 'InterContinental Danang Sun Peninsula Resort',
-    location: 'Son Tra Peninsula, Da Nang',
-    stars: 5,
-    rating: 4.9,
-    price: 8500000,
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    amenities: ['Free Wifi', 'Private Pool', 'Spa', 'Gym', 'Breakfast'],
-    isPromoted: true
-  },
-  {
-    id: 2,
-    name: 'Pullman Danang Beach Resort',
-    location: 'Ngu Hanh Son, Da Nang',
-    stars: 5,
-    rating: 4.7,
-    price: 3200000,
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    amenities: ['Free Wifi', 'Beachfront', 'Pool', 'Parking'],
-    isPromoted: false
-  },
-  {
-    id: 3,
-    name: 'Fusion Maia Da Nang',
-    location: 'My Khe Beach, Da Nang',
-    stars: 5,
-    rating: 4.8,
-    price: 5400000,
-    image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    amenities: ['All-inclusive Spa', 'Private Pool', 'Wifi', 'Breakfast'],
-    isPromoted: false
-  },
-  {
-    id: 4,
-    name: 'Hadana Boutique Hotel Da Nang',
-    location: 'Son Tra, Da Nang',
-    stars: 4,
-    rating: 4.5,
-    price: 1200000,
-    image: 'https://images.unsplash.com/photo-1541339946196-5eb5b23a56f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    amenities: ['Free Wifi', 'Pool', 'Rooftop Bar'],
-    isPromoted: false
-  },
-  {
-    id: 5,
-    name: 'Chicland Danang Beach Hotel',
-    location: 'My Khe, Da Nang',
-    stars: 4,
-    rating: 4.6,
-    price: 1850000,
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    amenities: ['Eco-friendly', 'Wifi', 'Pool', 'Sea View'],
-    isPromoted: false
-  }
-];
-
 const HotelSearchResults = () => {
-  const [hotels, setHotels] = useState(MOCK_HOTELS);
+  const [hotels, setHotels] = useState([]);
   const [sort, setSort] = useState('popularity');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchHotels();
   }, []);
+
+  const fetchHotels = async () => {
+    try {
+      setLoading(true);
+      // For now fetching Da Nang as default city if user navigated directly
+      const searchCity = MOCK_SEARCH.location;
+      const data = await hotelService.searchHotels(searchCity);
+      setHotels(data.content || []); // Spring Pageable returns 'content' array
+    } catch (error) {
+      console.error('Failed to fetch hotels:', error);
+      setHotels([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-gray-50/50 min-h-screen pb-20 -mx-4">

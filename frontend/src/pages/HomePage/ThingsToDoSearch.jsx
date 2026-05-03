@@ -12,8 +12,10 @@ import {
   FlightsIcon,
   ToursIcon
 } from './SearchIcons';
+import { useNavigate } from 'react-router-dom';
 
 const ThingsToDoSearch = ({ t, locale }) => {
+  const navigate = useNavigate();
   const thingsToDoSuggestions = [
     { id: 'attractions', label: t('attractions'), icon: 'attractions' },
     { id: 'spaRelaxation', label: t('spaRelaxation'), icon: 'spaRelaxation' },
@@ -66,7 +68,10 @@ const ThingsToDoSearch = ({ t, locale }) => {
             />
           </div>
 
-          <div className="w-[65px] h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-r-lg shrink-0 transition-colors hover:bg-[#b57215]">
+          <div 
+            onClick={() => navigate('/things-to-do')}
+            className="w-[65px] h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-r-lg shrink-0 transition-colors hover:bg-[#b57215]"
+          >
             <svg className="w-7 h-7 text-white font-bold" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>

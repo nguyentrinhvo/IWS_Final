@@ -27,6 +27,7 @@ import ToursPage from '../pages/ToursPage/ToursPage';
 import Tour from '../pages/ToursDetailPage/Tour';
 import ToursBooking from '../pages/ToursBookingPage/ToursBooking';
 import TourPayments from '../pages/TourPayments/TourPayments';
+import PaymentResult from '../pages/PaymentResult';
 import UserAccount from '../pages/PersonalProfile/UserAccount';
 import ThingsToDo from '../pages/ThingsToDo/ThingsToDo';
 import OAuth2RedirectHandler from '../pages/OAuth2RedirectHandler';
@@ -44,7 +45,6 @@ const UserRoutes = () => {
         <Route path="/transport/payment" element={<TransportPayment />} />
         <Route path="/transport/success" element={<TransportBookingSuccess />} />
         <Route path="/transport/manage" element={<ManageTransportBooking />} />
-        <Route path="/payment" element={<TransportPayment />} />
         <Route path="/hotels" element={<HomepageHotel />} />
         <Route path="/hotels/search" element={<HotelSearchResults />} />
         <Route path="/hotels/detail/:id" element={<HotelDetail />} />
@@ -61,6 +61,7 @@ const UserRoutes = () => {
         <Route path="/profile/:tab" element={<UserAccount />} />
         <Route path="/things-to-do" element={<ThingsToDo />} />
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+        <Route path="/payment-result" element={<PaymentResult />} />
       </Route>
       <Route path="/tours" element={<ToursPage />} />
       <Route path="/tour/:id" element={<Tour />} />

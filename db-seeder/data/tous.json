@@ -1,0 +1,198 @@
+[
+  {
+    "id": "TOUR_001",
+    "title": "Khám phá Hà Nội - Hạ Long - Sapa 5 ngày 4 đêm",
+    "location": "Hà Nội",
+    "price": 5490000,
+    "duration": "5 ngày 4 đêm",
+    "rating": 4.8,
+    "reviewsCount": 1289,
+    "image": "https://picsum.photos/seed/tour001/800/600",
+    "isFeatured": true,
+    "description": "Trải nghiệm văn hóa Bắc Bộ: phố cổ Hà Nội, vịnh Hạ Long kỳ quan, ruộng bậc thang Sapa.",
+    "itinerary": [
+      { "day": 1, "title": "Hà Nội - Nhận khách - Tham quan phố cổ", "meals": "Sáng, Trưa", "hotel": "Hanoi Paradise Hotel" },
+      { "day": 2, "title": "Hà Nội - Hạ Long - Tàu ngủ đêm", "meals": "Sáng, Trưa, Tối", "hotel": "Cruise 5 sao" },
+      { "day": 3, "title": "Hạ Long - Hà Nội - Tàu hỏa đi Lào Cai", "meals": "Sáng, Trưa", "hotel": "Tàu hỏa" },
+      { "day": 4, "title": "Sapa - Y Tý - Thăm bản Mông", "meals": "Sáng, Trưa, Tối", "hotel": "Sapa Highland Resort" },
+      { "day": 5, "title": "Sapa - Hà Nội - Kết thúc tour", "meals": "Sáng", "hotel": "" }
+    ],
+    "highlights": [
+      "Tham quan Văn Miếu - Quốc Tử Giám",
+      "Cruise vịnh Hạ Long 2 ngày 1 đêm trên tàu 5 sao",
+      "Trekking bản Cát Cát, làng Mông",
+      "Thưởng thức đặc sản: phố cổ Hà Nội, chả mực Hạ Long, cơm lam Sapa"
+    ],
+    "inclusions": [
+      "Xe đưa đón sân bay/ga tàu",
+      "Khách sạn 3-4 sao (phòng đôi/twin)",
+      "Bữa sáng buffet, 3 bữa chính/ngày",
+      "Vé tham quan, cáp treo Fansipan",
+      "Hướng dẫn viên tiếng Việt/Anh"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Đồ uống, chi phí cá nhân",
+      "Tips cho HDV, lái xe",
+      "Visa (nếu có)"
+    ],
+    "availableDates": ["2026-06-10", "2026-06-18", "2026-06-25", "2026-07-02"],
+    "departure": "Hà Nội (có thể khởi hành từ HN hoặc sân bay Nội Bài)",
+    "tourCode": "HAN-HLG-SAP-5D",
+    "images": [
+      "https://picsum.photos/seed/tour001_1/800/600",
+      "https://picsum.photos/seed/tour001_2/800/600",
+      "https://picsum.photos/seed/tour001_3/800/600"
+    ],
+    "departureSchedules": [
+      { "id": "schedule_001_1", "departure": "2026-06-10", "return": "2026-06-14", "seats": 12, "price": 5490000 },
+      { "id": "schedule_001_2", "departure": "2026-06-18", "return": "2026-06-22", "seats": 8, "price": 5690000 },
+      { "id": "schedule_001_3", "departure": "2026-06-25", "return": "2026-06-29", "seats": 15, "price": 5490000 }
+    ],
+    "terms": "Hủy tour trước 15 ngày hoàn 100%, trước 7 ngày hoàn 50%, trước 3 ngày hoàn 0%."
+  },
+  {
+    "id": "TOUR_002",
+    "title": "Đà Nẵng - Hội An - Bà Nà Hills 3 ngày 2 đêm",
+    "location": "Đà Nẵng",
+    "price": 3750000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.9,
+    "reviewsCount": 2456,
+    "image": "https://picsum.photos/seed/tour002/800/600",
+    "isFeatured": true,
+    "description": "Khám phá thành phố đáng sống Đà Nẵng, phố cổ Hội An mộng mơ và cầu vàng Bà Nà Hills.",
+    "itinerary": [
+      { "day": 1, "title": "Đà Nẵng - Nhận khách - Bán đảo Sơn Trà - Biển Mỹ Khê", "meals": "Trưa, Tối", "hotel": "Đà Nẵng Golden Hotel" },
+      { "day": 2, "title": "Bà Nà Hills - Cầu Vàng - Vườn hoa - Rời đi Hội An", "meals": "Sáng, Trưa, Tối", "hotel": "Hội An Ancient Town Hotel" },
+      { "day": 3, "title": "Tham quan phố cổ Hội An - Làng gốm Thanh Hà - Tiễn khách", "meals": "Sáng, Trưa", "hotel": "" }
+    ],
+    "highlights": [
+      "Check-in cầu Vàng, vườn Pháp",
+      "Dạo phố cổ Hội An về đêm thả đèn hoa đăng",
+      "Tắm biển Mỹ Khê - top 10 biển đẹp nhất thế giới",
+      "Thưởng thức mì Quảng, cao lầu, bánh xèo"
+    ],
+    "inclusions": [
+      "Xe 16 chỗ đời mới",
+      "Khách sạn 3 sao trung tâm",
+      "Bữa sáng, 3 bữa chính",
+      "Vé cáp treo Bà Nà Hills",
+      "Nước suối 0.5L/ngày"
+    ],
+    "exclusions": ["Vé máy bay", "Bữa tối ngày 2 (tự do khám phá ẩm thực)", "Chi phí cá nhân"],
+    "availableDates": ["2026-06-05", "2026-06-12", "2026-06-19", "2026-06-26"],
+    "departure": "Đà Nẵng (sân bay / ga tàu)",
+    "tourCode": "DAD-HOI-3D",
+    "images": [
+      "https://picsum.photos/seed/tour002_1/800/600",
+      "https://picsum.photos/seed/tour002_2/800/600",
+      "https://picsum.photos/seed/tour002_3/800/600"
+    ],
+    "departureSchedules": [
+      { "id": "schedule_002_1", "departure": "2026-06-05", "return": "2026-06-07", "seats": 20, "price": 3750000 },
+      { "id": "schedule_002_2", "departure": "2026-06-12", "return": "2026-06-14", "seats": 15, "price": 3850000 },
+      { "id": "schedule_002_3", "departure": "2026-06-19", "return": "2026-06-21", "seats": 10, "price": 3950000 }
+    ],
+    "terms": "Hủy tour trước 7 ngày hoàn 100%, trước 3 ngày hoàn 50%, không hoàn trong ngày."
+  },
+  {
+    "id": "TOUR_003",
+    "title": "TP.HCM - Củ Chi - Mỹ Tho 2 ngày 1 đêm",
+    "location": "Hồ Chí Minh",
+    "price": 1850000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.5,
+    "reviewsCount": 687,
+    "image": "https://picsum.photos/seed/tour003/800/600",
+    "isFeatured": false,
+    "description": "Tìm hiểu lịch sử địa đạo Củ Chi, khám phá miền Tây sông nước Mỹ Tho.",
+    "itinerary": [
+      { "day": 1, "title": "TP.HCM - Địa đạo Củ Chi - Chợ Bến Thành", "meals": "Sáng, Trưa", "hotel": "Saigon Central Hotel" },
+      { "day": 2, "title": "TP.HCM - Mỹ Tho - Tham quan làng nghề kẹo dừa", "meals": "Sáng, Trưa", "hotel": "" }
+    ],
+    "highlights": [
+      "Trải nghiệm đường hầm Củ Chi",
+      "Đi thuyền trên sông Tiền, thăm cù lao Thới Sơn",
+      "Thưởng thức trái cây miệt vườn, kẹo dừa"
+    ],
+    "inclusions": ["Xe tham quan", "Khách sạn 3 sao tiêu chuẩn", "Bữa sáng, 2 bữa chính", "Vé tham quan địa đạo", "Thuyền tham quan Mỹ Tho"],
+    "exclusions": ["Vé máy bay", "Bữa tối ngày 1", "Chi phí cá nhân", "Tips"],
+    "availableDates": ["2026-06-08", "2026-06-15", "2026-06-22"],
+    "departure": "Hồ Chí Minh (trung tâm Q1)",
+    "tourCode": "SGN-CCH-MTH-2D",
+    "images": [
+      "https://picsum.photos/seed/tour003_1/800/600",
+      "https://picsum.photos/seed/tour003_2/800/600"
+    ],
+    "departureSchedules": [
+      { "id": "schedule_003_1", "departure": "2026-06-08", "return": "2026-06-09", "seats": 25, "price": 1850000 },
+      { "id": "schedule_003_2", "departure": "2026-06-15", "return": "2026-06-16", "seats": 18, "price": 1950000 }
+    ],
+    "terms": "Hủy tour trước 3 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_004",
+    "title": "Nha Trang - Vinpearl Land - Lặn ngắm san hô 3 ngày 2 đêm",
+    "location": "Khánh Hòa",
+    "price": 4250000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.7,
+    "reviewsCount": 1542,
+    "image": "https://picsum.photos/seed/tour004/800/600",
+    "isFeatured": true,
+    "description": "Nghỉ dưỡng tại thiên đường biển Nha Trang, trải nghiệm công viên VinWonders.",
+    "itinerary": [
+      { "day": 1, "title": "Nha Trang - Nhận khách - Tham quan chùa Long Sơn - Tắm bùn", "meals": "Trưa, Tối", "hotel": "Nha Trang Beach Resort" },
+      { "day": 2, "title": "VinWonders - Cáp treo - Thủy cung - Công viên nước", "meals": "Sáng, Tối", "hotel": "Nha Trang Beach Resort" },
+      { "day": 3, "title": "Lặn ngắm san hô tại Hòn Mun - Tiễn khách", "meals": "Sáng, Trưa", "hotel": "" }
+    ],
+    "highlights": ["Cáp treo vượt biển dài nhất thế giới", "Thủy cung khổng lồ", "Lặn ngắm san hô", "Tắm bùn khoáng nóng"],
+    "inclusions": ["Xe đưa đón", "Khách sạn 4 sao View biển", "Bữa sáng buffet", "Vé VinWonders + cáp treo", "Thuyền đi Hòn Mun"],
+    "exclusions": ["Vé máy bay", "Bữa trưa ngày 2 (tự do tại VinWonders)", "Chi phí cá nhân"],
+    "availableDates": ["2026-06-04", "2026-06-11", "2026-06-18"],
+    "departure": "Nha Trang (sân bay Cam Ranh / ga Nha Trang)",
+    "tourCode": "NTR-VIN-3D",
+    "images": [
+      "https://picsum.photos/seed/tour004_1/800/600",
+      "https://picsum.photos/seed/tour004_2/800/600"
+    ],
+    "departureSchedules": [
+      { "id": "schedule_004_1", "departure": "2026-06-04", "return": "2026-06-06", "seats": 16, "price": 4250000 },
+      { "id": "schedule_004_2", "departure": "2026-06-11", "return": "2026-06-13", "seats": 10, "price": 4450000 }
+    ],
+    "terms": "Hủy trước 5 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_005",
+    "title": "Đà Lạt mộng mơ - Thác Pongour - Chợ Âm Phủ 3 ngày 2 đêm",
+    "location": "Lâm Đồng",
+    "price": 3150000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.6,
+    "reviewsCount": 982,
+    "image": "https://picsum.photos/seed/tour005/800/600",
+    "isFeatured": false,
+    "description": "Thành phố ngàn hoa, săn mây, check-in nhà thờ, ga xe lửa cổ.",
+    "itinerary": [
+      { "day": 1, "title": "Đà Lạt - Thung lũng Tình yêu - Hồ Xuân Hương", "meals": "Trưa, Tối", "hotel": "Đà Lạt Tuyết Hoa Hotel" },
+      { "day": 2, "title": "Thác Pongour - Làng Cù Lần - Chợ Âm Phủ", "meals": "Sáng, Trưa, Tối", "hotel": "Đà Lạt Tuyết Hoa Hotel" },
+      { "day": 3, "title": "Nhà thờ Con Gà - Ga Đà Lạt - Kết thúc", "meals": "Sáng", "hotel": "" }
+    ],
+    "highlights": ["Săn mây tại Đà Lạt", "Khám phá thác Pongour hùng vĩ", "Chợ Âm Phủ - ẩm thực độc đáo", "Check-in ga xe lửa cổ nhất Đông Dương"],
+    "inclusions": ["Xe du lịch", "Khách sạn 3 sao trung tâm", "Bữa sáng, 3 bữa chính", "Vé tham quan các điểm"],
+    "exclusions": ["Vé máy bay", "Chi phí cá nhân"],
+    "availableDates": ["2026-06-06", "2026-06-13", "2026-06-20"],
+    "departure": "Đà Lạt (sân bay Liên Khương)",
+    "tourCode": "DLT-PGN-3D",
+    "images": [
+      "https://picsum.photos/seed/tour005_1/800/600",
+      "https://picsum.photos/seed/tour005_2/800/600"
+    ],
+    "departureSchedules": [
+      { "id": "schedule_005_1", "departure": "2026-06-06", "return": "2026-06-08", "seats": 22, "price": 3150000 },
+      { "id": "schedule_005_2", "departure": "2026-06-13", "return": "2026-06-15", "seats": 14, "price": 3250000 }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  }
+]

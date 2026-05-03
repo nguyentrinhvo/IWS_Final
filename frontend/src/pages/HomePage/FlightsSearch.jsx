@@ -14,8 +14,10 @@ import {
   getMonthName,
   formatDate
 } from '../../utils/SearchUtils';
+import { useNavigate } from 'react-router-dom';
 
 const FlightsSearch = ({ t, locale }) => {
+  const navigate = useNavigate();
   const [activeFlightFilter, setActiveFlightFilter] = useState('oneWayRoundTrip');
   const [isReturnFlight, setIsReturnFlight] = useState(false);
 
@@ -708,7 +710,10 @@ const FlightsSearch = ({ t, locale }) => {
                   </div>
                 </div>
               </div>
-              <div className="flights_search_btn md:w-[60px] xl:w-[73px] h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-full shrink-0 transition-colors hover:bg-[#b57215]">
+              <div 
+                onClick={() => navigate('/flights/search')}
+                className="flights_search_btn md:w-[60px] xl:w-[73px] h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-full shrink-0 transition-colors hover:bg-[#b57215]"
+              >
                 <svg className="md:w-5 md:h-5 xl:w-7 xl:h-7 text-white font-bold" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
@@ -892,7 +897,10 @@ const FlightsSearch = ({ t, locale }) => {
                   </div>
                 </div>
               </div>
-              <div className="w-full h-[52px] md:h-[62px] bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl gap-2 hover:bg-[#b57215] transition-colors shadow-lg">
+              <div 
+                onClick={() => navigate('/flights/search')}
+                className="w-full h-[52px] md:h-[62px] bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl gap-2 hover:bg-[#b57215] transition-colors shadow-lg"
+              >
                 <svg className="w-6 h-6 text-white shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
@@ -1128,7 +1136,10 @@ const FlightsSearch = ({ t, locale }) => {
                   </svg>
                   <span className="text-[#180B51] text-[16px] font-bold whitespace-nowrap">{t('addAnotherFlight')}</span>
                 </div>
-                <div className={`h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl shrink-0 transition-colors hover:bg-[#b57215] px-6 gap-3 ${multiCityFlights.length >= 3 ? 'mr-[61px]' : ''}`}>
+                <div 
+                  onClick={() => navigate('/flights/search')}
+                  className={`h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl shrink-0 transition-colors hover:bg-[#b57215] px-6 gap-3 ${multiCityFlights.length >= 3 ? 'mr-[61px]' : ''}`}
+                >
                   <svg className="w-6 h-6 text-white font-bold shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                   </svg>
@@ -1335,7 +1346,10 @@ const FlightsSearch = ({ t, locale }) => {
                     <span className="text-[#180B51] text-[14px] md:text-[16px] font-bold whitespace-nowrap">{t('addAnotherFlight')}</span>
                   </div>
                 </div>
-                <div className="w-full h-[52px] md:h-[62px] bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl gap-2 hover:bg-[#b57215] transition-colors shadow-lg">
+                <div 
+                  onClick={() => navigate('/flights/search')}
+                  className="w-full h-[52px] md:h-[62px] bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl gap-2 hover:bg-[#b57215] transition-colors shadow-lg"
+                >
                   <svg className="w-6 h-6 text-white shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                   </svg>

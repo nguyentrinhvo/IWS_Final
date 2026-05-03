@@ -1,8 +1,6 @@
-// src/pages/ToursDetailPage/TourSchedulePrice.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
-import { mockData } from '../../data/mockData';
 
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat('vi-VN').format(amount);
@@ -16,13 +14,21 @@ const formatShortDate = (dateStr) => {
   return `${day}, ${dd}/${mm}`;
 };
 
-const TourSchedulePrice = ({ data, tourId = "TOUR001" }) => {
+const TourSchedulePrice = ({ data, tourId }) => {
   const navigate = useNavigate();
-  const tour = useMemo(() => {
-    return mockData.tours.find(t => t.id === tourId) || mockData.tours[0];
-  }, [tourId]);
-
-  const departureSchedules = tour?.departureSchedules || [];
+  
+  // Use data passed from parent instead of mockData
+  // data here is mappedData.schedulePrice from Tour.jsx
+  // but wait, we need the actual departureSchedules array.
+  // In Tour.jsx, we added departureSchedules to the main object.
+  // ToursDetailPage.jsx passes data.schedulePrice to TourSchedulePrice.
+  // Let's assume we pass the whole tour object or at least the schedules.
+  
+  // Actually, I'll update ToursDetailPage.jsx to pass the whole mapped tour object
+  // or at least the schedules.
+  
+  const departureSchedules = data?.departureSchedules || [];
+  const tour = data?.tour || {};
   
   const [selectedId, setSelectedId] = useState(null);
   const [windowStartIndex, setWindowStartIndex] = useState(0);
@@ -115,16 +121,16 @@ const TourSchedulePrice = ({ data, tourId = "TOUR001" }) => {
       alert('Please select at least one guest');
       return;
     }
-    navigate('/payment', {
-      state: {
-        booking: {
-          tour: tour,
-          schedule: selectedDateObj,
-          passengers: guests,
-          totalPrice: totalPrice
-        }
-      }
-    });
+    
+    // Cuộn xuống phần thông tin liên hệ và đặt chỗ chính
+    const el = document.getElementById('tour-book-now');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      // Gửi event để TourBookNow mở tab nhập thông tin (Step 3)
+      window.dispatchEvent(new CustomEvent('openContactForm', {
+        detail: { dateId: selectedId, guests: guests }
+      }));
+    }
   };
 
   const guestTypes = [
