@@ -4,6 +4,7 @@ import com.example.demo.security.CustomOAuth2UserService;
 import com.example.demo.security.JwtAuthFilter;
 import com.example.demo.security.OAuth2AuthenticationSuccessHandler;
 import com.example.demo.util.RateLimitFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -89,6 +90,11 @@ public class SecurityConfig {
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/categories").permitAll()
                 .requestMatchers("/api/tours/**").permitAll()
+                // Hotel public endpoints (browse, search, detail, featured)
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hotels/search").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hotels/featured").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hotels/{id}").permitAll()
+                // Attractions
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions/{id}").permitAll()
                 // Payment gateway callbacks (VNPay / PayPal redirects — no JWT)
@@ -103,6 +109,15 @@ public class SecurityConfig {
                                 .userService(customOAuth2UserService)
                         )
                         .successHandler(oAuth2AuthenticationSuccessHandler)
+                )
+                // Return 401 JSON instead of redirect to /login for API requests
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+                            response.getWriter().write("{\"error\":\"Unauthorized\",\"message\":\"Authentication required\"}");
+                        })
                 );
 
         // Rate limit filter runs first, then JWT auth

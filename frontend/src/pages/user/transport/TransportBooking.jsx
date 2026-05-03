@@ -10,7 +10,7 @@ import { useAuth } from '../../../context/AuthContext';
 const TransportBooking = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser: user } = useAuth();
+  const { currentUser: user, setIsLoginModalOpen } = useAuth();
   
   const { tripId, trip, selectedSeats } = location.state || {};
 
@@ -47,7 +47,7 @@ const TransportBooking = () => {
   const handleContinue = async () => {
     if (!user) {
         alert("Please login to book tickets");
-        navigate('/login', { state: { from: location.pathname, bookingState: location.state } });
+        setIsLoginModalOpen(true);
         return;
     }
 

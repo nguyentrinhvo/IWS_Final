@@ -87,9 +87,10 @@ public class HotelService {
         if (minPrice != null && maxPrice != null) {
             return hotelRepository.findByPriceRange(city, minPrice, maxPrice, pageable).map(this::mapToDTO);
         } else if (minStar != null) {
-            return hotelRepository.findByCityAndStarRatingGreaterThanEqualAndIsActiveTrue(city, minStar, pageable).map(this::mapToDTO);
+            return hotelRepository.findByCityIgnoreCaseAndStarRatingGreaterThanEqualAndIsActiveTrue(city, minStar, pageable).map(this::mapToDTO);
         } else {
-            return hotelRepository.findByCityAndIsActiveTrue(city, pageable).map(this::mapToDTO);
+            // Flexible keyword search (matches city, address, or name)
+            return hotelRepository.searchByKeyword(city, pageable).map(this::mapToDTO);
         }
     }
 

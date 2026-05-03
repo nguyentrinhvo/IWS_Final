@@ -2,7 +2,7 @@
   {
     "id": "HOTEL_001",
     "name": "Vinpearl Luxury Nha Trang",
-    "location": "Khánh Hòa",
+    "location": "Nha Trang",
     "address": "Đảo Hòn Tre, Vĩnh Nguyên, Nha Trang",
     "starRating": 5,
     "price": 4500000,
@@ -37,7 +37,7 @@
   {
     "id": "HOTEL_002",
     "name": "JW Marriott Phú Quốc Emerald Bay",
-    "location": "Kiên Giang",
+    "location": "Phú Quốc",
     "address": "Bãi Khem, An Thới, Phú Quốc",
     "starRating": 5,
     "price": 6800000,
@@ -141,7 +141,7 @@
   {
     "id": "HOTEL_005",
     "name": "Ana Mandara Đà Lạt",
-    "location": "Lâm Đồng",
+    "location": "Đà Lạt",
     "address": "Lê Lai, Phường 5, Đà Lạt",
     "starRating": 5,
     "price": 3200000,
@@ -206,5 +206,45 @@
     ],
     "nearbyAttractions": ["Nhà thờ Đức Bà", "Bưu điện trung tâm", "Chợ Bến Thành"],
     "coordinates": { "lat": 10.7737, "lng": 106.7020 }
+  },
+  {
+    "id": "HOTEL_007",
+    "name": "Four Seasons Resort The Nam Hai",
+    "location": "Hội An",
+    "address": "Điện Dương, Điện Bàn, Hội An",
+    "starRating": 5,
+    "price": 12500000,
+    "rating": 4.9,
+    "reviewsCount": 1543,
+    "image": "https://picsum.photos/seed/hoian_hotel/800/600",
+    "isFeatured": true,
+    "description": "Khu nghỉ dưỡng sang trọng bậc nhất Hội An, tọa lạc bên bờ biển Hà My xinh đẹp với thiết kế mang đậm bản sắc Việt.",
+    "rooms": [
+      { "type": "One-Bedroom Villa", "price": 12500000, "maxGuests": 2, "bedType": "King", "size": "80m²", "available": 5 },
+      { "type": "Beachfront Villa", "price": 25000000, "maxGuests": 3, "bedType": "King", "size": "110m²", "available": 2 }
+    ],
+    "amenities": ["Hồ bơi vô cực", "Bãi biển riêng", "Spa trên hồ", "Yoga & Wellness", "Nhà hàng Lá Sen", "Wifi miễn phí"],
+    "highlights": ["Top resort thế giới", "Kiến trúc phong thủy", "Gần phố cổ Hội An"],
+    "images": ["https://picsum.photos/seed/hoian_1/800/600", "https://picsum.photos/seed/hoian_2/800/600"]
+  },
+  {
+    "id": "HOTEL_008",
+    "name": "The Imperial Hotel Vung Tau",
+    "location": "Vũng Tàu",
+    "address": "159 Thùy Vân, Thắng Tam, Vũng Tàu",
+    "starRating": 5,
+    "price": 2800000,
+    "rating": 4.6,
+    "reviewsCount": 4200,
+    "image": "https://picsum.photos/seed/vungtau_hotel/800/600",
+    "isFeatured": true,
+    "description": "Khách sạn phong cách hoàng gia Anh duy nhất tại Vũng Tàu, view biển bãi Sau tuyệt đẹp.",
+    "rooms": [
+      { "type": "Deluxe Victorian", "price": 2800000, "maxGuests": 2, "bedType": "King", "size": "40m²", "available": 15 },
+      { "type": "Grand Suite", "price": 5500000, "maxGuests": 3, "bedType": "King", "size": "70m²", "available": 5 }
+    ],
+    "amenities": ["Hồ bơi ngoài trời", "Bãi biển riêng", "Beach Club", "Gym & Spa", "Nhà hàng Hải Vương", "Wifi miễn phí"],
+    "highlights": ["Kiến trúc Victorian", "Sát bãi Sau", "Hải sản tươi sống"],
+    "images": ["https://picsum.photos/seed/vt_1/800/600", "https://picsum.photos/seed/vt_2/800/600"]
   }
 ]

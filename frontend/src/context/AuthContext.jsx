@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
 
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   // ── Khởi tạo: đọc user từ storage ──────────────────────────
   useEffect(() => {
     const raw = localStorage.getItem('authUser') || sessionStorage.getItem('authUser');
@@ -31,6 +33,7 @@ export const AuthProvider = ({ children }) => {
     storage.setItem('token', userData.token);
     storage.setItem('authUser', JSON.stringify(userData));
     setCurrentUser(userData);
+    setIsLoginModalOpen(false); // Close modal on success
   }, []);
 
   // ── Đăng xuất ───────────────────────────────────────────────
@@ -70,6 +73,8 @@ export const AuthProvider = ({ children }) => {
       login,
       logout,
       updateUser,
+      isLoginModalOpen,
+      setIsLoginModalOpen,
     }}>
       {children}
     </AuthContext.Provider>
