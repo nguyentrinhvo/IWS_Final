@@ -150,6 +150,7 @@ async function run() {
         totalReviews: f.reviewsCount || 0,
         isFeatured: f.isFeatured || false,
         description: f.description || '',
+        imageUrl: f.image || null,
         amenities: f.amenities || [],
         baggagePolicy: f.baggagePolicy || {},
         schedules: f.schedules ? f.schedules.map(sch => ({

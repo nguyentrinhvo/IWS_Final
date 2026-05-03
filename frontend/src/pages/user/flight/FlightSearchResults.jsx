@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import flightService from '../../../services/flightService';
 import FlightSearchSummary from '../../../components/user/FlightSearchSummary';
 import FlightFiltersSidebar from '../../../components/user/FlightFiltersSidebar';
 import FlightSortBar from '../../../components/user/FlightSortBar';
@@ -160,19 +161,29 @@ const matchesDepartureTime = (timeStr, slots) => {
 // ─── Page ────────────────────────────────────────────────────────────────────
 const FlightSearchResults = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = location.state?.searchParams || {};
 
-  // Tạo đối tượng search summary từ dữ liệu thực tế (hoặc fallback)
   const searchSummary = useMemo(() => {
+    const getCode = (loc) => {
+      if (!loc) return null;
+      if (loc.airport) {
+        const match = loc.airport.match(/\(([A-Z]{3})\)/);
+        if (match) return match[1];
+      }
+      if (loc.name) return loc.name.slice(0, 3).toUpperCase();
+      return null;
+    };
+
     if (searchParams.tripType === 'multicity') {
       const firstSegment = searchParams.segments?.[0];
       return {
         from: { 
-          code: firstSegment?.from?.name?.slice(0, 3).toUpperCase() || 'HAN', 
+          code: getCode(firstSegment?.from) || 'HAN', 
           city: firstSegment?.from?.name || 'Hanoi' 
         },
         to: { 
-          code: firstSegment?.to?.name?.slice(0, 3).toUpperCase() || 'SGN', 
+          code: getCode(firstSegment?.to) || 'SGN', 
           city: firstSegment?.to?.name || 'Ho Chi Minh City' 
         },
         departDate: firstSegment?.date ? new Date(firstSegment.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '02 May 2026',
@@ -192,11 +203,11 @@ const FlightSearchResults = () => {
       
       return {
         from: { 
-          code: fromName.slice(0, 3).toUpperCase(), 
+          code: getCode(searchParams.from) || fromName.slice(0, 3).toUpperCase(), 
           city: fromName 
         },
         to: { 
-          code: toName.slice(0, 3).toUpperCase(), 
+          code: getCode(searchParams.to) || toName.slice(0, 3).toUpperCase(), 
           city: toName 
         },
         departDate: departDateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -210,23 +221,97 @@ const FlightSearchResults = () => {
     }
   }, [searchParams]);
 
-  // Lọc mock data theo tuyến bay (fromCode, toCode) nếu có trong searchParams
-  const relevantMockFlights = useMemo(() => {
-    if (searchParams.tripType === 'multicity') {
-      // Với multi-city, chỉ hiển thị segment đầu tiên (demo)
-      const first = searchParams.segments?.[0];
-      if (first?.from?.name && first?.to?.name) {
-        const fromCode = first.from.name.slice(0, 3).toUpperCase();
-        const toCode = first.to.name.slice(0, 3).toUpperCase();
-        return MOCK_FLIGHTS.filter(f => f.fromCode === fromCode && f.toCode === toCode);
+  const [flightsData, setFlightsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFlights = async () => {
+      setIsLoading(true);
+      try {
+        let fromCode = 'HAN';
+        let toCode = 'SGN';
+        let flightDateStr = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
+
+        const getCode = (loc) => {
+          if (!loc) return null;
+          if (loc.airport) {
+            const match = loc.airport.match(/\(([A-Z]{3})\)/);
+            if (match) return match[1];
+          }
+          if (loc.name) return loc.name.slice(0, 3).toUpperCase();
+          return null;
+        };
+
+        if (searchParams.tripType === 'multicity') {
+          const first = searchParams.segments?.[0];
+          if (first?.from) fromCode = getCode(first.from) || fromCode;
+          if (first?.to) toCode = getCode(first.to) || toCode;
+          if (first?.date) {
+            const d = new Date(first.date);
+            flightDateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          }
+        } else {
+          if (searchParams.from) fromCode = getCode(searchParams.from) || fromCode;
+          if (searchParams.to) toCode = getCode(searchParams.to) || toCode;
+          if (searchParams.departureDate) {
+            const d = new Date(searchParams.departureDate);
+            flightDateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          }
+        }
+
+        const response = await flightService.searchFlights({
+          departureAirport: fromCode,
+          arrivalAirport: toCode,
+          flightDate: flightDateStr
+        });
+        
+        const mapped = response.map(flight => {
+          const schedule = flight.schedules?.[0] || {};
+          
+          const formatTime = (timeStr, defaultTime) => {
+            if (!timeStr) return defaultTime;
+            try {
+              const d = new Date(timeStr);
+              if (isNaN(d.getTime())) return defaultTime;
+              return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+            } catch (e) {
+              return defaultTime;
+            }
+          };
+
+          return {
+            id: flight.id,
+            airline: flight.airline,
+            flightNo: flight.flightNumber,
+            aircraft: 'Airbus A320', 
+            fromCode: flight.departureAirport,
+            fromCity: flight.departureAirport, 
+            toCode: flight.arrivalAirport,
+            toCity: flight.arrivalAirport,
+            departTime: formatTime(schedule.departureTime, '06:00'),
+            arriveTime: formatTime(schedule.arrivalTime, '08:00'),
+            arrivalDayOffset: 0,
+            durationMinutes: flight.durationMinutes || 120,
+            stops: 0,
+            price: flight.basePrice || 0,
+            originalPrice: null,
+            cabinClass: flight.cabinClass || 'Economy',
+            seatsLeft: schedule.availableSeats || flight.totalSeats || 0,
+            baggage: '20kg included',
+            meal: 'Included',
+            refundable: true,
+          };
+        });
+        setFlightsData(mapped);
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+        setFlightsData([]);
+      } finally {
+        setIsLoading(false);
       }
-      return MOCK_FLIGHTS;
-    } else {
-      // Lọc theo điểm đi và đến
-      const fromCode = searchParams.from?.name?.slice(0, 3).toUpperCase() || 'HAN';
-      const toCode = searchParams.to?.name?.slice(0, 3).toUpperCase() || 'SGN';
-      return MOCK_FLIGHTS.filter(f => f.fromCode === fromCode && f.toCode === toCode);
-    }
+    };
+
+    fetchFlights();
   }, [searchParams]);
 
   // State filters và sort
@@ -240,9 +325,9 @@ const FlightSearchResults = () => {
   });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  // Áp dụng bộ lọc (airline, departure time, price, cabin, seats) lên relevantMockFlights
+  // Áp dụng bộ lọc (airline, departure time, price, cabin, seats) lên flightsData
   const filtered = useMemo(() => {
-    return relevantMockFlights.filter(f => {
+    return flightsData.filter(f => {
       if (filters.airlines.length > 0 && !filters.airlines.includes(f.airline)) return false;
       if (!matchesDepartureTime(f.departTime, filters.departureTimes)) return false;
       if (f.price > filters.maxPrice) return false;
@@ -250,7 +335,7 @@ const FlightSearchResults = () => {
       if (filters.seatsAvail && f.seatsLeft === 0) return false;
       return true;
     });
-  }, [relevantMockFlights, filters]);
+  }, [flightsData, filters]);
 
   // Sắp xếp
   const sorted = useMemo(() => {
@@ -273,7 +358,7 @@ const FlightSearchResults = () => {
   return (
     <div className="flex flex-col -mx-4 min-h-screen bg-gray-50">
       {/* Search Summary Bar – hiển thị thông tin tìm kiếm thực tế */}
-      <FlightSearchSummary search={searchSummary} onEditSearch={() => {}} />
+      <FlightSearchSummary search={searchSummary} onEditSearch={() => navigate('/flights')} />
 
       <div className="flex-1 max-w-[1200px] mx-auto w-full px-4 py-6">
         {/* Mobile filter toggle */}
@@ -305,7 +390,9 @@ const FlightSearchResults = () => {
               onSortChange={setSort}
               totalResults={sorted.length}
             />
-            {sorted.length > 0 ? (
+            {isLoading ? (
+              <div className="flex justify-center p-8"><p>Loading flights...</p></div>
+            ) : sorted.length > 0 ? (
               <FlightList flights={sorted} isLoading={false} />
             ) : (
               <FlightEmptyState onReset={resetFilters} />

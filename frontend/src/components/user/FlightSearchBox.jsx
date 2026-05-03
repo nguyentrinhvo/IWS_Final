@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+import flightService from '../../services/flightService';
 import {
   CalendarIcon,
   AdultIcon,
@@ -71,49 +72,29 @@ const FlightSearchBox = () => {
   const mobilePassengersRef = useRef(null);
   const mobileCabinRef = useRef(null);
   const navigate = useNavigate();
+  const [dbLocations, setDbLocations] = useState([]);
   
 
-  const flightLocationCategories = [
-    {
-      titleKey: "flightPopularCities",
-      places: [
-        { name: "Hong Kong", airport: "Hong Kong International Airport" },
-        { name: "Korea", airport: "Incheon International Airport" },
-        { name: "China", airport: "Beijing Capital International Airport" },
-        { name: "Japan", airport: "Narita International Airport" },
-        { name: "Singapore", airport: "Changi Airport" },
-      ]
-    },
-    {
-      titleKey: "flightVietnam",
-      places: [
-        { name: "Phu Quoc", airport: "Phu Quoc International Airport" },
-        { name: "Ha Long", airport: "Van Don International Airport" },
-        { name: "Da Nang", airport: "Da Nang International Airport" },
-        { name: "Da Lat", airport: "Lien Khuong Airport" },
-      ]
-    },
-    {
-      titleKey: "flightEurope",
-      places: [
-        { name: "America", airport: "John F. Kennedy International Airport" },
-        { name: "Germany", airport: "Frankfurt Airport" },
-      ]
-    },
-    {
-      titleKey: "flightAsia",
-      places: [
-        { name: "China", airport: "Beijing Capital International Airport" },
-        { name: "Singapore", airport: "Changi Airport" },
-        { name: "Australia", airport: "Sydney Kingsford Smith Airport" },
-        { name: "Laos", airport: "Wattay International Airport" },
-        { name: "Thai", airport: "Suvarnabhumi Airport" },
-        { name: "Cambodia", airport: "Phnom Penh International Airport" },
-      ]
-    },
-  ];
+  const airportMap = {
+    "HAN": { name: "Hanoi", airport: "Noi Bai International Airport (HAN)" },
+    "SGN": { name: "Ho Chi Minh City", airport: "Tan Son Nhat International Airport (SGN)" },
+    "DAD": { name: "Da Nang", airport: "Da Nang International Airport (DAD)" },
+    "PQC": { name: "Phu Quoc", airport: "Phu Quoc International Airport (PQC)" },
+    "CXR": { name: "Nha Trang", airport: "Cam Ranh International Airport (CXR)" },
+  };
 
-  const flightAllPlaces = flightLocationCategories.flatMap(c => c.places);
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const locs = await flightService.getLocations();
+        const mapped = locs.map(code => airportMap[code] || { name: code, airport: code });
+        setDbLocations(mapped);
+      } catch (err) {
+        console.error("Failed to fetch flight locations", err);
+      }
+    };
+    fetchLocations();
+  }, []);
 
   const flightFilters = [
     { id: "oneWayRoundTrip", label: t("oneWayRoundTrip") },
@@ -149,8 +130,11 @@ const FlightSearchBox = () => {
 
   const handleSearch = () => {
   // --- Kiểm tra dữ liệu cơ bản ---
+  const finalFrom = flightFrom || (flightFromQuery ? { name: flightFromQuery, airport: flightFromQuery } : null);
+  const finalTo = flightTo || (flightToQuery ? { name: flightToQuery, airport: flightToQuery } : null);
+
   if (activeFlightFilter === "oneWayRoundTrip") {
-    if (!flightFrom || !flightTo) {
+    if (!finalFrom || !finalTo) {
       alert(t("pleaseSelectOriginAndDestination") || "Please select origin and destination");
       return;
     }
@@ -184,12 +168,12 @@ const FlightSearchBox = () => {
 
   if (activeFlightFilter === "oneWayRoundTrip") {
     searchParams.from = {
-      name: flightFrom.name,
-      airport: flightFrom.airport,
+      name: finalFrom.name,
+      airport: finalFrom.airport,
     };
     searchParams.to = {
-      name: flightTo.name,
-      airport: flightTo.airport,
+      name: finalTo.name,
+      airport: finalTo.airport,
     };
     searchParams.departureDate = flightDepartureDate.toISOString();
     if (isReturnFlight && flightReturnDate) {
@@ -365,45 +349,27 @@ const FlightSearchBox = () => {
 
   const renderLocationList = (focus, onSelect) => {
     const query = focus === "from" ? flightFromQuery : flightToQuery;
+    let suggestions = dbLocations;
+    if (query) {
+      suggestions = dbLocations.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.airport.toLowerCase().includes(query.toLowerCase()));
+    }
+    
     return (
       <div className="p-4">
-        {query ? (
-          <div className="flex flex-col gap-1 max-h-[380px] overflow-y-auto custom_scrollbar">
-            {flightAllPlaces
-              .filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.airport.toLowerCase().includes(query.toLowerCase()))
-              .map((place, idx) => (
-                <div key={idx} className="flex flex-col px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
-                  onClick={() => onSelect(place)}
-                >
-                  <span className="text-[#180B51] font-bold text-sm">{place.name}</span>
-                  <span className="text-[#180B51]/50 text-xs">{place.airport}</span>
-                </div>
-              ))}
-          </div>
-        ) : (
-          <div className="max-h-[420px] overflow-y-auto custom_scrollbar">
-            {flightLocationCategories.map((cat) => (
-              <div key={cat.titleKey} className="mb-3">
-                <div className="flex items-center gap-2 mb-2 text-[#007BFF]">
-                  <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                  </svg>
-                  <span className="font-bold text-xs uppercase">{t(cat.titleKey)}</span>
-                </div>
-                <div className="grid grid-cols-2 gap-1">
-                  {cat.places.map((place, idx) => (
-                    <div key={idx} className="px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors text-left"
-                      onClick={() => onSelect(place)}
-                    >
-                      <span className="text-[#180B51] font-medium text-sm">{place.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-col gap-1 max-h-[380px] overflow-y-auto custom_scrollbar">
+          {suggestions.length > 0 ? suggestions.map((place, idx) => (
+            <div key={idx} className="flex flex-col px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+              onClick={() => onSelect(place)}
+            >
+              <span className="text-[#180B51] font-bold text-sm">{place.name}</span>
+              <span className="text-[#180B51]/50 text-xs">{place.airport}</span>
+            </div>
+          )) : (
+            <div className="px-3 py-2 text-sm text-gray-500">
+              Press Search to use "{query}" as custom city.
+            </div>
+          )}
+        </div>
       </div>
     );
   };

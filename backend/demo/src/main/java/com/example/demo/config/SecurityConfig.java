@@ -97,6 +97,11 @@ public class SecurityConfig {
                 // Attractions
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attractions/{id}").permitAll()
+                // Flights public endpoints
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/flights/search").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/flights/locations").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/flights/featured").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/flights/{id}").permitAll()
                 // Payment gateway callbacks (VNPay / PayPal redirects — no JWT)
                 .requestMatchers("/api/payment/vnpay-return").permitAll()
                 .requestMatchers("/api/payment/paypal/success").permitAll()

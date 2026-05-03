@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import BookingSuccessBanner from '../../../components/user/BookingSuccessBanner';
 import BookingInfoCard from '../../../components/user/BookingInfoCard';
 import FlightDetailSummary from '../../../components/user/FlightDetailSummary';
@@ -6,17 +7,19 @@ import PassengerSummary from '../../../components/user/PassengerSummary';
 import BookingActions from '../../../components/user/BookingActions';
 
 const FlightBookingSuccess = () => {
+  const location = useLocation();
+  const { flight, contactInfo, passengers, totalAmount, paymentMethod } = location.state || {};
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // ─── Mock Data ──────────────────────────────────────────────────────────────
-  const mockBooking = {
-    bookingCode: 'HVV-10293X',
-    date: '02 May 2026, 10:15',
+  const booking = {
+    bookingCode: 'HVV-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+    date: new Date().toLocaleString('en-GB'),
     status: 'Paid',
-    email: 'john.doe@example.com',
-    flight: {
+    email: contactInfo?.email || 'john.doe@example.com',
+    flight: flight || {
       airline: 'Vietnam Airlines',
       airlineLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Vietnam_Airlines_logo.svg/200px-Vietnam_Airlines_logo.svg.png',
       flightNo: 'VN-201',
@@ -28,7 +31,12 @@ const FlightBookingSuccess = () => {
       duration: '2h 05m',
       stops: 0,
     },
-    passengers: [
+    passengers: passengers?.map(p => ({
+      firstName: p.firstName.toUpperCase(),
+      lastName: p.lastName.toUpperCase(),
+      seat: 'Auto',
+      ticketNumber: 'TK-' + Math.floor(Math.random() * 1000000000)
+    })) || [
       { firstName: 'JOHN', lastName: 'DOE', seat: '12A', ticketNumber: 'VN-1029384756' }
     ]
   };
@@ -44,17 +52,17 @@ const FlightBookingSuccess = () => {
           <BookingSuccessBanner />
 
           <BookingInfoCard 
-            bookingCode={mockBooking.bookingCode}
-            date={mockBooking.date}
-            status={mockBooking.status}
+            bookingCode={booking.bookingCode}
+            date={booking.date}
+            status={booking.status}
           />
 
           <div className="mb-6">
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Flight Information</p>
-            <FlightDetailSummary flight={mockBooking.flight} />
+            <FlightDetailSummary flight={booking.flight} />
           </div>
 
-          <PassengerSummary passengers={mockBooking.passengers} />
+          <PassengerSummary passengers={booking.passengers} />
 
           {/* Email Notification Note */}
           <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-center gap-4 mb-10">
@@ -66,7 +74,7 @@ const FlightBookingSuccess = () => {
             <div>
               <p className="text-xs text-blue-800 leading-relaxed">
                 E-ticket has been sent to your registered email: <br className="md:hidden" />
-                <strong className="text-blue-900 font-bold ml-1">{mockBooking.email}</strong>
+                <strong className="text-blue-900 font-bold ml-1">{booking.email}</strong>
               </p>
               <button className="text-[10px] font-bold text-blue-600 uppercase mt-1 hover:underline">
                 Resend Email
