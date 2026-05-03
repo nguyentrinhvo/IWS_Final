@@ -61,10 +61,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
         setIsClosing(false);
         onClose();
         if (onRegisterSuccess) {
-          onRegisterSuccess(data); // Assuming data contains user info
-        }
-        if (onSwitchToOtp) {
-          onSwitchToOtp();
+          onRegisterSuccess(data); 
         }
       }, 300);
     } catch (error) {

@@ -521,5 +521,8 @@
   "catAttractions": "Attractions",
   "catExperiences": "Experiences",
   "catEssentials": "Essentials",
-  "catAllActivities": "All Activities"
+  "catAllActivities": "All Activities",
+  "registerSuccessTitle": "Registration Successful!",
+  "registerSuccessDesc": "Welcome to Hanuvivu. Your account has been created successfully. You can now log in to start your journey.",
+  "backToLoginBtn": "Back to Login"
 }

@@ -8,6 +8,7 @@ import ForgotPassword from '../../pages/LoginRegister/ForgotPassword';
 import OtpVerification from '../../pages/LoginRegister/OtpVerification';
 import RegisterOtp from '../../pages/LoginRegister/RegisterOtp';
 import AdditionalInfo from '../../pages/LoginRegister/AdditionalInfo';
+import RegisterSuccess from '../../pages/LoginRegister/RegisterSuccess';
 
 const formatDisplayName = (fullName) => {
   if (!fullName) return '';
@@ -31,6 +32,7 @@ export default function Navbar() {
   const [isOtpOpen, setIsOtpOpen] = useState(false);
   const [isRegisterOtpOpen, setIsRegisterOtpOpen] = useState(false);
   const [isAdditionalInfoOpen, setIsAdditionalInfoOpen] = useState(false);
+  const [isRegisterSuccessOpen, setIsRegisterSuccessOpen] = useState(false);
 
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isUserMenuClosing, setIsUserMenuClosing] = useState(false);
@@ -133,8 +135,8 @@ export default function Navbar() {
     setIsLoginOpen(false);
   };
 
-  const handleRegisterSuccess = (user) => {
-    authLogin(user, false);
+  const handleRegisterSuccess = (data) => {
+    setIsRegisterSuccessOpen(true);
   };
 
   const handleLogout = () => {
@@ -611,7 +613,6 @@ export default function Navbar() {
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
         onSwitchToLogin={() => { setIsRegisterOpen(false); setIsLoginOpen(true); }}
-        onSwitchToOtp={() => { setIsRegisterOpen(false); setIsRegisterOtpOpen(true); }}
         onRegisterSuccess={handleRegisterSuccess}
       />
       <ForgotPassword
@@ -625,6 +626,15 @@ export default function Navbar() {
         onClose={() => setIsOtpOpen(false)}
         onBackToLogin={() => { setIsOtpOpen(false); setIsLoginOpen(true); }}
       />
+      <RegisterSuccess
+        isOpen={isRegisterSuccessOpen}
+        onClose={() => setIsRegisterSuccessOpen(false)}
+        onSwitchToLogin={() => {
+          setIsRegisterSuccessOpen(false);
+          setIsLoginOpen(true);
+        }}
+      />
+
       <RegisterOtp
         isOpen={isRegisterOtpOpen}
         onClose={() => setIsRegisterOtpOpen(false)}

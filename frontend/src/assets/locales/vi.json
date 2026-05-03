@@ -521,5 +521,8 @@
   "catAttractions": "Điểm tham quan",
   "catExperiences": "Tour & Hoạt động",
   "catEssentials": "Cần thiết cho du lịch",
-  "catAllActivities": "Tất cả các hoạt động"
+  "catAllActivities": "Tất cả các hoạt động",
+  "registerSuccessTitle": "Đăng ký thành công!",
+  "registerSuccessDesc": "Chào mừng bạn đến với Hanuvivu. Tài khoản của bạn đã được tạo thành công. Bây giờ bạn có thể đăng nhập để bắt đầu hành trình.",
+  "backToLoginBtn": "Quay lại Đăng nhập"
 }
