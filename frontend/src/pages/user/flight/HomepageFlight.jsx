@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FlightSearchBox from '../../../components/user/FlightSearchBox';
 import FlightsRecommendation from './FlightsRecommendation';
 import NewUserExclusive from '../../HomePage/NewUserExclusive';
@@ -133,9 +134,68 @@ const INTERNATIONAL_FILTER_BUTTONS = [
   "Malaysia", "Singapore", "Australia", "China", "Laos", "Thai", "Campuchia", "Korea", "Japan", "America", "Europe"
 ];
 
+import flightService from '../../../services/flightService';
+
 const HomepageFlight = () => {
+  const [domesticDeals, setDomesticDeals] = useState([]);
+  const [internationalDeals, setInternationalDeals] = useState([]);
+  const [isLoadingDeals, setIsLoadingDeals] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchDeals = async () => {
+      try {
+        setIsLoadingDeals(true);
+        const data = await flightService.getFeaturedFlights();
+        
+        const mappedDeals = data.map(f => {
+          const schedule = f.schedules?.[0];
+          const dDate = schedule?.departureTime ? new Date(schedule.departureTime) : new Date();
+          const dDateStr = dDate.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+          
+          return {
+            id: f.id,
+            originCity: f.departureCity,
+            originFilter: f.departureCity,
+            title: `${f.departureCity} → ${f.arrivalCity}`,
+            departureDate: dDateStr,
+            price: f.basePrice ? f.basePrice.toLocaleString('vi-VN') + ' VND' : 'Contact',
+            image: f.imageUrl || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=400&h=500&fit=crop',
+            // Store full airport info to avoid mapping issues later
+            fromAirport: `${f.departureAirportName || f.departureCity} (${f.departureAirport})`,
+            toAirport: `${f.arrivalAirportName || f.arrivalCity} (${f.arrivalAirport})`
+          };
+        });
+
+        // Basic split: if arrival city is outside VN, it's international
+        // For simplicity, let's assume if it's not one of the domestic buttons, it's international
+        const domesticCities = [
+          "Ha Noi", "Hanoi", "Hà Nội", 
+          "Ho Chi Minh City", "Ho Chi Minh", "Hồ Chí Minh", 
+          "Da Nang", "Đà Nẵng", 
+          "Hue", "Huế", 
+          "Phu Quoc", "Phú Quốc", 
+          "Nha Trang", 
+          "Quy Nhon", "Quy Nhơn", 
+          "Hai Phong", "Hải Phòng", 
+          "Can Tho", "Cần Thơ", 
+          "Da Lat", "Đà Lạt"
+        ];
+        
+        const domestic = mappedDeals.filter(d => domesticCities.includes(d.title.split(' → ')[1]));
+        const international = mappedDeals.filter(d => !domesticCities.includes(d.title.split(' → ')[1]));
+
+        setDomesticDeals(domestic);
+        setInternationalDeals(international);
+      } catch (err) {
+        console.error("Failed to fetch featured flights:", err);
+        setDomesticDeals(MOCK_FLIGHT_DEALS);
+        setInternationalDeals(INTERNATIONAL_FLIGHT_DEALS);
+      } finally {
+        setIsLoadingDeals(false);
+      }
+    };
+    fetchDeals();
   }, []);
 
   const [domesticFilter, setDomesticFilter] = useState("Ha Noi");
@@ -143,14 +203,52 @@ const HomepageFlight = () => {
   
   const domesticScrollRef = useRef(null);
   const internationalScrollRef = useRef(null);
+  const navigate = useNavigate();
 
-  const domesticFilteredDeals = MOCK_FLIGHT_DEALS.filter(
-    (deal) => deal.originCity === domesticFilter
-  );
+  const handleDealClick = (deal) => {
+    try {
+      const dDate = new Date(deal.departureDate);
+      
+      const searchParams = {
+        tripType: 'oneway',
+        from: { 
+          name: deal.originCity || deal.title.split(' → ')[0], 
+          airport: deal.fromAirport || deal.title.split(' → ')[0] 
+        },
+        to: { 
+          name: deal.arrivalCity || deal.title.split(' → ')[1], 
+          airport: deal.toAirport || deal.title.split(' → ')[1] 
+        },
+        departureDate: !isNaN(dDate.getTime()) ? dDate.toISOString() : new Date().toISOString(),
+        returnDate: null,
+        adults: 1,
+        children: 0,
+        infants: 0,
+        cabinClass: 'economy'
+      };
+      navigate('/flights/search', { state: { searchParams } });
+    } catch (error) {
+      console.error("Error formatting deal search:", error);
+    }
+  };
 
-  const internationalFilteredDeals = INTERNATIONAL_FLIGHT_DEALS.filter(
-    (deal) => deal.originFilter === internationalFilter
-  );
+  // Remove diacritics for easier matching
+  const removeAccents = (str) => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+  };
+
+  const domesticFilteredDeals = domesticDeals.filter(deal => {
+    const normOrigin = removeAccents(deal.originCity).toLowerCase();
+    const normFilter = removeAccents(domesticFilter).toLowerCase();
+    const isHanoi = (normFilter === 'ha noi' || normFilter === 'hanoi') && (normOrigin === 'ha noi' || normOrigin === 'hanoi');
+    return isHanoi || normOrigin === normFilter || normOrigin.includes(normFilter) || normFilter.includes(normOrigin);
+  });
+
+  const internationalFilteredDeals = internationalDeals.filter(deal => {
+    const normOrigin = removeAccents(deal.originFilter).toLowerCase();
+    const normFilter = removeAccents(internationalFilter).toLowerCase();
+    return normOrigin === normFilter || normOrigin.includes(normFilter) || normFilter.includes(normOrigin) || removeAccents(deal.title).toLowerCase().includes(normFilter);
+  });
 
   const scrollLeft = (ref) => {
     if (ref.current) {
@@ -218,7 +316,8 @@ const HomepageFlight = () => {
               {domesticFilteredDeals.map((deal) => (
                 <div
                   key={deal.id}
-                  className="w-[230px] h-[270px] relative rounded-xl overflow-hidden shadow-md flex-shrink-0"
+                  onClick={() => handleDealClick(deal)}
+                  className="w-[230px] h-[270px] relative rounded-xl overflow-hidden shadow-md flex-shrink-0 cursor-pointer hover:scale-[1.02] transition-transform duration-300"
                   style={{
                     backgroundImage: `url(${deal.image})`,
                     backgroundSize: 'cover',
@@ -302,7 +401,8 @@ const HomepageFlight = () => {
               {internationalFilteredDeals.map((deal) => (
                 <div
                   key={deal.id}
-                  className="w-[230px] h-[270px] relative rounded-xl overflow-hidden shadow-md flex-shrink-0"
+                  onClick={() => handleDealClick(deal)}
+                  className="w-[230px] h-[270px] relative rounded-xl overflow-hidden shadow-md flex-shrink-0 cursor-pointer hover:scale-[1.02] transition-transform duration-300"
                   style={{
                     backgroundImage: `url(${deal.image})`,
                     backgroundSize: 'cover',

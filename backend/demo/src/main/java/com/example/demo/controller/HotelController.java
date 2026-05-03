@@ -21,10 +21,10 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
-    // PUBLIC: Search Hotels
+    // PUBLIC: Search Hotels (city optional — if missing, returns all active hotels)
     @GetMapping("/search")
     public ResponseEntity<Page<HotelDTO>> searchHotels(
-            @RequestParam String city,
+            @RequestParam(required = false) String city,
             @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(required = false) Integer minStar,
@@ -36,7 +36,19 @@ public class HotelController {
         Sort.Direction sortDirection = sort.length > 1 && sort[1].equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortField));
         
+        if (city == null || city.isBlank()) {
+            return ResponseEntity.ok(hotelService.getAllHotels(pageable));
+        }
         return ResponseEntity.ok(hotelService.searchHotels(city, minPrice, maxPrice, minStar, pageable));
+    }
+
+    // PUBLIC: Get Featured Hotels (active, top-rated)
+    @GetMapping("/featured")
+    public ResponseEntity<Page<HotelDTO>> getFeaturedHotels(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "avgRating"));
+        return ResponseEntity.ok(hotelService.getAllHotels(pageable));
     }
 
     // PUBLIC: Get Hotel By ID

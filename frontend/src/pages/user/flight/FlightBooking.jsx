@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BookingStepper from '../../../components/user/BookingStepper';
 import ContactForm from '../../../components/user/ContactForm';
 import PassengerForm from '../../../components/user/PassengerForm';
@@ -8,9 +8,17 @@ import BookingSummary from '../../../components/user/BookingSummary';
 
 const FlightBooking = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { flight: stateFlight, selectedFareId } = location.state || {};
 
   // ─── Mock Data ──────────────────────────────────────────────────────────────
-  const mockFlight = {
+  // ─── Data Initialization ───────────────────────────────────────────────────
+  const selectedFare = stateFlight?.fareOptions?.find(f => f.id === selectedFareId);
+  const flight = stateFlight ? {
+    ...stateFlight,
+    price: selectedFare?.price || stateFlight.price || 0,
+    date: stateFlight.departDate
+  } : {
     airline: 'Vietnam Airlines',
     airlineLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Vietnam_Airlines_logo.svg/200px-Vietnam_Airlines_logo.svg.png',
     fromCode: 'HAN',
@@ -95,9 +103,20 @@ const FlightBooking = () => {
 
   const handleContinue = () => {
     if (validate()) {
-      console.log('Booking Data:', { contactInfo, passengers, addons });
-      // navigate('/flights/payment'); 
-      alert('Validation Success! Proceeding to Payment...');
+      const baseFare = (flight.price || 0) * passengers.length;
+      const taxes = baseFare * 0.1;
+      const addonTotal = (addons.extraBaggage ? 250000 : 0) + (addons.insurance ? 120000 : 0);
+      const totalAmount = baseFare + taxes + addonTotal;
+
+      navigate('/flights/payment', { 
+        state: { 
+          flight, 
+          contactInfo, 
+          passengers, 
+          addons,
+          totalAmount
+        } 
+      });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -164,8 +183,9 @@ const FlightBooking = () => {
           {/* Summary Side */}
           <div className="lg:w-[350px] flex-shrink-0">
             <BookingSummary 
-              flight={mockFlight} 
-              passengers={passengers}
+              mode="flight"
+              data={flight} 
+              subData={passengers}
               addons={addons}
               onContinue={handleContinue}
             />

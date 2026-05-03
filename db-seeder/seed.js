@@ -91,26 +91,30 @@ async function run() {
       const hotelsData = JSON.parse(hotelsRaw);
 
       const hotelsToInsert = hotelsData.map(h => ({
-        hotelId: h.id,
+        // Match Spring Boot HotelDocument schema exactly
         name: h.name,
-        location: h.location,
         address: h.address,
+        city: h.location,           // hotels.json uses "location" → map to "city"
+        country: 'Vietnam',
         starRating: h.starRating,
-        basePrice: h.price,
-        avgRating: h.rating || 4.5,
-        totalReviews: h.reviewsCount || 0,
-        isFeatured: h.isFeatured || false,
         description: h.description,
-        rooms: h.rooms || [],
+        thumbnailUrl: h.image,      // hotels.json uses "image" → map to "thumbnailUrl"
+        images: h.images
+          ? h.images.map((url, i) => ({ url, caption: `Hotel image ${i + 1}`, isPrimary: i === 0 }))
+          : [],
         amenities: h.amenities || [],
-        highlights: h.highlights || [],
-        checkInTime: h.checkInTime || '14:00',
-        checkOutTime: h.checkOutTime || '12:00',
-        policies: h.policies || {},
-        images: h.images ? h.images.map((url, i) => ({ url, caption: `Hotel image ${i + 1}`, isPrimary: i === 0 })) : [],
-        nearbyAttractions: h.nearbyAttractions || [],
-        coordinates: h.coordinates || {},
-        isDeleted: false,
+        latitude: h.coordinates?.lat || null,
+        longitude: h.coordinates?.lng || null,
+        avgRating: h.rating || 4.5,
+        roomTypes: (h.rooms || []).map(r => ({
+          typeName: r.type,
+          pricePerNight: r.price,
+          maxGuests: r.maxGuests,
+          availableRooms: r.available || 10,
+          amenities: [],
+          imageUrl: h.image || null    // use hotel main image as room image
+        })),
+        isActive: !h.isDeleted,
         createdAt: new Date(),
         updatedAt: new Date()
       }));
@@ -118,6 +122,7 @@ async function run() {
       await hotelsCol.insertMany(hotelsToInsert);
       console.log(`Seeded ${hotelsToInsert.length} hotels from hotels.json.`);
     }
+
 
     // 3. Seed Flights from flights.json
     const flightsFilePath = path.join(__dirname, 'data', 'flights.json');
@@ -145,6 +150,7 @@ async function run() {
         totalReviews: f.reviewsCount || 0,
         isFeatured: f.isFeatured || false,
         description: f.description || '',
+        imageUrl: f.image || null,
         amenities: f.amenities || [],
         baggagePolicy: f.baggagePolicy || {},
         schedules: f.schedules ? f.schedules.map(sch => ({

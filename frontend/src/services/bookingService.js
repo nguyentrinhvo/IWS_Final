@@ -30,6 +30,12 @@ export const getMyBookings = async (page = 0, size = 10) => {
   return response.data; // Page<BookingDTO>
 };
 
+/** Lấy chi tiết một booking theo ID */
+export const getBookingById = async (id) => {
+  const response = await api.get(`/bookings/${id}`);
+  return response.data; // BookingDTO
+};
+
 /** Hủy booking */
 export const cancelBooking = async (id) => {
   const response = await api.put(`/bookings/${id}/cancel`);

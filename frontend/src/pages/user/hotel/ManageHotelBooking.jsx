@@ -1,56 +1,129 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import BookingInfoCard from '../../../components/user/BookingInfoCard';
 import GuestSummary from '../../../components/user/GuestSummary';
 import CancelBookingModal from '../../../components/user/CancelBookingModal';
-
-const MOCK_BOOKING = {
-  bookingCode: 'HTL-99283X',
-  date: '02 May 2026',
-  status: 'Paid',
-  bookingStatus: 'Confirmed',
-  hotel: {
-    name: 'InterContinental Danang Sun Peninsula Resort',
-    location: 'Son Tra Peninsula, Da Nang',
-    roomType: 'Resort Classic Oceanview',
-    checkIn: '02 Apr 2024',
-    checkOut: '05 Apr 2024',
-    nights: 3,
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-  },
-  guest: {
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+84 987 654 321'
-  },
-  refundInfo: {
-    originalAmount: 25500000,
-    fee: 2500000,
-    finalRefund: 23000000
-  }
-};
+import { getBookingById, cancelBooking } from '../../../services/bookingService';
 
 const ManageHotelBooking = () => {
   const navigate = useNavigate();
-  const [booking, setBooking] = useState(MOCK_BOOKING);
+  const { id: paramId } = useParams();           // from /hotels/manage/:id
+  const location = useLocation();
+  const stateBookingId = location.state?.bookingId; // from navigate(state)
+
+  const bookingId = paramId || stateBookingId;
+
+  const [booking, setBooking] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    if (bookingId) {
+      fetchBooking(bookingId);
+    } else {
+      setError('Booking ID not found');
+      setLoading(false);
+    }
+  }, [bookingId]);
 
-  const handleConfirmCancel = () => {
-    // In real app: API call to cancel
-    setBooking(prev => ({ ...prev, bookingStatus: 'Cancelled' }));
-    setIsCancelModalOpen(false);
+  const fetchBooking = async (id) => {
+    try {
+      setLoading(true);
+      const data = await getBookingById(id);
+      setBooking(mapBookingDTO(data));
+    } catch (err) {
+      console.error('Failed to fetch booking:', err);
+      setError('Không thể tải thông tin đặt phòng. Vui lòng thử lại.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Map backend BookingDTO -> component shape
+  const mapBookingDTO = (dto) => {
+    const bookingCode = dto.id ? `HTL-${dto.id.slice(-6).toUpperCase()}` : 'HTL-XXXXXX';
+    const formatDate = (str) => str
+      ? new Date(str).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+      : '—';
+
+    return {
+      bookingCode,
+      id: dto.id,
+      date: formatDate(dto.createdAt),
+      status: dto.payment?.paymentStatus === 'success' ? 'Paid' : 'Pending',
+      bookingStatus: dto.status === 'cancelled' ? 'Cancelled' : 'Confirmed',
+      hotel: {
+        name: dto.snapshotName || '—',
+        location: '',
+        roomType: dto.snapshotDetail || '—',
+        checkIn: '—',
+        checkOut: '—',
+        nights: dto.quantity || 1,
+        image: '',
+      },
+      guest: {
+        fullName: dto.contactName || '—',
+        email: dto.contactEmail || '—',
+        phone: dto.contactPhone || '—',
+      },
+      refundInfo: {
+        originalAmount: dto.totalPrice || 0,
+        fee: Math.round((dto.totalPrice || 0) * 0.1),
+        finalRefund: Math.round((dto.totalPrice || 0) * 0.9),
+      },
+    };
+  };
+
+  const handleConfirmCancel = async () => {
+    try {
+      await cancelBooking(booking.id);
+      setBooking(prev => ({ ...prev, bookingStatus: 'Cancelled' }));
+    } catch (err) {
+      console.error('Cancel booking error:', err);
+      alert(err?.response?.data?.message || 'Hủy đặt phòng thất bại. Vui lòng thử lại.');
+    } finally {
+      setIsCancelModalOpen(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-gray-50/50 min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <svg className="animate-spin h-10 w-10 text-[#7978E9]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+          <p className="text-gray-500 font-medium">Đang tải thông tin đặt phòng...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !booking) {
+    return (
+      <div className="bg-gray-50/50 min-h-screen flex items-center justify-center">
+        <div className="text-center p-8">
+          <p className="text-red-500 font-bold text-lg mb-4">{error || 'Không tìm thấy đặt phòng'}</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-6 py-3 bg-[#7978E9] text-white rounded-xl font-bold hover:bg-[#6665d0] transition-all"
+          >
+            Quay lại
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-50/50 min-h-screen pb-20">
       <div className="max-w-[1000px] mx-auto px-4 py-8">
-        
+
         <div className="mb-6 flex items-center justify-between">
-          <button 
+          <button
             onClick={() => navigate(-1)}
             className="flex items-center text-gray-500 hover:text-[#7978E9] font-bold text-sm transition-colors"
           >
@@ -62,7 +135,7 @@ const ManageHotelBooking = () => {
           <h2 className="text-xl font-black text-[#1a2b49] italic">Manage Booking</h2>
         </div>
 
-        <BookingInfoCard 
+        <BookingInfoCard
           bookingCode={booking.bookingCode}
           date={booking.date}
           status={booking.status}
@@ -77,30 +150,34 @@ const ManageHotelBooking = () => {
             </svg>
             Accommodation Summary
           </h3>
-          
+
           <div className="flex flex-col md:flex-row gap-8">
-             <div className="md:w-64 h-40 rounded-3xl overflow-hidden shadow-md flex-shrink-0">
+            {booking.hotel.image && (
+              <div className="md:w-64 h-40 rounded-3xl overflow-hidden shadow-md flex-shrink-0">
                 <img src={booking.hotel.image} alt="" className="w-full h-full object-cover" />
-             </div>
-             <div className="flex-1 flex flex-col justify-center">
-                <h4 className="text-xl font-bold text-[#1a2b49] mb-1">{booking.hotel.name}</h4>
+              </div>
+            )}
+            <div className="flex-1 flex flex-col justify-center">
+              <h4 className="text-xl font-bold text-[#1a2b49] mb-1">{booking.hotel.name}</h4>
+              {booking.hotel.location && (
                 <p className="text-sm text-gray-500 mb-4">{booking.hotel.location}</p>
-                
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 py-4 border-t border-gray-50">
-                   <div>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Room Type</p>
-                      <p className="text-sm font-bold text-gray-700">{booking.hotel.roomType}</p>
-                   </div>
-                   <div>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Check-in</p>
-                      <p className="text-sm font-bold text-gray-700">{booking.hotel.checkIn}</p>
-                   </div>
-                   <div>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Check-out</p>
-                      <p className="text-sm font-bold text-gray-700">{booking.hotel.checkOut}</p>
-                   </div>
+              )}
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 py-4 border-t border-gray-50">
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Room Type</p>
+                  <p className="text-sm font-bold text-gray-700">{booking.hotel.roomType}</p>
                 </div>
-             </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Duration</p>
+                  <p className="text-sm font-bold text-gray-700">{booking.hotel.nights} night(s)</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Check-in</p>
+                  <p className="text-sm font-bold text-gray-700">{booking.hotel.checkIn}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -110,7 +187,7 @@ const ManageHotelBooking = () => {
         <div className="mt-10 flex flex-col items-center gap-4">
           {booking.bookingStatus === 'Confirmed' ? (
             <>
-              <button 
+              <button
                 onClick={() => setIsCancelModalOpen(true)}
                 className="w-full max-w-md bg-white border-2 border-red-100 text-red-500 font-bold py-4 rounded-2xl hover:bg-red-50 transition-all shadow-sm active:scale-[0.98] flex items-center justify-center gap-2"
               >
@@ -127,7 +204,7 @@ const ManageHotelBooking = () => {
             </div>
           )}
 
-          <button 
+          <button
             onClick={() => navigate('/hotels')}
             className="mt-4 text-sm font-bold text-[#7978E9] hover:underline flex items-center gap-2"
           >
@@ -140,7 +217,7 @@ const ManageHotelBooking = () => {
 
       </div>
 
-      <CancelBookingModal 
+      <CancelBookingModal
         isOpen={isCancelModalOpen}
         onClose={() => setIsCancelModalOpen(false)}
         onConfirm={handleConfirmCancel}

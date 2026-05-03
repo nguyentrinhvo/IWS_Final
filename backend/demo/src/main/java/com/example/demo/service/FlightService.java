@@ -7,6 +7,9 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.FlightRepository;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,12 +79,46 @@ public class FlightService {
     }
 
     public List<FlightDTO> searchAvailableFlights(String departureAirport, String arrivalAirport, Date flightDate, String airline, String cabinClass) {
-        List<FlightDocument> flights = flightRepository.findAvailableFlights(departureAirport, arrivalAirport, flightDate);
+        List<FlightDocument> flights = flightRepository.findAvailableFlights(departureAirport, arrivalAirport);
+        System.out.println("DEBUG: Found " + flights.size() + " flights in DB for " + departureAirport + " -> " + arrivalAirport);
+        
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        String searchDateStr = sdf.format(flightDate);
+        System.out.println("DEBUG: Searching for date " + searchDateStr + " (raw flightDate: " + flightDate + ")");
+
         return flights.stream()
-                .filter(f -> airline == null || f.getAirline().equalsIgnoreCase(airline))
-                .filter(f -> cabinClass == null || f.getCabinClass().equalsIgnoreCase(cabinClass))
+                .filter(f -> {
+                    boolean matchAirline = airline == null || f.getAirline().equalsIgnoreCase(airline);
+                    boolean matchCabin = cabinClass == null || f.getCabinClass().equalsIgnoreCase(cabinClass);
+                    boolean matchSchedule = f.getSchedules() != null && f.getSchedules().stream()
+                            .anyMatch(s -> {
+                                boolean hasSeats = s.getAvailableSeats() != null && s.getAvailableSeats() > 0;
+                                boolean matchDate = s.getDepartureTime() != null && sdf.format(s.getDepartureTime()).equals(searchDateStr);
+                                return hasSeats && matchDate;
+                            });
+                    return matchAirline && matchCabin && matchSchedule;
+                })
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<FlightDTO> getFeaturedFlights() {
+        return flightRepository.findAll().stream()
+                .filter(f -> f.getIsActive() != null && f.getIsActive())
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getAllLocations() {
+        List<FlightDocument> flights = flightRepository.findAll();
+        Set<String> locations = new HashSet<>();
+        for (FlightDocument f : flights) {
+            if (f.getIsActive() != null && f.getIsActive()) {
+                if (f.getDepartureAirport() != null) locations.add(f.getDepartureAirport());
+                if (f.getArrivalAirport() != null) locations.add(f.getArrivalAirport());
+            }
+        }
+        return new ArrayList<>(locations);
     }
 
     private FlightDTO mapToDTO(FlightDocument flight) {
@@ -91,6 +128,11 @@ public class FlightService {
                 .flightNumber(flight.getFlightNumber())
                 .departureAirport(flight.getDepartureAirport())
                 .arrivalAirport(flight.getArrivalAirport())
+                .departureCity(flight.getDepartureCity())
+                .arrivalCity(flight.getArrivalCity())
+                .departureAirportName(flight.getDepartureAirportName())
+                .arrivalAirportName(flight.getArrivalAirportName())
+                .imageUrl(flight.getImageUrl())
                 .cabinClass(flight.getCabinClass())
                 .basePrice(flight.getBasePrice())
                 .durationMinutes(flight.getDurationMinutes())

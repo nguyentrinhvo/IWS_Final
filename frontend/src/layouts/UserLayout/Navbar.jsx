@@ -21,12 +21,11 @@ const formatDisplayName = (fullName) => {
 export default function Navbar() {
   const navigate = useNavigate();
   const { currency, language, t } = useGlobal();
-  const { currentUser, login: authLogin, logout: authLogout } = useAuth();
+  const { currentUser, login: authLogin, logout: authLogout, isLoginModalOpen, setIsLoginModalOpen } = useAuth();
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isSupportClosing, setIsSupportClosing] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isLangClosing, setIsLangClosing] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
   const [isOtpOpen, setIsOtpOpen] = useState(false);
@@ -132,7 +131,7 @@ export default function Navbar() {
     // user đã được lưu bởi Login component → AuthContext tự đọc từ storage
     // Cần gọi lại authLogin để cập nhật state ngay lập tức
     authLogin(user, user._rememberMe);
-    setIsLoginOpen(false);
+    setIsLoginModalOpen(false);
   };
 
   const handleRegisterSuccess = (data) => {
@@ -348,7 +347,7 @@ export default function Navbar() {
               ) : (
                 <>
                   <button
-                    onClick={() => setIsLoginOpen(true)}
+                    onClick={() => setIsLoginModalOpen(true)}
                     className="flex items-center space-x-2 bg-[#FADCD9] text-indigo-800 px-6 py-2.5 rounded-full font-semibold hover:bg-pink-100 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     <span>{t('logIn')}</span>
@@ -407,7 +406,7 @@ export default function Navbar() {
                       </>
                     ) : (
                       <div className="flex flex-col w-full p-2">
-                        <button onClick={() => { setIsMobileUserMenuOpen(false); setIsLoginOpen(true); }} className="px-4 py-2.5 mx-1 mt-1 bg-[#FADCD9] text-indigo-800 rounded-full font-semibold hover:bg-pink-100 transition-colors text-center text-[15px]">{t('logIn')}</button>
+                        <button onClick={() => { setIsMobileUserMenuOpen(false); setIsLoginModalOpen(true); }} className="px-4 py-2.5 mx-1 mt-1 bg-[#FADCD9] text-indigo-800 rounded-full font-semibold hover:bg-pink-100 transition-colors text-center text-[15px]">{t('logIn')}</button>
                         <button onClick={() => { setIsMobileUserMenuOpen(false); setIsRegisterOpen(true); }} className="px-4 py-2.5 mx-1 my-2 bg-[#7978E9] text-white rounded-full font-semibold hover:bg-indigo-500 transition-colors text-center text-[15px]">{t('register')}</button>
                       </div>
                     )}
@@ -603,35 +602,35 @@ export default function Navbar() {
       </div>
 
       <Login
-        isOpen={isLoginOpen}
-        onClose={() => setIsLoginOpen(false)}
-        onSwitchToRegister={() => { setIsLoginOpen(false); setIsRegisterOpen(true); }}
-        onSwitchToForgotPassword={() => { setIsLoginOpen(false); setIsForgotPasswordOpen(true); }}
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterOpen(true); }}
+        onSwitchToForgotPassword={() => { setIsLoginModalOpen(false); setIsForgotPasswordOpen(true); }}
         onLoginSuccess={handleLoginSuccess}
       />
       <Register
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
-        onSwitchToLogin={() => { setIsRegisterOpen(false); setIsLoginOpen(true); }}
+        onSwitchToLogin={() => { setIsRegisterOpen(false); setIsLoginModalOpen(true); }}
         onRegisterSuccess={handleRegisterSuccess}
       />
       <ForgotPassword
         isOpen={isForgotPasswordOpen}
         onClose={() => setIsForgotPasswordOpen(false)}
-        onBackToLogin={() => { setIsForgotPasswordOpen(false); setIsLoginOpen(true); }}
+        onBackToLogin={() => { setIsForgotPasswordOpen(false); setIsLoginModalOpen(true); }}
         onSwitchToOtp={() => { setIsForgotPasswordOpen(false); setIsOtpOpen(true); }}
       />
       <OtpVerification
         isOpen={isOtpOpen}
         onClose={() => setIsOtpOpen(false)}
-        onBackToLogin={() => { setIsOtpOpen(false); setIsLoginOpen(true); }}
+        onBackToLogin={() => { setIsOtpOpen(false); setIsLoginModalOpen(true); }}
       />
       <RegisterSuccess
         isOpen={isRegisterSuccessOpen}
         onClose={() => setIsRegisterSuccessOpen(false)}
         onSwitchToLogin={() => {
           setIsRegisterSuccessOpen(false);
-          setIsLoginOpen(true);
+          setIsLoginModalOpen(true);
         }}
       />
 

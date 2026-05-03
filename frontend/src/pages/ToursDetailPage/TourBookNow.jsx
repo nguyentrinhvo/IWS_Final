@@ -142,14 +142,14 @@ const TourBookNow = ({ data }) => {
     if (selectedDateId && activeStep !== 2) setActiveStep(2);
   };
 
-  const { currentUser: user } = useAuth();
+  const { currentUser: user, setIsLoginModalOpen } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
     if (!user) {
       alert("Please login to book a tour");
-      navigate('/login', { state: { from: window.location.pathname } });
+      setIsLoginModalOpen(true);
       return;
     }
 

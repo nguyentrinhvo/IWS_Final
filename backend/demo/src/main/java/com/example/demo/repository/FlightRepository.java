@@ -23,7 +23,6 @@ public interface FlightRepository extends MongoRepository<FlightDocument, String
     Page<FlightDocument> findByDepartureAirportAndArrivalAirportAndCabinClassAndIsActiveTrue(
         String departureAirport, String arrivalAirport, String cabinClass, Pageable pageable);
 
-    @Query("{ 'departureAirport': ?0, 'arrivalAirport': ?1, 'isActive': true, " +
-           "'schedules': { '$elemMatch': { 'flightDate': ?2, 'availableSeats': { '$gt': 0 } } } }")
-    List<FlightDocument> findAvailableFlights(String departureAirport, String arrivalAirport, Date flightDate);
+    @Query("{ 'departureAirport': ?0, 'arrivalAirport': ?1, 'isActive': true }")
+    List<FlightDocument> findAvailableFlights(String departureAirport, String arrivalAirport);
 }

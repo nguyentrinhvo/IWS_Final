@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class FlightSchedule {
-    private String departureTime;    // "06:30"
-    private String arrivalTime;      // "08:45"
+    private Date departureTime;
+    private Date arrivalTime;
     private Integer availableSeats;
     private Date flightDate;
 }

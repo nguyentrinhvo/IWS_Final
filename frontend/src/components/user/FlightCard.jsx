@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AIRLINE_LOGOS = {
   'Vietnam Airlines': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Vietnam_Airlines_logo.svg/200px-Vietnam_Airlines_logo.svg.png',
@@ -9,6 +10,7 @@ const AIRLINE_LOGOS = {
 
 const FlightCard = ({ flight, isCheapest, isFastest }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const formatDuration = (minutes) => {
     const h = Math.floor(minutes / 60);
@@ -116,7 +118,7 @@ const FlightCard = ({ flight, isCheapest, isFastest }) => {
             </p>
             <p className="text-[11px] text-gray-500">per person</p>
           </div>
-          <button className="bg-[#CD6F1E] hover:bg-[#b8631b] text-white font-bold py-2.5 px-6 rounded-xl shadow-sm transition-colors whitespace-nowrap text-sm">
+          <button onClick={() => navigate(`/flights/detail/${flight.id}`)} className="bg-[#CD6F1E] hover:bg-[#b8631b] text-white font-bold py-2.5 px-6 rounded-xl shadow-sm transition-colors whitespace-nowrap text-sm">
             Select
           </button>
         </div>

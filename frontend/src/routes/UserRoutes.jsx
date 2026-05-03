@@ -31,6 +31,8 @@ import PaymentResult from '../pages/PaymentResult';
 import UserAccount from '../pages/PersonalProfile/UserAccount';
 import ThingsToDo from '../pages/ThingsToDo/ThingsToDo';
 import OAuth2RedirectHandler from '../pages/OAuth2RedirectHandler';
+import PrivateRoute from './PrivateRoute';
+import LoginRedirect from './LoginRedirect';
 
 const UserRoutes = () => {
   return (
@@ -41,27 +43,29 @@ const UserRoutes = () => {
         <Route path="/transport" element={<HomepageTransport />} />
         <Route path="/transport/search" element={<TransportSearchResults />} />
         <Route path="/transport/detail/:id" element={<TransportDetail />} />
-        <Route path="/transport/booking" element={<TransportBooking />} />
-        <Route path="/transport/payment" element={<TransportPayment />} />
+        <Route path="/transport/booking" element={<PrivateRoute><TransportBooking /></PrivateRoute>} />
+        <Route path="/transport/payment" element={<PrivateRoute><TransportPayment /></PrivateRoute>} />
         <Route path="/transport/success" element={<TransportBookingSuccess />} />
-        <Route path="/transport/manage" element={<ManageTransportBooking />} />
+        <Route path="/transport/manage" element={<PrivateRoute><ManageTransportBooking /></PrivateRoute>} />
         <Route path="/hotels" element={<HomepageHotel />} />
         <Route path="/hotels/search" element={<HotelSearchResults />} />
         <Route path="/hotels/detail/:id" element={<HotelDetail />} />
-        <Route path="/hotels/booking" element={<HotelBooking />} />
-        <Route path="/hotels/payment" element={<HotelPayment />} />
+        <Route path="/hotels/booking" element={<PrivateRoute><HotelBooking /></PrivateRoute>} />
+        <Route path="/hotels/payment" element={<PrivateRoute><HotelPayment /></PrivateRoute>} />
         <Route path="/hotels/success" element={<HotelBookingSuccess />} />
-        <Route path="/hotels/manage" element={<ManageHotelBooking />} />
+        <Route path="/hotels/manage/:id" element={<PrivateRoute><ManageHotelBooking /></PrivateRoute>} />
+        <Route path="/hotels/manage" element={<PrivateRoute><ManageHotelBooking /></PrivateRoute>} />
         <Route path="/flights/search" element={<FlightSearchResults />} />
         <Route path="/flights/detail/:id" element={<FlightDetail />} />
-        <Route path="/flights/booking" element={<FlightBooking />} />
-        <Route path="/flights/payment" element={<FlightPayment />} />
+        <Route path="/flights/booking" element={<PrivateRoute><FlightBooking /></PrivateRoute>} />
+        <Route path="/flights/payment" element={<PrivateRoute><FlightPayment /></PrivateRoute>} />
         <Route path="/flights/success" element={<FlightBookingSuccess />} />
-        <Route path="/flights/manage" element={<ManageBooking />} />
-        <Route path="/profile/:tab" element={<UserAccount />} />
+        <Route path="/flights/manage" element={<PrivateRoute><ManageBooking /></PrivateRoute>} />
+        <Route path="/profile/:tab" element={<PrivateRoute><UserAccount /></PrivateRoute>} />
         <Route path="/things-to-do" element={<ThingsToDo />} />
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         <Route path="/payment-result" element={<PaymentResult />} />
+        <Route path="/login" element={<LoginRedirect />} />
       </Route>
       <Route path="/tours" element={<ToursPage />} />
       <Route path="/tour/:id" element={<Tour />} />
