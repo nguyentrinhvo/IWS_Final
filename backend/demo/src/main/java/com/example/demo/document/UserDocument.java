@@ -35,4 +35,5 @@ public class UserDocument {
     private String city;
     private Date createdAt;
     private Date updatedAt;
+    private Date lastActiveAt;
 }

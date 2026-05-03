@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building, MapPin, Star, BedDouble, 
   Search, Filter, Plus, Pencil, Trash2, Home
@@ -6,43 +6,145 @@ import {
 import DashboardCard from '../../../components/admin/DashboardCard';
 import AdminModal from '../../../components/admin/AdminModal';
 import ConfirmModal from '../../../components/admin/ConfirmModal';
-
-// Dummy Data
-const MOCK_HOTELS = [
-  { id: 1, name: 'Grand Plaza Hotel', city: 'Hanoi', country: 'Vietnam', rating: 5, description: 'Luxury hotel in the center.', status: 'Active' },
-  { id: 2, name: 'Ocean View Resort', city: 'Da Nang', country: 'Vietnam', rating: 4, description: 'Beautiful ocean view.', status: 'Active' },
-  { id: 3, name: 'Mountain Retreat', city: 'Sapa', country: 'Vietnam', rating: 3, description: 'Quiet place in mountains.', status: 'Inactive' },
-  { id: 4, name: 'City Center Inn', city: 'Ho Chi Minh', country: 'Vietnam', rating: 3, description: 'Convenient location.', status: 'Active' },
-];
-
-const MOCK_ROOMS = [
-  { id: 1, type: 'Deluxe Ocean View', hotel: 'Ocean View Resort', capacity: 2, price: 1500000, available: 12, amenities: 'WiFi, Pool', status: 'Active' },
-  { id: 2, type: 'Presidential Suite', hotel: 'Grand Plaza Hotel', capacity: 4, price: 5000000, available: 2, amenities: 'WiFi, Pool, Spa', status: 'Active' },
-  { id: 3, type: 'Standard Double', hotel: 'City Center Inn', capacity: 2, price: 800000, available: 0, amenities: 'WiFi', status: 'Inactive' },
-  { id: 4, type: 'Family Suite', hotel: 'Mountain Retreat', capacity: 4, price: 2000000, available: 5, amenities: 'Breakfast, WiFi', status: 'Active' },
-];
+import { hotelService } from '../../../services/hotelService';
+import { toast } from 'react-hot-toast';
 
 const HotelManagement = () => {
   const [activeTab, setActiveTab] = useState('Hotels');
   const [searchTerm, setSearchTerm] = useState('');
-  
-  // Dummy State lists for CRUD
-  const [hotels, setHotels] = useState(MOCK_HOTELS);
-  const [rooms, setRooms] = useState(MOCK_ROOMS);
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedRating, setSelectedRating] = useState('');
+  const [hotels, setHotels] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({ page: 0, size: 10, totalElements: 0 });
+  const [stats, setStats] = useState({
+    totalHotels: 0,
+    activeHotels: 0,
+    totalRoomTypes: 0,
+    totalAvailableRooms: 0
+  });
+
+  const fetchStats = async () => {
+    try {
+      const data = await hotelService.getHotelStats();
+      setStats(data);
+    } catch (error) {
+      console.error("Error fetching hotel stats:", error);
+    }
+  };
+
+  const fetchHotels = async () => {
+    setLoading(true);
+    try {
+      const data = await hotelService.getAllHotels(
+        pagination.page, 
+        pagination.size, 
+        'id,desc', 
+        { 
+          name: searchTerm, 
+          city: selectedCity, 
+          starRating: selectedRating 
+        }
+      );
+      setHotels(data.content);
+      // Populate rooms from hotels
+      const allRooms = data.content.flatMap(h => 
+        (h.roomTypes || []).map(r => ({
+          ...r,
+          id: `${h.id}-${r.typeName}`, // Virtual ID for keying
+          hotelId: h.id,
+          hotel: h.name,
+          type: r.typeName,
+          price: r.pricePerNight,
+          available: r.availableRooms,
+          capacity: r.maxGuests,
+          status: h.isActive ? 'Active' : 'Inactive'
+        }))
+      );
+      setRooms(allRooms);
+      setPagination(prev => ({ ...prev, totalElements: data.totalElements }));
+    } catch (error) {
+      console.error("Error fetching hotels:", error);
+      toast.error("Failed to load hotels");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'Hotels') {
+      fetchHotels();
+      fetchStats();
+    }
+  }, [pagination.page, activeTab]);
+
+  const handleFilter = () => {
+    if (pagination.page === 0) {
+      fetchHotels();
+    } else {
+      setPagination(prev => ({ ...prev, page: 0 }));
+    }
+  };
+
+  // Dummy State for rooms for now as they are embedded
+  const [rooms, setRooms] = useState([]);
 
   // Modals state
   const [hotelModal, setHotelModal] = useState({ isOpen: false, type: 'add', data: null });
+  const [hotelFormData, setHotelFormData] = useState({
+    name: '',
+    city: '',
+    country: 'Vietnam',
+    starRating: 5,
+    isActive: true,
+    description: '',
+    address: '',
+    roomTypes: []
+  });
+
   const [roomModal, setRoomModal] = useState({ isOpen: false, type: 'add', data: null });
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, type: null, id: null });
 
   // Handlers for Hotel Modal
-  const openAddHotel = () => setHotelModal({ isOpen: true, type: 'add', data: null });
-  const openEditHotel = (hotel) => setHotelModal({ isOpen: true, type: 'edit', data: hotel });
+  const openAddHotel = () => {
+    setHotelFormData({
+      name: '',
+      city: '',
+      country: 'Vietnam',
+      starRating: 5,
+      isActive: true,
+      description: '',
+      address: '',
+      roomTypes: []
+    });
+    setHotelModal({ isOpen: true, type: 'add', data: null });
+  };
+
+  const openEditHotel = (hotel) => {
+    setHotelFormData({
+      name: hotel.name,
+      city: hotel.city,
+      country: hotel.country || 'Vietnam',
+      starRating: hotel.starRating,
+      isActive: !!hotel.isActive,
+      description: hotel.description || '',
+      address: hotel.address || '',
+      roomTypes: hotel.roomTypes || []
+    });
+    setHotelModal({ isOpen: true, type: 'edit', data: hotel });
+  };
+
   const closeHotelModal = () => setHotelModal({ isOpen: false, type: 'add', data: null });
 
   // Handlers for Room Modal
-  const openAddRoom = () => setRoomModal({ isOpen: true, type: 'add', data: null });
-  const openEditRoom = (room) => setRoomModal({ isOpen: true, type: 'edit', data: room });
+  const openAddRoom = () => {
+    setRoomFormData({ typeName: '', pricePerNight: 0, availableRooms: 0, maxGuests: 2, description: '' });
+    setRoomModal({ isOpen: true, type: 'add', data: null });
+  };
+  const openEditRoom = (room) => {
+    setRoomFormData({ ...room, typeName: room.type, pricePerNight: room.price, availableRooms: room.available, maxGuests: room.capacity });
+    setRoomModal({ isOpen: true, type: 'edit', data: room });
+  };
   const closeRoomModal = () => setRoomModal({ isOpen: false, type: 'add', data: null });
 
   // Handlers for Delete
@@ -50,42 +152,104 @@ const HotelManagement = () => {
   const openDeleteRoom = (id) => setDeleteModal({ isOpen: true, type: 'room', id });
   const closeDeleteModal = () => setDeleteModal({ isOpen: false, type: null, id: null });
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteModal.type === 'hotel') {
-      setHotels(hotels.filter(h => h.id !== deleteModal.id));
+      try {
+        await hotelService.deleteHotel(deleteModal.id);
+        toast.success("Hotel deleted successfully");
+        fetchHotels();
+        fetchStats();
+      } catch (error) {
+        toast.error("Failed to delete hotel");
+      }
     } else if (deleteModal.type === 'room') {
-      setRooms(rooms.filter(r => r.id !== deleteModal.id));
+      try {
+        // Find the hotel for this room
+        const room = rooms.find(r => r.id === deleteModal.id);
+        const hotel = hotels.find(h => h.id === room.hotelId);
+        
+        const updatedRoomTypes = hotel.roomTypes.filter(rt => rt.typeName !== room.type);
+        
+        await hotelService.updateHotel(hotel.id, {
+          ...hotel,
+          roomTypes: updatedRoomTypes
+        });
+        
+        toast.success("Room deleted successfully");
+        fetchHotels();
+        fetchStats();
+      } catch (error) {
+        toast.error("Failed to delete room");
+      }
     }
     closeDeleteModal();
   };
 
-  const handleSaveHotel = (e) => {
+  const handleSaveHotel = async (e) => {
     e.preventDefault();
-    // Simulate save logic here
-    closeHotelModal();
+    try {
+      if (hotelModal.type === 'add') {
+        await hotelService.createHotel(hotelFormData);
+        toast.success("Hotel created successfully");
+      } else {
+        await hotelService.updateHotel(hotelModal.data.id, hotelFormData);
+        toast.success("Hotel updated successfully");
+      }
+      fetchHotels();
+      fetchStats();
+      closeHotelModal();
+    } catch (error) {
+      console.error("Error saving hotel:", error);
+      toast.error("Failed to save hotel");
+    }
   };
 
-  const handleSaveRoom = (e) => {
+  const [roomFormData, setRoomFormData] = useState({
+    typeName: '',
+    pricePerNight: 0,
+    availableRooms: 0,
+    maxGuests: 2,
+    description: ''
+  });
+
+  const handleSaveRoom = async (e) => {
     e.preventDefault();
-    // Simulate save logic here
-    closeRoomModal();
-  };
-  
-  // Dummy Stats
-  const stats = {
-    totalHotels: hotels.length,
-    activeHotels: hotels.filter(h => h.status === 'Active').length,
-    totalRooms: 4500, // Dummy
-    availableRooms: rooms.reduce((acc, curr) => acc + curr.available, 0)
+    try {
+      const hotel = hotels.find(h => h.id === (roomModal.data?.hotelId || roomFormData.hotelId));
+      if (!hotel) {
+        toast.error("Please select a hotel first");
+        return;
+      }
+
+      let updatedRoomTypes;
+      if (roomModal.type === 'edit') {
+        updatedRoomTypes = hotel.roomTypes.map(rt => 
+          rt.typeName === roomModal.data.type ? { ...roomFormData } : rt
+        );
+      } else {
+        updatedRoomTypes = [...(hotel.roomTypes || []), { ...roomFormData }];
+      }
+
+      await hotelService.updateHotel(hotel.id, {
+        ...hotel,
+        roomTypes: updatedRoomTypes
+      });
+
+      toast.success("Room saved successfully");
+      fetchHotels();
+      closeRoomModal();
+    } catch (error) {
+      toast.error("Failed to save room");
+    }
   };
 
-  const StatusBadge = ({ status }) => (
+  const StatusBadge = ({ isActive }) => (
     <span className={`px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-wider ${
-      status === 'Active' 
+      isActive 
         ? 'bg-[#eefcf2] text-[#22a85a]' 
         : 'bg-gray-100 text-gray-500'
     }`}>
-      {status}
+      {isActive ? 'Active' : 'Inactive'}
     </span>
   );
 
@@ -113,21 +277,19 @@ const HotelManagement = () => {
           title="TOTAL HOTELS" 
           value={stats.totalHotels} 
           icon={Building} 
-          trend="up" 
-          trendValue="+12" 
+          trend="stable" 
         />
         <DashboardCard 
           title="ACTIVE HOTELS" 
           value={stats.activeHotels} 
           icon={Building} 
-          trend="up" 
-          trendValue="+5" 
+          trend="stable" 
           iconBgColor="bg-[#eefcf2]" 
           iconColor="text-[#22a85a]" 
         />
         <DashboardCard 
-          title="TOTAL ROOMS" 
-          value={stats.totalRooms} 
+          title="ROOM TYPES" 
+          value={stats.totalRoomTypes} 
           icon={BedDouble} 
           trend="stable" 
           iconBgColor="bg-[#f3f4f6]" 
@@ -135,10 +297,9 @@ const HotelManagement = () => {
         />
         <DashboardCard 
           title="AVAILABLE ROOMS" 
-          value={stats.availableRooms} 
+          value={stats.totalAvailableRooms} 
           icon={Home} 
-          trend="up" 
-          trendValue="+45" 
+          trend="stable" 
           iconBgColor="bg-[#eff6ff]" 
           iconColor="text-blue-500" 
         />
@@ -181,6 +342,7 @@ const HotelManagement = () => {
                   className="w-full pl-9 pr-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 placeholder-gray-400 outline-none focus:border-[#7C4A4A] transition-all"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleFilter()}
                 />
               </div>
             </div>
@@ -189,11 +351,20 @@ const HotelManagement = () => {
               <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
                 City
               </label>
-              <select className="w-full bg-[#fafafa] border border-gray-100 text-sm font-semibold text-slate-700 py-2.5 px-4 rounded-lg outline-none focus:border-[#7C4A4A] transition-all appearance-none cursor-pointer">
+              <select 
+                className="w-full bg-[#fafafa] border border-gray-100 text-sm font-semibold text-slate-700 py-2.5 px-4 rounded-lg outline-none focus:border-[#7C4A4A] transition-all appearance-none cursor-pointer"
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+              >
                 <option value="">All Cities</option>
-                <option value="hanoi">Hanoi</option>
-                <option value="hcm">Ho Chi Minh</option>
-                <option value="danang">Da Nang</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="Hội An">Hội An</option>
+                <option value="Phú Quốc">Phú Quốc</option>
+                <option value="Vũng Tàu">Vũng Tàu</option>
+                <option value="Sapa">Sapa</option>
+                <option value="Nha Trang">Nha Trang</option>
               </select>
             </div>
 
@@ -201,18 +372,31 @@ const HotelManagement = () => {
               <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
                 Star Rating
               </label>
-              <select className="w-full bg-[#fafafa] border border-gray-100 text-sm font-semibold text-slate-700 py-2.5 px-4 rounded-lg outline-none focus:border-[#7C4A4A] transition-all appearance-none cursor-pointer">
+              <select 
+                className="w-full bg-[#fafafa] border border-gray-100 text-sm font-semibold text-slate-700 py-2.5 px-4 rounded-lg outline-none focus:border-[#7C4A4A] transition-all appearance-none cursor-pointer"
+                value={selectedRating}
+                onChange={(e) => setSelectedRating(e.target.value)}
+              >
                 <option value="">All Ratings</option>
                 <option value="5">5 Stars</option>
                 <option value="4">4 Stars</option>
                 <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
               </select>
             </div>
 
-            <button className="w-full px-5 py-2.5 bg-[#7C4A4A] hover:bg-[#633b3b] text-white text-xs font-black uppercase tracking-widest rounded-lg shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
-              <Filter className="w-4 h-4" />
-              Filter
-            </button>
+            <div>
+              <label className="block text-[10px] font-bold text-transparent uppercase tracking-widest mb-1.5">
+                Spacer
+              </label>
+              <button 
+                onClick={handleFilter}
+                className="w-full px-5 py-2.5 bg-[#7C4A4A] hover:bg-[#633b3b] text-white text-xs font-black uppercase tracking-widest rounded-lg shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 h-[42px]"
+              >
+                <Filter className="w-4 h-4" />
+                Filter
+              </button>
+            </div>
           </div>
         </div>
 
@@ -280,13 +464,13 @@ const HotelManagement = () => {
                           {[...Array(5)].map((_, i) => (
                             <Star 
                               key={i} 
-                              className={`w-3.5 h-3.5 ${i < hotel.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} 
+                              className={`w-3.5 h-3.5 ${i < hotel.starRating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} 
                             />
                           ))}
                         </div>
                       </td>
-                      <td className="py-4 px-5 text-sm font-bold text-slate-700">{hotel.totalRooms || 0}</td>
-                      <td className="py-4 px-5"><StatusBadge status={hotel.status} /></td>
+                      <td className="py-4 px-5 text-sm font-bold text-slate-700">{hotel.roomTypes?.length || 0}</td>
+                      <td className="py-4 px-5"><StatusBadge isActive={hotel.isActive} /></td>
                       <td className="py-4 px-5">
                         <ActionButtons 
                           onEdit={() => openEditHotel(hotel)} 
@@ -335,62 +519,121 @@ const HotelManagement = () => {
           {/* Pagination Footer */}
           <div className="px-6 py-4 border-t border-gray-100 bg-[#fefcfc] flex items-center justify-between">
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Showing 1-4 of 4 results
+              Showing {(pagination.page * pagination.size) + 1}-{Math.min((pagination.page + 1) * pagination.size, pagination.totalElements)} of {pagination.totalElements} results
             </p>
-            {/* Minimal pagination UI for demo */}
             <div className="flex gap-1">
-              <button className="px-3 py-1 text-xs font-bold text-gray-400 border border-gray-100 rounded-md bg-white opacity-50 cursor-not-allowed">Prev</button>
-              <button className="px-3 py-1 text-xs font-bold text-white border border-[#7C4A4A] rounded-md bg-[#7C4A4A]">1</button>
-              <button className="px-3 py-1 text-xs font-bold text-gray-400 border border-gray-100 rounded-md bg-white opacity-50 cursor-not-allowed">Next</button>
+              <button 
+                onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
+                disabled={pagination.page === 0}
+                className="px-3 py-1 text-xs font-bold text-gray-400 border border-gray-100 rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Prev
+              </button>
+              <button className="px-3 py-1 text-xs font-bold text-white border border-[#7C4A4A] rounded-md bg-[#7C4A4A]">
+                {pagination.page + 1}
+              </button>
+              <button 
+                onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
+                disabled={(pagination.page + 1) * pagination.size >= pagination.totalElements}
+                className="px-3 py-1 text-xs font-bold text-gray-400 border border-gray-100 rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Hotel Form Modal */}
       <AdminModal 
         isOpen={hotelModal.isOpen} 
         onClose={closeHotelModal} 
         title={hotelModal.type === 'add' ? 'Add Hotel' : 'Edit Hotel'}
       >
         <form onSubmit={handleSaveHotel} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Hotel Name</label>
-            <input type="text" defaultValue={hotelModal.data?.name} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter hotel name" required />
-          </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">City</label>
-              <input type="text" defaultValue={hotelModal.data?.city} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter city" required />
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hotel Name</label>
+              <input 
+                type="text" 
+                value={hotelFormData.name}
+                onChange={(e) => setHotelFormData({...hotelFormData, name: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                placeholder="Enter hotel name" 
+                required 
+              />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Country</label>
-              <input type="text" defaultValue={hotelModal.data?.country || 'Vietnam'} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter country" required />
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">City</label>
+              <input 
+                type="text" 
+                value={hotelFormData.city}
+                onChange={(e) => setHotelFormData({...hotelFormData, city: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                placeholder="Enter city" 
+                required 
+              />
             </div>
           </div>
+
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Star Rating</label>
-              <select defaultValue={hotelModal.data?.rating || "5"} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all">
-                <option value="5">5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="1">1 Star</option>
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Country</label>
+              <input 
+                type="text" 
+                value={hotelFormData.country}
+                onChange={(e) => setHotelFormData({...hotelFormData, country: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                required 
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Star Rating</label>
+              <select 
+                value={hotelFormData.starRating}
+                onChange={(e) => setHotelFormData({...hotelFormData, starRating: parseInt(e.target.value)})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A]"
+              >
+                {[5,4,3,2,1].map(star => (
+                  <option key={star} value={star}>{star} Stars</option>
+                ))}
               </select>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Status</label>
-              <select defaultValue={hotelModal.data?.status || "Active"} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all">
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-            </div>
           </div>
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Description</label>
-            <textarea defaultValue={hotelModal.data?.description} rows="3" className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter description..."></textarea>
+
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Address</label>
+            <input 
+              type="text" 
+              value={hotelFormData.address}
+              onChange={(e) => setHotelFormData({...hotelFormData, address: e.target.value})}
+              className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+              placeholder="Enter full address" 
+              required 
+            />
           </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Description</label>
+            <textarea 
+              value={hotelFormData.description}
+              onChange={(e) => setHotelFormData({...hotelFormData, description: e.target.value})}
+              rows="3" 
+              className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] resize-none" 
+              placeholder="Enter description..."
+            ></textarea>
+          </div>
+
+          <div className="flex items-center gap-2 py-2">
+            <input 
+              type="checkbox" 
+              id="isActiveForm"
+              checked={hotelFormData.isActive}
+              onChange={(e) => setHotelFormData({...hotelFormData, isActive: e.target.checked})}
+              className="w-4 h-4 text-[#7C4A4A] border-gray-300 rounded focus:ring-[#7C4A4A]"
+            />
+            <label htmlFor="isActiveForm" className="text-sm font-semibold text-slate-700">Active and visible to customers</label>
+          </div>
+
           <div className="flex gap-3 pt-4 border-t border-gray-100">
             <button type="button" onClick={closeHotelModal} className="flex-1 py-2.5 rounded-lg border border-gray-200 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all">Cancel</button>
             <button type="submit" className="flex-1 py-2.5 rounded-lg bg-[#7C4A4A] hover:bg-[#633b3b] text-white text-sm font-bold transition-all shadow-md active:scale-95">Save Hotel</button>
@@ -411,39 +654,74 @@ const HotelManagement = () => {
           </div>
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Hotel</label>
-            <select defaultValue={roomModal.data?.hotel || ""} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" required>
+            <select 
+              value={roomModal.data?.hotelId || roomFormData.hotelId || ""} 
+              onChange={(e) => setRoomFormData({ ...roomFormData, hotelId: e.target.value })}
+              className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+              required
+              disabled={roomModal.type === 'edit'}
+            >
               <option value="" disabled>Select Hotel</option>
               {hotels.map(h => (
-                <option key={h.id} value={h.name}>{h.name}</option>
+                <option key={h.id} value={h.id}>{h.name}</option>
               ))}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Capacity</label>
-              <input type="number" defaultValue={roomModal.data?.capacity} min="1" className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Max people" required />
+              <input 
+                type="number" 
+                value={roomFormData.maxGuests} 
+                onChange={(e) => setRoomFormData({ ...roomFormData, maxGuests: parseInt(e.target.value) })}
+                min="1" 
+                className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+                placeholder="Max people" 
+                required 
+              />
             </div>
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Price per Night</label>
-              <input type="number" defaultValue={roomModal.data?.price} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Price (VND)" required />
+              <input 
+                type="number" 
+                value={roomFormData.pricePerNight} 
+                onChange={(e) => setRoomFormData({ ...roomFormData, pricePerNight: parseFloat(e.target.value) })}
+                className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+                placeholder="Price (VND)" 
+                required 
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Available Rooms</label>
-              <input type="number" defaultValue={roomModal.data?.available} min="0" className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Count" required />
+              <input 
+                type="number" 
+                value={roomFormData.availableRooms} 
+                onChange={(e) => setRoomFormData({ ...roomFormData, availableRooms: parseInt(e.target.value) })}
+                min="0" 
+                className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+                placeholder="Count" 
+                required 
+              />
             </div>
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Status</label>
-              <select defaultValue={roomModal.data?.status || "Active"} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all">
+              <select className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all">
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Amenities</label>
-            <input type="text" defaultValue={roomModal.data?.amenities} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="e.g., WiFi, Pool, Breakfast" />
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Description</label>
+            <input 
+              type="text" 
+              value={roomFormData.description} 
+              onChange={(e) => setRoomFormData({ ...roomFormData, description: e.target.value })}
+              className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+              placeholder="e.g., Garden view, Balcony..." 
+            />
           </div>
           <div className="flex gap-3 pt-4 border-t border-gray-100">
             <button type="button" onClick={closeRoomModal} className="flex-1 py-2.5 rounded-lg border border-gray-200 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all">Cancel</button>

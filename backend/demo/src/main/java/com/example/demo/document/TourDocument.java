@@ -58,6 +58,9 @@ public class TourDocument {
     @Indexed
     private Boolean isDeleted;
 
+    @Indexed
+    private Boolean isActive;
+
     // EMBEDDED
     private List<TourImage> images;
     private List<Itinerary> itinerary;

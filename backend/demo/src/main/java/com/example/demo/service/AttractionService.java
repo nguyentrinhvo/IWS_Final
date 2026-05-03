@@ -339,4 +339,29 @@ public class AttractionService {
         dto.setCreatedAt(booking.getCreatedAt());
         return dto;
     }
+
+    public com.example.demo.dto.attraction.AttractionStatsDTO getStats() {
+        List<AttractionDocument> all = attractionRepository.findAll();
+        long totalAttractions = all.size();
+        long activeAttractions = all.stream().filter(a -> a.getIsActive() != null && a.getIsActive()).count();
+        
+        long totalTickets = all.stream()
+                .filter(a -> a.getTicketTypes() != null)
+                .mapToLong(a -> a.getTicketTypes().size())
+                .sum();
+                
+        double avgPrice = all.stream()
+                .filter(a -> a.getTicketTypes() != null)
+                .flatMap(a -> a.getTicketTypes().stream())
+                .mapToDouble(t -> t.getPrice() != null ? t.getPrice() : 0.0)
+                .average()
+                .orElse(0.0);
+
+        return com.example.demo.dto.attraction.AttractionStatsDTO.builder()
+                .totalAttractions(totalAttractions)
+                .activeAttractions(activeAttractions)
+                .totalTickets(totalTickets)
+                .avgTicketPrice(avgPrice)
+                .build();
+    }
 }

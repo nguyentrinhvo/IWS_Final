@@ -174,4 +174,4 @@ const TourPaymentOptions = ({
   );
 };
 
-export default TourPaymentOptions;
+export default TourPaymentOptions;

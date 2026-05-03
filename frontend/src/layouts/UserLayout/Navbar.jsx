@@ -21,7 +21,7 @@ const formatDisplayName = (fullName) => {
 export default function Navbar() {
   const navigate = useNavigate();
   const { currency, language, t } = useGlobal();
-  const { currentUser, login: authLogin, logout: authLogout, isLoginModalOpen, setIsLoginModalOpen } = useAuth();
+  const { currentUser, isAdmin, login: authLogin, logout: authLogout, isLoginModalOpen, setIsLoginModalOpen } = useAuth();
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isSupportClosing, setIsSupportClosing] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -132,6 +132,12 @@ export default function Navbar() {
     // Cần gọi lại authLogin để cập nhật state ngay lập tức
     authLogin(user, user._rememberMe);
     setIsLoginModalOpen(false);
+
+    // Redirect admin to dashboard
+    const userRole = user.role || '';
+    if (userRole.toUpperCase().includes('ADMIN')) {
+      navigate('/admin');
+    }
   };
 
   const handleRegisterSuccess = (data) => {
@@ -227,7 +233,7 @@ export default function Navbar() {
         </svg>
       )
     },
-    ...(currentUser?.role?.toUpperCase() === 'ADMIN' ? [{
+    ...(isAdmin ? [{
       key: 'adminPanel',
       tabId: 'admin',
       icon: (

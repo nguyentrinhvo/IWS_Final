@@ -63,7 +63,7 @@ const UserRoutes = () => {
         <Route path="/flights/manage" element={<PrivateRoute><ManageBooking /></PrivateRoute>} />
         <Route path="/profile/:tab" element={<PrivateRoute><UserAccount /></PrivateRoute>} />
         <Route path="/things-to-do" element={<ThingsToDo />} />
-        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+        <Route path="/auth/callback" element={<OAuth2RedirectHandler />} />
         <Route path="/payment-result" element={<PaymentResult />} />
         <Route path="/login" element={<LoginRedirect />} />
       </Route>

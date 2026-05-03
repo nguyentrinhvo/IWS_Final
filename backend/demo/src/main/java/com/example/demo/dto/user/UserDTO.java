@@ -22,4 +22,7 @@ public class UserDTO {
     private Date dateOfBirth;
     private String city;
     private String provider;
+    private Date createdAt;
+    private Boolean isLocked;
+    private Date lastActiveAt;
 }

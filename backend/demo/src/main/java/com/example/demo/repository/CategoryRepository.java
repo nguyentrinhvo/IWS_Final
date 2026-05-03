@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends MongoRepository<CategoryDocument, String> {
+    org.springframework.data.domain.Page<CategoryDocument> findByNameViContainingIgnoreCaseOrNameEnContainingIgnoreCase(String nameVi, String nameEn, org.springframework.data.domain.Pageable pageable);
 }

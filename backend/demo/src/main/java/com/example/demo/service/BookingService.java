@@ -8,6 +8,7 @@ import com.example.demo.dto.booking.BookingRequest;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.TourRepository;
+import com.example.demo.repository.UserRepository;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,9 @@ public class BookingService {
 
     @Autowired
     private TourRepository tourRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public BookingDTO createTourBooking(String userId, BookingRequest request) {
         TourDocument tour = tourRepository.findById(request.getServiceId())
@@ -99,6 +103,23 @@ public class BookingService {
         return mapToDTO(booking);
     }
 
+    public BookingDTO updateBookingStatus(String id, String status) {
+        BookingDocument booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+        
+        booking.setStatus(status);
+        
+        if ("confirmed".equals(status) || "success".equals(status)) {
+            if (booking.getPayment() != null) {
+                booking.getPayment().setPaymentStatus("success");
+                booking.getPayment().setPaidAt(new Date());
+            }
+        }
+        
+        BookingDocument updatedBooking = bookingRepository.save(booking);
+        return mapToDTO(updatedBooking);
+    }
+
     public BookingDTO confirmBooking(String id) {
         BookingDocument booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
@@ -112,6 +133,21 @@ public class BookingService {
         
         BookingDocument updatedBooking = bookingRepository.save(booking);
         return mapToDTO(updatedBooking);
+    }
+
+    public Page<BookingDTO> getAllBookings(String serviceType, String status, Pageable pageable) {
+        Page<BookingDocument> bookings;
+        if (serviceType != null && status != null) {
+            bookings = bookingRepository.findByServiceTypeAndStatus(serviceType, status, pageable);
+        } else if (serviceType != null) {
+            // Need to add this to repo if not exists, or use Query
+            bookings = bookingRepository.findByServiceType(serviceType, pageable);
+        } else if (status != null) {
+            bookings = bookingRepository.findByStatus(status, pageable);
+        } else {
+            bookings = bookingRepository.findAll(pageable);
+        }
+        return bookings.map(this::mapToDTO);
     }
 
     public BookingDTO cancelBooking(String id, String userId) {
@@ -207,6 +243,15 @@ public class BookingService {
         dto.setPayment(booking.getPayment());
         dto.setPassengers(booking.getPassengers());
         dto.setCreatedAt(booking.getCreatedAt());
+
+        // Populate user info
+        if (booking.getUserId() != null) {
+            userRepository.findById(booking.getUserId()).ifPresent(user -> {
+                dto.setUserName(user.getFullName());
+                dto.setUserEmail(user.getEmail());
+            });
+        }
+
         return dto;
     }
 

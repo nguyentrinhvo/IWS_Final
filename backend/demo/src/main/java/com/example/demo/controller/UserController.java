@@ -38,17 +38,4 @@ public class UserController {
 
     // ── Admin endpoints ──────────────────────────────────────────
 
-    @GetMapping("/admin/users")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<UserDTO>> getAllUsers(
-            @RequestParam(required = false) String keyword,
-            @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        return ResponseEntity.ok(userService.getAllUsers(keyword, pageable));
-    }
-
-    @PutMapping("/admin/users/{id}/lock")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MessageResponse> toggleLockUser(@PathVariable String id) {
-        return ResponseEntity.ok(userService.toggleLockUser(id));
-    }
 }

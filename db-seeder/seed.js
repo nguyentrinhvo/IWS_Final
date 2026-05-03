@@ -258,6 +258,87 @@ async function run() {
       console.log(`Seeded ${ttdToInsert.length} activities from things_to_do.json.`);
     }
 
+    // 6. Seed Users from users.json
+    const usersFilePath = path.join(__dirname, 'data', 'users.json');
+    if (fs.existsSync(usersFilePath)) {
+      const usersCol = db.collection('users');
+      await usersCol.deleteMany({});
+
+      const usersRaw = fs.readFileSync(usersFilePath, 'utf8');
+      const usersData = JSON.parse(usersRaw);
+
+      const usersToInsert = usersData.map(u => ({
+        _id: u.id ? new ObjectId(u.id) : undefined,
+        email: u.email,
+        fullName: u.fullName,
+        passwordHash: u.passwordHash,
+        role: u.role || 'customer',
+        phoneNumber: u.phoneNumber || '',
+        city: u.city || '',
+        provider: u.provider || 'local',
+        language: u.language || 'vi',
+        isLocked: u.isLocked || false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+
+      await usersCol.insertMany(usersToInsert);
+      console.log(`Seeded ${usersToInsert.length} users from users.json.`);
+    }
+
+    // 7. Seed Bookings from bookings.json
+    const bookingsFilePath = path.join(__dirname, 'data', 'bookings.json');
+    if (fs.existsSync(bookingsFilePath)) {
+      const bookingsCol = db.collection('bookings');
+      await bookingsCol.deleteMany({});
+
+      const bookingsRaw = fs.readFileSync(bookingsFilePath, 'utf8');
+      const bookingsData = JSON.parse(bookingsRaw);
+
+      const bookingsToInsert = bookingsData.map(b => ({
+        _id: b.id ? new ObjectId(b.id) : undefined,
+        userId: b.userId,
+        serviceId: b.serviceId,
+        serviceType: b.serviceType,
+        numAdults: b.numAdults || 0,
+        numChildren: b.numChildren || 0,
+        quantity: b.quantity || 1,
+        totalPrice: b.totalPrice,
+        status: b.status || 'pending',
+        snapshotName: b.snapshotName || '',
+        snapshotPrice: b.snapshotPrice || 0,
+        createdAt: b.createdAt ? new Date(b.createdAt) : new Date(),
+        updatedAt: new Date()
+      }));
+
+      await bookingsCol.insertMany(bookingsToInsert);
+      console.log(`Seeded ${bookingsToInsert.length} bookings from bookings.json.`);
+    }
+
+    // 8. Seed Categories from categories.json
+    const categoriesFilePath = path.join(__dirname, 'data', 'categories.json');
+    if (fs.existsSync(categoriesFilePath)) {
+      const categoriesCol = db.collection('categories');
+      await categoriesCol.deleteMany({});
+
+      const categoriesRaw = fs.readFileSync(categoriesFilePath, 'utf8');
+      const categoriesData = JSON.parse(categoriesRaw);
+
+      const categoriesToInsert = categoriesData.map(c => ({
+        _id: c.id ? new ObjectId(c.id) : undefined,
+        nameVi: c.nameVi,
+        nameEn: c.nameEn,
+        descriptionVi: c.descriptionVi,
+        descriptionEn: c.descriptionEn,
+        imageUrl: c.imageUrl,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+
+      await categoriesCol.insertMany(categoriesToInsert);
+      console.log(`Seeded ${categoriesToInsert.length} categories from categories.json.`);
+    }
+
     console.log("\n✅ Seeding completed successfully!");
   } catch (error) {
     console.error("Error seeding data:", error);

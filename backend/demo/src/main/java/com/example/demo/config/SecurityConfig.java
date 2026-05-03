@@ -87,9 +87,12 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/categories").permitAll()
                 .requestMatchers("/api/tours/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/bus-train/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/providers/**").permitAll()
                 // Hotel public endpoints (browse, search, detail, featured)
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hotels/search").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hotels/featured").permitAll()

@@ -98,4 +98,26 @@ public class BusTrainRouteService {
                 .isActive(document.getIsActive())
                 .build();
     }
+    @Autowired
+    private com.example.demo.repository.ProviderRepository providerRepository;
+
+    public com.example.demo.dto.bus_train.BusTrainStatsDTO getStats() {
+        List<BusTrainRouteDocument> all = repository.findAll();
+        long totalRoutes = all.size();
+        long activeRoutes = all.stream().filter(r -> r.getIsActive() != null && r.getIsActive()).count();
+        long totalProviders = providerRepository.count();
+        
+        long availableSeats = all.stream()
+                .filter(r -> r.getIsActive() != null && r.getIsActive())
+                .flatMap(r -> r.getSeatMap() != null ? r.getSeatMap().stream() : java.util.stream.Stream.empty())
+                .filter(s -> "available".equalsIgnoreCase(s.getStatus()))
+                .count();
+
+        return com.example.demo.dto.bus_train.BusTrainStatsDTO.builder()
+                .totalProviders(totalProviders)
+                .totalRoutes(totalRoutes)
+                .activeRoutes(activeRoutes)
+                .availableSeats(availableSeats)
+                .build();
+    }
 }

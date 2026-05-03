@@ -14,9 +14,7 @@
     "transport": "TRANSPORT",
     "attractions": "ATTRACTIONS",
     "categories": "CATEGORIES",
-    "reviews": "REVIEWS",
-    "chat": "CHAT",
-    "reports": "REPORTS"
+    "reviews": "REVIEWS"
   },
   "header": {
     "admin": "Admin",

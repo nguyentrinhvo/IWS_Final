@@ -1,69 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CalendarCheck, Clock, CheckCircle2, XCircle, Check, X } from 'lucide-react';
 import DashboardCard from '../../../components/admin/DashboardCard';
 import AdminTable from '../../../components/admin/AdminTable';
 import TablePagination from '../../../components/admin/TablePagination';
 import FilterBar, { FilterLabel, AdminSelect } from '../../../components/admin/FilterBar';
 import SearchInput from '../../../components/admin/SearchInput';
+import { getAllBookings } from '../../../services/adminService';
+import api from '../../../services/api';
+import { toast } from "react-hot-toast";
 
-const MOCK_BOOKINGS = [
-  { id: 1, bookingId: 'BK-1001', user: 'John Doe', tour: 'Ha Long Bay Cruise', date: '2023-11-15', status: 'Pending', paymentStatus: 'Pending', totalPrice: 1500000 },
-  { id: 2, bookingId: 'BK-1002', user: 'Jane Smith', tour: 'Hoi An Ancient Town', date: '2023-11-16', status: 'Confirmed', paymentStatus: 'Confirmed', totalPrice: 850000 },
-  { id: 3, bookingId: 'BK-1003', user: 'Mike Johnson', tour: 'Ba Na Hills', date: '2023-11-17', status: 'Rejected', paymentStatus: 'Cancelled', totalPrice: 1200000 },
-  { id: 4, bookingId: 'BK-1004', user: 'Sarah Williams', tour: 'Phu Quoc Island', date: '2023-11-18', status: 'Cancelled', paymentStatus: 'Cancelled', totalPrice: 3500000 },
-  { id: 5, bookingId: 'BK-1005', user: 'David Brown', tour: 'Mekong Delta', date: '2023-11-19', status: 'Pending', paymentStatus: 'Confirmed', totalPrice: 950000 },
-];
-
-const COLUMNS = ['Booking ID', 'User', 'Tour', 'Date', 'Status', 'Payment Status', 'Total Price', 'Actions'];
+const COLUMNS = ['Booking ID', 'User', 'Service', 'Date', 'Status', 'Payment Status', 'Total Price', 'Actions'];
 
 const BookingManagement = () => {
-  const [bookings, setBookings] = useState(MOCK_BOOKINGS);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [tourFilter, setTourFilter] = useState('All');
-  const [dateFilter, setDateFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('All');
   const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 5;
+  const [totalElements, setTotalElements] = useState(0);
+  const ITEMS_PER_PAGE = 10;
 
-  const toursList = [...new Set(MOCK_BOOKINGS.map(b => b.tour))];
+  const fetchBookings = async () => {
+    setLoading(true);
+    try {
+      const params = {
+        page: page - 1,
+        size: ITEMS_PER_PAGE,
+      };
+      if (statusFilter !== 'All') params.status = statusFilter.toLowerCase();
+      if (typeFilter !== 'All') params.serviceType = typeFilter.toLowerCase();
 
-  // ─── Filters ─────────────────────────────────────────────────────────────────
-  const filteredBookings = bookings.filter(b => {
-    const matchSearch = search === '' || 
-      b.bookingId.toLowerCase().includes(search.toLowerCase()) || 
-      b.user.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = statusFilter === 'All' || b.status === statusFilter;
-    const matchTour = tourFilter === 'All' || b.tour === tourFilter;
-    const matchDate = dateFilter === '' || b.date === dateFilter;
-    return matchSearch && matchStatus && matchTour && matchDate;
-  });
+      const data = await getAllBookings(params);
+      setBookings(data.content);
+      setTotalElements(data.totalElements);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+      toast.error("Failed to load bookings");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const paginatedBookings = filteredBookings.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-  const totalPages = Math.ceil(filteredBookings.length / ITEMS_PER_PAGE) || 1;
+  useEffect(() => {
+    fetchBookings();
+  }, [page, statusFilter, typeFilter]);
 
   // ─── Stats ───────────────────────────────────────────────────────────────────
-  const totalBookings = bookings.length;
-  const pendingBookings = bookings.filter(b => b.status === 'Pending').length;
-  const confirmedBookings = bookings.filter(b => b.status === 'Confirmed').length;
-  const cancelledBookings = bookings.filter(b => b.status === 'Cancelled').length;
+  // Note: For real stats, we should use the Dashboard API or a separate summary API.
+  // Here we just show some placeholder or derived values from the current page/total.
 
-  // ─── Handlers ────────────────────────────────────────────────────────────────
-  const handleApprove = (id) => {
-    setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'Confirmed' } : b));
+  const handleApprove = async (id) => {
+    try {
+      await api.put(`/admin/bookings/${id}/confirm`);
+      toast.success("Booking confirmed");
+      fetchBookings();
+    } catch (error) {
+      toast.error("Failed to confirm booking");
+    }
   };
 
-  const handleReject = (id) => {
-    setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'Rejected' } : b));
-  };
-
-  const handlePaymentChange = (id, newStatus) => {
-    setBookings(prev => prev.map(b => b.id === id ? { ...b, paymentStatus: newStatus } : b));
+  const handleCancel = async (id) => {
+    if (window.confirm("Are you sure you want to cancel this booking?")) {
+      try {
+        await api.put(`/bookings/${id}/cancel`); // Uses the common cancel endpoint
+        toast.success("Booking cancelled");
+        fetchBookings();
+      } catch (error) {
+        toast.error("Failed to cancel booking");
+      }
+    }
   };
 
   const renderBadge = (status) => {
     let style = '';
-    if (status === 'Pending') style = 'bg-yellow-50 text-yellow-600 border-yellow-200';
-    else if (status === 'Confirmed') style = 'bg-green-50 text-green-600 border-green-200';
+    const s = status?.toLowerCase();
+    if (s === 'pending') style = 'bg-yellow-50 text-yellow-600 border-yellow-200';
+    else if (s === 'confirmed' || s === 'success') style = 'bg-green-50 text-green-600 border-green-200';
     else style = 'bg-red-50 text-red-600 border-red-200'; // Cancelled or Rejected
 
     return (
@@ -84,22 +97,23 @@ const BookingManagement = () => {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <DashboardCard title="TOTAL BOOKINGS" value={totalBookings} icon={CalendarCheck} />
-        <DashboardCard title="PENDING" value={pendingBookings} icon={Clock} iconBgColor="bg-[#fffbeb]" iconColor="text-[#f59e0b]" trend="up" trendValue="+2" />
-        <DashboardCard title="CONFIRMED" value={confirmedBookings} icon={CheckCircle2} iconBgColor="bg-[#eefcf2]" iconColor="text-[#22a85a]" trend="up" trendValue="+5" />
-        <DashboardCard title="CANCELLED" value={cancelledBookings} icon={XCircle} iconBgColor="bg-[#fef2f2]" iconColor="text-[#ef4444]" />
+        <DashboardCard title="TOTAL BOOKINGS" value={totalElements} icon={CalendarCheck} />
+        <DashboardCard title="LIVE UPDATES" value="Real-time" icon={Clock} iconBgColor="bg-[#fffbeb]" iconColor="text-[#f59e0b]" />
+        <DashboardCard title="STATUS" value="Active" icon={CheckCircle2} iconBgColor="bg-[#eefcf2]" iconColor="text-[#22a85a]" />
+        <DashboardCard title="DATABASE" value="Connected" icon={XCircle} iconBgColor="bg-blue-50" iconColor="text-blue-500" />
       </div>
 
       {/* Main Content Area */}
       <div className="space-y-6">
         {/* Filter Panel */}
-        <FilterBar gridCols="grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
+        <FilterBar gridCols="grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <FilterLabel>Search Bookings</FilterLabel>
             <SearchInput
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              placeholder="Search by Booking ID or User..."
+              placeholder="Search is handled by backend (WIP)..."
+              disabled
             />
           </div>
           <div>
@@ -108,82 +122,80 @@ const BookingManagement = () => {
               <option value="All">All Statuses</option>
               <option value="Pending">Pending</option>
               <option value="Confirmed">Confirmed</option>
-              <option value="Rejected">Rejected</option>
               <option value="Cancelled">Cancelled</option>
             </AdminSelect>
           </div>
           <div>
-            <FilterLabel>Tour</FilterLabel>
-            <AdminSelect value={tourFilter} onChange={(e) => { setTourFilter(e.target.value); setPage(1); }}>
-              <option value="All">All Tours</option>
-              {toursList.map(t => <option key={t} value={t}>{t}</option>)}
+            <FilterLabel>Type</FilterLabel>
+            <AdminSelect value={typeFilter} onChange={(e) => { setTypeFilter(e.target.value); setPage(1); }}>
+              <option value="All">All Types</option>
+              <option value="tour">Tour</option>
+              <option value="flight">Flight</option>
+              <option value="hotel">Hotel</option>
+              <option value="bus_train">Transport</option>
             </AdminSelect>
-          </div>
-          <div>
-            <FilterLabel>Date</FilterLabel>
-            <input 
-              type="date"
-              value={dateFilter}
-              onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all"
-            />
           </div>
         </FilterBar>
 
         {/* Table */}
-        <AdminTable columns={COLUMNS} minWidth="min-w-[1200px]" emptyMessage="No bookings match your filters.">
-          {paginatedBookings.map(b => (
-            <tr key={b.id} className="hover:bg-[#faf8f7] transition-colors group">
-              <td className="py-4 px-5 text-sm font-black text-[#7C4A4A]">{b.bookingId}</td>
-              <td className="py-4 px-5 text-sm font-bold text-slate-800">{b.user}</td>
-              <td className="py-4 px-5 text-sm font-semibold text-gray-600">{b.tour}</td>
-              <td className="py-4 px-5 text-sm font-semibold text-gray-500 whitespace-nowrap">{b.date}</td>
-              <td className="py-4 px-5">{renderBadge(b.status)}</td>
-              <td className="py-4 px-5">{renderBadge(b.paymentStatus)}</td>
-              <td className="py-4 px-5 text-sm font-bold text-slate-800">
-                {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(b.totalPrice)}
-              </td>
-              <td className="py-4 px-5">
-                <div className="flex items-center gap-2">
-                  {b.status === 'Pending' && (
-                    <>
-                      <button 
-                        onClick={() => handleApprove(b.id)}
-                        className="p-1.5 bg-green-50 text-green-600 hover:bg-green-100 rounded border border-green-200 transition-colors shadow-sm"
-                        title="Approve Booking"
-                      >
-                        <Check className="w-4 h-4" />
-                      </button>
-                      <button 
-                        onClick={() => handleReject(b.id)}
-                        className="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded border border-red-200 transition-colors shadow-sm"
-                        title="Reject Booking"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </>
-                  )}
-                  
-                  <select 
-                    value={b.paymentStatus}
-                    onChange={(e) => handlePaymentChange(b.id, e.target.value)}
-                    className="ml-1 px-2 py-1.5 bg-gray-50 border border-gray-200 rounded text-xs font-bold text-gray-600 outline-none focus:border-[#7C4A4A] transition-colors cursor-pointer"
-                    title="Update Payment Status"
-                  >
-                    <option value="Pending">Payment: Pending</option>
-                    <option value="Confirmed">Payment: Confirmed</option>
-                    <option value="Cancelled">Payment: Cancelled</option>
-                  </select>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </AdminTable>
+        <div className="relative min-h-[400px]">
+          {loading && (
+            <div className="absolute inset-0 bg-white/50 backdrop-blur-[1px] flex items-center justify-center z-10">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#7C4A4A]"></div>
+            </div>
+          )}
+          
+          <AdminTable columns={COLUMNS} minWidth="min-w-[1200px]" emptyMessage="No bookings match your filters.">
+            {bookings.map(b => (
+              <tr key={b.id} className="hover:bg-[#faf8f7] transition-colors group">
+                <td className="py-4 px-5 text-sm font-black text-[#7C4A4A]">#{b.id.substring(0, 8)}</td>
+                <td className="py-4 px-5">
+                   <div className="text-sm font-bold text-slate-800">{b.userName || 'Unknown User'}</div>
+                   <div className="text-[10px] text-gray-400">{b.userEmail}</div>
+                </td>
+                <td className="py-4 px-5">
+                   <div className="text-sm font-semibold text-gray-600">{b.snapshotName}</div>
+                   <div className="text-[10px] text-gray-400 uppercase font-bold">{b.serviceType}</div>
+                </td>
+                <td className="py-4 px-5 text-sm font-semibold text-gray-500 whitespace-nowrap">
+                  {new Date(b.createdAt).toLocaleDateString()}
+                </td>
+                <td className="py-4 px-5">{renderBadge(b.status)}</td>
+                <td className="py-4 px-5">{renderBadge(b.payment?.paymentStatus || 'N/A')}</td>
+                <td className="py-4 px-5 text-sm font-bold text-slate-800">
+                  {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(b.totalPrice)}
+                </td>
+                <td className="py-4 px-5">
+                  <div className="flex items-center gap-2">
+                    {b.status === 'pending' && (
+                      <>
+                        <button 
+                          onClick={() => handleApprove(b.id)}
+                          className="p-1.5 bg-green-50 text-green-600 hover:bg-green-100 rounded border border-green-200 transition-colors shadow-sm"
+                          title="Confirm Booking"
+                        >
+                          <Check className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => handleCancel(b.id)}
+                          className="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded border border-red-200 transition-colors shadow-sm"
+                          title="Cancel Booking"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </AdminTable>
+        </div>
 
         <TablePagination
           currentPage={page}
-          totalPages={totalPages}
-          totalItems={filteredBookings.length}
+          totalPages={Math.ceil(totalElements / ITEMS_PER_PAGE) || 1}
+          totalItems={totalElements}
           itemsPerPage={ITEMS_PER_PAGE}
           onPageChange={setPage}
           noun="bookings"

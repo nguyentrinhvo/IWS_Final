@@ -67,10 +67,10 @@ public class HotelService {
     }
 
     public void deleteHotel(String id) {
-        HotelDocument document = hotelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
-        document.setIsActive(false);
-        hotelRepository.save(document);
+        if (!hotelRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Hotel not found");
+        }
+        hotelRepository.deleteById(id);
     }
 
     public HotelDTO getHotelById(String id) {
@@ -83,6 +83,13 @@ public class HotelService {
         return hotelRepository.findAll(pageable).map(this::mapToDTO);
     }
 
+    public Page<HotelDTO> getAdminHotels(String name, String city, Integer starRating, Pageable pageable) {
+        String nameRegex = (name == null || name.isBlank()) ? ".*" : name;
+        String cityRegex = (city == null || city.isBlank()) ? ".*" : city;
+        
+        return hotelRepository.adminSearch(nameRegex, cityRegex, starRating, pageable).map(this::mapToDTO);
+    }
+
     public Page<HotelDTO> searchHotels(String city, Double minPrice, Double maxPrice, Integer minStar, Pageable pageable) {
         if (minPrice != null && maxPrice != null) {
             return hotelRepository.findByPriceRange(city, minPrice, maxPrice, pageable).map(this::mapToDTO);
@@ -92,6 +99,30 @@ public class HotelService {
             // Flexible keyword search (matches city, address, or name)
             return hotelRepository.searchByKeyword(city, pageable).map(this::mapToDTO);
         }
+    }
+
+    public com.example.demo.dto.hotel.HotelStatsDTO getHotelStats() {
+        List<HotelDocument> allHotels = hotelRepository.findAll();
+        long totalHotels = allHotels.size();
+        long activeHotels = allHotels.stream().filter(h -> h.getIsActive() != null && h.getIsActive()).count();
+        
+        long totalRoomTypes = allHotels.stream()
+                .filter(h -> h.getRoomTypes() != null)
+                .mapToLong(h -> h.getRoomTypes().size())
+                .sum();
+                
+        long totalAvailableRooms = allHotels.stream()
+                .filter(h -> h.getRoomTypes() != null)
+                .flatMap(h -> h.getRoomTypes().stream())
+                .mapToLong(r -> r.getAvailableRooms() != null ? r.getAvailableRooms() : 0)
+                .sum();
+
+        return com.example.demo.dto.hotel.HotelStatsDTO.builder()
+                .totalHotels(totalHotels)
+                .activeHotels(activeHotels)
+                .totalRoomTypes(totalRoomTypes)
+                .totalAvailableRooms(totalAvailableRooms)
+                .build();
     }
 
     private HotelDTO mapToDTO(HotelDocument document) {

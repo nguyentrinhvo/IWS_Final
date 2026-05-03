@@ -1,0 +1,26 @@
+[
+  {
+    "id": "6634c0000000000000000001",
+    "email": "admin@travel.com",
+    "fullName": "System Administrator",
+    "passwordHash": "$2a$10$r8O7k6N1v3j4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1g2h3i4j",
+    "role": "admin",
+    "phoneNumber": "0901234567",
+    "city": "Hồ Chí Minh",
+    "provider": "local",
+    "language": "vi",
+    "isLocked": false
+  },
+  {
+    "id": "6634c0000000000000000002",
+    "email": "customer@gmail.com",
+    "fullName": "Nguyễn Văn Khách",
+    "passwordHash": "$2a$10$r8O7k6N1v3j4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1g2h3i4j",
+    "role": "customer",
+    "phoneNumber": "0987654321",
+    "city": "Hà Nội",
+    "provider": "local",
+    "language": "vi",
+    "isLocked": false
+  }
+]

@@ -13,7 +13,6 @@ import HotelManagement from '../pages/admin/Hotels/HotelManagement';
 import AttractionsManagement from '../pages/admin/Attractions/AttractionsManagement';
 import CategoriesManagement from '../pages/admin/Categories/CategoriesManagement';
 import ReviewsManagement from '../pages/admin/Reviews/ReviewsManagement';
-import ChatManagement from '../pages/admin/Chat/ChatManagement';
 import BookingManagement from '../pages/admin/Bookings/BookingManagement';
 import TransportManagement from '../pages/admin/transport/TransportManagement';
 
@@ -33,7 +32,6 @@ const AdminRoutes = () => {
           <Route path="attractions" element={<AttractionsManagement />} />
           <Route path="categories" element={<CategoriesManagement />} />
           <Route path="reviews" element={<ReviewsManagement />} />
-          <Route path="chat" element={<ChatManagement />} />
           <Route path="bookings" element={<BookingManagement />} />
           <Route path="transport" element={<TransportManagement />} />
           {/* If hitting /admin, redirect to /admin/dashboard */}

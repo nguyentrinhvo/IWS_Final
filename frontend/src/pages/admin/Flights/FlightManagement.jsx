@@ -9,24 +9,6 @@ import ConfirmModal from '../../../components/admin/ConfirmModal';
 import AirlineFormModal from './AirlineFormModal';
 import FlightFormModal from './FlightFormModal';
 
-// ─── Mock Data ─────────────────────────────────────────────────────────────
-const INIT_AIRLINES = [
-  { id: 1, name: 'Vietnam Airlines', code: 'VN', country: 'Vietnam', status: 'Active' },
-  { id: 2, name: 'Vietjet Air', code: 'VJ', country: 'Vietnam', status: 'Active' },
-  { id: 3, name: 'Bamboo Airways', code: 'QH', country: 'Vietnam', status: 'Inactive' },
-  { id: 4, name: 'Emirates', code: 'EK', country: 'UAE', status: 'Active' },
-  { id: 5, name: 'Singapore Airlines', code: 'SQ', country: 'Singapore', status: 'Active' },
-  { id: 6, name: 'Thai Airways', code: 'TG', country: 'Thailand', status: 'Inactive' },
-];
-
-const INIT_FLIGHTS = [
-  { id: 1, so_hieu: 'VN-201', hang_bay: 'Vietnam Airlines', diem_di: 'Hanoi (HAN)', diem_den: 'Ho Chi Minh (SGN)', gio_di: '2024-11-01T06:00', gio_den: '2024-11-01T08:10', hang_ve: 'Economy', gia: 1200000, so_cho_con: 48 },
-  { id: 2, so_hieu: 'VJ-410', hang_bay: 'Vietjet Air', diem_di: 'Ho Chi Minh (SGN)', diem_den: 'Da Nang (DAD)', gio_di: '2024-11-02T09:30', gio_den: '2024-11-02T11:00', hang_ve: 'Economy', gia: 850000, so_cho_con: 120 },
-  { id: 3, so_hieu: 'EK-343', hang_bay: 'Emirates', diem_di: 'Ho Chi Minh (SGN)', diem_den: 'Dubai (DXB)', gio_di: '2024-11-03T23:55', gio_den: '2024-11-04T05:30', hang_ve: 'Business', gia: 12500000, so_cho_con: 12 },
-  { id: 4, so_hieu: 'SQ-186', hang_bay: 'Singapore Airlines', diem_di: 'Hanoi (HAN)', diem_den: 'Singapore (SIN)', gio_di: '2024-11-05T14:15', gio_den: '2024-11-05T18:45', hang_ve: 'First Class', gia: 25000000, so_cho_con: 4 },
-  { id: 5, so_hieu: 'QH-201', hang_bay: 'Bamboo Airways', diem_di: 'Phu Quoc (PQC)', diem_den: 'Hanoi (HAN)', gio_di: '2024-11-06T16:00', gio_den: '2024-11-06T18:20', hang_ve: 'Economy', gia: 990000, so_cho_con: 76 },
-];
-
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const fmtPrice = (p) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(p);
 const fmtDT = (dt) => {
@@ -138,10 +120,10 @@ const FlightsTab = ({ flights, airlines, onAdd, onEdit, onDelete }) => {
 
   const filtered = flights.filter((f) => {
     const q = (applied.search || '').toLowerCase();
-    return (!q || f.so_hieu.toLowerCase().includes(q) || f.hang_bay.toLowerCase().includes(q))
-      && (!applied.airlineFilter || applied.airlineFilter === 'All Airlines' || f.hang_bay === applied.airlineFilter)
-      && (!applied.fromFilter || applied.fromFilter === 'All' || f.diem_di === applied.fromFilter)
-      && (!applied.toFilter || applied.toFilter === 'All' || f.diem_den === applied.toFilter);
+    return (!q || f.flightNumber.toLowerCase().includes(q) || f.airline.toLowerCase().includes(q))
+      && (!applied.airlineFilter || applied.airlineFilter === 'All Airlines' || f.airline === applied.airlineFilter)
+      && (!applied.fromFilter || applied.fromFilter === 'All' || f.departureCity === applied.fromFilter)
+      && (!applied.toFilter || applied.toFilter === 'All' || f.arrivalCity === applied.toFilter);
   });
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS));
@@ -205,18 +187,18 @@ const FlightsTab = ({ flights, airlines, onAdd, onEdit, onDelete }) => {
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-lg bg-[#faeceb] flex items-center justify-center flex-shrink-0"><PlaneTakeoff className="w-3.5 h-3.5 text-[#7C4A4A]" /></div>
-                      <span className="text-sm font-black text-slate-800 whitespace-nowrap">{f.so_hieu}</span>
+                      <span className="text-sm font-black text-slate-800 whitespace-nowrap">{f.flightNumber}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-4 text-sm font-semibold text-gray-600 whitespace-nowrap">{f.hang_bay}</td>
-                  <td className="py-4 px-4 text-sm font-semibold text-slate-700 whitespace-nowrap">{f.diem_di}</td>
-                  <td className="py-4 px-4 text-sm font-semibold text-slate-700 whitespace-nowrap">{f.diem_den}</td>
-                  <td className="py-4 px-4 text-xs font-semibold text-gray-500 whitespace-nowrap">{fmtDT(f.gio_di)}</td>
-                  <td className="py-4 px-4 text-xs font-semibold text-gray-500 whitespace-nowrap">{fmtDT(f.gio_den)}</td>
-                  <td className="py-4 px-4 whitespace-nowrap"><Badge label={f.hang_ve} cls={CLASS_STYLE[f.hang_ve] || 'bg-gray-100 text-gray-500'} /></td>
-                  <td className="py-4 px-4 text-sm font-black text-slate-800 whitespace-nowrap">{fmtPrice(f.gia)}</td>
+                  <td className="py-4 px-4 text-sm font-semibold text-gray-600 whitespace-nowrap">{f.airline}</td>
+                  <td className="py-4 px-4 text-sm font-semibold text-slate-700 whitespace-nowrap">{f.departureCity}</td>
+                  <td className="py-4 px-4 text-sm font-semibold text-slate-700 whitespace-nowrap">{f.arrivalCity}</td>
+                  <td className="py-4 px-4 text-xs font-semibold text-gray-500 whitespace-nowrap">{fmtDT(f.schedules?.[0]?.departureTime)}</td>
+                  <td className="py-4 px-4 text-xs font-semibold text-gray-500 whitespace-nowrap">{fmtDT(f.schedules?.[0]?.arrivalTime)}</td>
+                  <td className="py-4 px-4 whitespace-nowrap"><Badge label={f.cabinClass} cls={CLASS_STYLE[f.cabinClass] || 'bg-gray-100 text-gray-500'} /></td>
+                  <td className="py-4 px-4 text-sm font-black text-slate-800 whitespace-nowrap">{fmtPrice(f.basePrice)}</td>
                   <td className="py-4 px-4 whitespace-nowrap">
-                    <span className={`text-sm font-black ${f.so_cho_con <= 10 ? 'text-[#e0455d]' : f.so_cho_con <= 30 ? 'text-[#f59e0b]' : 'text-[#22a85a]'}`}>{f.so_cho_con}</span>
+                    <span className={`text-sm font-black ${(f.schedules?.[0]?.availableSeats || 0) <= 10 ? 'text-[#e0455d]' : (f.schedules?.[0]?.availableSeats || 0) <= 30 ? 'text-[#f59e0b]' : 'text-[#22a85a]'}`}>{f.schedules?.[0]?.availableSeats || 0}</span>
                   </td>
                   <td className="py-4 px-4 whitespace-nowrap">
                     <div className="flex items-center gap-2">
@@ -234,11 +216,9 @@ const FlightsTab = ({ flights, airlines, onAdd, onEdit, onDelete }) => {
             Showing <span className="text-slate-800">{filtered.length === 0 ? 0 : (page - 1) * ITEMS + 1}–{Math.min(page * ITEMS, filtered.length)}</span> of <span className="text-slate-800">{filtered.length}</span> flights
           </p>
           <div className="flex items-center space-x-1">
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-2 border border-gray-100 rounded-lg hover:bg-white text-gray-400 transition-all disabled:opacity-30"><ChevronLeft size={16} /></button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button key={p} onClick={() => setPage(p)} className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold transition-all ${page === p ? 'bg-[#7C4A4A] text-white shadow-md' : 'text-gray-500 hover:bg-gray-100'}`}>{p}</button>
-            ))}
-            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-2 border border-gray-100 rounded-lg hover:bg-white text-gray-400 transition-all disabled:opacity-30"><ChevronRight size={16} /></button>
+            <button onClick={() => setPagination(p => ({...p, page: Math.max(0, p.page - 1)}))} disabled={pagination.page === 0} className="p-2 border border-gray-100 rounded-lg hover:bg-white text-gray-400 transition-all disabled:opacity-30"><ChevronLeft size={16} /></button>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#7C4A4A] text-white text-xs font-bold shadow-md">{pagination.page + 1}</button>
+            <button onClick={() => setPagination(p => ({...p, page: p.page + 1}))} disabled={(pagination.page + 1) * pagination.size >= pagination.totalElements} className="p-2 border border-gray-100 rounded-lg hover:bg-white text-gray-400 transition-all disabled:opacity-30"><ChevronRight size={16} /></button>
           </div>
         </div>
       </div>
@@ -247,12 +227,46 @@ const FlightsTab = ({ flights, airlines, onAdd, onEdit, onDelete }) => {
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────
+import { useEffect } from 'react';
+import flightService from '../../../services/flightService';
+import { toast } from 'react-hot-toast';
+
 const TABS = ['Flights', 'Airlines'];
 
 const FlightManagement = () => {
   const [activeTab, setActiveTab] = useState('Flights');
-  const [airlines, setAirlines] = useState(INIT_AIRLINES);
-  const [flights, setFlights] = useState(INIT_FLIGHTS);
+  const [airlines, setAirlines] = useState([]);
+  const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({ page: 0, size: 10, totalElements: 0 });
+
+  const fetchFlights = async () => {
+    setLoading(true);
+    try {
+      const data = await flightService.getAllFlightsAdmin(pagination.page, pagination.size);
+      setFlights(data.content);
+      setPagination(prev => ({ ...prev, totalElements: data.totalElements }));
+      
+      // Derive simple airlines list for the UI
+      const uniqueAirlines = [...new Set(data.content.map(f => f.airline))].map((name, idx) => ({
+        id: idx + 1,
+        name,
+        code: name.split(' ').map(w => w[0]).join('').toUpperCase(),
+        country: 'Vietnam',
+        status: 'Active'
+      }));
+      setAirlines(uniqueAirlines);
+    } catch (error) {
+      console.error("Error fetching flights:", error);
+      toast.error("Failed to load flights");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFlights();
+  }, [pagination.page]);
 
   // Modal state
   const [airlineModal, setAirlineModal] = useState({ open: false, data: null });
@@ -265,13 +279,17 @@ const FlightManagement = () => {
   const openDeleteAirline = (a) => setConfirmModal({
     open: true,
     message: `Are you sure you want to delete "${a.name}"?`,
-    onConfirm: () => setAirlines((prev) => prev.filter((x) => x.id !== a.id)),
+    onConfirm: () => {
+      setAirlines((prev) => prev.filter((x) => x.id !== a.id));
+      toast.success("Airline deleted (simulated)");
+    }
   });
   const saveAirline = (data) => {
     setAirlines((prev) => {
       const exists = prev.find((x) => x.id === data.id);
       return exists ? prev.map((x) => (x.id === data.id ? data : x)) : [...prev, data];
     });
+    setAirlineModal({ open: false, data: null });
   };
 
   // ── Flight CRUD ────────────────────────────────────────────────
@@ -279,14 +297,32 @@ const FlightManagement = () => {
   const openEditFlight = (f) => setFlightModal({ open: true, data: f });
   const openDeleteFlight = (f) => setConfirmModal({
     open: true,
-    message: `Are you sure you want to delete flight "${f.so_hieu}"?`,
-    onConfirm: () => setFlights((prev) => prev.filter((x) => x.id !== f.id)),
+    message: `Are you sure you want to delete flight "${f.flightNumber}"?`,
+    onConfirm: async () => {
+      try {
+        await flightService.deleteFlight(f.id);
+        toast.success("Flight deleted");
+        fetchFlights();
+      } catch (error) {
+        toast.error("Failed to delete flight");
+      }
+    }
   });
-  const saveFlight = (data) => {
-    setFlights((prev) => {
-      const exists = prev.find((x) => x.id === data.id);
-      return exists ? prev.map((x) => (x.id === data.id ? data : x)) : [...prev, data];
-    });
+
+  const saveFlight = async (data) => {
+    try {
+      if (flightModal.data) {
+        await flightService.updateFlight(flightModal.data.id, data);
+        toast.success("Flight updated");
+      } else {
+        await flightService.createFlight(data);
+        toast.success("Flight created");
+      }
+      fetchFlights();
+      setFlightModal({ open: false, data: null });
+    } catch (error) {
+      toast.error("Failed to save flight");
+    }
   };
 
   // Summary stats

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, Route as RouteIcon, CheckCircle, UserCheck, Plus, Search } from 'lucide-react';
 import DashboardCard from '../../../components/admin/DashboardCard';
 import TabBar from '../../../components/admin/TabBar';
@@ -11,10 +11,28 @@ import FilterBar, { FilterLabel, AdminSelect } from '../../../components/admin/F
 import ConfirmModal from '../../../components/admin/ConfirmModal';
 import ProviderFormModal from './ProviderFormModal';
 import RouteFormModal from './RouteFormModal';
+import { transportService } from '../../../services/transportService';
+import { toast } from 'react-hot-toast';
 
 const TransportManagement = () => {
   const [activeTab, setActiveTab] = useState('Providers');
+  const [loading, setLoading] = useState(true);
   
+  // States
+  const [routes, setRoutes] = useState([]);
+  const [providers, setProviders] = useState([]);
+  const [stats, setStats] = useState({
+    totalProviders: 0,
+    totalRoutes: 0,
+    activeRoutes: 0,
+    availableSeats: 0
+  });
+
+  const [pagination, setPagination] = useState({ page: 0, size: 10, totalElements: 0 });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState('All');
+  const [providerFilter, setProviderFilter] = useState('All');
+
   // Modal States
   const [isProviderModalOpen, setIsProviderModalOpen] = useState(false);
   const [isRouteModalOpen, setIsRouteModalOpen] = useState(false);
@@ -22,55 +40,45 @@ const TransportManagement = () => {
   
   const [editingItem, setEditingItem] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-  const [deleteType, setDeleteType] = useState(''); // 'provider' or 'route'
+  const [deleteType, setDeleteType] = useState('');
 
-  // Providers Mock Data
-  const [providers, setProviders] = useState([
-    { id: 1, name: 'Hoang Long Bus', type: 'Bus', status: 'Active' },
-    { id: 2, name: 'Vietnam Railways', type: 'Train', status: 'Active' },
-    { id: 3, name: 'Phuong Trang (FUTA)', type: 'Bus', status: 'Active' },
-    { id: 4, name: 'Mai Linh Express', type: 'Bus', status: 'Inactive' },
-  ]);
+  const fetchStats = async () => {
+    try {
+      const data = await transportService.getTransportStats();
+      setStats(data);
+    } catch (error) {
+      console.error("Error fetching transport stats:", error);
+    }
+  };
 
-  // Routes Mock Data
-  const [routes, setRoutes] = useState([
-    { 
-      id: 1, 
-      provider: 'Hoang Long Bus', 
-      type: 'Bus', 
-      from: 'Hanoi', 
-      to: 'Da Nang', 
-      depTime: '08:00', 
-      arrTime: '20:00', 
-      price: 450000, 
-      totalSeats: 40, 
-      availSeats: 12 
-    },
-    { 
-      id: 2, 
-      provider: 'Vietnam Railways', 
-      type: 'Train', 
-      from: 'Saigon', 
-      to: 'Nha Trang', 
-      depTime: '06:30', 
-      arrTime: '13:45', 
-      price: 680000, 
-      totalSeats: 320, 
-      availSeats: 45 
-    },
-    { 
-      id: 3, 
-      provider: 'Phuong Trang', 
-      type: 'Bus', 
-      from: 'Da Lat', 
-      to: 'Saigon', 
-      depTime: '22:00', 
-      arrTime: '05:00', 
-      price: 300000, 
-      totalSeats: 36, 
-      availSeats: 5 
-    },
-  ]);
+  const fetchProviders = async () => {
+    try {
+      const data = await transportService.getAllProviders();
+      setProviders(data);
+    } catch (error) {
+      console.error("Error fetching providers:", error);
+    }
+  };
+
+  const fetchRoutes = async () => {
+    setLoading(true);
+    try {
+      const data = await transportService.getAllRoutesAdmin(pagination.page, pagination.size);
+      setRoutes(data.content);
+      setPagination(prev => ({ ...prev, totalElements: data.totalElements }));
+    } catch (error) {
+      console.error("Error fetching transport routes:", error);
+      toast.error("Failed to load routes");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRoutes();
+    fetchStats();
+    fetchProviders();
+  }, [pagination.page]);
 
   // Handlers
   const handleAddProvider = () => {
@@ -89,6 +97,22 @@ const TransportManagement = () => {
     setIsConfirmModalOpen(true);
   };
 
+  const handleSaveProvider = async (data) => {
+    try {
+      if (editingItem) {
+        await transportService.updateProvider(editingItem.id, data);
+        toast.success("Provider updated");
+      } else {
+        await transportService.createProvider(data);
+        toast.success("Provider added");
+      }
+      fetchProviders();
+      setIsProviderModalOpen(false);
+    } catch (error) {
+      toast.error("Failed to save provider");
+    }
+  };
+
   const handleAddRoute = () => {
     setEditingItem(null);
     setIsRouteModalOpen(true);
@@ -105,29 +129,50 @@ const TransportManagement = () => {
     setIsConfirmModalOpen(true);
   };
 
-  const handleSaveProvider = (data) => {
-    if (editingItem) {
-      setProviders(providers.map(p => p.id === data.id ? data : p));
-    } else {
-      setProviders([...providers, data]);
+  const handleSaveRoute = async (data) => {
+    try {
+      if (editingItem) {
+        await transportService.updateTransportRoute(editingItem.id, data);
+        toast.success("Route updated");
+      } else {
+        await transportService.createTransportRoute(data);
+        toast.success("Route created");
+      }
+      fetchRoutes();
+      fetchStats();
+      setIsRouteModalOpen(false);
+    } catch (error) {
+      toast.error("Failed to save route");
     }
   };
 
-  const handleSaveRoute = (data) => {
-    if (editingItem) {
-      setRoutes(routes.map(r => r.id === data.id ? data : r));
-    } else {
-      setRoutes([...routes, data]);
+  const handleConfirmDelete = async () => {
+    try {
+      if (deleteType === 'route') {
+        await transportService.deleteTransportRoute(deletingId);
+        toast.success("Route deleted");
+        fetchRoutes();
+      } else {
+        await transportService.deleteProvider(deletingId);
+        toast.success("Provider deleted");
+        fetchProviders();
+      }
+      fetchStats();
+    } catch (error) {
+      toast.error(`Failed to delete ${deleteType}`);
     }
+    setIsConfirmModalOpen(false);
   };
 
-  const handleConfirmDelete = () => {
-    if (deleteType === 'provider') {
-      setProviders(providers.filter(p => p.id !== deletingId));
-    } else {
-      setRoutes(routes.filter(r => r.id !== deletingId));
-    }
-  };
+  const filteredRoutes = routes.filter(r => {
+    const matchSearch = searchQuery === '' || 
+      r.departureCity.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      r.arrivalCity.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.operatorName.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchType = typeFilter === 'All' || r.vehicleType === typeFilter;
+    const matchProvider = providerFilter === 'All' || r.operatorName === providerFilter;
+    return matchSearch && matchType && matchProvider;
+  });
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -136,32 +181,30 @@ const TransportManagement = () => {
         <DashboardCard 
           icon={Users} 
           title="Total Providers" 
-          value={providers.length} 
-          trend="up" 
-          trendValue="2 new" 
+          value={stats.totalProviders} 
+          trend="stable" 
           iconBgColor="bg-blue-50" 
           iconColor="text-blue-600" 
         />
         <DashboardCard 
           icon={RouteIcon} 
           title="Total Routes" 
-          value={routes.length} 
-          trend="up" 
-          trendValue="+12%" 
+          value={stats.totalRoutes} 
+          trend="stable" 
           iconBgColor="bg-purple-50" 
           iconColor="text-purple-600" 
         />
         <DashboardCard 
           icon={CheckCircle} 
           title="Active Routes" 
-          value="142" 
+          value={stats.activeRoutes} 
           iconBgColor="bg-green-50" 
           iconColor="text-green-600" 
         />
         <DashboardCard 
           icon={UserCheck} 
           title="Available Seats" 
-          value="1,204" 
+          value={(stats.availableSeats || 0).toLocaleString()} 
           iconBgColor="bg-orange-50" 
           iconColor="text-orange-600" 
         />
@@ -225,26 +268,37 @@ const TransportManagement = () => {
                   <FilterBar gridCols="grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
                     <div>
                       <FilterLabel>Search</FilterLabel>
-                      <SearchInput placeholder="Route or provider..." />
+                      <SearchInput 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Route or provider..." 
+                      />
                     </div>
                     <div>
                       <FilterLabel>Transport Type</FilterLabel>
-                      <AdminSelect>
-                        <option>All Types</option>
-                        <option>Bus</option>
-                        <option>Train</option>
+                      <AdminSelect value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
+                        <option value="All">All Types</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Train">Train</option>
                       </AdminSelect>
                     </div>
                     <div>
                       <FilterLabel>Provider</FilterLabel>
-                      <AdminSelect>
-                        <option>All Providers</option>
-                        {providers.map(p => <option key={p.id}>{p.name}</option>)}
+                      <AdminSelect value={providerFilter} onChange={(e) => setProviderFilter(e.target.value)}>
+                        <option value="All">All Providers</option>
+                        {providers.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
                       </AdminSelect>
                     </div>
-                    <div>
-                      <AdminPrimaryButton className="w-full h-[42px] mt-auto">
-                        Apply Filters
+                    <div className="flex items-end">
+                      <AdminPrimaryButton 
+                        className="w-full h-[42px]"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setTypeFilter('All');
+                          setProviderFilter('All');
+                        }}
+                      >
+                        Reset Filters
                       </AdminPrimaryButton>
                     </div>
                   </FilterBar>
@@ -268,38 +322,40 @@ const TransportManagement = () => {
                 'Seats (T/A)', 
                 'Actions'
               ]}>
-                {routes.map((r) => (
+                {filteredRoutes.map((r) => (
                   <tr key={r.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="py-4 px-5">
-                      <span className="text-sm font-bold text-slate-700">{r.provider}</span>
+                      <span className="text-sm font-bold text-slate-700">{r.operatorName}</span>
                     </td>
                     <td className="py-4 px-5 text-center">
-                      <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${r.type === 'Bus' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600'}`}>
-                        {r.type}
+                      <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${r.vehicleType === 'Bus' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600'}`}>
+                        {r.vehicleType}
                       </span>
                     </td>
                     <td className="py-4 px-5">
-                      <span className="text-xs font-bold text-slate-600">{r.from}</span>
+                      <span className="text-xs font-bold text-slate-600">{r.departureCity}</span>
                     </td>
                     <td className="py-4 px-5">
-                      <span className="text-xs font-bold text-slate-600">{r.to}</span>
+                      <span className="text-xs font-bold text-slate-600">{r.arrivalCity}</span>
                     </td>
                     <td className="py-4 px-5">
-                      <span className="text-xs font-bold text-slate-800">{r.depTime}</span>
+                      <span className="text-xs font-bold text-slate-800">{new Date(r.departureTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </td>
                     <td className="py-4 px-5">
-                      <span className="text-xs font-bold text-slate-800">{r.arrTime}</span>
+                      <span className="text-xs font-bold text-slate-800">{new Date(r.arrivalTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </td>
                     <td className="py-4 px-5">
                       <span className="text-sm font-black text-[#7C4A4A]">{Number(r.price).toLocaleString()}đ</span>
                     </td>
                     <td className="py-4 px-5">
                       <div className="flex flex-col">
-                        <span className="text-xs font-bold text-slate-700">{r.availSeats} / {r.totalSeats}</span>
+                        <span className="text-xs font-bold text-slate-700">
+                          {(r.seatMap || []).filter(s => s.isAvailable).length} / {r.totalSeats}
+                        </span>
                         <div className="w-16 h-1 bg-gray-100 rounded-full mt-1 overflow-hidden">
                           <div 
                             className="h-full bg-[#7C4A4A]" 
-                            style={{ width: `${(r.availSeats/r.totalSeats)*100}%` }}
+                            style={{ width: `${((r.seatMap || []).filter(s => s.isAvailable).length/r.totalSeats)*100}%` }}
                           ></div>
                         </div>
                       </div>

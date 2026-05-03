@@ -21,6 +21,12 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
+    @GetMapping("/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getHotelStats() {
+        return ResponseEntity.ok(hotelService.getHotelStats());
+    }
+
     // PUBLIC: Search Hotels (city optional — if missing, returns all active hotels)
     @GetMapping("/search")
     public ResponseEntity<Page<HotelDTO>> searchHotels(
@@ -57,17 +63,20 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.getHotelById(id));
     }
 
-    // ADMIN: Get All Hotels
+    // ADMIN: Get All Hotels with filtering
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<HotelDTO>> getAllHotels(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) Integer starRating,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort) {
         String sortField = sort[0];
         Sort.Direction sortDirection = sort.length > 1 && sort[1].equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortField));
-        return ResponseEntity.ok(hotelService.getAllHotels(pageable));
+        return ResponseEntity.ok(hotelService.getAdminHotels(name, city, starRating, pageable));
     }
 
     // ADMIN: Create Hotel

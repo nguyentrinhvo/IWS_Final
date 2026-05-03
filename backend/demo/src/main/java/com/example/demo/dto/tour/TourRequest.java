@@ -38,6 +38,7 @@ public class TourRequest {
     private Boolean requireVisa;
     private String visaInfo;
     private Integer maxCapacity;
+    private Boolean isActive;
     
     private List<TourImage> images;
     private List<Itinerary> itinerary;

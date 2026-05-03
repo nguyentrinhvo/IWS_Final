@@ -26,7 +26,15 @@ const ProviderFormModal = ({ isOpen, onClose, onSave, initial }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name.trim()) return;
-    onSave({ ...form, id: initial?.id ?? Date.now() });
+    
+    const submitData = { ...form };
+    if (isEdit) {
+      submitData.id = initial.id;
+    } else {
+      delete submitData.id;
+    }
+    
+    onSave(submitData);
     onClose();
   };
 

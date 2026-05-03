@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import AdminModal from '../../../components/admin/AdminModal';
 
 const EMPTY = { 
-  provider: '', 
-  type: 'Bus', 
-  from: '', 
-  to: '', 
-  depTime: '', 
-  arrTime: '', 
+  operatorName: '', 
+  vehicleType: 'Bus', 
+  departureCity: '', 
+  arrivalCity: '', 
+  departureTime: '', 
+  arrivalTime: '', 
   price: '', 
-  totalSeats: '', 
-  availSeats: '' 
+  totalSeats: '',
+  vehicleClass: 'Standard'
 };
 
 const Field = ({ label, children }) => (
@@ -27,7 +27,21 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
   const [form, setForm] = useState(EMPTY);
 
   useEffect(() => {
-    setForm(initial ? { ...initial } : { ...EMPTY, provider: providers[0]?.name || '' });
+    if (initial) {
+      setForm({
+        operatorName: initial.operatorName || '',
+        vehicleType: initial.vehicleType || 'Bus',
+        departureCity: initial.departureCity || '',
+        arrivalCity: initial.arrivalCity || '',
+        departureTime: initial.departureTime ? new Date(initial.departureTime).toISOString().slice(0, 16) : '',
+        arrivalTime: initial.arrivalTime ? new Date(initial.arrivalTime).toISOString().slice(0, 16) : '',
+        price: initial.price || '',
+        totalSeats: initial.totalSeats || '',
+        vehicleClass: initial.vehicleClass || 'Standard'
+      });
+    } else {
+      setForm({ ...EMPTY, operatorName: providers[0]?.name || '' });
+    }
   }, [initial, isOpen, providers]);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
@@ -35,7 +49,7 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({ ...form, id: initial?.id ?? Date.now() });
+    onSave({ ...form, id: initial?.id });
     onClose();
   };
 
@@ -43,13 +57,14 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
     <AdminModal isOpen={isOpen} onClose={onClose} title={isEdit ? 'Edit Route' : 'Add Route'} size="lg">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Field label="Provider">
+          <Field label="Provider/Operator">
             <select
               className={inputCls}
-              value={form.provider}
-              onChange={(e) => set('provider', e.target.value)}
+              value={form.operatorName}
+              onChange={(e) => set('operatorName', e.target.value)}
               required
             >
+              <option value="">Select a provider</option>
               {providers.map(p => (
                 <option key={p.id} value={p.name}>{p.name}</option>
               ))}
@@ -58,8 +73,8 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
           <Field label="Transport Type">
             <select
               className={inputCls}
-              value={form.type}
-              onChange={(e) => set('type', e.target.value)}
+              value={form.vehicleType}
+              onChange={(e) => set('vehicleType', e.target.value)}
             >
               <option value="Bus">Bus</option>
               <option value="Train">Train</option>
@@ -68,21 +83,21 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Field label="From">
+          <Field label="Departure City">
             <input
               className={inputCls}
               placeholder="e.g. Hanoi"
-              value={form.from}
-              onChange={(e) => set('from', e.target.value)}
+              value={form.departureCity}
+              onChange={(e) => set('departureCity', e.target.value)}
               required
             />
           </Field>
-          <Field label="To">
+          <Field label="Arrival City">
             <input
               className={inputCls}
               placeholder="e.g. Da Nang"
-              value={form.to}
-              onChange={(e) => set('to', e.target.value)}
+              value={form.arrivalCity}
+              onChange={(e) => set('arrivalCity', e.target.value)}
               required
             />
           </Field>
@@ -91,36 +106,35 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
         <div className="grid grid-cols-2 gap-4">
           <Field label="Departure Time">
             <input
-              type="time"
+              type="datetime-local"
               className={inputCls}
-              value={form.depTime}
-              onChange={(e) => set('depTime', e.target.value)}
+              value={form.departureTime}
+              onChange={(e) => set('departureTime', e.target.value)}
               required
             />
           </Field>
           <Field label="Arrival Time">
             <input
-              type="time"
+              type="datetime-local"
               className={inputCls}
-              value={form.arrTime}
-              onChange={(e) => set('arrTime', e.target.value)}
+              value={form.arrivalTime}
+              onChange={(e) => set('arrivalTime', e.target.value)}
               required
             />
           </Field>
         </div>
 
-        <Field label="Price (VND)">
-          <input
-            type="number"
-            className={inputCls}
-            placeholder="e.g. 450000"
-            value={form.price}
-            onChange={(e) => set('price', e.target.value)}
-            required
-          />
-        </Field>
-
         <div className="grid grid-cols-2 gap-4">
+          <Field label="Price (VND)">
+            <input
+              type="number"
+              className={inputCls}
+              placeholder="e.g. 450000"
+              value={form.price}
+              onChange={(e) => set('price', e.target.value)}
+              required
+            />
+          </Field>
           <Field label="Total Seats">
             <input
               type="number"
@@ -128,16 +142,6 @@ const RouteFormModal = ({ isOpen, onClose, onSave, initial, providers = [] }) =>
               placeholder="e.g. 40"
               value={form.totalSeats}
               onChange={(e) => set('totalSeats', e.target.value)}
-              required
-            />
-          </Field>
-          <Field label="Available Seats">
-            <input
-              type="number"
-              className={inputCls}
-              placeholder="e.g. 12"
-              value={form.availSeats}
-              onChange={(e) => set('availSeats', e.target.value)}
               required
             />
           </Field>

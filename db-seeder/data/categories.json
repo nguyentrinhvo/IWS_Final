@@ -1,0 +1,26 @@
+[
+  {
+    "id": "6634e0000000000000000001",
+    "nameVi": "Du lịch biển",
+    "nameEn": "Beach Tours",
+    "descriptionVi": "Khám phá những bãi biển đẹp nhất Việt Nam",
+    "descriptionEn": "Explore the most beautiful beaches in Vietnam",
+    "imageUrl": "https://picsum.photos/seed/beach/800/600"
+  },
+  {
+    "id": "6634e0000000000000000002",
+    "nameVi": "Du lịch núi",
+    "nameEn": "Mountain Tours",
+    "descriptionVi": "Chinh phục những đỉnh núi hùng vĩ",
+    "descriptionEn": "Conquer majestic mountain peaks",
+    "imageUrl": "https://picsum.photos/seed/mountain/800/600"
+  },
+  {
+    "id": "6634e0000000000000000003",
+    "nameVi": "Văn hóa & Lịch sử",
+    "nameEn": "Culture & History",
+    "descriptionVi": "Tìm hiểu về bản sắc văn hóa và lịch sử hào hùng",
+    "descriptionEn": "Learn about cultural identity and heroic history",
+    "imageUrl": "https://picsum.photos/seed/culture/800/600"
+  }
+]

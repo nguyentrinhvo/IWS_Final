@@ -30,6 +30,27 @@ const flightService = {
     const response = await api.get(`/flights/${id}`);
     return response.data;
   },
+
+  // Admin Methods
+  getAllFlightsAdmin: async (page = 0, size = 10) => {
+    const response = await api.get('/admin/flights', { params: { page, size } });
+    return response.data;
+  },
+
+  createFlight: async (data) => {
+    const response = await api.post('/admin/flights', data);
+    return response.data;
+  },
+
+  updateFlight: async (id, data) => {
+    const response = await api.put(`/admin/flights/${id}`, data);
+    return response.data;
+  },
+
+  deleteFlight: async (id) => {
+    const response = await api.delete(`/admin/flights/${id}`);
+    return response.data;
+  },
 };
 
 export default flightService;

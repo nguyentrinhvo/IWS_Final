@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
 
   // ── Helpers ──────────────────────────────────────────────────
   const isAuthenticated = Boolean(currentUser);
-  const isAdmin = currentUser?.role?.toUpperCase() === 'ADMIN';
+  const isAdmin = currentUser?.role?.toUpperCase()?.includes('ADMIN');
 
   return (
     <AuthContext.Provider value={{

@@ -29,4 +29,11 @@ public interface HotelRepository extends MongoRepository<HotelDocument, String> 
 
     @Query("{ '$text': { '$search': ?0 }, 'isActive': true }")
     Page<HotelDocument> searchByTextIndex(String keyword, Pageable pageable);
+
+    @Query("{ " +
+           "  'name': { '$regex': ?0, '$options': 'i' }, " +
+           "  'city': { '$regex': ?1, '$options': 'i' }, " +
+           "  '$or': [ { '$expr': { '$eq': [?2, null] } }, { 'starRating': ?2 } ] " +
+           "}")
+    Page<HotelDocument> adminSearch(String name, String city, Integer starRating, Pageable pageable);
 }

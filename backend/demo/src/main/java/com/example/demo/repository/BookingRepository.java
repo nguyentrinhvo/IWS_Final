@@ -15,6 +15,7 @@ public interface BookingRepository extends MongoRepository<BookingDocument, Stri
     Page<BookingDocument> findByUserIdAndServiceTypeAndStatus(String userId, String serviceType, String status, Pageable pageable);
 
     Page<BookingDocument> findByStatus(String status, Pageable pageable);
+    Page<BookingDocument> findByServiceType(String serviceType, Pageable pageable);
     Page<BookingDocument> findByServiceTypeAndStatus(String serviceType, String status, Pageable pageable);
     Page<BookingDocument> findByCreatedAtBetween(Date from, Date to, Pageable pageable);
 
