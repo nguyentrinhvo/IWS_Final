@@ -42,7 +42,8 @@ export const GlobalProvider = ({ children }) => {
   }, [currency]);
 
   const t = (key) => {
-    return translations[language][key] || key;
+    const langKey = language?.toUpperCase() || 'EN';
+    return translations[langKey]?.[key] || key;
   };
 
   return (

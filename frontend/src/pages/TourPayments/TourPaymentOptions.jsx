@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../components/button';
+import Button from '../../components/Button';
 
-const TourPaymentOptions = ({ 
-  selectedMethod, 
-  onSelectMethod, 
-  totalAmount = 300000, 
-  onSubmit, 
-  isProcessing, 
+
+const TourPaymentOptions = ({
+  selectedMethod,
+  onSelectMethod,
+  totalAmount = 300000,
+  onSubmit,
+  isProcessing,
   error,
   tourName = "Selected Tour",
   guestsCount = 1
@@ -14,7 +15,7 @@ const TourPaymentOptions = ({
   const [timeLeft, setTimeLeft] = useState(3600);
   const [showPriceDetails, setShowPriceDetails] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState('momo');
-  
+
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
@@ -81,9 +82,9 @@ const TourPaymentOptions = ({
           <div className={`border rounded-lg transition-all ${selectedMethod === 'vietqr' ? 'border-[#0194F3] bg-blue-50/30' : 'border-gray-200'}`}>
             <label className="flex items-center justify-between p-4 cursor-pointer">
               <div className="flex items-center gap-3">
-                <input 
-                  type="radio" 
-                  name="payment_method" 
+                <input
+                  type="radio"
+                  name="payment_method"
                   checked={selectedMethod === 'vietqr'}
                   onChange={() => onSelectMethod('vietqr')}
                   className="w-5 h-5 text-[#0194F3] focus:ring-[#0194F3]"
@@ -104,9 +105,9 @@ const TourPaymentOptions = ({
           <div className={`border rounded-lg transition-all ${selectedMethod === 'mobile_banking' ? 'border-[#0194F3] bg-blue-50/30' : 'border-gray-200'}`}>
             <label className="flex items-center justify-between p-4 cursor-pointer">
               <div className="flex items-center gap-3">
-                <input 
-                  type="radio" 
-                  name="payment_method" 
+                <input
+                  type="radio"
+                  name="payment_method"
                   checked={selectedMethod === 'mobile_banking'}
                   onChange={() => onSelectMethod('mobile_banking')}
                   className="w-5 h-5 text-[#0194F3] focus:ring-[#0194F3]"
@@ -114,24 +115,24 @@ const TourPaymentOptions = ({
                 <span className="font-semibold text-gray-800">Mobile Banking</span>
               </div>
               <svg version="1.1" viewBox="0 0 512 512" width="32px" height="32px" fill="#000000">
-                <path d="M358.584,512H153.416c-21.863-0.061-39.571-17.769-39.632-39.632V39.632C113.845,17.769,131.553,0.061,153.416,0h205.168 c21.862,0.061,39.571,17.769,39.632,39.632v432.736C398.146,494.228,380.443,511.93,358.584,512z"></path> 
-                <rect x="132.546" y="40.4" style={{fill:"#FFFFFF"}} width="246.917" height="403.719"></rect> 
-                <path style={{fill:"#CCCCCC"}} d="M293.032,24.424h-50.528c-2.278-0.004-4.124-1.85-4.128-4.128l0,0 c0.004-2.278,1.85-4.124,4.128-4.128h50.528c2.279,0.004,4.124,1.85,4.128,4.128l0,0C297.155,22.574,295.31,24.419,293.032,24.424z "></path> 
-                <circle style={{fill:"#CCCCCC"}} cx="218.97" cy="20.296" r="4.128"></circle> 
-                <path style={{fill:"#CCCCCC"}} d="M256,497.601c-10.781,0-19.52-8.739-19.52-19.52s8.739-19.52,19.52-19.52 c10.781,0,19.52,8.739,19.52,19.52l0,0C275.507,488.856,266.774,497.587,256,497.601z M256,462.553c-8.571,0-15.52,6.949-15.52,15.52c0,8.571,6.948,15.52,15.52,15.52c8.571,0,15.52-6.949,15.52-15.52l0,0 c0.009-8.58-6.94-15.543-15.52-15.552l0,0V462.553z"></path> 
-                <rect x="311.976" y="162.762" style={{fill:"#E21B1B"}} width="18.16" height="71.375"></rect> 
-                <rect x="181.876" y="162.762" style={{fill:"#E21B1B"}} width="18.16" height="71.375"></rect> 
-                <rect x="255.876" y="250.913" width="93.292" height="18.16"></rect> 
-                <rect x="162.831" y="250.913" style={{fill:"#3F3F3F"}} width="93.292" height="18.16"></rect> 
-                <path d="M253.368,228.176v-7.44c-3.989-0.014-7.894-1.139-11.28-3.248l1.768-4.944c3.158,2.064,6.843,3.176,10.616,3.2 c5.232,0,8.8-3.024,8.8-7.2c0-4.056-2.88-6.56-8.336-8.8c-7.52-2.944-12.16-6.336-12.16-12.752 c0.096-6.237,4.918-11.378,11.136-11.872v-7.44h4.568v7.152c3.369,0.025,6.674,0.915,9.6,2.584l-1.848,4.864 c-2.807-1.672-6.02-2.538-9.288-2.504c-5.68,0-7.816,3.392-7.816,6.336c0,3.832,2.727,5.752,9.144,8.408 c7.592,3.104,11.424,6.936,11.424,13.496c-0.109,6.541-5.132,11.948-11.648,12.536v7.664h-4.64L253.368,228.176z"></path> 
-                <rect x="210.01" y="162.762" style={{fill:"#E21B1B"}} width="18.16" height="71.375"></rect> 
-                <rect x="283.832" y="162.762" style={{fill:"#E21B1B"}} width="18.16" height="71.375"></rect> 
-                <path d="M256,88.752v23.752c5.284-0.432,9.918,3.5,10.352,8.784c0.432,5.284-3.5,9.918-8.784,10.352 c-0.521,0.042-1.045,0.042-1.566,0v15.2h86.665L256,88.752z"></path> 
-                <path style={{fill:"#3F3F3F"}} d="M246.4,122.072c0-5.302,4.299-9.6,9.6-9.6l0,0V88.752l-86.665,58.104H256v-15.2 C250.704,131.657,246.409,127.368,246.4,122.072z"></path> 
-                <rect x="162.831" y="317.068" style={{fill:"#CCCCCC"}} width="186.327" height="8"></rect> 
-                <rect x="162.831" y="342.725" style={{fill:"#CCCCCC"}} width="186.327" height="8"></rect> 
-                <rect x="162.831" y="368.362" style={{fill:"#CCCCCC"}} width="186.327" height="8"></rect> 
-                <rect x="162.831" y="394.009" style={{fill:"#CCCCCC"}} width="186.327" height="8"></rect> 
+                <path d="M358.584,512H153.416c-21.863-0.061-39.571-17.769-39.632-39.632V39.632C113.845,17.769,131.553,0.061,153.416,0h205.168 c21.862,0.061,39.571,17.769,39.632,39.632v432.736C398.146,494.228,380.443,511.93,358.584,512z"></path>
+                <rect x="132.546" y="40.4" style={{ fill: "#FFFFFF" }} width="246.917" height="403.719"></rect>
+                <path style={{ fill: "#CCCCCC" }} d="M293.032,24.424h-50.528c-2.278-0.004-4.124-1.85-4.128-4.128l0,0 c0.004-2.278,1.85-4.124,4.128-4.128h50.528c2.279,0.004,4.124,1.85,4.128,4.128l0,0C297.155,22.574,295.31,24.419,293.032,24.424z "></path>
+                <circle style={{ fill: "#CCCCCC" }} cx="218.97" cy="20.296" r="4.128"></circle>
+                <path style={{ fill: "#CCCCCC" }} d="M256,497.601c-10.781,0-19.52-8.739-19.52-19.52s8.739-19.52,19.52-19.52 c10.781,0,19.52,8.739,19.52,19.52l0,0C275.507,488.856,266.774,497.587,256,497.601z M256,462.553c-8.571,0-15.52,6.949-15.52,15.52c0,8.571,6.948,15.52,15.52,15.52c8.571,0,15.52-6.949,15.52-15.52l0,0 c0.009-8.58-6.94-15.543-15.52-15.552l0,0V462.553z"></path>
+                <rect x="311.976" y="162.762" style={{ fill: "#E21B1B" }} width="18.16" height="71.375"></rect>
+                <rect x="181.876" y="162.762" style={{ fill: "#E21B1B" }} width="18.16" height="71.375"></rect>
+                <rect x="255.876" y="250.913" width="93.292" height="18.16"></rect>
+                <rect x="162.831" y="250.913" style={{ fill: "#3F3F3F" }} width="93.292" height="18.16"></rect>
+                <path d="M253.368,228.176v-7.44c-3.989-0.014-7.894-1.139-11.28-3.248l1.768-4.944c3.158,2.064,6.843,3.176,10.616,3.2 c5.232,0,8.8-3.024,8.8-7.2c0-4.056-2.88-6.56-8.336-8.8c-7.52-2.944-12.16-6.336-12.16-12.752 c0.096-6.237,4.918-11.378,11.136-11.872v-7.44h4.568v7.152c3.369,0.025,6.674,0.915,9.6,2.584l-1.848,4.864 c-2.807-1.672-6.02-2.538-9.288-2.504c-5.68,0-7.816,3.392-7.816,6.336c0,3.832,2.727,5.752,9.144,8.408 c7.592,3.104,11.424,6.936,11.424,13.496c-0.109,6.541-5.132,11.948-11.648,12.536v7.664h-4.64L253.368,228.176z"></path>
+                <rect x="210.01" y="162.762" style={{ fill: "#E21B1B" }} width="18.16" height="71.375"></rect>
+                <rect x="283.832" y="162.762" style={{ fill: "#E21B1B" }} width="18.16" height="71.375"></rect>
+                <path d="M256,88.752v23.752c5.284-0.432,9.918,3.5,10.352,8.784c0.432,5.284-3.5,9.918-8.784,10.352 c-0.521,0.042-1.045,0.042-1.566,0v15.2h86.665L256,88.752z"></path>
+                <path style={{ fill: "#3F3F3F" }} d="M246.4,122.072c0-5.302,4.299-9.6,9.6-9.6l0,0V88.752l-86.665,58.104H256v-15.2 C250.704,131.657,246.409,127.368,246.4,122.072z"></path>
+                <rect x="162.831" y="317.068" style={{ fill: "#CCCCCC" }} width="186.327" height="8"></rect>
+                <rect x="162.831" y="342.725" style={{ fill: "#CCCCCC" }} width="186.327" height="8"></rect>
+                <rect x="162.831" y="368.362" style={{ fill: "#CCCCCC" }} width="186.327" height="8"></rect>
+                <rect x="162.831" y="394.009" style={{ fill: "#CCCCCC" }} width="186.327" height="8"></rect>
               </svg>
             </label>
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${selectedMethod === 'mobile_banking' ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -145,9 +146,9 @@ const TourPaymentOptions = ({
           <div className={`border rounded-lg transition-all ${selectedMethod === 'digital_wallet' ? 'border-[#0194F3] bg-blue-50/30' : 'border-gray-200'}`}>
             <label className="flex items-center justify-between p-4 cursor-pointer">
               <div className="flex items-center gap-3">
-                <input 
-                  type="radio" 
-                  name="payment_method" 
+                <input
+                  type="radio"
+                  name="payment_method"
                   checked={selectedMethod === 'digital_wallet'}
                   onChange={() => onSelectMethod('digital_wallet')}
                   className="w-5 h-5 text-[#0194F3] focus:ring-[#0194F3]"
@@ -164,9 +165,9 @@ const TourPaymentOptions = ({
                 <div className="space-y-2 bg-white p-3 rounded-md border border-gray-100">
                   <label className="flex items-center justify-between p-3 border rounded-md cursor-pointer hover:bg-gray-50">
                     <div className="flex items-center gap-3">
-                      <input 
-                        type="radio" 
-                        name="wallet_type" 
+                      <input
+                        type="radio"
+                        name="wallet_type"
                         checked={selectedWallet === 'momo'}
                         onChange={() => setSelectedWallet('momo')}
                         className="w-4 h-4 text-[#0194F3] focus:ring-[#0194F3]"
@@ -177,9 +178,9 @@ const TourPaymentOptions = ({
                   </label>
                   <label className="flex items-center justify-between p-3 border rounded-md cursor-pointer hover:bg-gray-50">
                     <div className="flex items-center gap-3">
-                      <input 
-                        type="radio" 
-                        name="wallet_type" 
+                      <input
+                        type="radio"
+                        name="wallet_type"
                         checked={selectedWallet === 'zalopay'}
                         onChange={() => setSelectedWallet('zalopay')}
                         className="w-4 h-4 text-[#0194F3] focus:ring-[#0194F3]"
@@ -196,9 +197,9 @@ const TourPaymentOptions = ({
           <div className={`border rounded-lg transition-all ${selectedMethod === 'credit_card' ? 'border-[#0194F3] bg-blue-50/30' : 'border-gray-200'}`}>
             <label className="flex items-center justify-between p-4 cursor-pointer">
               <div className="flex items-center gap-3">
-                <input 
-                  type="radio" 
-                  name="payment_method" 
+                <input
+                  type="radio"
+                  name="payment_method"
                   checked={selectedMethod === 'credit_card'}
                   onChange={() => onSelectMethod('credit_card')}
                   className="w-5 h-5 text-[#0194F3] focus:ring-[#0194F3]"
@@ -266,13 +267,13 @@ const TourPaymentOptions = ({
           <h3 className="text-lg font-bold text-gray-800">Apply Coupons</h3>
           <p className="text-sm text-gray-500 mb-3">Enter coupon code or select available coupon(s)</p>
           <div className="flex gap-3">
-            <input 
-              type="text" 
-              placeholder="Enter code" 
+            <input
+              type="text"
+              placeholder="Enter code"
               className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:border-[#0194F3] focus:outline-none"
             />
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               className="!bg-gray-800 hover:!bg-gray-700 !px-6 !py-2 !rounded-md"
             >
               Apply
@@ -281,7 +282,7 @@ const TourPaymentOptions = ({
         </div>
 
         <div className="mt-8 border-t border-gray-200 pt-6">
-          <div 
+          <div
             className="flex justify-between items-center cursor-pointer select-none group"
             onClick={() => setShowPriceDetails(!showPriceDetails)}
           >
@@ -292,12 +293,12 @@ const TourPaymentOptions = ({
               {!showPriceDetails && (
                 <span className="text-xl font-bold text-gray-800">{totalAmount.toLocaleString()} VND</span>
               )}
-              <svg 
-                className={`transform transition-transform duration-300 text-gray-600 ${showPriceDetails ? 'rotate-180' : ''}`} 
-                width="24px" 
-                height="24px" 
-                viewBox="0 0 24 24" 
-                fill="none" 
+              <svg
+                className={`transform transition-transform duration-300 text-gray-600 ${showPriceDetails ? 'rotate-180' : ''}`}
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path fillRule="evenodd" clipRule="evenodd" d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z" fill="currentColor"></path>
@@ -322,7 +323,7 @@ const TourPaymentOptions = ({
           </div>
         </div>
 
-        <Button 
+        <Button
           variant="primary"
           size="lg"
           onClick={onSubmit}
