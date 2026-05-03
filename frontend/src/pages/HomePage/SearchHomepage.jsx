@@ -141,8 +141,8 @@ export default function SearchHomepage() {
                 }
               }}
               className={`category_item relative z-10 items-center gap-2 px-2 sm:px-3 md:px-4 py-1 rounded-full border-2 transition-all cursor-pointer text-xs sm:text-sm md:text-base xl:text-lg ${visibility} ${activeCategory === cat.id && cat.id !== 'more'
-                  ? 'border-transparent text-[#7C70EB] opacity-100'
-                  : 'border-transparent text-black opacity-70 hover:opacity-100 hover:border-black'
+                ? 'border-transparent text-[#7C70EB] opacity-100'
+                : 'border-transparent text-black opacity-70 hover:opacity-100 hover:border-black'
                 }`}
             >
               {cat.icon}
