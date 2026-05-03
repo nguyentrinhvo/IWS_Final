@@ -81,107 +81,178 @@ async function run() {
       console.log(`Seeded ${toursToInsert.length} tours from tous.json.`);
     }
 
-    // 2. Seed Bus/Train Routes
-    const transportCol = db.collection('bus_train_routes');
-    await transportCol.deleteMany({});
-    const transportRoutes = [
-      {
-        operatorName: 'Hoang Long Bus',
-        vehicleType: 'bus',
-        vehicleClass: 'Sleeper',
-        departureCity: 'Hanoi',
-        arrivalCity: 'Da Nang',
-        departureTime: '08:00',
-        arrivalTime: '20:00',
-        price: 450000,
-        totalSeats: 40,
-        isActive: true,
-        seatMap: Array.from({ length: 40 }, (_, i) => ({
-          position: `${String.fromCharCode(65 + Math.floor(i / 10))}${i % 10 + 1}`,
-          status: Math.random() > 0.8 ? 'booked' : 'available'
-        }))
-      },
-      {
-        operatorName: 'Phuong Trang (FUTA)',
-        vehicleType: 'bus',
-        vehicleClass: 'Sleeper',
-        departureCity: 'Hanoi',
-        arrivalCity: 'Da Nang',
-        departureTime: '10:30',
-        arrivalTime: '22:45',
-        price: 480000,
-        totalSeats: 38,
-        isActive: true,
-        seatMap: Array.from({ length: 38 }, (_, i) => ({
-          position: `S${i + 1}`,
-          status: 'available'
-        }))
-      },
-      {
-        operatorName: 'Vietnam Railways',
-        vehicleType: 'train',
-        vehicleClass: 'Soft seat',
-        departureCity: 'Hanoi',
-        arrivalCity: 'Da Nang',
-        departureTime: '06:00',
-        arrivalTime: '21:30',
-        price: 850000,
-        totalSeats: 64,
-        isActive: true,
-        seatMap: Array.from({ length: 64 }, (_, i) => ({
-          position: `T${i + 1}`,
-          status: 'available'
-        }))
-      }
-    ];
-    await transportCol.insertMany(transportRoutes);
-    console.log("Seeded 3 transport routes.");
+    // 2. Seed Hotels from hotels.json
+    const hotelsFilePath = path.join(__dirname, 'data', 'hotels.json');
+    if (fs.existsSync(hotelsFilePath)) {
+      const hotelsCol = db.collection('hotels');
+      await hotelsCol.deleteMany({});
 
-    // 3. Seed Flights
-    const flightCol = db.collection('flights');
-    await flightCol.deleteMany({});
-    const flights = [
-      {
-        airline: 'Vietnam Airlines',
-        flightNumber: 'VN123',
-        departureCity: 'Hanoi',
-        arrivalCity: 'Ho Chi Minh',
-        departureAirport: 'HAN',
-        arrivalAirport: 'SGN',
-        basePrice: 1200000,
-        cabinClass: 'Economy',
-        isActive: true,
-        schedules: [
-          {
-            departureTime: new Date('2026-05-10T08:00:00'),
-            arrivalTime: new Date('2026-05-10T10:15:00'),
-            availableSeats: 120
-          }
-        ]
-      },
-      {
-        airline: 'Vietjet Air',
-        flightNumber: 'VJ456',
-        departureCity: 'Hanoi',
-        arrivalCity: 'Ho Chi Minh',
-        departureAirport: 'HAN',
-        arrivalAirport: 'SGN',
-        basePrice: 850000,
-        cabinClass: 'Economy',
-        isActive: true,
-        schedules: [
-          {
-            departureTime: new Date('2026-05-10T14:30:00'),
-            arrivalTime: new Date('2026-05-10T16:45:00'),
-            availableSeats: 150
-          }
-        ]
-      }
-    ];
-    await flightCol.insertMany(flights);
-    console.log("Seeded 2 flight routes.");
+      const hotelsRaw = fs.readFileSync(hotelsFilePath, 'utf8');
+      const hotelsData = JSON.parse(hotelsRaw);
 
-    console.log("Seeding completed successfully!");
+      const hotelsToInsert = hotelsData.map(h => ({
+        hotelId: h.id,
+        name: h.name,
+        location: h.location,
+        address: h.address,
+        starRating: h.starRating,
+        basePrice: h.price,
+        avgRating: h.rating || 4.5,
+        totalReviews: h.reviewsCount || 0,
+        isFeatured: h.isFeatured || false,
+        description: h.description,
+        rooms: h.rooms || [],
+        amenities: h.amenities || [],
+        highlights: h.highlights || [],
+        checkInTime: h.checkInTime || '14:00',
+        checkOutTime: h.checkOutTime || '12:00',
+        policies: h.policies || {},
+        images: h.images ? h.images.map((url, i) => ({ url, caption: `Hotel image ${i + 1}`, isPrimary: i === 0 })) : [],
+        nearbyAttractions: h.nearbyAttractions || [],
+        coordinates: h.coordinates || {},
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+
+      await hotelsCol.insertMany(hotelsToInsert);
+      console.log(`Seeded ${hotelsToInsert.length} hotels from hotels.json.`);
+    }
+
+    // 3. Seed Flights from flights.json
+    const flightsFilePath = path.join(__dirname, 'data', 'flights.json');
+    if (fs.existsSync(flightsFilePath)) {
+      const flightCol = db.collection('flights');
+      await flightCol.deleteMany({});
+
+      const flightsRaw = fs.readFileSync(flightsFilePath, 'utf8');
+      const flightsData = JSON.parse(flightsRaw);
+
+      const flightsToInsert = flightsData.map(f => ({
+        flightId: f.id,
+        airline: f.airline,
+        flightNumber: f.flightNumber,
+        departureCity: f.departureCity,
+        arrivalCity: f.arrivalCity,
+        departureAirport: f.departureAirport,
+        arrivalAirport: f.arrivalAirport,
+        departureAirportName: f.departureAirportName || '',
+        arrivalAirportName: f.arrivalAirportName || '',
+        basePrice: f.basePrice,
+        cabinClass: f.cabinClass || 'Economy',
+        aircraft: f.aircraft || '',
+        avgRating: f.rating || 4.5,
+        totalReviews: f.reviewsCount || 0,
+        isFeatured: f.isFeatured || false,
+        description: f.description || '',
+        amenities: f.amenities || [],
+        baggagePolicy: f.baggagePolicy || {},
+        schedules: f.schedules ? f.schedules.map(sch => ({
+          scheduleId: sch.id,
+          departureTime: new Date(sch.departureTime),
+          arrivalTime: new Date(sch.arrivalTime),
+          availableSeats: sch.availableSeats,
+          price: sch.price
+        })) : [],
+        isActive: f.isActive !== false,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+
+      await flightCol.insertMany(flightsToInsert);
+      console.log(`Seeded ${flightsToInsert.length} flights from flights.json.`);
+    }
+
+    // 4. Seed Cars & Trains from cars_trains.json
+    const carsTrainsFilePath = path.join(__dirname, 'data', 'cars_trains.json');
+    if (fs.existsSync(carsTrainsFilePath)) {
+      const transportCol = db.collection('bus_train_routes');
+      await transportCol.deleteMany({});
+
+      const ctRaw = fs.readFileSync(carsTrainsFilePath, 'utf8');
+      const ctData = JSON.parse(ctRaw);
+
+      const transportToInsert = ctData.map(t => ({
+        routeId: t.id,
+        operatorName: t.operatorName,
+        vehicleType: t.vehicleType,
+        vehicleClass: t.vehicleClass,
+        departureCity: t.departureCity,
+        arrivalCity: t.arrivalCity,
+        departureStation: t.departureStation || '',
+        arrivalStation: t.arrivalStation || '',
+        departureTime: t.departureTime,
+        arrivalTime: t.arrivalTime,
+        duration: t.duration || '',
+        price: t.price,
+        totalSeats: t.totalSeats,
+        avgRating: t.rating || 4.0,
+        totalReviews: t.reviewsCount || 0,
+        isFeatured: t.isFeatured || false,
+        description: t.description || '',
+        amenities: t.amenities || [],
+        schedules: t.schedules ? t.schedules.map(sch => ({
+          scheduleId: sch.id,
+          date: sch.date,
+          departureTime: sch.departureTime,
+          arrivalTime: sch.arrivalTime,
+          availableSeats: sch.availableSeats,
+          price: sch.price
+        })) : [],
+        seatMap: Array.from({ length: t.totalSeats }, (_, i) => ({
+          position: `${t.vehicleType === 'train' ? 'T' : 'S'}${i + 1}`,
+          status: 'available'
+        })),
+        isActive: t.isActive !== false,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+
+      await transportCol.insertMany(transportToInsert);
+      console.log(`Seeded ${transportToInsert.length} car/train routes from cars_trains.json.`);
+    }
+
+    // 5. Seed Things To Do from things_to_do.json
+    const ttdFilePath = path.join(__dirname, 'data', 'things_to_do.json');
+    if (fs.existsSync(ttdFilePath)) {
+      const ttdCol = db.collection('things_to_do');
+      await ttdCol.deleteMany({});
+
+      const ttdRaw = fs.readFileSync(ttdFilePath, 'utf8');
+      const ttdData = JSON.parse(ttdRaw);
+
+      const ttdToInsert = ttdData.map(a => ({
+        activityId: a.id,
+        title: a.title,
+        category: a.category,
+        location: a.location,
+        price: a.price,
+        duration: a.duration || '',
+        avgRating: a.rating || 4.5,
+        totalReviews: a.reviewsCount || 0,
+        isFeatured: a.isFeatured || false,
+        description: a.description || '',
+        highlights: a.highlights || [],
+        inclusions: a.inclusions || [],
+        exclusions: a.exclusions || [],
+        availableDates: a.availableDates ? a.availableDates.map(d => new Date(d)) : [],
+        images: a.images ? a.images.map((url, i) => ({ url, caption: `Activity image ${i + 1}`, isPrimary: i === 0 })) : [],
+        ageRestriction: a.ageRestriction || '',
+        maxParticipants: a.maxParticipants || 0,
+        meetingPoint: a.meetingPoint || '',
+        terms: a.terms || '',
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+
+      await ttdCol.insertMany(ttdToInsert);
+      console.log(`Seeded ${ttdToInsert.length} activities from things_to_do.json.`);
+    }
+
+    console.log("\n✅ Seeding completed successfully!");
   } catch (error) {
     console.error("Error seeding data:", error);
   } finally {

@@ -1,0 +1,246 @@
+[
+  {
+    "id": "TTD_001",
+    "title": "Lặn ngắm san hô tại Hòn Mun - Nha Trang",
+    "category": "attractions",
+    "location": "Khánh Hòa",
+    "price": 650000,
+    "duration": "Nửa ngày (4 giờ)",
+    "rating": 4.8,
+    "reviewsCount": 2345,
+    "image": "https://picsum.photos/seed/ttd001/800/600",
+    "isFeatured": true,
+    "description": "Trải nghiệm lặn biển ngắm rạn san hô đa dạng tại khu bảo tồn biển Hòn Mun, Nha Trang.",
+    "highlights": [
+      "Ngắm 350+ loài san hô và cá nhiệt đới",
+      "Hướng dẫn viên lặn chuyên nghiệp",
+      "Trang bị kính lặn và ống thở đầy đủ",
+      "Chụp ảnh dưới nước miễn phí"
+    ],
+    "inclusions": ["Thuyền đưa đón", "Trang bị lặn", "Hướng dẫn viên", "Bữa trưa nhẹ trên thuyền", "Bảo hiểm"],
+    "exclusions": ["Di chuyển đến bến tàu", "Đồ uống", "Tips"],
+    "availableDates": ["2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-18"],
+    "images": [
+      "https://picsum.photos/seed/ttd001_1/800/600",
+      "https://picsum.photos/seed/ttd001_2/800/600",
+      "https://picsum.photos/seed/ttd001_3/800/600"
+    ],
+    "ageRestriction": "Từ 8 tuổi trở lên",
+    "maxParticipants": 20,
+    "meetingPoint": "Cảng du lịch Nha Trang, 04 Trần Phú",
+    "terms": "Hủy trước 24 giờ hoàn 100%. Phụ thuộc thời tiết."
+  },
+  {
+    "id": "TTD_002",
+    "title": "Cooking Class - Học nấu ẩm thực Hội An",
+    "category": "experiences",
+    "location": "Quảng Nam",
+    "price": 450000,
+    "duration": "3 giờ",
+    "rating": 4.9,
+    "reviewsCount": 1876,
+    "image": "https://picsum.photos/seed/ttd002/800/600",
+    "isFeatured": true,
+    "description": "Học nấu các món ẩm thực truyền thống Hội An: Cao lầu, Mì Quảng, Bánh bao Bánh vạc cùng đầu bếp địa phương.",
+    "highlights": [
+      "Đi chợ cùng đầu bếp",
+      "Nấu 3 món truyền thống Hội An",
+      "Thưởng thức thành phẩm",
+      "Nhận sách công thức làm quà"
+    ],
+    "inclusions": ["Nguyên liệu nấu ăn", "Hướng dẫn đầu bếp", "Thức uống", "Tạp dề & mũ bếp", "Sách công thức"],
+    "exclusions": ["Di chuyển đến địa điểm", "Đồ uống có cồn"],
+    "availableDates": ["2026-06-10", "2026-06-12", "2026-06-14", "2026-06-16"],
+    "images": [
+      "https://picsum.photos/seed/ttd002_1/800/600",
+      "https://picsum.photos/seed/ttd002_2/800/600"
+    ],
+    "ageRestriction": "Từ 6 tuổi trở lên",
+    "maxParticipants": 12,
+    "meetingPoint": "Chợ Hội An, Phường Minh An",
+    "terms": "Hủy trước 24 giờ hoàn 100%."
+  },
+  {
+    "id": "TTD_003",
+    "title": "Tham quan Địa đạo Củ Chi",
+    "category": "attractions",
+    "location": "Hồ Chí Minh",
+    "price": 350000,
+    "duration": "Nửa ngày (5 giờ)",
+    "rating": 4.6,
+    "reviewsCount": 4567,
+    "image": "https://picsum.photos/seed/ttd003/800/600",
+    "isFeatured": true,
+    "description": "Khám phá hệ thống đường hầm Củ Chi, di tích lịch sử cách mạng nổi tiếng thế giới.",
+    "highlights": [
+      "Trải nghiệm chui hầm thực tế",
+      "Xem phim tài liệu lịch sử",
+      "Tham quan xưởng vũ khí tái hiện",
+      "Thử bắn súng (phụ thu)"
+    ],
+    "inclusions": ["Xe đưa đón từ Q.1", "Vé tham quan", "Hướng dẫn viên", "Nước uống", "Bảo hiểm"],
+    "exclusions": ["Bữa trưa", "Phí bắn súng", "Chi phí cá nhân"],
+    "availableDates": ["2026-06-10", "2026-06-11", "2026-06-13", "2026-06-15", "2026-06-17"],
+    "images": [
+      "https://picsum.photos/seed/ttd003_1/800/600",
+      "https://picsum.photos/seed/ttd003_2/800/600"
+    ],
+    "ageRestriction": "Mọi lứa tuổi",
+    "maxParticipants": 30,
+    "meetingPoint": "Nhà hát lớn TP.HCM, Q.1",
+    "terms": "Hủy trước 48 giờ hoàn 100%."
+  },
+  {
+    "id": "TTD_004",
+    "title": "Trekking Fansipan - Nóc nhà Đông Dương",
+    "category": "recreationalSports",
+    "location": "Lào Cai",
+    "price": 1200000,
+    "duration": "1 ngày",
+    "rating": 4.7,
+    "reviewsCount": 1234,
+    "image": "https://picsum.photos/seed/ttd004/800/600",
+    "isFeatured": true,
+    "description": "Chinh phục đỉnh Fansipan 3143m bằng đường trek, ngắm mây biển và rừng nguyên sinh.",
+    "highlights": [
+      "Chinh phục nóc nhà Đông Dương",
+      "Ngắm mây biển tuyệt đẹp",
+      "Đi qua rừng nguyên sinh",
+      "Check-in đỉnh Fansipan"
+    ],
+    "inclusions": ["Hướng dẫn viên leo núi", "Bữa trưa", "Nước uống", "Bảo hiểm", "Gậy trekking"],
+    "exclusions": ["Di chuyển đến Sapa", "Cáp treo (nếu chọn)", "Chi phí cá nhân"],
+    "availableDates": ["2026-06-12", "2026-06-15", "2026-06-19", "2026-06-22"],
+    "images": [
+      "https://picsum.photos/seed/ttd004_1/800/600",
+      "https://picsum.photos/seed/ttd004_2/800/600",
+      "https://picsum.photos/seed/ttd004_3/800/600"
+    ],
+    "ageRestriction": "Từ 15 tuổi, sức khỏe tốt",
+    "maxParticipants": 10,
+    "meetingPoint": "Trung tâm Sapa, trước nhà thờ đá",
+    "terms": "Hủy trước 3 ngày hoàn 100%. Phụ thuộc thời tiết."
+  },
+  {
+    "id": "TTD_005",
+    "title": "Spa & Tắm bùn khoáng Nha Trang",
+    "category": "spaRelaxation",
+    "location": "Khánh Hòa",
+    "price": 380000,
+    "duration": "3 giờ",
+    "rating": 4.5,
+    "reviewsCount": 3210,
+    "image": "https://picsum.photos/seed/ttd005/800/600",
+    "isFeatured": false,
+    "description": "Thư giãn tắm bùn khoáng nóng thiên nhiên, trải nghiệm spa cao cấp tại Nha Trang.",
+    "highlights": [
+      "Tắm bùn khoáng nóng thiên nhiên",
+      "Bể bơi nước khoáng",
+      "Massage toàn thân 60 phút",
+      "Khu vườn nhiệt đới"
+    ],
+    "inclusions": ["Vé tắm bùn", "Khăn tắm", "Tủ đồ", "Nước uống"],
+    "exclusions": ["Di chuyển", "Massage (phụ thu)", "Đồ uống thêm"],
+    "availableDates": ["2026-06-10", "2026-06-11", "2026-06-12", "2026-06-13", "2026-06-14"],
+    "images": [
+      "https://picsum.photos/seed/ttd005_1/800/600",
+      "https://picsum.photos/seed/ttd005_2/800/600"
+    ],
+    "ageRestriction": "Mọi lứa tuổi",
+    "maxParticipants": 50,
+    "meetingPoint": "I-Resort Nha Trang, Vĩnh Ngọc",
+    "terms": "Hủy trước 12 giờ hoàn 100%."
+  },
+  {
+    "id": "TTD_006",
+    "title": "Tour ẩm thực đường phố Hà Nội",
+    "category": "culinaryExperiences",
+    "location": "Hà Nội",
+    "price": 550000,
+    "duration": "4 giờ",
+    "rating": 4.8,
+    "reviewsCount": 2890,
+    "image": "https://picsum.photos/seed/ttd006/800/600",
+    "isFeatured": true,
+    "description": "Khám phá ẩm thực đường phố Hà Nội cùng hướng dẫn viên địa phương: phở, bún chả, cà phê trứng...",
+    "highlights": [
+      "Thưởng thức 8 món đặc trưng Hà Nội",
+      "Hướng dẫn viên am hiểu ẩm thực",
+      "Dạo phố cổ về đêm",
+      "Uống cà phê trứng tại quán cổ"
+    ],
+    "inclusions": ["Hướng dẫn viên", "8 món ẩm thực", "Đồ uống", "Bảo hiểm"],
+    "exclusions": ["Di chuyển đến điểm hẹn", "Đồ uống có cồn", "Tips"],
+    "availableDates": ["2026-06-10", "2026-06-11", "2026-06-12", "2026-06-14", "2026-06-16"],
+    "images": [
+      "https://picsum.photos/seed/ttd006_1/800/600",
+      "https://picsum.photos/seed/ttd006_2/800/600",
+      "https://picsum.photos/seed/ttd006_3/800/600"
+    ],
+    "ageRestriction": "Mọi lứa tuổi",
+    "maxParticipants": 15,
+    "meetingPoint": "Cổng chợ Đồng Xuân, Hoàn Kiếm",
+    "terms": "Hủy trước 24 giờ hoàn 100%."
+  },
+  {
+    "id": "TTD_007",
+    "title": "Chèo SUP trên sông Hương - Huế",
+    "category": "recreationalSports",
+    "location": "Thừa Thiên Huế",
+    "price": 300000,
+    "duration": "2 giờ",
+    "rating": 4.4,
+    "reviewsCount": 876,
+    "image": "https://picsum.photos/seed/ttd007/800/600",
+    "isFeatured": false,
+    "description": "Chèo SUP (Stand Up Paddle) trên sông Hương thơ mộng, ngắm cầu Tràng Tiền và Đại Nội lúc hoàng hôn.",
+    "highlights": [
+      "Chèo SUP trên sông Hương",
+      "Ngắm hoàng hôn tuyệt đẹp",
+      "View cầu Tràng Tiền",
+      "Hướng dẫn từ cơ bản"
+    ],
+    "inclusions": ["Ván SUP & mái chèo", "Áo phao", "Hướng dẫn viên", "Nước uống", "Bảo hiểm"],
+    "exclusions": ["Di chuyển", "Chụp ảnh chuyên nghiệp (phụ thu)"],
+    "availableDates": ["2026-06-10", "2026-06-13", "2026-06-16", "2026-06-19"],
+    "images": [
+      "https://picsum.photos/seed/ttd007_1/800/600",
+      "https://picsum.photos/seed/ttd007_2/800/600"
+    ],
+    "ageRestriction": "Từ 12 tuổi, biết bơi",
+    "maxParticipants": 8,
+    "meetingPoint": "Bến thuyền Tòa Khâm, Huế",
+    "terms": "Hủy trước 12 giờ hoàn 100%. Phụ thuộc thời tiết."
+  },
+  {
+    "id": "TTD_008",
+    "title": "Vé VinWonders Nha Trang",
+    "category": "gamesActivities",
+    "location": "Khánh Hòa",
+    "price": 880000,
+    "duration": "Cả ngày",
+    "rating": 4.7,
+    "reviewsCount": 5678,
+    "image": "https://picsum.photos/seed/ttd008/800/600",
+    "isFeatured": true,
+    "description": "Vé trọn gói VinWonders Nha Trang - công viên giải trí hàng đầu Việt Nam trên đảo Hòn Tre.",
+    "highlights": [
+      "Cáp treo vượt biển dài nhất thế giới",
+      "Thủy cung khổng lồ",
+      "Công viên nước",
+      "30+ trò chơi cảm giác mạnh"
+    ],
+    "inclusions": ["Vé vào cổng trọn gói", "Cáp treo khứ hồi", "Tất cả trò chơi"],
+    "exclusions": ["Di chuyển đến bến cáp", "Ăn uống trong công viên", "Locker (phụ thu)"],
+    "availableDates": ["2026-06-10", "2026-06-11", "2026-06-12", "2026-06-13", "2026-06-14", "2026-06-15"],
+    "images": [
+      "https://picsum.photos/seed/ttd008_1/800/600",
+      "https://picsum.photos/seed/ttd008_2/800/600",
+      "https://picsum.photos/seed/ttd008_3/800/600"
+    ],
+    "ageRestriction": "Mọi lứa tuổi (trẻ dưới 1m miễn phí)",
+    "maxParticipants": 500,
+    "meetingPoint": "Ga cáp treo VinWonders, Trần Phú, Nha Trang",
+    "terms": "Vé có hiệu lực trong ngày. Không hoàn tiền."
+  }
+]

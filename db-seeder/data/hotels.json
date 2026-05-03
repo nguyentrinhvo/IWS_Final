@@ -1,0 +1,210 @@
+[
+  {
+    "id": "HOTEL_001",
+    "name": "Vinpearl Luxury Nha Trang",
+    "location": "Khánh Hòa",
+    "address": "Đảo Hòn Tre, Vĩnh Nguyên, Nha Trang",
+    "starRating": 5,
+    "price": 4500000,
+    "rating": 4.9,
+    "reviewsCount": 3256,
+    "image": "https://picsum.photos/seed/hotel001/800/600",
+    "isFeatured": true,
+    "description": "Resort 5 sao đẳng cấp trên đảo Hòn Tre, bãi biển riêng, hồ bơi vô cực và spa cao cấp.",
+    "rooms": [
+      { "type": "Deluxe Ocean View", "price": 4500000, "maxGuests": 2, "bedType": "King", "size": "45m²", "available": 8 },
+      { "type": "Premium Suite", "price": 7200000, "maxGuests": 3, "bedType": "King + Sofa", "size": "72m²", "available": 4 },
+      { "type": "Villa Pool Access", "price": 12000000, "maxGuests": 4, "bedType": "King", "size": "120m²", "available": 2 }
+    ],
+    "amenities": ["Hồ bơi vô cực", "Bãi biển riêng", "Spa & Wellness", "Buffet quốc tế", "Gym", "Wifi miễn phí", "Room service 24/7", "Cáp treo VinWonders"],
+    "highlights": ["View biển 180 độ", "Cáp treo vượt biển", "3 nhà hàng & 2 bar", "Bể bơi nước mặn"],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "policies": {
+      "cancellation": "Miễn phí hủy trước 48 giờ, phí 50% trong 24 giờ.",
+      "children": "Trẻ dưới 6 tuổi miễn phí.",
+      "pets": "Không cho phép.",
+      "smoking": "Không hút thuốc trong phòng."
+    },
+    "images": [
+      "https://picsum.photos/seed/hotel001_1/800/600",
+      "https://picsum.photos/seed/hotel001_2/800/600",
+      "https://picsum.photos/seed/hotel001_3/800/600"
+    ],
+    "nearbyAttractions": ["VinWonders Nha Trang", "Hòn Tằm", "Tháp Bà Ponagar"],
+    "coordinates": { "lat": 12.2188, "lng": 109.1967 }
+  },
+  {
+    "id": "HOTEL_002",
+    "name": "JW Marriott Phú Quốc Emerald Bay",
+    "location": "Kiên Giang",
+    "address": "Bãi Khem, An Thới, Phú Quốc",
+    "starRating": 5,
+    "price": 6800000,
+    "rating": 4.8,
+    "reviewsCount": 2187,
+    "image": "https://picsum.photos/seed/hotel002/800/600",
+    "isFeatured": true,
+    "description": "Khu nghỉ dưỡng sang trọng Phú Quốc, thiết kế Đại học Lamarck thế kỷ 19, bãi Khem tuyệt đẹp.",
+    "rooms": [
+      { "type": "Emerald Bay View", "price": 6800000, "maxGuests": 2, "bedType": "King", "size": "55m²", "available": 10 },
+      { "type": "Lamarck Suite", "price": 11500000, "maxGuests": 3, "bedType": "King + Single", "size": "95m²", "available": 5 },
+      { "type": "Beach Villa", "price": 18000000, "maxGuests": 4, "bedType": "King", "size": "150m²", "available": 3 }
+    ],
+    "amenities": ["Hồ bơi vô cực", "Bãi biển cát trắng", "Chanterelle Spa", "4 nhà hàng", "Gym & Yoga", "Wifi miễn phí", "Kids Club", "Đưa đón sân bay"],
+    "highlights": ["Kiến trúc Bill Bensley", "Bãi Khem top châu Á", "Hải sản cao cấp", "Cooking class"],
+    "checkInTime": "15:00",
+    "checkOutTime": "12:00",
+    "policies": {
+      "cancellation": "Miễn phí hủy trước 72 giờ.",
+      "children": "Trẻ dưới 5 tuổi miễn phí.",
+      "pets": "Không cho phép.",
+      "smoking": "Khu vực riêng ngoài trời."
+    },
+    "images": [
+      "https://picsum.photos/seed/hotel002_1/800/600",
+      "https://picsum.photos/seed/hotel002_2/800/600",
+      "https://picsum.photos/seed/hotel002_3/800/600"
+    ],
+    "nearbyAttractions": ["Bãi Sao", "Chợ đêm Phú Quốc", "Vinpearl Safari"],
+    "coordinates": { "lat": 10.0195, "lng": 104.0186 }
+  },
+  {
+    "id": "HOTEL_003",
+    "name": "Sofitel Legend Metropole Hà Nội",
+    "location": "Hà Nội",
+    "address": "15 Ngô Quyền, Hoàn Kiếm, Hà Nội",
+    "starRating": 5,
+    "price": 5200000,
+    "rating": 4.9,
+    "reviewsCount": 4512,
+    "image": "https://picsum.photos/seed/hotel003/800/600",
+    "isFeatured": true,
+    "description": "Khách sạn huyền thoại từ 1901, biểu tượng Hà Nội với kiến trúc Pháp cổ điển, trung tâm phố cổ.",
+    "rooms": [
+      { "type": "Premium Room", "price": 5200000, "maxGuests": 2, "bedType": "King/Twin", "size": "32m²", "available": 12 },
+      { "type": "Grand Premium", "price": 7500000, "maxGuests": 2, "bedType": "King", "size": "40m²", "available": 6 },
+      { "type": "Opera Wing Suite", "price": 15000000, "maxGuests": 3, "bedType": "King", "size": "65m²", "available": 3 }
+    ],
+    "amenities": ["Hồ bơi ngoài trời", "Le Spa du Metropole", "Nhà hàng Le Beaulieu", "Spices Garden", "Angelina Bar", "Gym", "Wifi miễn phí", "Limousine"],
+    "highlights": ["Hầm trú ẩn lịch sử", "Trà chiều kiểu Pháp", "Cách Hồ Hoàn Kiếm 200m", "Di sản kiến trúc"],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "policies": {
+      "cancellation": "Miễn phí hủy trước 24 giờ.",
+      "children": "Trẻ dưới 12 tuổi miễn phí sáng.",
+      "pets": "Thú cưng dưới 5kg (phụ thu).",
+      "smoking": "Không hút thuốc."
+    },
+    "images": [
+      "https://picsum.photos/seed/hotel003_1/800/600",
+      "https://picsum.photos/seed/hotel003_2/800/600",
+      "https://picsum.photos/seed/hotel003_3/800/600"
+    ],
+    "nearbyAttractions": ["Hồ Hoàn Kiếm", "Nhà hát lớn", "Phố cổ Hà Nội"],
+    "coordinates": { "lat": 21.0252, "lng": 105.8577 }
+  },
+  {
+    "id": "HOTEL_004",
+    "name": "Mường Thanh Luxury Đà Nẵng",
+    "location": "Đà Nẵng",
+    "address": "270 Võ Nguyên Giáp, Sơn Trà, Đà Nẵng",
+    "starRating": 4,
+    "price": 1850000,
+    "rating": 4.5,
+    "reviewsCount": 1876,
+    "image": "https://picsum.photos/seed/hotel004/800/600",
+    "isFeatured": false,
+    "description": "Khách sạn 4 sao mặt biển Mỹ Khê, view cầu Thuận Phước, phù hợp gia đình và doanh nhân.",
+    "rooms": [
+      { "type": "Superior City View", "price": 1850000, "maxGuests": 2, "bedType": "Queen", "size": "30m²", "available": 20 },
+      { "type": "Deluxe Sea View", "price": 2500000, "maxGuests": 2, "bedType": "King", "size": "35m²", "available": 15 },
+      { "type": "Family Suite", "price": 3800000, "maxGuests": 4, "bedType": "King + 2 Single", "size": "55m²", "available": 6 }
+    ],
+    "amenities": ["Hồ bơi tầng thượng", "Buffet sáng", "Sky bar", "Gym", "Sauna", "Wifi miễn phí", "Bãi đỗ xe", "Phòng hội nghị"],
+    "highlights": ["Sát biển Mỹ Khê", "Hồ bơi vô cực rooftop", "Buffet 50+ món", "Gần cầu Rồng"],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "policies": {
+      "cancellation": "Miễn phí hủy trước 24 giờ.",
+      "children": "Trẻ dưới 6 tuổi miễn phí.",
+      "pets": "Không cho phép.",
+      "smoking": "Phòng không hút thuốc."
+    },
+    "images": [
+      "https://picsum.photos/seed/hotel004_1/800/600",
+      "https://picsum.photos/seed/hotel004_2/800/600"
+    ],
+    "nearbyAttractions": ["Biển Mỹ Khê", "Cầu Rồng", "Bà Nà Hills"],
+    "coordinates": { "lat": 16.0544, "lng": 108.2462 }
+  },
+  {
+    "id": "HOTEL_005",
+    "name": "Ana Mandara Đà Lạt",
+    "location": "Lâm Đồng",
+    "address": "Lê Lai, Phường 5, Đà Lạt",
+    "starRating": 5,
+    "price": 3200000,
+    "rating": 4.7,
+    "reviewsCount": 1234,
+    "image": "https://picsum.photos/seed/hotel005/800/600",
+    "isFeatured": false,
+    "description": "Biệt thự Pháp cổ điển giữa rừng thông Đà Lạt, phong cách Indochine sang trọng và yên bình.",
+    "rooms": [
+      { "type": "Deluxe Room", "price": 3200000, "maxGuests": 2, "bedType": "King", "size": "35m²", "available": 10 },
+      { "type": "Villa Garden View", "price": 5500000, "maxGuests": 3, "bedType": "King + Single", "size": "60m²", "available": 5 },
+      { "type": "Presidential Villa", "price": 9800000, "maxGuests": 4, "bedType": "King", "size": "100m²", "available": 2 }
+    ],
+    "amenities": ["Hồ bơi nước ấm", "Spa thảo dược", "Nhà hàng Le Petit", "Bar lò sưởi", "Vườn hoa 5000m²", "Wifi miễn phí", "Xe đạp miễn phí", "Bãi đỗ xe"],
+    "highlights": ["Biệt thự Pháp từ 1920", "Rừng thông bao quanh", "Trà chiều bên lò sưởi", "Không gian yên tĩnh"],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "policies": {
+      "cancellation": "Miễn phí hủy trước 3 ngày.",
+      "children": "Trẻ dưới 8 tuổi miễn phí.",
+      "pets": "Không cho phép.",
+      "smoking": "Không hút thuốc."
+    },
+    "images": [
+      "https://picsum.photos/seed/hotel005_1/800/600",
+      "https://picsum.photos/seed/hotel005_2/800/600"
+    ],
+    "nearbyAttractions": ["Hồ Xuân Hương", "Dinh Bảo Đại", "Thung lũng Tình Yêu"],
+    "coordinates": { "lat": 11.9404, "lng": 108.4583 }
+  },
+  {
+    "id": "HOTEL_006",
+    "name": "Rex Hotel Sài Gòn",
+    "location": "Hồ Chí Minh",
+    "address": "141 Nguyễn Huệ, Quận 1, TP.HCM",
+    "starRating": 5,
+    "price": 3800000,
+    "rating": 4.6,
+    "reviewsCount": 2890,
+    "image": "https://picsum.photos/seed/hotel006/800/600",
+    "isFeatured": true,
+    "description": "Khách sạn 5 sao lịch sử trung tâm Sài Gòn, rooftop bar nổi tiếng nhìn ra phố đi bộ Nguyễn Huệ.",
+    "rooms": [
+      { "type": "Superior Room", "price": 3800000, "maxGuests": 2, "bedType": "King/Twin", "size": "32m²", "available": 18 },
+      { "type": "Deluxe Room", "price": 4800000, "maxGuests": 2, "bedType": "King", "size": "40m²", "available": 10 },
+      { "type": "Rex Suite", "price": 8500000, "maxGuests": 3, "bedType": "King", "size": "70m²", "available": 4 }
+    ],
+    "amenities": ["Hồ bơi rooftop", "Rooftop Garden Bar", "3 nhà hàng", "Spa & Sauna", "Gym", "Wifi miễn phí", "Trung tâm thương mại", "Phòng hội nghị"],
+    "highlights": ["Rooftop bar nổi tiếng nhất SG", "Phố đi bộ Nguyễn Huệ", "Lịch sử 60+ năm", "Buffet 5 sao"],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "policies": {
+      "cancellation": "Miễn phí hủy trước 24 giờ.",
+      "children": "Trẻ dưới 6 tuổi miễn phí.",
+      "pets": "Không cho phép.",
+      "smoking": "Khu vực riêng."
+    },
+    "images": [
+      "https://picsum.photos/seed/hotel006_1/800/600",
+      "https://picsum.photos/seed/hotel006_2/800/600",
+      "https://picsum.photos/seed/hotel006_3/800/600"
+    ],
+    "nearbyAttractions": ["Nhà thờ Đức Bà", "Bưu điện trung tâm", "Chợ Bến Thành"],
+    "coordinates": { "lat": 10.7737, "lng": 106.7020 }
+  }
+]
