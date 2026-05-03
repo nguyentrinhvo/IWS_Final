@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ToursBookingPage from './ToursBookingPage';
-import { mockData } from '../../data/mockData';
+import { getTours } from '../../services/tourService';
 
 const ToursBooking = () => {
   const [allTours, setAllTours] = useState([]);
@@ -20,25 +20,30 @@ const ToursBooking = () => {
   });
   const [sortBy, setSortBy] = useState('price_asc');
 
-  // 1. Lấy dữ liệu từ mockData (giống Tour.jsx)
+  // 1. Lấy dữ liệu từ API
   useEffect(() => {
-    setLoading(true);
-    try {
-      const tours = mockData.tours || [];
-      if (tours.length === 0) {
-        setError('Không có dữ liệu tour');
-      } else {
-        setAllTours(tours);
-        // Cập nhật khoảng giá động
-        const minP = Math.min(...tours.map(t => t.price));
-        const maxP = Math.max(...tours.map(t => t.price));
-        setFilters(prev => ({ ...prev, minPrice: minP, maxPrice: maxP }));
+    const fetchTours = async () => {
+      setLoading(true);
+      try {
+        const res = await getTours({ size: 100 }); // Lấy 100 tours để filter client-side tạm thời
+        const tours = res.content || [];
+        if (tours.length === 0) {
+          setError('Không có dữ liệu tour');
+        } else {
+          setAllTours(tours);
+          // Cập nhật khoảng giá động
+          const minP = Math.min(...tours.map(t => t.price || 0));
+          const maxP = Math.max(...tours.map(t => t.price || 0));
+          setFilters(prev => ({ ...prev, minPrice: minP, maxPrice: maxP }));
+        }
+      } catch (err) {
+        console.error('Fetch tours failed:', err);
+        setError('Lỗi khi tải dữ liệu tour từ máy chủ');
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    };
+    fetchTours();
   }, []);
 
   // 2. Hàm lọc (viết trực tiếp, không cần utils)

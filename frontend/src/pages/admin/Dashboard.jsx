@@ -82,10 +82,10 @@ const topDestinations = [
 const Dashboard = () => {
   const { t } = useTranslation();
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 xl:space-y-8">
       
       {/* Top Stats Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 2xl:gap-8">
         <DashboardCard 
           title="TOTAL REVENUE" 
           value="$842,900.00" 
@@ -117,13 +117,13 @@ const Dashboard = () => {
       </div>
 
       {/* Middle Row: Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 2xl:gap-8">
         
         {/* Bar Chart section */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-[#f0ecec] p-6 h-[400px] flex flex-col">
-          <div className="flex justify-between items-center mb-6">
+        <div className="xl:col-span-2 bg-white rounded-xl shadow-sm border border-[#f0ecec] p-4 md:p-6 h-[350px] md:h-[400px] flex flex-col">
+          <div className="flex justify-between items-start sm:items-center mb-6 gap-4 flex-col sm:flex-row">
             <div>
-              <h2 className="text-lg font-bold text-slate-800">Revenue Insights</h2>
+              <h2 className="text-base md:text-lg font-bold text-slate-800">Revenue Insights</h2>
               <p className="text-sm text-gray-500">Monthly transactional volume for 2024</p>
             </div>
             <select className="bg-gray-100 border-none text-sm font-medium text-slate-700 py-1.5 px-3 rounded-md outline-none">
@@ -157,9 +157,9 @@ const Dashboard = () => {
         </div>
 
         {/* Donut Chart section */}
-        <div className="bg-white rounded-xl shadow-sm border border-[#f0ecec] p-6 h-[400px] flex flex-col items-center">
+        <div className="bg-white rounded-xl shadow-sm border border-[#f0ecec] p-4 md:p-6 h-[350px] md:h-[400px] flex flex-col items-center">
            <div className="w-full text-left mb-4">
-             <h2 className="text-lg font-bold text-slate-800">Payment Mix</h2>
+             <h2 className="text-base md:text-lg font-bold text-slate-800">Payment Mix</h2>
            </div>
            
            <div className="relative flex-1 w-full flex justify-center items-center">
@@ -205,12 +205,12 @@ const Dashboard = () => {
       </div>
 
       {/* Bottom Row: Table & List */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 2xl:gap-8">
         
         {/* Recent Bookings Table */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-[#f0ecec] flex flex-col overflow-hidden">
-          <div className="p-6 flex justify-between items-center border-b border-gray-100">
-             <h2 className="text-lg font-bold text-slate-800">Recent Bookings</h2>
+        <div className="xl:col-span-2 bg-white rounded-xl shadow-sm border border-[#f0ecec] flex flex-col overflow-hidden">
+          <div className="p-4 md:p-6 flex justify-between items-center border-b border-gray-100">
+             <h2 className="text-base md:text-lg font-bold text-slate-800">Recent Bookings</h2>
              <button className="text-xs font-bold text-[#7C4A4A] uppercase tracking-wider hover:underline">
                View All
              </button>
@@ -219,20 +219,20 @@ const Dashboard = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-[#fcfaf9]">
-                  <th className="py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">Booking ID</th>
-                  <th className="py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">Traveler</th>
-                  <th className="py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">Destination</th>
-                  <th className="py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">Status</th>
-                  <th className="py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 text-right">Amount</th>
+                  <th className="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 whitespace-nowrap">Booking ID</th>
+                  <th className="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 whitespace-nowrap">Traveler</th>
+                  <th className="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 whitespace-nowrap">Destination</th>
+                  <th className="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 whitespace-nowrap">Status</th>
+                  <th className="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 text-right whitespace-nowrap">Amount</th>
                 </tr>
               </thead>
               <tbody>
                 {recentBookings.map((booking, index) => (
                   <tr key={booking.id} className="border-b border-gray-50 last:border-b-0 hover:bg-[#faf8f7] transition-colors">
-                    <td className="py-4 px-6 text-sm font-bold text-slate-800">{booking.id}</td>
-                    <td className="py-4 px-6">
+                    <td className="py-4 px-4 md:px-6 text-sm font-bold text-slate-800 whitespace-nowrap">{booking.id}</td>
+                    <td className="py-4 px-4 md:px-6 whitespace-nowrap">
                       <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 rounded-full bg-[#faeceb] flex items-center justify-center text-[#7C4A4A] text-xs font-bold">
+                        <div className="w-8 h-8 rounded-full bg-[#faeceb] flex items-center justify-center text-[#7C4A4A] text-xs font-bold shrink-0">
                           {booking.initials}
                         </div>
                         <div>
@@ -241,13 +241,13 @@ const Dashboard = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 px-6 text-sm font-semibold text-gray-600">{booking.destination}</td>
-                    <td className="py-4 px-6">
+                    <td className="py-4 px-4 md:px-6 text-sm font-semibold text-gray-600 whitespace-nowrap">{booking.destination}</td>
+                    <td className="py-4 px-4 md:px-6 whitespace-nowrap">
                       <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${booking.statusBg} ${booking.statusText}`}>
                         {booking.status}
                       </span>
                     </td>
-                    <td className="py-4 px-6 text-sm font-bold text-slate-800 text-right">{booking.amount}</td>
+                    <td className="py-4 px-4 md:px-6 text-sm font-bold text-slate-800 text-right whitespace-nowrap">{booking.amount}</td>
                   </tr>
                 ))}
               </tbody>
@@ -256,8 +256,8 @@ const Dashboard = () => {
         </div>
 
         {/* Top Destinations */}
-        <div className="bg-white rounded-xl shadow-sm border border-[#f0ecec] p-6 flex flex-col">
-          <h2 className="text-lg font-bold text-slate-800 mb-6">Top Destinations</h2>
+        <div className="bg-white rounded-xl shadow-sm border border-[#f0ecec] p-4 md:p-6 flex flex-col">
+          <h2 className="text-base md:text-lg font-bold text-slate-800 mb-6">Top Destinations</h2>
           
           <div className="space-y-6 flex-1">
             {topDestinations.map(dest => (

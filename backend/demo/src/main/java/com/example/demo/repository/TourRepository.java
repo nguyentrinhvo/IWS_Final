@@ -18,6 +18,6 @@ public interface TourRepository extends MongoRepository<TourDocument, String> {
     Page<TourDocument> findByPriceAdultBetweenAndIsDeletedFalse(Double minPrice, Double maxPrice, Pageable pageable);
     Page<TourDocument> findByDurationDaysAndIsDeletedFalse(Integer durationDays, Pageable pageable);
 
-    @Query("{ '$text': { '$search': ?0 }, 'isDeleted': false }")
+    @Query("{ '$and': [ { '$or': [ {'nameVi': { '$regex': ?0, '$options': 'i' }}, {'nameEn': { '$regex': ?0, '$options': 'i' }} ] }, { 'isDeleted': false } ] }")
     Page<TourDocument> searchByKeyword(String keyword, Pageable pageable);
 }

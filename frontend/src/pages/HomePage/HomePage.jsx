@@ -10,8 +10,8 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col mb-20">
       <SearchHomepage />
-      
-      <div className="w-full max-w-[1320px] mx-auto px-[16px] md:px-[24px] lg:px-0 flex flex-col gap-12">
+
+      <div className="w-full max-w-[1320px] mx-auto px-[16px] md:px-[24px] xl:px-0 flex flex-col gap-12">
         <NewUserExclusive />
         <PopularDestinations />
         <OverseasDestinations />

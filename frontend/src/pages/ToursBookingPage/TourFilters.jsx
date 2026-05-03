@@ -1,14 +1,5 @@
-// File 1: TourFilters.jsx
 import React, { useState } from 'react';
-
-const filterMockData = {
-  durations: ["2-4 ngày", "5-6 ngày", "7-8 ngày", "9-10 ngày"],
-  prices: ["< 11 triệu", "11 triệu - 18 triệu", "18 triệu - 21 triệu", "> 21 triệu"],
-  shopping: ["Không Shopping", "Có Shopping"]
-};
-
-const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+import { filterMockData, weekDays, monthNames } from '../../data/mockData';
 
 const TourFilters = ({ onClose }) => {
   const [currentDate] = useState(new Date());

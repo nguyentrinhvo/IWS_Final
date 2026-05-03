@@ -26,14 +26,14 @@ const RightArrowIcon = () => (
 
 const ClockIcon = () => (
   <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 8V12L14.5 14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M12 8V12L14.5 14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
 
 const LocationIcon = () => (
   <svg width="20px" height="20px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-    <path d="M256 17.108c-75.73 0-137.122 61.392-137.122 137.122.055 23.25 6.022 46.107 11.58 56.262L256 494.892l119.982-274.244h-.063c11.27-20.324 17.188-43.18 17.202-66.418C393.122 78.5 331.73 17.108 256 17.108zm0 68.56a68.56 68.56 0 0 1 68.56 68.562A68.56 68.56 0 0 1 256 222.79a68.56 68.56 0 0 1-68.56-68.56A68.56 68.56 0 0 1 256 85.67z"/>
+    <path d="M256 17.108c-75.73 0-137.122 61.392-137.122 137.122.055 23.25 6.022 46.107 11.58 56.262L256 494.892l119.982-274.244h-.063c11.27-20.324 17.188-43.18 17.202-66.418C393.122 78.5 331.73 17.108 256 17.108zm0 68.56a68.56 68.56 0 0 1 68.56 68.562A68.56 68.56 0 0 1 256 222.79a68.56 68.56 0 0 1-68.56-68.56A68.56 68.56 0 0 1 256 85.67z" />
   </svg>
 );
 
@@ -60,15 +60,15 @@ const BestTourDeals = () => {
           <h2 className="text-2xl md:text-3xl font-bold break-words">{t('bestTourDealsTitle')}</h2>
         </div>
         <p className="text-[#180B51] mb-6 md:mb-8 break-words">{t('bestTourDealsDesc')}</p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {bestTourDealsData.map((tour, index) => {
             const cardContent = (
               <div className="h-[520px] border border-gray-200 rounded-t-xl rounded-b-xl flex flex-col bg-white shadow-md transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
-                <img 
-                  src={tour.image} 
-                  alt={tour.titleTemplate} 
-                  className="w-full h-[220px] object-cover rounded-t-xl" 
+                <img
+                  src={tour.image}
+                  alt={tour.titleTemplate}
+                  className="w-full h-[220px] object-cover rounded-t-xl"
                 />
                 <div className="p-5 flex flex-col flex-1 justify-between">
                   <div>
@@ -109,7 +109,6 @@ const BestTourDeals = () => {
               </div>
             );
 
-            // Only the first card gets a Link wrapper
             if (index === 0) {
               return (
                 <Link key={tour.id} to={`/tour/${tour.id}`}>

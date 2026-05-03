@@ -1,25 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-
-const mockRoutes = [
-  "Beijing - Shanghai",
-  "Shanghai - Wuzhen",
-  "Beijing",
-  "Chengdu - Jiuzhaigou",
-  "Guangzhou - Shenzhen",
-  "Hangzhou - Suzhou",
-  "Xi'an - Luoyang",
-  "Kunming - Dali - Lijiang",
-  "Chongqing - Yangtze River",
-  "Harbin - Snow Town"
-];
-
-const sortOptions = [
-  { id: 'suggested', label: 'Hanuvivu suggests' },
-  { id: 'duration', label: 'Duration' },
-  { id: 'departure', label: 'Departure Date' },
-  { id: 'price_asc', label: 'Price: Low to High' },
-  { id: 'price_desc', label: 'Price: High to Low' }
-];
+import { mockRoutes, sortOptions } from '../../data/mockData';
 
 export const SortIcon = () => (
   <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -81,23 +61,22 @@ const TourHeaderLooking = ({ totalResults = 122, routes = mockRoutes, onSortChan
         <span className="font-medium text-gray-700">Sort by:</span>
       </div>
       <div className="relative" ref={dropdownRef}>
-        <div 
+        <div
           className="flex items-center gap-1 cursor-pointer select-none"
           onClick={() => setIsSortOpen(!isSortOpen)}
         >
           <span className="font-semibold text-gray-900">{selectedSort.label}</span>
           <DownIcon className={`transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`} />
         </div>
-        
+
         {isSortOpen && (
           <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 py-1">
             {sortOptions.map((option) => (
               <div
                 key={option.id}
                 onClick={() => handleSortSelect(option)}
-                className={`px-4 py-2 cursor-pointer hover:bg-gray-50 transition-colors ${
-                  selectedSort.id === option.id ? 'text-blue-500 font-medium' : 'text-gray-700'
-                }`}
+                className={`px-4 py-2 cursor-pointer hover:bg-gray-50 transition-colors ${selectedSort.id === option.id ? 'text-blue-500 font-medium' : 'text-gray-700'
+                  }`}
               >
                 {option.label}
               </div>
@@ -123,8 +102,8 @@ const TourHeaderLooking = ({ totalResults = 122, routes = mockRoutes, onSortChan
         <div className="flex items-center justify-between gap-3">
           <div className="flex-1 min-w-0 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {firstFiveRoutes.map((route, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="border border-gray-300 rounded-md px-4 py-2 text-sm text-gray-700 bg-white whitespace-nowrap hover:border-gray-400 transition-colors cursor-pointer"
               >
                 {route}
@@ -133,7 +112,7 @@ const TourHeaderLooking = ({ totalResults = 122, routes = mockRoutes, onSortChan
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
             {hasMoreRoutes && (
-              <button 
+              <button
                 onClick={() => setIsExpanded(true)}
                 className="flex items-center gap-1 text-blue-500 font-medium text-sm whitespace-nowrap hover:text-blue-600 transition-colors"
               >
@@ -152,18 +131,18 @@ const TourHeaderLooking = ({ totalResults = 122, routes = mockRoutes, onSortChan
           {/* All routes chips - full width with wrap */}
           <div className="w-full flex flex-wrap items-center gap-2">
             {routes.map((route, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="border border-gray-300 rounded-md px-4 py-2 text-sm text-gray-700 bg-white hover:border-gray-400 transition-colors cursor-pointer"
               >
                 {route}
               </div>
             ))}
           </div>
-          
+
           {/* Bottom row: Show less left, Sort by right */}
           <div className="flex justify-between items-center">
-            <button 
+            <button
               onClick={() => setIsExpanded(false)}
               className="flex items-center gap-1 text-blue-500 font-medium text-sm hover:text-blue-600 transition-colors"
             >

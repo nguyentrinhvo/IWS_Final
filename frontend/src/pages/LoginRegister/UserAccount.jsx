@@ -95,7 +95,7 @@ const UserAccount = () => {
             pointerEvents: openDropdown === field ? 'all' : 'none'
         }}>
             {options.map(opt => (
-                <div 
+                <div
                     key={opt}
                     onClick={() => handleSelect(field, opt)}
                     style={{ padding: '8px 12px', cursor: 'pointer' }}
@@ -121,11 +121,11 @@ const UserAccount = () => {
                         <div style={{ fontSize: '12px', color: '#666' }}>Google</div>
                     </div>
                 </div>
-                
+
                 <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '10px 0' }} />
 
                 {menuItems.map(item => (
-                    <div 
+                    <div
                         key={item.id}
                         onClick={() => setActiveMenu(item.id)}
                         style={{
@@ -140,8 +140,8 @@ const UserAccount = () => {
                             color: activeMenu === item.id ? 'white' : 'black',
                             transition: 'all 0.2s'
                         }}
-                        onMouseEnter={(e) => { if(activeMenu !== item.id) e.currentTarget.style.backgroundColor = '#f5f5f5' }}
-                        onMouseLeave={(e) => { if(activeMenu !== item.id) e.currentTarget.style.backgroundColor = 'transparent' }}
+                        onMouseEnter={(e) => { if (activeMenu !== item.id) e.currentTarget.style.backgroundColor = '#f5f5f5' }}
+                        onMouseLeave={(e) => { if (activeMenu !== item.id) e.currentTarget.style.backgroundColor = 'transparent' }}
                     >
                         <span style={{ color: activeMenu === item.id ? 'white' : '#007CE8' }}>{item.icon}</span>
                         <span style={{ fontSize: '14px' }}>{item.label}</span>
@@ -150,7 +150,7 @@ const UserAccount = () => {
 
                 <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '10px 0' }} />
 
-                <div 
+                <div
                     onClick={() => setActiveMenu('account')}
                     style={{
                         display: 'flex',
@@ -180,11 +180,11 @@ const UserAccount = () => {
                 </div>
 
                 <div style={{ display: 'flex', gap: '25px', position: 'relative', borderBottom: '1px solid #eee' }}>
-                    <div 
+                    <div
                         onClick={() => setActiveTab('info')}
-                        style={{ 
-                            padding: '10px 0', 
-                            cursor: 'pointer', 
+                        style={{
+                            padding: '10px 0',
+                            cursor: 'pointer',
                             color: activeTab === 'info' ? '#007CE8' : 'black',
                             borderBottom: activeTab === 'info' ? '2px solid #007CE8' : 'none',
                             marginBottom: '-1px',
@@ -193,11 +193,11 @@ const UserAccount = () => {
                     >
                         {t('userAccountInfo')}
                     </div>
-                    <div 
+                    <div
                         onClick={() => setActiveTab('security')}
-                        style={{ 
-                            padding: '10px 0', 
-                            cursor: 'pointer', 
+                        style={{
+                            padding: '10px 0',
+                            cursor: 'pointer',
                             color: activeTab === 'security' ? '#007CE8' : 'black',
                             borderBottom: activeTab === 'security' ? '2px solid #007CE8' : 'none',
                             marginBottom: '-1px',
@@ -210,9 +210,9 @@ const UserAccount = () => {
 
                 {activeTab === 'info' && (
                     <div style={{ marginTop: '20px' }}>
-                        <div style={{ 
-                            backgroundColor: 'white', 
-                            borderRadius: '12px', 
+                        <div style={{
+                            backgroundColor: 'white',
+                            borderRadius: '12px',
                             boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                             padding: '20px'
                         }}>
@@ -221,11 +221,11 @@ const UserAccount = () => {
 
                             <div style={{ marginBottom: '20px' }}>
                                 <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px' }}>{t('userFullName')}</label>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     value={formData.fullName}
-                                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd', boxSizing: 'border-box' }} 
+                                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd', boxSizing: 'border-box' }}
                                 />
                                 <div style={{ fontSize: '12px', color: '#666', marginTop: '6px' }}>{t('userFullNameDesc')}</div>
                             </div>
@@ -233,7 +233,7 @@ const UserAccount = () => {
                             <div style={{ display: 'flex', gap: '15px', marginBottom: '25px' }}>
                                 <div style={{ width: '30%', position: 'relative' }}>
                                     <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px' }}>{t('userGender')}</label>
-                                    <div 
+                                    <div
                                         onClick={() => toggleDropdown('gender')}
                                         style={{ padding: '12px', border: '1px solid #ddd', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }}
                                     >
@@ -249,7 +249,7 @@ const UserAccount = () => {
                                             <span>{formData.day || '-'}</span>
                                             <span style={{ color: '#007CE8', transform: openDropdown === 'day' ? 'rotate(180deg)' : 'none', transition: '0.3s' }}><ArrowDownIcon /></span>
                                         </div>
-                                        {renderDropdown('day', Array.from({length: 31}, (_, i) => i + 1))}
+                                        {renderDropdown('day', Array.from({ length: 31 }, (_, i) => i + 1))}
                                     </div>
                                     <div style={{ flex: 1, position: 'relative' }}>
                                         <label style={{ display: 'block', height: '21px', marginBottom: '8px' }}></label>
@@ -257,7 +257,7 @@ const UserAccount = () => {
                                             <span>{formData.month || '-'}</span>
                                             <span style={{ color: '#007CE8', transform: openDropdown === 'month' ? 'rotate(180deg)' : 'none', transition: '0.3s' }}><ArrowDownIcon /></span>
                                         </div>
-                                        {renderDropdown('month', Array.from({length: 12}, (_, i) => i + 1))}
+                                        {renderDropdown('month', Array.from({ length: 12 }, (_, i) => i + 1))}
                                     </div>
                                     <div style={{ flex: 1, position: 'relative' }}>
                                         <label style={{ display: 'block', height: '21px', marginBottom: '8px' }}></label>
@@ -265,7 +265,7 @@ const UserAccount = () => {
                                             <span>{formData.year || '-'}</span>
                                             <span style={{ color: '#007CE8', transform: openDropdown === 'year' ? 'rotate(180deg)' : 'none', transition: '0.3s' }}><ArrowDownIcon /></span>
                                         </div>
-                                        {renderDropdown('year', Array.from({length: 127}, (_, i) => 2026 - i))}
+                                        {renderDropdown('year', Array.from({ length: 127 }, (_, i) => 2026 - i))}
                                     </div>
                                 </div>
                             </div>
@@ -316,7 +316,7 @@ const UserAccount = () => {
                             <h3 style={{ margin: 0, fontWeight: 'bold' }}>{t('userLinkedAccount')}</h3>
                             <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 15px 0' }}>{t('userLinkedDesc')}</p>
                             <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '0 -20px 0 -20px' }} />
-                            
+
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #eee' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                     <img src="/icons/facebook.svg" width="20" height="20" alt="Facebook" />

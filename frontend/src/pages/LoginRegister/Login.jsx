@@ -1,7 +1,7 @@
 // Login.jsx
 import React, { useState, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
-import { mockData } from '../../data/mockData';
+import { login } from '../../services/authService';
 
 export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToForgotPassword, onLoginSuccess }) {
   const { t } = useGlobal();
@@ -52,26 +52,26 @@ export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToF
     }, 300);
   };
 
-  const handleLogin = () => {
-    const user = mockData.users.find(
-      (u) => (u.email === email || u.phone === email) && u.password === password
-    );
-    if (user) {
+  const handleLogin = async () => {
+    try {
       setLoginError('');
-      if (rememberMe) {
-        localStorage.setItem('authUser', JSON.stringify(user));
-      } else {
-        sessionStorage.setItem('authUser', JSON.stringify(user));
-      }
-      if (onLoginSuccess) onLoginSuccess(user);
+      const data = await login(email, password);
+
+      // Đính kèm flag để Navbar biết dùng localStorage hay sessionStorage
+      const userData = { ...data, _rememberMe: rememberMe };
+
+      if (onLoginSuccess) onLoginSuccess(userData);
+
       setIsClosing(true);
       setTimeout(() => {
         setVisible(false);
         setIsClosing(false);
         onClose();
       }, 300);
-    } else {
-      setLoginError(t('loginError'));
+    } catch (error) {
+      console.error('Login error:', error);
+      const message = error.response?.data?.message || t('loginError');
+      setLoginError(message);
     }
   };
 
@@ -195,11 +195,11 @@ export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToF
 
             <div className="flex items-center justify-between mt-1">
               <label className="flex items-center space-x-2 cursor-pointer">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-3 h-3 sm:w-4 sm:h-4 rounded border-gray-300 text-[#F57323] focus:ring-[#F57323]" 
+                  className="w-3 h-3 sm:w-4 sm:h-4 rounded border-gray-300 text-[#F57323] focus:ring-[#F57323]"
                 />
                 <span className="text-xs sm:text-sm text-gray-600 font-medium">{t('rememberMe')}</span>
               </label>
@@ -225,14 +225,20 @@ export default function Login({ isOpen, onClose, onSwitchToRegister, onSwitchToF
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 sm:space-x-0">
-              <button className="w-full sm:flex-1 border border-gray-200 rounded-full py-2.5 sm:py-3 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors cursor-pointer">
+              <a
+                href="http://localhost:8080/oauth2/authorization/google"
+                className="w-full sm:flex-1 border border-gray-200 rounded-full py-2.5 sm:py-3 flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors cursor-pointer no-underline"
+              >
                 <img src="/Logo/google.svg" alt="Google" className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="font-bold text-[#0B1E43] text-xs sm:text-sm">Google</span>
-              </button>
-              <button className="w-full sm:flex-1 bg-[#1877F2] rounded-full py-2.5 sm:py-3 flex items-center justify-center space-x-2 hover:bg-[#166FE5] transition-colors cursor-pointer">
+              </a>
+              <a
+                href="http://localhost:8080/oauth2/authorization/facebook"
+                className="w-full sm:flex-1 bg-[#1877F2] rounded-full py-2.5 sm:py-3 flex items-center justify-center space-x-2 hover:bg-[#166FE5] transition-colors cursor-pointer no-underline"
+              >
                 <img src="/Logo/facebook.svg" alt="Facebook" className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="font-bold text-white text-xs sm:text-sm">Facebook</span>
-              </button>
+              </a>
             </div>
 
             <div className="mt-4 sm:mt-8 text-center text-xs sm:text-sm pb-2">

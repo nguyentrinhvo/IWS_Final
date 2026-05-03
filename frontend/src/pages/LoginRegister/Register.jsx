@@ -1,6 +1,7 @@
 // Register.jsx
 import React, { useState, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
+import { register } from '../../services/authService';
 
 export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToOtp, onRegisterSuccess }) {
   const { t } = useGlobal();
@@ -10,6 +11,9 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
   const [visible, setVisible] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -39,25 +43,32 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
     }, 300);
   };
 
-  const handleRegisterClick = () => {
-    setIsClosing(true);
-    const newUser = {
-      id: Date.now().toString(),
-      fullName: fullName || "New Member",
-      email: email || "member@hanuvivu.com"
-    };
+  const [registerError, setRegisterError] = useState('');
 
-    setTimeout(() => {
-      setVisible(false);
-      setIsClosing(false);
-      onClose();
-      if (onRegisterSuccess) {
-        onRegisterSuccess(newUser);
-      }
-      if (onSwitchToOtp) {
-        onSwitchToOtp();
-      }
-    }, 300);
+  const handleRegisterClick = async () => {
+    try {
+      setRegisterError('');
+      const data = await register({
+        fullName,
+        email,
+        phone,
+        password,
+      });
+
+      setIsClosing(true);
+      setTimeout(() => {
+        setVisible(false);
+        setIsClosing(false);
+        onClose();
+        if (onRegisterSuccess) {
+          onRegisterSuccess(data); 
+        }
+      }, 300);
+    } catch (error) {
+      console.error('Register error:', error);
+      const message = error.response?.data?.message || t('registerError');
+      setRegisterError(message);
+    }
   };
 
   if (!visible) return null;
@@ -92,24 +103,9 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
         onClick={handleClose}
       >
         <div
-          className={`w-full max-w-[768px] h-auto max-h-[calc(100vh-2rem)] bg-white rounded-3xl relative flex flex-col md:flex-row overflow-hidden shadow-2xl ${isClosing ? 'modal-out' : 'modal-in'}`}
+          className={`w-full max-w-[500px] h-auto max-h-[calc(100vh-2rem)] bg-white rounded-3xl relative flex flex-col overflow-hidden shadow-2xl ${isClosing ? 'modal-out' : 'modal-in'}`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className="hidden md:block w-[300px] h-full flex-shrink-0 relative"
-            style={{
-              backgroundImage: `url('https://png.pngtree.com/background/20241009/original/pngtree-exploring-with-the-golden-compass-and-map-a-journey-of-travel-picture-image_10809502.jpg')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-8 left-6 right-6 text-white">
-              <h3 className="text-2xl font-black uppercase leading-tight mb-2">{t('registerImageTitle')}</h3>
-              <p className="text-sm text-white/80 leading-relaxed">{t('registerImageSubtitle')}</p>
-            </div>
-          </div>
-
           <div className="flex-1 flex flex-col px-6 py-6 sm:px-8 sm:py-8 overflow-y-auto">
             <button
               onClick={handleClose}
@@ -165,6 +161,8 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                     name="registerPhone"
                     autoComplete="off"
                     placeholder={t('mobilePlaceholder')}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 px-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                   />
                 </div>
@@ -181,6 +179,8 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                       name="registerPassword"
                       autoComplete="new-password"
                       placeholder="........"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 pl-4 pr-10 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                     />
                     <div
@@ -210,6 +210,8 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                       name="registerConfirmPassword"
                       autoComplete="new-password"
                       placeholder="........"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       className="w-full bg-[#F4F7FF] rounded-xl py-2.5 sm:py-3 pl-4 pr-10 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#F57323]/50 transition-all text-[#0B1E43]"
                     />
                     <div
@@ -231,7 +233,11 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                 </div>
               </div>
 
-              <label className="flex items-start space-x-2.5 cursor-pointer mt-1">
+              {registerError && (
+                <p className="text-red-500 text-xs sm:text-sm font-medium mt-2">{registerError}</p>
+              )}
+
+              <label className="flex items-start space-x-2.5 cursor-pointer mt-4">
                 <input type="checkbox" className="w-4 h-4 mt-0.5 rounded border-gray-300 text-[#F57323] focus:ring-[#F57323] flex-shrink-0" />
                 <span className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {t('agreeTerms1')}{' '}
@@ -240,7 +246,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                 </span>
               </label>
 
-              <button 
+              <button
                 onClick={handleRegisterClick}
                 className="w-full bg-gradient-to-r from-[#9F4200] to-[#F57323] text-white font-bold py-3 sm:py-3.5 rounded-full shadow-lg shadow-orange-500/30 hover:opacity-90 transition-opacity cursor-pointer text-sm sm:text-base mt-2"
               >

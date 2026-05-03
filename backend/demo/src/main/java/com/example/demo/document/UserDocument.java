@@ -24,11 +24,15 @@ public class UserDocument {
     @Indexed
     private String fullName;
     private String passwordHash;
+    private String provider;         // "google" | "facebook" | "local"
     private String phoneNumber;
     private String avatarUrl;
     private String role;             // "customer" | "admin"
     private Boolean isLocked;
     private String language;         // "vi" | "en"
+    private String gender;           // "Nam" | "Nữ"
+    private Date dateOfBirth;
+    private String city;
     private Date createdAt;
     private Date updatedAt;
 }

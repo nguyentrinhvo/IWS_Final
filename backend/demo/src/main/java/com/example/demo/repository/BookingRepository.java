@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface BookingRepository extends MongoRepository<BookingDocument, String> {
     Page<BookingDocument> findByUserId(String userId, Pageable pageable);
     Page<BookingDocument> findByUserIdAndServiceType(String userId, String serviceType, Pageable pageable);
+    Page<BookingDocument> findByUserIdAndStatus(String userId, String status, Pageable pageable);
+    Page<BookingDocument> findByUserIdAndServiceTypeAndStatus(String userId, String serviceType, String status, Pageable pageable);
 
     Page<BookingDocument> findByStatus(String status, Pageable pageable);
     Page<BookingDocument> findByServiceTypeAndStatus(String serviceType, String status, Pageable pageable);

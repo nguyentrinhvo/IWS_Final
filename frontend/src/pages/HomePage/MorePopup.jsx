@@ -1,4 +1,3 @@
-// src/pages/HomePage/MorePopup.jsx
 import React from 'react';
 import {
   AttractionsIcon,
@@ -9,10 +8,9 @@ import {
   CulinaryExperiencesIcon,
   PlaygroundIcon,
   EventsIcon
-} from './SearchIcons'; // adjust path to your SearchIcons.jsx
+} from './SearchIcons';
 
 const MorePopup = ({ isOpen, onClose, t }) => {
-  // Data (copied from original)
   const activitiesToTryItems = [
     { id: 'beautySpa', label: t('beautySpa'), icon: 'spaRelaxation' },
     { id: 'playground', label: t('playground'), icon: 'playground' },
@@ -50,9 +48,8 @@ const MorePopup = ({ isOpen, onClose, t }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-      }`}
+      className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}
     >
       <div
         className="absolute inset-0 bg-black/50 transition-opacity"
@@ -60,9 +57,8 @@ const MorePopup = ({ isOpen, onClose, t }) => {
       ></div>
 
       <div
-        className={`bg-white rounded-3xl w-[1000px] h-[500px] relative flex flex-col shadow-2xl transition-all duration-300 ease-out overflow-hidden ${
-          isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-20 opacity-0 scale-95'
-        }`}
+        className={`bg-white rounded-3xl w-[1000px] h-[500px] relative flex flex-col shadow-2xl transition-all duration-300 ease-out overflow-hidden ${isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-20 opacity-0 scale-95'
+          }`}
       >
         <button
           onClick={onClose}

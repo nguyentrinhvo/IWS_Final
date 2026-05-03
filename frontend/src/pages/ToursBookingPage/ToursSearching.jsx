@@ -1,4 +1,3 @@
-// File 6: ToursSearching.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
@@ -68,7 +67,7 @@ export default function ToursSearching() {
   const handlePrevMonth = () => {
     const currentRealMonth = new Date();
     if (calendarCurrentMonth.getFullYear() === currentRealMonth.getFullYear() &&
-        calendarCurrentMonth.getMonth() === currentRealMonth.getMonth()) {
+      calendarCurrentMonth.getMonth() === currentRealMonth.getMonth()) {
       return;
     }
     setCalendarCurrentMonth(new Date(calendarCurrentMonth.getFullYear(), calendarCurrentMonth.getMonth() - 1, 1));
@@ -107,13 +106,12 @@ export default function ToursSearching() {
               setIsTourDateOpen(false);
             }
           }}
-          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${
-            isPast
+          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${isPast
               ? 'text-[#180B51]/30 cursor-not-allowed'
               : isSelected
-              ? 'bg-[#180B51] text-white cursor-pointer'
-              : 'text-[#180B51] hover:bg-gray-100 cursor-pointer'
-          }`}
+                ? 'bg-[#180B51] text-white cursor-pointer'
+                : 'text-[#180B51] hover:bg-gray-100 cursor-pointer'
+            }`}
         >
           {dayNum}
         </div>
@@ -172,7 +170,7 @@ export default function ToursSearching() {
   return (
     <div className="w-full lg:h-[90px] h-auto bg-[#f8f9fa] lg:bg-white shadow-md flex justify-center items-center relative z-40 py-4 lg:py-0">
       <div className="w-full lg:max-w-[1320px] px-4 md:px-6 lg:px-[15px] flex flex-col lg:flex-row items-center gap-3 lg:gap-3 h-full lg:py-4">
-        
+
         <div
           ref={tourDestRef}
           className="w-full h-[48px] lg:h-full lg:flex-[1.5] border-[3px] border-[#D9D9D9] rounded-xl bg-white relative flex items-center px-3 gap-2 cursor-pointer shadow-sm hover:shadow-md transition-shadow shrink-0"
@@ -189,9 +187,8 @@ export default function ToursSearching() {
             className="w-full h-full bg-transparent outline-none text-[#180B51] text-base font-medium placeholder-[#180B51]/40 cursor-pointer truncate"
           />
           <div
-            className={`absolute top-[110%] left-0 w-full md:w-[400px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${
-              isTourDestOpen ? 'max-h-[350px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
-            }`}
+            className={`absolute top-[110%] left-0 w-full md:w-[400px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${isTourDestOpen ? 'max-h-[350px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
+              }`}
           >
             <div className="p-4" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center gap-2 mb-4 text-[#007BFF]">
@@ -236,19 +233,17 @@ export default function ToursSearching() {
             {tourDate ? formatDate(tourDate, locale) : t('flexible')}
           </span>
           <div
-            className={`absolute top-[110%] left-0 w-full md:w-[600px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${
-              isTourDateOpen ? 'max-h-[400px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
-            }`}
+            className={`absolute top-[110%] left-0 w-full md:w-[600px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${isTourDateOpen ? 'max-h-[400px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
+              }`}
           >
             <div className="p-4 flex flex-col" onClick={(e) => e.stopPropagation()}>
               <div className="flex justify-between items-center mb-4 px-4">
                 <button
-                  className={`p-2 rounded-full transition-colors ${
-                    calendarCurrentMonth.getFullYear() === new Date().getFullYear() &&
-                    calendarCurrentMonth.getMonth() === new Date().getMonth()
+                  className={`p-2 rounded-full transition-colors ${calendarCurrentMonth.getFullYear() === new Date().getFullYear() &&
+                      calendarCurrentMonth.getMonth() === new Date().getMonth()
                       ? 'text-gray-300 cursor-not-allowed'
                       : 'text-[#180B51] hover:bg-gray-100'
-                  }`}
+                    }`}
                   onClick={handlePrevMonth}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -290,9 +285,8 @@ export default function ToursSearching() {
           <ToursDepartureIcon className="w-6 h-6 text-[#007BFF] shrink-0" />
           <span className="text-[#180B51] text-base font-medium truncate whitespace-nowrap">{tourOrigin}</span>
           <div
-            className={`absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${
-              isTourOriginOpen ? 'max-h-[300px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
-            }`}
+            className={`absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${isTourOriginOpen ? 'max-h-[300px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
+              }`}
           >
             <div className="p-2 max-h-[264px] overflow-y-auto custom_scrollbar flex flex-col gap-1" onClick={(e) => e.stopPropagation()}>
               {tourOriginsMock.map((origin, idx) => (
@@ -322,18 +316,16 @@ export default function ToursSearching() {
             {tourAdults} {t('adultsDisplay')}, {tourChildren} {tourChildren > 1 ? t('childDisplayPlural') : t('childDisplay')}
           </span>
           <div
-            className={`absolute -top-12 left-0 w-full md:w-[200px] bg-black text-white p-3 rounded-md shadow-md text-xs z-[60] transition-opacity duration-300 pointer-events-none ${
-              showGuestLimitMsg ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute -top-12 left-0 w-full md:w-[200px] bg-black text-white p-3 rounded-md shadow-md text-xs z-[60] transition-opacity duration-300 pointer-events-none ${showGuestLimitMsg ? 'opacity-100' : 'opacity-0'
+              }`}
           >
             {t('onlySevenPassengersAllowed')}
           </div>
           <div
-            className={`absolute top-[110%] right-0 md:left-0 w-full md:w-[320px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl transition-all duration-300 origin-top ${
-              isTourGuestsOpen
+            className={`absolute top-[110%] right-0 md:left-0 w-full md:w-[320px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl transition-all duration-300 origin-top ${isTourGuestsOpen
                 ? 'max-h-[1000px] opacity-100 border-opacity-100 overflow-visible'
                 : 'max-h-0 opacity-0 border-opacity-0 overflow-hidden'
-            }`}
+              }`}
           >
             <div className="p-4 flex flex-col gap-4 min-h-fit" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between">
@@ -402,9 +394,8 @@ export default function ToursSearching() {
                       >
                         <span className="truncate">{childAges[i]} {t('yearsOld')}</span>
                         <svg
-                          className={`w-4 h-4 text-[#180B51] transition-transform shrink-0 ${
-                            openAgeIndex === i ? 'rotate-180' : ''
-                          }`}
+                          className={`w-4 h-4 text-[#180B51] transition-transform shrink-0 ${openAgeIndex === i ? 'rotate-180' : ''
+                            }`}
                           fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />

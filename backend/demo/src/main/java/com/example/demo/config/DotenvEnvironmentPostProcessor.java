@@ -23,8 +23,16 @@ public class DotenvEnvironmentPostProcessor
         System.out.println(">>> [DotenvLoader] Working directory: " + System.getProperty("user.dir"));
 
         Dotenv dotenv = Dotenv.configure()
+                .directory("./backend/demo")
                 .ignoreIfMissing()
                 .load();
+
+        if (dotenv.entries(Dotenv.Filter.DECLARED_IN_ENV_FILE).isEmpty()) {
+            // Nếu không tìm thấy trong backend/demo, thử ở root mặc định
+            dotenv = Dotenv.configure()
+                    .ignoreIfMissing()
+                    .load();
+        }
 
         Map<String, Object> props = new HashMap<>();
 

@@ -1,7 +1,7 @@
 // src/pages/ToursPage/ToursPage.jsx
 import React from 'react';
-import Navbar from '../../layouts/Navbar';
-import Footer from '../../layouts/Footer';
+import Navbar from '../../layouts/UserLayout/Navbar';
+import Footer from '../../layouts/UserLayout/Footer';
 import ToursForYou from './ToursForYou';
 import BestTourDeals from './BestTourDeals';
 import ToursDestination from './ToursDestination';

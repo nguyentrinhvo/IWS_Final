@@ -16,7 +16,6 @@ import {
 } from '../../utils/SearchUtils';
 
 const ToursSearch = ({ t, locale }) => {
-  // ---------- State ----------
   const [tourDestination, setTourDestination] = useState('');
   const [isTourDestOpen, setIsTourDestOpen] = useState(false);
   const tourDestRef = useRef(null);
@@ -38,7 +37,6 @@ const ToursSearch = ({ t, locale }) => {
   const [openAgeIndex, setOpenAgeIndex] = useState(null);
   const tourGuestsRef = useRef(null);
 
-  // Mock destinations
   const tourDestinationsMock = [
     { id: 'china', label: t('china'), count: 120, image: 'https://images.unsplash.com/photo-1508804185872-d7bad1000cb7?auto=format&fit=crop&w=150&h=100' },
     { id: 'singaporeDest', label: t('singaporeDest'), count: 85, image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=150&h=100' },
@@ -59,7 +57,6 @@ const ToursSearch = ({ t, locale }) => {
     t('thailand'), t('laos'), t('cambodia'), t('singapore'), t('hue'), t('hoiAn')
   ];
 
-  // ---------- Handlers ----------
   const handleAddGuest = (type, amount) => {
     const total = tourAdults + tourChildren;
     if (amount > 0 && total >= 7) {
@@ -80,7 +77,7 @@ const ToursSearch = ({ t, locale }) => {
   const handlePrevMonth = () => {
     const currentRealMonth = new Date();
     if (calendarCurrentMonth.getFullYear() === currentRealMonth.getFullYear() &&
-        calendarCurrentMonth.getMonth() === currentRealMonth.getMonth()) {
+      calendarCurrentMonth.getMonth() === currentRealMonth.getMonth()) {
       return;
     }
     setCalendarCurrentMonth(new Date(calendarCurrentMonth.getFullYear(), calendarCurrentMonth.getMonth() - 1, 1));
@@ -119,13 +116,12 @@ const ToursSearch = ({ t, locale }) => {
               setIsTourDateOpen(false);
             }
           }}
-          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${
-            isPast
+          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${isPast
               ? 'text-[#180B51]/30 cursor-not-allowed'
               : isSelected
-              ? 'bg-[#180B51] text-white cursor-pointer'
-              : 'text-[#180B51] hover:bg-gray-100 cursor-pointer'
-          }`}
+                ? 'bg-[#180B51] text-white cursor-pointer'
+                : 'text-[#180B51] hover:bg-gray-100 cursor-pointer'
+            }`}
         >
           {dayNum}
         </div>
@@ -167,7 +163,6 @@ const ToursSearch = ({ t, locale }) => {
     setCalendarCurrentMonth(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1));
   }, []);
 
-  // ---------- JSX ----------
   return (
     <div className="w-full max-w-[1403px] min-w-min mt-[67px] h-auto lg:h-[73px]">
       <div className="tours_input_wrapper flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-4 lg:gap-0 p-3 lg:p-0 lg:h-full lg:border-[5px] lg:border-[#D9D9D9] lg:rounded-xl relative lg:bg-white w-full">
@@ -192,9 +187,8 @@ const ToursSearch = ({ t, locale }) => {
           />
 
           <div
-            className={`tour_destination_dropdown absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${
-              isTourDestOpen ? 'max-h-[350px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
-            }`}
+            className={`tour_destination_dropdown absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${isTourDestOpen ? 'max-h-[350px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
+              }`}
           >
             <div className="p-4" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center gap-2 mb-4 text-[#007BFF]">
@@ -244,19 +238,17 @@ const ToursSearch = ({ t, locale }) => {
           </span>
 
           <div
-            className={`tour_date_dropdown absolute top-[110%] left-0 w-full md:w-[600px] max-h-[80vh] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-y-auto transition-all duration-300 origin-top ${
-              isTourDateOpen ? 'opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0 overflow-hidden'
-            }`}
+            className={`tour_date_dropdown absolute top-[110%] left-0 w-full md:w-[600px] max-h-[80vh] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-y-auto transition-all duration-300 origin-top ${isTourDateOpen ? 'opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0 overflow-hidden'
+              }`}
           >
             <div className="p-4 flex flex-col" onClick={(e) => e.stopPropagation()}>
               <div className="flex justify-between items-center mb-4 px-4">
                 <button
-                  className={`p-2 rounded-full transition-colors ${
-                    calendarCurrentMonth.getFullYear() === new Date().getFullYear() &&
-                    calendarCurrentMonth.getMonth() === new Date().getMonth()
+                  className={`p-2 rounded-full transition-colors ${calendarCurrentMonth.getFullYear() === new Date().getFullYear() &&
+                      calendarCurrentMonth.getMonth() === new Date().getMonth()
                       ? 'text-gray-300 cursor-not-allowed'
                       : 'text-[#180B51] hover:bg-gray-100'
-                  }`}
+                    }`}
                   onClick={handlePrevMonth}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -303,9 +295,8 @@ const ToursSearch = ({ t, locale }) => {
           <span className="text-[#180B51] text-lg font-medium truncate">{tourOrigin}</span>
 
           <div
-            className={`tour_origin_dropdown absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${
-              isTourOriginOpen ? 'max-h-[300px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
-            }`}
+            className={`tour_origin_dropdown absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top ${isTourOriginOpen ? 'max-h-[300px] opacity-100 border-opacity-100' : 'max-h-0 opacity-0 border-opacity-0'
+              }`}
           >
             <div className="p-2 max-h-[264px] overflow-y-auto custom_scrollbar flex flex-col gap-1" onClick={(e) => e.stopPropagation()}>
               {tourOriginsMock.map((origin, idx) => (
@@ -340,19 +331,17 @@ const ToursSearch = ({ t, locale }) => {
           </span>
 
           <div
-            className={`absolute -top-12 lg:top-0 left-0 lg:left-[calc(100%+16px)] w-[200px] bg-black text-white p-3 rounded-md shadow-md text-xs z-[60] transition-opacity duration-300 pointer-events-none ${
-              showGuestLimitMsg ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute -top-12 lg:top-0 left-0 lg:left-[calc(100%+16px)] w-[200px] bg-black text-white p-3 rounded-md shadow-md text-xs z-[60] transition-opacity duration-300 pointer-events-none ${showGuestLimitMsg ? 'opacity-100' : 'opacity-0'
+              }`}
           >
             {t('onlySevenPassengersAllowed')}
           </div>
 
           <div
-            className={`tour_guests_dropdown absolute top-[110%] right-0 lg:left-0 w-full lg:w-[320px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl transition-all duration-300 origin-top ${
-              isTourGuestsOpen
+            className={`tour_guests_dropdown absolute top-[110%] right-0 lg:left-0 w-full lg:w-[320px] z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl transition-all duration-300 origin-top ${isTourGuestsOpen
                 ? 'max-h-[1000px] opacity-100 border-opacity-100 overflow-visible'
                 : 'max-h-0 opacity-0 border-opacity-0 overflow-hidden'
-            }`}
+              }`}
           >
             <div className="p-4 flex flex-col gap-4 min-h-fit" onClick={(e) => e.stopPropagation()}>
               {/* Adult */}
@@ -426,9 +415,8 @@ const ToursSearch = ({ t, locale }) => {
                       >
                         <span className="truncate">{childAges[i]} {t('yearsOld')}</span>
                         <svg
-                          className={`w-4 h-4 text-[#180B51] transition-transform shrink-0 ${
-                            openAgeIndex === i ? 'rotate-180' : ''
-                          }`}
+                          className={`w-4 h-4 text-[#180B51] transition-transform shrink-0 ${openAgeIndex === i ? 'rotate-180' : ''
+                            }`}
                           fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />

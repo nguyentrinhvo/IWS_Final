@@ -59,7 +59,7 @@ const VoucherItem = ({ icon, percent, title, description, popupData, onOpenPopup
   };
 
   return (
-    <div 
+    <div
       className="w-full border border-[#D9D9D9] rounded-2xl px-6 py-3 relative bg-white flex flex-col h-full"
       style={cardShadow}
     >
@@ -68,7 +68,7 @@ const VoucherItem = ({ icon, percent, title, description, popupData, onOpenPopup
           {icon}
         </div>
         <span className="text-[22px] font-bold text-[#180B51]">{percent}</span>
-        
+
         <div className="ml-auto cursor-pointer hover:opacity-80 transition-opacity" onClick={() => onOpenPopup(popupData)}>
           <InfoIcon />
         </div>
@@ -81,8 +81,8 @@ const VoucherItem = ({ icon, percent, title, description, popupData, onOpenPopup
 
       <div className="relative w-full flex items-center my-4">
         <div className="border-t-2 border-dashed border-[#D9D9D9] w-full"></div>
-        <div className="absolute top-1/2 -translate-y-1/2 -left-[25px] w-[18px] h-[36px] bg-[#fafafa] rounded-r-full border-y border-r border-[#D9D9D9] z-10 hidden lg:block"></div>
-        <div className="absolute top-1/2 -translate-y-1/2 -right-[25px] w-[18px] h-[36px] bg-[#fafafa] rounded-l-full border-y border-l border-[#D9D9D9] z-10 hidden lg:block"></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -left-[25px] w-[18px] h-[36px] bg-[#fafafa] rounded-r-full border-y border-r border-[#D9D9D9] z-10 hidden xl:block"></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -right-[25px] w-[18px] h-[36px] bg-[#fafafa] rounded-l-full border-y border-l border-[#D9D9D9] z-10 hidden xl:block"></div>
       </div>
 
       <div className="flex items-center justify-between mt-auto">
@@ -90,7 +90,7 @@ const VoucherItem = ({ icon, percent, title, description, popupData, onOpenPopup
           <TicketIcon />
           <span className="font-bold text-[#180B51]">TVDKMOI</span>
         </div>
-        <button 
+        <button
           onClick={handleCopy}
           className="px-4 py-1.5 bg-[#D1F0FF] text-[#181BAE] font-bold rounded-full text-[14px] hover:bg-opacity-80 transition-all cursor-pointer"
         >
@@ -155,7 +155,7 @@ export default function NewUserExclusive() {
       popupData: { type: 'flight', titleKey: 'flightTitlePopup' },
       icon: (
         <svg fill="#180B51" width="35px" height="35px" viewBox="0 0 416.327 416.327">
-           <path d="M412.676,157.634l-37.951-37.951c-4.514-4.515-11.707-4.889-16.666-0.869c-17.146,13.902-41.865,12.594-57.503-3.042 c-15.636-15.636-16.941-40.356-3.042-57.502c4.021-4.959,3.646-12.153-0.867-16.667L258.695,3.652c-4.868-4.868-12.764-4.869-17.631,0 L3.651,241.064c-4.869,4.868-4.869,12.763,0,17.631l37.951,37.95c0.004,0.005,0.009,0.01,0.01,0.013c4.868,4.869,12.763,4.869,17.631,0 c0.453-0.454,0.865-0.935,1.235-1.437c0.851-1.021,1.744-2.001,2.663-2.921c16.787-16.786,44.098-16.786,60.884-0.002 c16.785,16.786,16.785,44.1-0.001,60.884c-1.056,1.058-2.194,2.079-3.381,3.042c-2.744,2.227-4.414,5.51-4.599,9.035 c-0.184,3.527,1.138,6.967,3.636,9.464l37.949,37.951c4.869,4.869,12.764,4.869,17.632,0l237.41-237.41 C417.545,170.397,417.544,162.503,412.676,157.634z M334.117,203.36c-5.076,5.077-13.31,5.077-18.385,0L212.968,100.598 c-5.076-5.077-5.076-13.308,0-18.385s13.309-5.077,18.385,0l102.767,102.765C339.194,190.055,339.194,198.286,334.117,203.36z" />
+          <path d="M412.676,157.634l-37.951-37.951c-4.514-4.515-11.707-4.889-16.666-0.869c-17.146,13.902-41.865,12.594-57.503-3.042 c-15.636-15.636-16.941-40.356-3.042-57.502c4.021-4.959,3.646-12.153-0.867-16.667L258.695,3.652c-4.868-4.868-12.764-4.869-17.631,0 L3.651,241.064c-4.869,4.868-4.869,12.763,0,17.631l37.951,37.95c0.004,0.005,0.009,0.01,0.01,0.013c4.868,4.869,12.763,4.869,17.631,0 c0.453-0.454,0.865-0.935,1.235-1.437c0.851-1.021,1.744-2.001,2.663-2.921c16.787-16.786,44.098-16.786,60.884-0.002 c16.785,16.786,16.785,44.1-0.001,60.884c-1.056,1.058-2.194,2.079-3.381,3.042c-2.744,2.227-4.414,5.51-4.599,9.035 c-0.184,3.527,1.138,6.967,3.636,9.464l37.949,37.951c4.869,4.869,12.764,4.869,17.632,0l237.41-237.41 C417.545,170.397,417.544,162.503,412.676,157.634z M334.117,203.36c-5.076,5.077-13.31,5.077-18.385,0L212.968,100.598 c-5.076-5.077-5.076-13.308,0-18.385s13.309-5.077,18.385,0l102.767,102.765C339.194,190.055,339.194,198.286,334.117,203.36z" />
         </svg>
       )
     },
@@ -221,19 +221,19 @@ export default function NewUserExclusive() {
       </div>
 
       <div className="relative w-full group">
-        <div className="overflow-x-auto lg:overflow-hidden pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          <div 
-            className="flex transition-transform duration-500 ease-in-out w-max lg:w-full gap-4 lg:gap-[24px]"
-            style={{ 
-              transform: typeof window !== 'undefined' && window.innerWidth >= 1024 
-                ? `translateX(calc(-${currentIndex} * (calc((100% - 48px) / 3) + 24px)))` 
+        <div className="overflow-x-auto xl:overflow-hidden pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div
+            className="flex transition-transform duration-500 ease-in-out w-max xl:w-full gap-4 xl:gap-[24px]"
+            style={{
+              transform: typeof window !== 'undefined' && window.innerWidth >= 1280
+                ? `translateX(calc(-${currentIndex} * (calc((100% - 48px) / 3) + 24px)))`
                 : 'none'
             }}
           >
             {vouchers.map((v) => (
-              <div 
-                key={v.id} 
-                className="w-[calc((100vw-48px)/1.5)] md:w-[calc((100vw-80px)/2.5)] lg:w-[calc((100%-48px)/3)] shrink-0 snap-center lg:snap-align-none"
+              <div
+                key={v.id}
+                className="w-[calc((100vw-48px)/1.5)] md:w-[calc((100vw-80px)/2.5)] xl:w-[calc((100%-48px)/3)] shrink-0 snap-center xl:snap-align-none"
               >
                 <VoucherItem {...v} onOpenPopup={openPopup} />
               </div>
@@ -242,18 +242,18 @@ export default function NewUserExclusive() {
         </div>
 
         {currentIndex > 0 && (
-          <button 
+          <button
             onClick={handlePrev}
-            className="absolute left-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center shadow-md z-20 hover:bg-gray-100 hidden lg:flex"
+            className="absolute left-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center shadow-md z-20 hover:bg-gray-100 hidden xl:flex"
           >
             <ArrowLeft />
           </button>
         )}
-        
+
         {currentIndex < vouchers.length - 3 && (
-          <button 
+          <button
             onClick={handleNext}
-            className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center shadow-md z-20 hover:bg-gray-100 hidden lg:flex"
+            className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full items-center justify-center shadow-md z-20 hover:bg-gray-100 hidden xl:flex"
           >
             <ArrowRight />
           </button>
@@ -276,9 +276,9 @@ export default function NewUserExclusive() {
               <p className="text-center italic text-[13px] text-gray-600 mt-1 w-full">
                 {t('popupSubtitle')}
               </p>
-              
+
               <div className="w-full border-t border-gray-300 my-4"></div>
-              
+
               <div className="flex flex-col gap-2 w-full">
                 {activePopupData.terms.map((term, index) => (
                   <div key={index} className="flex items-start gap-2 text-[14px] text-black w-full">
@@ -288,7 +288,7 @@ export default function NewUserExclusive() {
                 ))}
               </div>
             </div>
-            
+
             <div className="p-4 w-full bg-white rounded-t-xl" style={{ boxShadow: "0 -4px 6px -1px rgba(0, 0, 0, 0.05)" }}>
               <button
                 onClick={handleGlobalCopy}

@@ -26,6 +26,18 @@
     "users": {
       "title": "Users Management",
       "description": "This is the users management page."
+    },
+    "tours": {
+      "title": "Tours Management",
+      "description": "This is the tour management page."
+    },
+    "payments": {
+      "title": "Payment Management",
+      "description": "Track, manage, and reconcile all payment transactions."
+    },
+    "flights": {
+      "title": "Flights Management",
+      "description": "Manage airlines, flights, routes, and seat availability."
     }
   }
 }

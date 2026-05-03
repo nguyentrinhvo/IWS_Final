@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
 import ToursSearch from './ToursSearch';
 import HotelsSearch from './HotelsSearch';
@@ -11,6 +11,8 @@ export default function SearchHomepage() {
   const { t, locale } = useGlobal();
   const [activeCategory, setActiveCategory] = useState('tours');
   const [isMorePopupOpen, setIsMorePopupOpen] = useState(false);
+  const tabsRef = useRef([]);
+  const [pillStyle, setPillStyle] = useState({ left: 0, top: 0, width: 0, height: 0, opacity: 0 });
 
   const categories = [
     {
@@ -72,6 +74,29 @@ export default function SearchHomepage() {
     },
   ];
 
+  useEffect(() => {
+    const updatePillPosition = () => {
+      const activeIndex = categories.findIndex((c) => c.id === activeCategory);
+      const activeElement = tabsRef.current[activeIndex];
+
+      if (activeElement && activeCategory !== 'more') {
+        setPillStyle({
+          left: activeElement.offsetLeft,
+          top: activeElement.offsetTop,
+          width: activeElement.offsetWidth,
+          height: activeElement.offsetHeight,
+          opacity: 1,
+        });
+      } else {
+        setPillStyle((prev) => ({ ...prev, opacity: 0 }));
+      }
+    };
+
+    updatePillPosition();
+    window.addEventListener('resize', updatePillPosition);
+    return () => window.removeEventListener('resize', updatePillPosition);
+  }, [activeCategory, t, locale]);
+
   return (
     <div className="search_homepage_container relative w-full flex flex-col items-center min-h-[647px] mb-[50px] md:overflow-visible">
       <div
@@ -84,7 +109,18 @@ export default function SearchHomepage() {
       </h1>
 
       <div className="categories_bar_wrapper w-[95%] md:w-auto xl:w-fit xl:mx-auto h-auto xl:h-[56px] bg-[#D9D9D9] rounded-[24px] xl:rounded-full flex flex-nowrap items-center gap-1 px-2 py-3 xl:py-0 shadow-[0_4px_4px_rgba(0,0,0,0.25)] relative z-20 xl:justify-center">
-        {categories.map((cat) => {
+        <div
+          className="absolute bg-white border-2 border-white rounded-full transition-all duration-300 ease-in-out z-0"
+          style={{
+            left: pillStyle.left,
+            top: pillStyle.top,
+            width: pillStyle.width,
+            height: pillStyle.height,
+            opacity: pillStyle.opacity,
+          }}
+        />
+
+        {categories.map((cat, index) => {
           let visibility = '';
           if (cat.id === 'thingsToDo') {
             visibility = 'hidden md:flex';
@@ -96,6 +132,7 @@ export default function SearchHomepage() {
           return (
             <div
               key={cat.id}
+              ref={(el) => (tabsRef.current[index] = el)}
               onClick={() => {
                 if (cat.id === 'more') {
                   setIsMorePopupOpen(true);
@@ -103,11 +140,10 @@ export default function SearchHomepage() {
                   setActiveCategory(cat.id);
                 }
               }}
-              className={`category_item items-center gap-2 px-2 sm:px-3 md:px-4 py-1 rounded-full border-2 transition-all cursor-pointer text-xs sm:text-sm md:text-base xl:text-lg ${visibility} ${
-                activeCategory === cat.id && cat.id !== 'more'
-                  ? 'bg-white border-white text-[#7C70EB] opacity-100'
-                  : 'bg-transparent border-transparent text-black opacity-70 hover:opacity-100 hover:border-black'
-              }`}
+              className={`category_item relative z-10 items-center gap-2 px-2 sm:px-3 md:px-4 py-1 rounded-full border-2 transition-all cursor-pointer text-xs sm:text-sm md:text-base xl:text-lg ${visibility} ${activeCategory === cat.id && cat.id !== 'more'
+                  ? 'border-transparent text-[#7C70EB] opacity-100'
+                  : 'border-transparent text-black opacity-70 hover:opacity-100 hover:border-black'
+                }`}
             >
               {cat.icon}
               <span className="font-semibold whitespace-nowrap">{cat.label}</span>

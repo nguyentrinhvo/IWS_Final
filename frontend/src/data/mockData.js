@@ -289,7 +289,7 @@ const generateMockData = () => {
 
       // Cars & Trains
       const type = i % 2 === 0 ? "Train" : "Car";
-      const title = type === "Train" 
+      const title = type === "Train"
         ? `Tàu ${randomItem(trainTypes)} - Hà Nội đi ${loc}`
         : `Xe ${randomItem(carTypes)} - Xe riêng đi ${loc}`;
       data.carsTrains.push({
@@ -301,10 +301,10 @@ const generateMockData = () => {
         duration: type === "Train" ? `${randomInt(6, 14)}h${randomInt(0, 50)}m` : `${randomInt(4, 10)}h${randomInt(0, 30)}m`,
         departure: `Ga Hà Nội / Nội thành`,
         destination: loc,
-        features: type === "Train" 
+        features: type === "Train"
           ? ["Điều hòa", "Giường nằm mềm", "Toa ăn", "Nhà vệ sinh"]
           : ["Máy lạnh", "Đưa đón tận nơi", "Tài xế thân thiện", "Nước suối miễn phí"],
-        seatTypes: type === "Train" 
+        seatTypes: type === "Train"
           ? [{ name: "Ghế cứng", price: randomPrice(100, 300) }, { name: "Ghế mềm", price: randomPrice(300, 600) }, { name: "Giường nằm", price: randomPrice(600, 1200) }]
           : [{ name: "Xe 4 chỗ", price: randomPrice(500, 1000) }, { name: "Xe 7 chỗ", price: randomPrice(800, 1500) }, { name: "Xe 16 chỗ", price: randomPrice(1200, 2000) }],
         image: `https://picsum.photos/seed/transport_${idSuffix}/800/600`
@@ -362,7 +362,7 @@ export const toursForYouData = [
     location: { titleKey: "hoChiMinhTitle", image: "https://picsum.photos/seed/hcm/800/600" },
     tours: Array.from({ length: 6 }, (_, i) => ({
       id: `hcm_t_${i}`,
-      titleKey: `tour_hcm_${i+1}`,
+      titleKey: `tour_hcm_${i + 1}`,
       image: `https://picsum.photos/seed/hcm_t_${i}/800/600`,
       rating: (4.2 + Math.random() * 0.7).toFixed(1),
       reviewsCount: Math.floor(Math.random() * 1000) + 50,
@@ -374,7 +374,7 @@ export const toursForYouData = [
     location: { titleKey: "shanghai", image: "https://picsum.photos/seed/shanghai/800/600" },
     tours: Array.from({ length: 6 }, (_, i) => ({
       id: `sh_t_${i}`,
-      titleKey: `tour_shanghai_${i+1}`,
+      titleKey: `tour_shanghai_${i + 1}`,
       image: `https://picsum.photos/seed/sh_t_${i}/800/600`,
       rating: (4.2 + Math.random() * 0.7).toFixed(1),
       reviewsCount: Math.floor(Math.random() * 1000) + 50,
@@ -416,7 +416,7 @@ const randomHighlights = [
 ];
 
 const generateRandomHighlights = () => {
-  const count = Math.floor(Math.random() * 3) + 3; 
+  const count = Math.floor(Math.random() * 3) + 3;
   const shuffled = [...randomHighlights].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
@@ -452,7 +452,7 @@ export const getMockBookingSummary = (tourId, scheduleId) => {
   const defaultPassengers = { adults: 2, children: 1, infants: 0 };
   const unitPrice = schedule?.price || tour.price || 3500000;
   const totalPrice = (defaultPassengers.adults * unitPrice) + (defaultPassengers.children * unitPrice * 0.7);
-  
+
   return {
     tour,
     schedule,
@@ -464,6 +464,49 @@ export const getMockBookingSummary = (tourId, scheduleId) => {
       hotelUpgrade: false
     }
   };
+};
+
+// --- TourFilters Mock Data ---
+export const filterMockData = {
+  durations: ["2-4 ngày", "5-6 ngày", "7-8 ngày", "9-10 ngày"],
+  prices: ["< 11 triệu", "11 triệu - 18 triệu", "18 triệu - 21 triệu", "> 21 triệu"],
+  shopping: ["Không Shopping", "Có Shopping"]
+};
+
+export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// --- TourHeaderLooking Mock Data ---
+export const mockRoutes = [
+  "Beijing - Shanghai",
+  "Shanghai - Wuzhen",
+  "Beijing",
+  "Chengdu - Jiuzhaigou",
+  "Guangzhou - Shenzhen",
+  "Hangzhou - Suzhou",
+  "Xi'an - Luoyang",
+  "Kunming - Dali - Lijiang",
+  "Chongqing - Yangtze River",
+  "Harbin - Snow Town"
+];
+
+export const sortOptions = [
+  { id: 'suggested', label: 'Hanuvivu suggests' },
+  { id: 'duration', label: 'Duration' },
+  { id: 'departure', label: 'Departure Date' },
+  { id: 'price_asc', label: 'Price: Low to High' },
+  { id: 'price_desc', label: 'Price: High to Low' }
+];
+
+// --- ThingsToDo Mock Data (Dummy) ---
+export const categories = [];
+export const attractions = [];
+export const experiences = [];
+export const essentials = [];
+export const allActivities = [];
+export const reviews = [];
+
+/*
 export const mockData = {
   users: [
     {
@@ -659,3 +702,4 @@ export const mockData = {
     }
   ]
 };
+*/
