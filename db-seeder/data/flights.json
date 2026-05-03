@@ -17,13 +17,41 @@
     "image": "https://picsum.photos/seed/flight001/800/600",
     "isFeatured": true,
     "description": "Chuyến bay thẳng Hà Nội - TP.HCM, dịch vụ 4 sao hàng đầu Việt Nam.",
-    "amenities": ["Suất ăn miễn phí", "Hành lý ký gửi 23kg", "Giải trí trên máy bay", "Wifi (phụ thu)", "Nước uống miễn phí"],
-    "schedules": [
-      { "id": "sch_f001_1", "departureTime": "2026-06-10T06:00:00", "arrivalTime": "2026-06-10T08:15:00", "availableSeats": 120, "price": 1200000 },
-      { "id": "sch_f001_2", "departureTime": "2026-06-10T12:30:00", "arrivalTime": "2026-06-10T14:45:00", "availableSeats": 95, "price": 1350000 },
-      { "id": "sch_f001_3", "departureTime": "2026-06-10T19:00:00", "arrivalTime": "2026-06-10T21:15:00", "availableSeats": 80, "price": 1500000 }
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí trên máy bay",
+      "Wifi (phụ thu)",
+      "Nước uống miễn phí"
     ],
-    "baggagePolicy": { "carryOn": "7kg", "checked": "23kg (miễn phí)", "extra": "50,000đ/kg" },
+    "schedules": [
+      {
+        "id": "sch_f001_1",
+        "departureTime": "2026-06-10T06:00:00",
+        "arrivalTime": "2026-06-10T08:15:00",
+        "availableSeats": 120,
+        "price": 1200000
+      },
+      {
+        "id": "sch_f001_2",
+        "departureTime": "2026-06-10T12:30:00",
+        "arrivalTime": "2026-06-10T14:45:00",
+        "availableSeats": 95,
+        "price": 1350000
+      },
+      {
+        "id": "sch_f001_3",
+        "departureTime": "2026-06-10T19:00:00",
+        "arrivalTime": "2026-06-10T21:15:00",
+        "availableSeats": 80,
+        "price": 1500000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
     "isActive": true
   },
   {
@@ -44,13 +72,39 @@
     "image": "https://picsum.photos/seed/flight002/800/600",
     "isFeatured": true,
     "description": "Bay giá rẻ Hà Nội - TP.HCM, nhiều khung giờ linh hoạt trong ngày.",
-    "amenities": ["Nước uống miễn phí", "Mua suất ăn trên máy bay", "Wifi (phụ thu)"],
-    "schedules": [
-      { "id": "sch_f002_1", "departureTime": "2026-06-10T07:30:00", "arrivalTime": "2026-06-10T09:45:00", "availableSeats": 150, "price": 850000 },
-      { "id": "sch_f002_2", "departureTime": "2026-06-10T14:00:00", "arrivalTime": "2026-06-10T16:15:00", "availableSeats": 130, "price": 950000 },
-      { "id": "sch_f002_3", "departureTime": "2026-06-10T21:00:00", "arrivalTime": "2026-06-10T23:15:00", "availableSeats": 110, "price": 750000 }
+    "amenities": [
+      "Nước uống miễn phí",
+      "Mua suất ăn trên máy bay",
+      "Wifi (phụ thu)"
     ],
-    "baggagePolicy": { "carryOn": "7kg", "checked": "Mua thêm từ 100,000đ/20kg", "extra": "N/A" },
+    "schedules": [
+      {
+        "id": "sch_f002_1",
+        "departureTime": "2026-06-10T07:30:00",
+        "arrivalTime": "2026-06-10T09:45:00",
+        "availableSeats": 150,
+        "price": 850000
+      },
+      {
+        "id": "sch_f002_2",
+        "departureTime": "2026-06-10T14:00:00",
+        "arrivalTime": "2026-06-10T16:15:00",
+        "availableSeats": 130,
+        "price": 950000
+      },
+      {
+        "id": "sch_f002_3",
+        "departureTime": "2026-06-10T21:00:00",
+        "arrivalTime": "2026-06-10T23:15:00",
+        "availableSeats": 110,
+        "price": 750000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
     "isActive": true
   },
   {
@@ -71,12 +125,33 @@
     "image": "https://picsum.photos/seed/flight003/800/600",
     "isFeatured": false,
     "description": "Bay thẳng Hà Nội - Đà Nẵng, dịch vụ 5 sao hướng đến trải nghiệm cao cấp.",
-    "amenities": ["Suất ăn miễn phí", "Hành lý ký gửi 20kg", "Giải trí", "Nước uống miễn phí"],
-    "schedules": [
-      { "id": "sch_f003_1", "departureTime": "2026-06-12T08:00:00", "arrivalTime": "2026-06-12T09:20:00", "availableSeats": 100, "price": 980000 },
-      { "id": "sch_f003_2", "departureTime": "2026-06-12T15:30:00", "arrivalTime": "2026-06-12T16:50:00", "availableSeats": 85, "price": 1100000 }
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 20kg",
+      "Giải trí",
+      "Nước uống miễn phí"
     ],
-    "baggagePolicy": { "carryOn": "7kg", "checked": "20kg (miễn phí)", "extra": "60,000đ/kg" },
+    "schedules": [
+      {
+        "id": "sch_f003_1",
+        "departureTime": "2026-06-12T08:00:00",
+        "arrivalTime": "2026-06-12T09:20:00",
+        "availableSeats": 100,
+        "price": 980000
+      },
+      {
+        "id": "sch_f003_2",
+        "departureTime": "2026-06-12T15:30:00",
+        "arrivalTime": "2026-06-12T16:50:00",
+        "availableSeats": 85,
+        "price": 1100000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "20kg (miễn phí)",
+      "extra": "60,000đ/kg"
+    },
     "isActive": true
   },
   {
@@ -97,12 +172,32 @@
     "image": "https://picsum.photos/seed/flight004/800/600",
     "isFeatured": true,
     "description": "Bay thẳng TP.HCM - Phú Quốc, chỉ 1 giờ bay đến thiên đường biển đảo.",
-    "amenities": ["Suất ăn nhẹ", "Hành lý ký gửi 23kg", "Nước uống miễn phí"],
-    "schedules": [
-      { "id": "sch_f004_1", "departureTime": "2026-06-15T09:00:00", "arrivalTime": "2026-06-15T10:00:00", "availableSeats": 110, "price": 1050000 },
-      { "id": "sch_f004_2", "departureTime": "2026-06-15T16:00:00", "arrivalTime": "2026-06-15T17:00:00", "availableSeats": 90, "price": 1200000 }
+    "amenities": [
+      "Suất ăn nhẹ",
+      "Hành lý ký gửi 23kg",
+      "Nước uống miễn phí"
     ],
-    "baggagePolicy": { "carryOn": "7kg", "checked": "23kg (miễn phí)", "extra": "50,000đ/kg" },
+    "schedules": [
+      {
+        "id": "sch_f004_1",
+        "departureTime": "2026-06-15T09:00:00",
+        "arrivalTime": "2026-06-15T10:00:00",
+        "availableSeats": 110,
+        "price": 1050000
+      },
+      {
+        "id": "sch_f004_2",
+        "departureTime": "2026-06-15T16:00:00",
+        "arrivalTime": "2026-06-15T17:00:00",
+        "availableSeats": 90,
+        "price": 1200000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
     "isActive": true
   },
   {
@@ -123,12 +218,31 @@
     "image": "https://picsum.photos/seed/flight005/800/600",
     "isFeatured": false,
     "description": "Bay giá rẻ Đà Nẵng - TP.HCM, phù hợp cho chuyến du lịch tiết kiệm.",
-    "amenities": ["Nước uống", "Mua suất ăn trên bay"],
-    "schedules": [
-      { "id": "sch_f005_1", "departureTime": "2026-06-18T10:00:00", "arrivalTime": "2026-06-18T11:20:00", "availableSeats": 140, "price": 750000 },
-      { "id": "sch_f005_2", "departureTime": "2026-06-18T17:30:00", "arrivalTime": "2026-06-18T18:50:00", "availableSeats": 120, "price": 850000 }
+    "amenities": [
+      "Nước uống",
+      "Mua suất ăn trên bay"
     ],
-    "baggagePolicy": { "carryOn": "7kg", "checked": "Mua thêm từ 100,000đ/20kg", "extra": "N/A" },
+    "schedules": [
+      {
+        "id": "sch_f005_1",
+        "departureTime": "2026-06-18T10:00:00",
+        "arrivalTime": "2026-06-18T11:20:00",
+        "availableSeats": 140,
+        "price": 750000
+      },
+      {
+        "id": "sch_f005_2",
+        "departureTime": "2026-06-18T17:30:00",
+        "arrivalTime": "2026-06-18T18:50:00",
+        "availableSeats": 120,
+        "price": 850000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
     "isActive": true
   },
   {
@@ -149,12 +263,971 @@
     "image": "https://picsum.photos/seed/flight006/800/600",
     "isFeatured": false,
     "description": "Bay thẳng Hà Nội - Cam Ranh (Nha Trang), máy bay thân rộng Boeing 787 hiện đại.",
-    "amenities": ["Suất ăn miễn phí", "Hành lý ký gửi 23kg", "Giải trí cá nhân", "Wifi", "Nước uống miễn phí"],
-    "schedules": [
-      { "id": "sch_f006_1", "departureTime": "2026-06-20T07:00:00", "arrivalTime": "2026-06-20T09:00:00", "availableSeats": 200, "price": 1400000 },
-      { "id": "sch_f006_2", "departureTime": "2026-06-20T18:00:00", "arrivalTime": "2026-06-20T20:00:00", "availableSeats": 180, "price": 1550000 }
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí cá nhân",
+      "Wifi",
+      "Nước uống miễn phí"
     ],
-    "baggagePolicy": { "carryOn": "7kg", "checked": "23kg (miễn phí)", "extra": "50,000đ/kg" },
+    "schedules": [
+      {
+        "id": "sch_f006_1",
+        "departureTime": "2026-06-20T07:00:00",
+        "arrivalTime": "2026-06-20T09:00:00",
+        "availableSeats": 200,
+        "price": 1400000
+      },
+      {
+        "id": "sch_f006_2",
+        "departureTime": "2026-06-20T18:00:00",
+        "arrivalTime": "2026-06-20T20:00:00",
+        "availableSeats": 180,
+        "price": 1550000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_007",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1006",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1311969,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 3.9,
+    "reviewsCount": 304,
+    "image": "https://picsum.photos/seed/flight001/800/600",
+    "isFeatured": true,
+    "description": "Chuyến bay thẳng Hà Nội - TP.HCM, dịch vụ 4 sao hàng đầu Việt Nam.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí trên máy bay",
+      "Wifi (phụ thu)",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f007_1",
+        "departureTime": "2026-06-10T06:00:00",
+        "arrivalTime": "2026-06-10T08:15:00",
+        "availableSeats": 120,
+        "price": 1200000
+      },
+      {
+        "id": "sch_f007_2",
+        "departureTime": "2026-06-10T12:30:00",
+        "arrivalTime": "2026-06-10T14:45:00",
+        "availableSeats": 95,
+        "price": 1350000
+      },
+      {
+        "id": "sch_f007_3",
+        "departureTime": "2026-06-10T19:00:00",
+        "arrivalTime": "2026-06-10T21:15:00",
+        "availableSeats": 80,
+        "price": 1500000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_008",
+    "airline": "Vietjet Air",
+    "flightNumber": "VI1007",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1083711,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A320",
+    "rating": 4.3,
+    "reviewsCount": 155,
+    "image": "https://picsum.photos/seed/flight002/800/600",
+    "isFeatured": true,
+    "description": "Bay giá rẻ Hà Nội - TP.HCM, nhiều khung giờ linh hoạt trong ngày.",
+    "amenities": [
+      "Nước uống miễn phí",
+      "Mua suất ăn trên máy bay",
+      "Wifi (phụ thu)"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f008_1",
+        "departureTime": "2026-06-10T07:30:00",
+        "arrivalTime": "2026-06-10T09:45:00",
+        "availableSeats": 150,
+        "price": 850000
+      },
+      {
+        "id": "sch_f008_2",
+        "departureTime": "2026-06-10T14:00:00",
+        "arrivalTime": "2026-06-10T16:15:00",
+        "availableSeats": 130,
+        "price": 950000
+      },
+      {
+        "id": "sch_f008_3",
+        "departureTime": "2026-06-10T21:00:00",
+        "arrivalTime": "2026-06-10T23:15:00",
+        "availableSeats": 110,
+        "price": 750000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_009",
+    "airline": "Bamboo Airways",
+    "flightNumber": "BA1008",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Đà Nẵng",
+    "departureAirport": "HAN",
+    "arrivalAirport": "DAD",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Đà Nẵng",
+    "basePrice": 1115252,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321neo",
+    "rating": 3.7,
+    "reviewsCount": 55,
+    "image": "https://picsum.photos/seed/flight003/800/600",
+    "isFeatured": false,
+    "description": "Bay thẳng Hà Nội - Đà Nẵng, dịch vụ 5 sao hướng đến trải nghiệm cao cấp.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 20kg",
+      "Giải trí",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f009_1",
+        "departureTime": "2026-06-12T08:00:00",
+        "arrivalTime": "2026-06-12T09:20:00",
+        "availableSeats": 100,
+        "price": 980000
+      },
+      {
+        "id": "sch_f009_2",
+        "departureTime": "2026-06-12T15:30:00",
+        "arrivalTime": "2026-06-12T16:50:00",
+        "availableSeats": 85,
+        "price": 1100000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "20kg (miễn phí)",
+      "extra": "60,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_010",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1009",
+    "departureCity": "Hồ Chí Minh",
+    "arrivalCity": "Phú Quốc",
+    "departureAirport": "SGN",
+    "arrivalAirport": "PQC",
+    "departureAirportName": "Sân bay Tân Sơn Nhất",
+    "arrivalAirportName": "Sân bay Phú Quốc",
+    "basePrice": 1380217,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 4.9,
+    "reviewsCount": 323,
+    "image": "https://picsum.photos/seed/flight004/800/600",
+    "isFeatured": true,
+    "description": "Bay thẳng TP.HCM - Phú Quốc, chỉ 1 giờ bay đến thiên đường biển đảo.",
+    "amenities": [
+      "Suất ăn nhẹ",
+      "Hành lý ký gửi 23kg",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f010_1",
+        "departureTime": "2026-06-15T09:00:00",
+        "arrivalTime": "2026-06-15T10:00:00",
+        "availableSeats": 110,
+        "price": 1050000
+      },
+      {
+        "id": "sch_f010_2",
+        "departureTime": "2026-06-15T16:00:00",
+        "arrivalTime": "2026-06-15T17:00:00",
+        "availableSeats": 90,
+        "price": 1200000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_011",
+    "airline": "Vietjet Air",
+    "flightNumber": "VI1010",
+    "departureCity": "Đà Nẵng",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "DAD",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Đà Nẵng",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 765832,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A320",
+    "rating": 4.1,
+    "reviewsCount": 284,
+    "image": "https://picsum.photos/seed/flight005/800/600",
+    "isFeatured": false,
+    "description": "Bay giá rẻ Đà Nẵng - TP.HCM, phù hợp cho chuyến du lịch tiết kiệm.",
+    "amenities": [
+      "Nước uống",
+      "Mua suất ăn trên bay"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f011_1",
+        "departureTime": "2026-06-18T10:00:00",
+        "arrivalTime": "2026-06-18T11:20:00",
+        "availableSeats": 140,
+        "price": 750000
+      },
+      {
+        "id": "sch_f011_2",
+        "departureTime": "2026-06-18T17:30:00",
+        "arrivalTime": "2026-06-18T18:50:00",
+        "availableSeats": 120,
+        "price": 850000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_012",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1011",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Nha Trang",
+    "departureAirport": "HAN",
+    "arrivalAirport": "CXR",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Cam Ranh",
+    "basePrice": 1783955,
+    "cabinClass": "Economy",
+    "aircraft": "Boeing 787",
+    "rating": 4.3,
+    "reviewsCount": 438,
+    "image": "https://picsum.photos/seed/flight006/800/600",
+    "isFeatured": false,
+    "description": "Bay thẳng Hà Nội - Cam Ranh (Nha Trang), máy bay thân rộng Boeing 787 hiện đại.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí cá nhân",
+      "Wifi",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f012_1",
+        "departureTime": "2026-06-20T07:00:00",
+        "arrivalTime": "2026-06-20T09:00:00",
+        "availableSeats": 200,
+        "price": 1400000
+      },
+      {
+        "id": "sch_f012_2",
+        "departureTime": "2026-06-20T18:00:00",
+        "arrivalTime": "2026-06-20T20:00:00",
+        "availableSeats": 180,
+        "price": 1550000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_013",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1012",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1222431,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 4.6,
+    "reviewsCount": 147,
+    "image": "https://picsum.photos/seed/flight001/800/600",
+    "isFeatured": true,
+    "description": "Chuyến bay thẳng Hà Nội - TP.HCM, dịch vụ 4 sao hàng đầu Việt Nam.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí trên máy bay",
+      "Wifi (phụ thu)",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f013_1",
+        "departureTime": "2026-06-10T06:00:00",
+        "arrivalTime": "2026-06-10T08:15:00",
+        "availableSeats": 120,
+        "price": 1200000
+      },
+      {
+        "id": "sch_f013_2",
+        "departureTime": "2026-06-10T12:30:00",
+        "arrivalTime": "2026-06-10T14:45:00",
+        "availableSeats": 95,
+        "price": 1350000
+      },
+      {
+        "id": "sch_f013_3",
+        "departureTime": "2026-06-10T19:00:00",
+        "arrivalTime": "2026-06-10T21:15:00",
+        "availableSeats": 80,
+        "price": 1500000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_014",
+    "airline": "Vietjet Air",
+    "flightNumber": "VI1013",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1143542,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A320",
+    "rating": 4.9,
+    "reviewsCount": 28,
+    "image": "https://picsum.photos/seed/flight002/800/600",
+    "isFeatured": true,
+    "description": "Bay giá rẻ Hà Nội - TP.HCM, nhiều khung giờ linh hoạt trong ngày.",
+    "amenities": [
+      "Nước uống miễn phí",
+      "Mua suất ăn trên máy bay",
+      "Wifi (phụ thu)"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f014_1",
+        "departureTime": "2026-06-10T07:30:00",
+        "arrivalTime": "2026-06-10T09:45:00",
+        "availableSeats": 150,
+        "price": 850000
+      },
+      {
+        "id": "sch_f014_2",
+        "departureTime": "2026-06-10T14:00:00",
+        "arrivalTime": "2026-06-10T16:15:00",
+        "availableSeats": 130,
+        "price": 950000
+      },
+      {
+        "id": "sch_f014_3",
+        "departureTime": "2026-06-10T21:00:00",
+        "arrivalTime": "2026-06-10T23:15:00",
+        "availableSeats": 110,
+        "price": 750000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_015",
+    "airline": "Bamboo Airways",
+    "flightNumber": "BA1014",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Đà Nẵng",
+    "departureAirport": "HAN",
+    "arrivalAirport": "DAD",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Đà Nẵng",
+    "basePrice": 1021374,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321neo",
+    "rating": 3.8,
+    "reviewsCount": 322,
+    "image": "https://picsum.photos/seed/flight003/800/600",
+    "isFeatured": false,
+    "description": "Bay thẳng Hà Nội - Đà Nẵng, dịch vụ 5 sao hướng đến trải nghiệm cao cấp.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 20kg",
+      "Giải trí",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f015_1",
+        "departureTime": "2026-06-12T08:00:00",
+        "arrivalTime": "2026-06-12T09:20:00",
+        "availableSeats": 100,
+        "price": 980000
+      },
+      {
+        "id": "sch_f015_2",
+        "departureTime": "2026-06-12T15:30:00",
+        "arrivalTime": "2026-06-12T16:50:00",
+        "availableSeats": 85,
+        "price": 1100000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "20kg (miễn phí)",
+      "extra": "60,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_016",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1015",
+    "departureCity": "Hồ Chí Minh",
+    "arrivalCity": "Phú Quốc",
+    "departureAirport": "SGN",
+    "arrivalAirport": "PQC",
+    "departureAirportName": "Sân bay Tân Sơn Nhất",
+    "arrivalAirportName": "Sân bay Phú Quốc",
+    "basePrice": 1217313,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 3.8,
+    "reviewsCount": 79,
+    "image": "https://picsum.photos/seed/flight004/800/600",
+    "isFeatured": true,
+    "description": "Bay thẳng TP.HCM - Phú Quốc, chỉ 1 giờ bay đến thiên đường biển đảo.",
+    "amenities": [
+      "Suất ăn nhẹ",
+      "Hành lý ký gửi 23kg",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f016_1",
+        "departureTime": "2026-06-15T09:00:00",
+        "arrivalTime": "2026-06-15T10:00:00",
+        "availableSeats": 110,
+        "price": 1050000
+      },
+      {
+        "id": "sch_f016_2",
+        "departureTime": "2026-06-15T16:00:00",
+        "arrivalTime": "2026-06-15T17:00:00",
+        "availableSeats": 90,
+        "price": 1200000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_017",
+    "airline": "Vietjet Air",
+    "flightNumber": "VI1016",
+    "departureCity": "Đà Nẵng",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "DAD",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Đà Nẵng",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 807299,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A320",
+    "rating": 4.2,
+    "reviewsCount": 100,
+    "image": "https://picsum.photos/seed/flight005/800/600",
+    "isFeatured": false,
+    "description": "Bay giá rẻ Đà Nẵng - TP.HCM, phù hợp cho chuyến du lịch tiết kiệm.",
+    "amenities": [
+      "Nước uống",
+      "Mua suất ăn trên bay"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f017_1",
+        "departureTime": "2026-06-18T10:00:00",
+        "arrivalTime": "2026-06-18T11:20:00",
+        "availableSeats": 140,
+        "price": 750000
+      },
+      {
+        "id": "sch_f017_2",
+        "departureTime": "2026-06-18T17:30:00",
+        "arrivalTime": "2026-06-18T18:50:00",
+        "availableSeats": 120,
+        "price": 850000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_018",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1017",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Nha Trang",
+    "departureAirport": "HAN",
+    "arrivalAirport": "CXR",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Cam Ranh",
+    "basePrice": 1763019,
+    "cabinClass": "Economy",
+    "aircraft": "Boeing 787",
+    "rating": 4.6,
+    "reviewsCount": 255,
+    "image": "https://picsum.photos/seed/flight006/800/600",
+    "isFeatured": false,
+    "description": "Bay thẳng Hà Nội - Cam Ranh (Nha Trang), máy bay thân rộng Boeing 787 hiện đại.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí cá nhân",
+      "Wifi",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f018_1",
+        "departureTime": "2026-06-20T07:00:00",
+        "arrivalTime": "2026-06-20T09:00:00",
+        "availableSeats": 200,
+        "price": 1400000
+      },
+      {
+        "id": "sch_f018_2",
+        "departureTime": "2026-06-20T18:00:00",
+        "arrivalTime": "2026-06-20T20:00:00",
+        "availableSeats": 180,
+        "price": 1550000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_019",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1018",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1448557,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 4.7,
+    "reviewsCount": 254,
+    "image": "https://picsum.photos/seed/flight001/800/600",
+    "isFeatured": true,
+    "description": "Chuyến bay thẳng Hà Nội - TP.HCM, dịch vụ 4 sao hàng đầu Việt Nam.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí trên máy bay",
+      "Wifi (phụ thu)",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f019_1",
+        "departureTime": "2026-06-10T06:00:00",
+        "arrivalTime": "2026-06-10T08:15:00",
+        "availableSeats": 120,
+        "price": 1200000
+      },
+      {
+        "id": "sch_f019_2",
+        "departureTime": "2026-06-10T12:30:00",
+        "arrivalTime": "2026-06-10T14:45:00",
+        "availableSeats": 95,
+        "price": 1350000
+      },
+      {
+        "id": "sch_f019_3",
+        "departureTime": "2026-06-10T19:00:00",
+        "arrivalTime": "2026-06-10T21:15:00",
+        "availableSeats": 80,
+        "price": 1500000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_020",
+    "airline": "Vietjet Air",
+    "flightNumber": "VI1019",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 989598,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A320",
+    "rating": 5,
+    "reviewsCount": 136,
+    "image": "https://picsum.photos/seed/flight002/800/600",
+    "isFeatured": true,
+    "description": "Bay giá rẻ Hà Nội - TP.HCM, nhiều khung giờ linh hoạt trong ngày.",
+    "amenities": [
+      "Nước uống miễn phí",
+      "Mua suất ăn trên máy bay",
+      "Wifi (phụ thu)"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f020_1",
+        "departureTime": "2026-06-10T07:30:00",
+        "arrivalTime": "2026-06-10T09:45:00",
+        "availableSeats": 150,
+        "price": 850000
+      },
+      {
+        "id": "sch_f020_2",
+        "departureTime": "2026-06-10T14:00:00",
+        "arrivalTime": "2026-06-10T16:15:00",
+        "availableSeats": 130,
+        "price": 950000
+      },
+      {
+        "id": "sch_f020_3",
+        "departureTime": "2026-06-10T21:00:00",
+        "arrivalTime": "2026-06-10T23:15:00",
+        "availableSeats": 110,
+        "price": 750000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_021",
+    "airline": "Bamboo Airways",
+    "flightNumber": "BA1020",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Đà Nẵng",
+    "departureAirport": "HAN",
+    "arrivalAirport": "DAD",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Đà Nẵng",
+    "basePrice": 1270140,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321neo",
+    "rating": 4.1,
+    "reviewsCount": 172,
+    "image": "https://picsum.photos/seed/flight003/800/600",
+    "isFeatured": false,
+    "description": "Bay thẳng Hà Nội - Đà Nẵng, dịch vụ 5 sao hướng đến trải nghiệm cao cấp.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 20kg",
+      "Giải trí",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f021_1",
+        "departureTime": "2026-06-12T08:00:00",
+        "arrivalTime": "2026-06-12T09:20:00",
+        "availableSeats": 100,
+        "price": 980000
+      },
+      {
+        "id": "sch_f021_2",
+        "departureTime": "2026-06-12T15:30:00",
+        "arrivalTime": "2026-06-12T16:50:00",
+        "availableSeats": 85,
+        "price": 1100000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "20kg (miễn phí)",
+      "extra": "60,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_022",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1021",
+    "departureCity": "Hồ Chí Minh",
+    "arrivalCity": "Phú Quốc",
+    "departureAirport": "SGN",
+    "arrivalAirport": "PQC",
+    "departureAirportName": "Sân bay Tân Sơn Nhất",
+    "arrivalAirportName": "Sân bay Phú Quốc",
+    "basePrice": 1184331,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 4.2,
+    "reviewsCount": 463,
+    "image": "https://picsum.photos/seed/flight004/800/600",
+    "isFeatured": true,
+    "description": "Bay thẳng TP.HCM - Phú Quốc, chỉ 1 giờ bay đến thiên đường biển đảo.",
+    "amenities": [
+      "Suất ăn nhẹ",
+      "Hành lý ký gửi 23kg",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f022_1",
+        "departureTime": "2026-06-15T09:00:00",
+        "arrivalTime": "2026-06-15T10:00:00",
+        "availableSeats": 110,
+        "price": 1050000
+      },
+      {
+        "id": "sch_f022_2",
+        "departureTime": "2026-06-15T16:00:00",
+        "arrivalTime": "2026-06-15T17:00:00",
+        "availableSeats": 90,
+        "price": 1200000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_023",
+    "airline": "Vietjet Air",
+    "flightNumber": "VI1022",
+    "departureCity": "Đà Nẵng",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "DAD",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Đà Nẵng",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1228671,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A320",
+    "rating": 3.9,
+    "reviewsCount": 388,
+    "image": "https://picsum.photos/seed/flight005/800/600",
+    "isFeatured": false,
+    "description": "Bay giá rẻ Đà Nẵng - TP.HCM, phù hợp cho chuyến du lịch tiết kiệm.",
+    "amenities": [
+      "Nước uống",
+      "Mua suất ăn trên bay"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f023_1",
+        "departureTime": "2026-06-18T10:00:00",
+        "arrivalTime": "2026-06-18T11:20:00",
+        "availableSeats": 140,
+        "price": 750000
+      },
+      {
+        "id": "sch_f023_2",
+        "departureTime": "2026-06-18T17:30:00",
+        "arrivalTime": "2026-06-18T18:50:00",
+        "availableSeats": 120,
+        "price": 850000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "Mua thêm từ 100,000đ/20kg",
+      "extra": "N/A"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_024",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1023",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Nha Trang",
+    "departureAirport": "HAN",
+    "arrivalAirport": "CXR",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Cam Ranh",
+    "basePrice": 1466060,
+    "cabinClass": "Economy",
+    "aircraft": "Boeing 787",
+    "rating": 4.4,
+    "reviewsCount": 130,
+    "image": "https://picsum.photos/seed/flight006/800/600",
+    "isFeatured": false,
+    "description": "Bay thẳng Hà Nội - Cam Ranh (Nha Trang), máy bay thân rộng Boeing 787 hiện đại.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí cá nhân",
+      "Wifi",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f024_1",
+        "departureTime": "2026-06-20T07:00:00",
+        "arrivalTime": "2026-06-20T09:00:00",
+        "availableSeats": 200,
+        "price": 1400000
+      },
+      {
+        "id": "sch_f024_2",
+        "departureTime": "2026-06-20T18:00:00",
+        "arrivalTime": "2026-06-20T20:00:00",
+        "availableSeats": 180,
+        "price": 1550000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
+    "isActive": true
+  },
+  {
+    "id": "FLIGHT_025",
+    "airline": "Vietnam Airlines",
+    "flightNumber": "VI1024",
+    "departureCity": "Hà Nội",
+    "arrivalCity": "Hồ Chí Minh",
+    "departureAirport": "HAN",
+    "arrivalAirport": "SGN",
+    "departureAirportName": "Sân bay Nội Bài",
+    "arrivalAirportName": "Sân bay Tân Sơn Nhất",
+    "basePrice": 1349244,
+    "cabinClass": "Economy",
+    "aircraft": "Airbus A321",
+    "rating": 4.6,
+    "reviewsCount": 197,
+    "image": "https://picsum.photos/seed/flight001/800/600",
+    "isFeatured": true,
+    "description": "Chuyến bay thẳng Hà Nội - TP.HCM, dịch vụ 4 sao hàng đầu Việt Nam.",
+    "amenities": [
+      "Suất ăn miễn phí",
+      "Hành lý ký gửi 23kg",
+      "Giải trí trên máy bay",
+      "Wifi (phụ thu)",
+      "Nước uống miễn phí"
+    ],
+    "schedules": [
+      {
+        "id": "sch_f025_1",
+        "departureTime": "2026-06-10T06:00:00",
+        "arrivalTime": "2026-06-10T08:15:00",
+        "availableSeats": 120,
+        "price": 1200000
+      },
+      {
+        "id": "sch_f025_2",
+        "departureTime": "2026-06-10T12:30:00",
+        "arrivalTime": "2026-06-10T14:45:00",
+        "availableSeats": 95,
+        "price": 1350000
+      },
+      {
+        "id": "sch_f025_3",
+        "departureTime": "2026-06-10T19:00:00",
+        "arrivalTime": "2026-06-10T21:15:00",
+        "availableSeats": 80,
+        "price": 1500000
+      }
+    ],
+    "baggagePolicy": {
+      "carryOn": "7kg",
+      "checked": "23kg (miễn phí)",
+      "extra": "50,000đ/kg"
+    },
     "isActive": true
   }
 ]

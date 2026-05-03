@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import TransportSearchBox from '../../../components/user/TransportSearchBox';
+import { transportService } from '../../../services/transportService';
 import { getDaysInMonth, getFirstDayOfMonth, getWeekDays, getMonthName, formatDate } from '../../../utils/SearchUtils';
 
 const TrainIcon = () => (
@@ -59,60 +60,12 @@ const RentLocationIcon = () => (
   </svg>
 );
 
-const MOCK_TRAIN_ROUTES = [
-  { id: 1, title: 'Hanoi', price: 350000, image: 'https://images.unsplash.com/photo-1555944630-da23b9d107c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 2, title: 'Hue', price: 420000, image: 'https://images.unsplash.com/photo-1560662241-11d7c07ce2c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 3, title: 'Da Nang', price: 480000, image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 4, title: 'Nha Trang', price: 560000, image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 5, title: 'Hai Phong', price: 220000, image: 'https://images.unsplash.com/photo-1562794850-cc5ba1035da3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 6, title: 'Ho Chi Minh City', price: 620000, image: 'https://images.unsplash.com/photo-1555848962-6e79363ec58f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 7, title: 'Nghe An', price: 280000, image: 'https://images.unsplash.com/photo-1620959049103-6f345a9fc27c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 8, title: 'Sapa', price: 390000, image: 'https://images.unsplash.com/photo-1508804052314-11d867317ad5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-];
-
 const FILTER_BUTTONS = [
   "Ha Noi", "Hue", "Da Nang", "Nha Trang", "Hai Phong", "Ho Chi Minh City", "Nghe An", "Other Places"
 ];
 
-const WORLD_TRAIN_PASSES = [
-  { id: 1, title: 'Japan Rail Pass', price: 1890000, image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&h=600&fit=crop', filterKey: 'Japan' },
-  { id: 2, title: 'Tokyo Wide Pass', price: 520000, image: 'https://images.unsplash.com/photo-1542051841857-5f900e8e17f1?w=800&h=600&fit=crop', filterKey: 'Japan' },
-  { id: 3, title: 'Osaka-Kyoto Pass', price: 380000, image: 'https://images.unsplash.com/photo-1559061220-6c96c9dcb6b3?w=800&h=600&fit=crop', filterKey: 'Japan' },
-  { id: 4, title: 'Eurail Global Pass', price: 2350000, image: 'https://images.unsplash.com/photo-1519456264917-42d0b52e3d0e?w=800&h=600&fit=crop', filterKey: 'Europe' },
-  { id: 5, title: 'France Rail Pass', price: 890000, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop', filterKey: 'Europe' },
-  { id: 6, title: 'Germany Rail Pass', price: 980000, image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&h=600&fit=crop', filterKey: 'Europe' },
-  { id: 7, title: 'Korail Pass', price: 750000, image: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=800&h=600&fit=crop', filterKey: 'South Korea' },
-  { id: 8, title: 'Seoul-Busan Pass', price: 420000, image: 'https://images.unsplash.com/photo-1504035468969-4b268613ed5f?w=800&h=600&fit=crop', filterKey: 'South Korea' },
-  { id: 9, title: 'Hong Kong MTR Pass', price: 180000, image: 'https://images.unsplash.com/photo-1518620531417-8ef20b5f8b75?w=800&h=600&fit=crop', filterKey: 'Hong Kong (China)' },
-  { id: 10, title: 'Taiwan TR-Pass', price: 320000, image: 'https://images.unsplash.com/photo-1513706510235-c63c9dda6c76?w=800&h=600&fit=crop', filterKey: 'Taiwan (China)' },
-  { id: 11, title: 'Taipei-Kaohsiung Pass', price: 290000, image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&h=600&fit=crop', filterKey: 'Taiwan (China)' },
-  { id: 12, title: 'Thai Railway Pass', price: 250000, image: 'https://images.unsplash.com/photo-1583491470869-d4677e11c5f0?w=800&h=600&fit=crop', filterKey: 'Thailand' },
-  { id: 13, title: 'Bangkok-Chiang Mai Pass', price: 310000, image: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&h=600&fit=crop', filterKey: 'Thailand' },
-  { id: 14, title: 'Indonesia Rail Pass', price: 280000, image: 'https://images.unsplash.com/photo-1564665285942-68a85ded4b0f?w=800&h=600&fit=crop', filterKey: 'Indonesia' },
-  { id: 15, title: 'Java Explorer Pass', price: 390000, image: 'https://images.unsplash.com/photo-1523707611943-e935f0eb5da3?w=800&h=600&fit=crop', filterKey: 'Indonesia' }
-];
-
 const WORLD_FILTER_BUTTONS = [
   "Japan", "Europe", "South Korea", "Hong Kong (China)", "Taiwan (China)", "Thailand", "Indonesia"
-];
-
-const MOCK_HOT_LOCATIONS = [
-  "Noi Bai International Airport",
-  "Tan Son Nhat International Airport",
-  "Da Nang International Airport",
-  "Hanoi Old Quarter",
-  "Ben Thanh Market"
-];
-
-const MOCK_RENTAL_LOCATIONS = [
-  { id: 1, title: 'Hanoi', available: 'Over 20 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1555944630-da23b9d107c9?auto=format&fit=crop&w=800&q=80' },
-  { id: 2, title: 'Ho Chi Minh City', available: 'Over 35 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80' },
-  { id: 3, title: 'Da Nang', available: 'Over 15 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80' },
-  { id: 4, title: 'Hue', available: 'Over 10 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1560662241-11d7c07ce2c8?auto=format&fit=crop&w=800&q=80' },
-  { id: 5, title: 'Nha Trang', available: 'Over 18 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80' },
-  { id: 6, title: 'Hoi An', available: 'Over 12 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1555848962-6e79363ec58f?auto=format&fit=crop&w=800&q=80' },
-  { id: 7, title: 'Phu Quoc', available: 'Over 25 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=800&q=80' },
-  { id: 8, title: 'Da Lat', available: 'Over 14 idle vehicles are waiting for you', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f0a?auto=format&fit=crop&w=800&q=80' }
 ];
 
 const HomepageTransport = () => {
@@ -135,12 +88,51 @@ const HomepageTransport = () => {
   const [wayType, setWayType] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  
+  const [dbRoutes, setDbRoutes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [currentMonth, setCurrentMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
 
   const carBookRef = useRef(null);
+
+  useEffect(() => {
+    const fetchRealData = async () => {
+      try {
+        setIsLoading(true);
+        // Fetching some popular routes as "Featured"
+        // Since there is no "featured" endpoint, we search for common routes
+        const popularCities = ["Ha Noi", "Hue", "Da Nang", "Nha Trang", "Ho Chi Minh City", "Sapa"];
+        const promises = popularCities.slice(0, 3).map(city => 
+          transportService.searchTransportRoutes({ departureCity: "Ha Noi", arrivalCity: city })
+        );
+        const results = await Promise.all(promises);
+        const flatResults = results.flat();
+        
+        if (flatResults.length > 0) {
+          setDbRoutes(flatResults.map(r => ({
+            id: r.id,
+            title: `${r.departureCity} to ${r.arrivalCity}`,
+            price: r.price,
+            image: r.vehicleType === 'train' 
+              ? 'https://images.unsplash.com/photo-1555944630-da23b9d107c9?auto=format&fit=crop&w=800&q=80'
+              : 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
+            city: r.arrivalCity
+          })));
+        } else {
+          setDbRoutes([]);
+        }
+      } catch (err) {
+        console.error("Failed to fetch transport data", err);
+        setDbRoutes([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchRealData();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -152,13 +144,13 @@ const HomepageTransport = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredRoutes = MOCK_TRAIN_ROUTES.filter(route =>
+  const filteredRoutes = dbRoutes.filter(route =>
     activeFilter === "Other Places"
-      ? !FILTER_BUTTONS.slice(0, -1).includes(route.title)
-      : route.title === activeFilter
+      ? !FILTER_BUTTONS.slice(0, -1).includes(route.city || route.title)
+      : (route.city === activeFilter || route.title.includes(activeFilter))
   );
 
-  const filteredWorldPasses = WORLD_TRAIN_PASSES.filter(pass => pass.filterKey === activeWorldFilter);
+  const filteredWorldPasses = [];
 
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
@@ -533,7 +525,7 @@ const HomepageTransport = () => {
                   </span>
                 </div>
                 <div className={`absolute left-0 right-0 top-full mt-2 bg-white border border-gray-100 shadow-xl rounded-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${activeDropdown === 'pickup' ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible'}`}>
-                  {MOCK_HOT_LOCATIONS.map((loc, idx) => (
+                  {["Noi Bai Airport", "Tan Son Nhat Airport"].map((loc, idx) => (
                     <div
                       key={idx}
                       onClick={() => { setPickup(loc); setActiveDropdown(null); }}
@@ -556,7 +548,7 @@ const HomepageTransport = () => {
                   </span>
                 </div>
                 <div className={`absolute left-0 right-0 top-full mt-2 bg-white border border-gray-100 shadow-xl rounded-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${activeDropdown === 'dropoff' ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible'}`}>
-                  {MOCK_HOT_LOCATIONS.map((loc, idx) => (
+                  {["Noi Bai Airport", "Tan Son Nhat Airport"].map((loc, idx) => (
                     <div
                       key={idx}
                       onClick={() => { setDropoff(loc); setActiveDropdown(null); }}
@@ -621,34 +613,8 @@ const HomepageTransport = () => {
               Where do you need to rent a car?
             </h2>
           </div>
-          <div className="grid grid-cols-4 gap-[20px] w-full mt-2">
-            {MOCK_RENTAL_LOCATIONS.map((loc) => (
-              <div
-                key={loc.id}
-                className="relative w-full h-[290px] rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all"
-              >
-                <img
-                  src={loc.image}
-                  alt={loc.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-                <div className="absolute top-4 left-4 z-10 flex flex-col gap-1 w-full pr-4">
-                  <h3
-                    className="text-white font-bold text-xl"
-                    style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
-                  >
-                    {loc.title}
-                  </h3>
-                  <p
-                    className="text-white text-[11px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis"
-                    style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
-                  >
-                    {loc.available}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] w-full mt-2">
+            {/* Real locations would go here */}
           </div>
         </div>
 

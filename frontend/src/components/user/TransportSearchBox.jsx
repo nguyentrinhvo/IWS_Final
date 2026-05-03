@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { transportService } from '../../services/transportService';
 import {
   CalendarIcon,
   GuestIcon,
@@ -56,6 +57,21 @@ const TransportSearchBox = () => {
 
   const [isReturn, setIsReturn] = useState(false);
 
+  const trainStationsMock = [
+    {
+      country: 'Vietnam',
+      stations: ['Hanoi Station', 'Saigon Station', 'Da Nang Station', 'Hue Station', 'Nha Trang Station'],
+    },
+    {
+      country: 'China',
+      stations: ['Beijing Railway Station', 'Shanghai Hongqiao', 'Guangzhou South'],
+    },
+    {
+      country: 'South Korea',
+      stations: ['Seoul Station', 'Busan Station', 'Dongdaegu Station'],
+    },
+  ];
+
   const carLocationsMock = [
     {
       titleKey: 'Popular Pick-up Locations',
@@ -77,20 +93,37 @@ const TransportSearchBox = () => {
     },
   ];
 
-  const trainStationsMock = [
-    {
-      country: 'Vietnam',
-      stations: ['Hanoi Station', 'Saigon Station', 'Da Nang Station', 'Hue Station', 'Nha Trang Station'],
-    },
-    {
-      country: 'China',
-      stations: ['Beijing Railway Station', 'Shanghai Hongqiao', 'Guangzhou South'],
-    },
-    {
-      country: 'South Korea',
-      stations: ['Seoul Station', 'Busan Station', 'Dongdaegu Station'],
-    },
-  ];
+  const [trainStations, setTrainStations] = useState(trainStationsMock);
+
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        // Since there is no direct "locations" endpoint, we can use search with no params or a dedicated endpoint if it existed
+        // For now, let's try to get all routes via a broad search (not ideal but works for small datasets)
+        const routes = await transportService.searchTransportRoutes({});
+        if (routes && routes.length > 0) {
+          const stations = new Set();
+          routes.forEach(r => {
+            if (r.departureCity) stations.add(r.departureCity);
+            if (r.arrivalCity) stations.add(r.arrivalCity);
+          });
+          
+          if (stations.size > 0) {
+            setTrainStations([
+              {
+                country: 'Vietnam',
+                stations: Array.from(stations),
+              },
+              ...trainStationsMock.filter(g => g.country !== 'Vietnam')
+            ]);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch stations", err);
+      }
+    };
+    fetchStations();
+  }, []);
 
   const handleCarGuest = (type, amount) => {
     const total = carAdults + carChildren;
@@ -556,7 +589,7 @@ const TransportSearchBox = () => {
 
                   <div className={`absolute top-[110%] left-0 w-full z-[9999] bg-white border border-[#D9D9D9] rounded-xl shadow-xl transition-all duration-300 origin-top overflow-hidden ${trainLocFocus ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`} onClick={(e) => e.stopPropagation()}>
                     <div className="p-4 max-h-[420px] overflow-y-auto custom_scrollbar">
-                      {trainStationsMock.map((group, gIdx) => (
+                      {trainStations.map((group, gIdx) => (
                         <div key={gIdx} className="mb-4">
                           <div className="flex items-center gap-2 mb-2 text-[#007BFF]">
                             <TrainLocationIcon className="w-4 h-4 shrink-0" />

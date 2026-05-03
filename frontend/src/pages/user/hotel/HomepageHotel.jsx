@@ -6,6 +6,7 @@ import AppDownloadBanner from '../../../components/user/AppDownloadBanner';
 import DestinationGrid from '../../../components/user/DestinationGrid';
 import RecommendationLinks from '../../../components/user/RecommendationLinks';
 import { hotelService } from '../../../services/hotelService';
+import flightService from '../../../services/flightService';
 
 /* ─── Mini Hotel Card cho Featured section ─── */
 const FeaturedHotelCard = ({ hotel, onClick }) => {
@@ -100,10 +101,13 @@ const HomepageHotel = () => {
   const navigate = useNavigate();
   const [featuredHotels, setFeaturedHotels] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
+  const [domesticHotels, setDomesticHotels] = useState([]);
+  const [internationalHotels, setInternationalHotels] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchFeaturedHotels();
+    fetchDestinationHotels();
   }, []);
 
   const fetchFeaturedHotels = async () => {
@@ -120,61 +124,90 @@ const HomepageHotel = () => {
     }
   };
 
-  // Static destination grids (thành phố cố định)
-  const domesticHotels = [
-    { title: 'Phú Quốc', flightsCount: '2,500+ Hotels', image: 'https://picsum.photos/seed/phuquoc/800/600' },
-    { title: 'Đà Lạt', flightsCount: '1,800+ Hotels', image: 'https://picsum.photos/seed/dalat/400/300' },
-    { title: 'Đà Nẵng', flightsCount: '3,200+ Hotels', image: 'https://picsum.photos/seed/danang/800/600' },
-    { title: 'Nha Trang', flightsCount: '2,100+ Hotels', image: 'https://picsum.photos/seed/nhatrang/400/600' },
-    { title: 'Hội An', flightsCount: '1,400+ Hotels', image: 'https://picsum.photos/seed/hoian/400/300' },
-    { title: 'Vũng Tàu', flightsCount: '900+ Hotels', image: 'https://picsum.photos/seed/vungtau/400/600' },
-    { title: 'Huế', flightsCount: '750+ Hotels', image: 'https://picsum.photos/seed/huecity/400/300' },
-    { title: 'Sa Pa', flightsCount: '800+ Hotels', image: 'https://picsum.photos/seed/sapa/400/300' },
-  ];
+  const fetchDestinationHotels = async () => {
+    try {
+      const fallbackCities = [
+        "Phu Quoc", "Hanoi", "Da Nang", "Ho Chi Minh City", 
+        "Nha Trang", "Da Lat", "Vung Tau", "Hoi An"
+      ];
+      
+      const CITY_IMAGES = {
+        "Hanoi": "https://images.unsplash.com/photo-1599708153386-62bf0bd1bd86?auto=format&fit=crop&w=800&q=80",
+        "Ho Chi Minh City": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80",
+        "Da Nang": "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80",
+        "Phu Quoc": "https://images.unsplash.com/photo-1552834546-24e52514de1d?auto=format&fit=crop&w=800&q=80",
+        "Nha Trang": "https://images.unsplash.com/photo-1629853380486-13a893259975?auto=format&fit=crop&w=800&q=80",
+        "Da Lat": "https://images.unsplash.com/photo-1582294132474-5e1df1151608?auto=format&fit=crop&w=800&q=80",
+        "Vung Tau": "https://images.unsplash.com/photo-1588147608828-5696d5e0aab0?auto=format&fit=crop&w=800&q=80",
+        "Hoi An": "https://images.unsplash.com/photo-1559526323-cb2f2fe8274d?auto=format&fit=crop&w=800&q=80",
+        "Hue": "https://images.unsplash.com/photo-1600869115792-71c1b3f6bb9d?auto=format&fit=crop&w=800&q=80",
+        "Sapa": "https://images.unsplash.com/photo-1580228020478-f7b5ec4d1736?auto=format&fit=crop&w=800&q=80"
+      };
 
-  const internationalHotels = [
-    { title: 'Singapore', flightsCount: '1,200+ Hotels', image: 'https://picsum.photos/seed/singapore/800/400' },
-    { title: 'Bangkok', flightsCount: '4,500+ Hotels', image: 'https://picsum.photos/seed/bangkok/800/400' },
-    { title: 'Seoul', flightsCount: '2,800+ Hotels', image: 'https://picsum.photos/seed/seoul/800/400' },
-    { title: 'Tokyo', flightsCount: '5,000+ Hotels', image: 'https://picsum.photos/seed/tokyo/800/400' },
-    { title: 'Hong Kong', flightsCount: '1,500+ Hotels', image: 'https://picsum.photos/seed/hongkong/800/400' },
-    { title: 'Paris', flightsCount: '3,000+ Hotels', image: 'https://picsum.photos/seed/paris/800/400' },
-  ];
+      const locs = await flightService.getLocations();
+      let cities = locs.map(code => airportMap[code]?.name || code);
+      
+      // Ensure we have exactly 8 cities for the grid layout
+      if (cities.length < 8) {
+        const needed = 8 - cities.length;
+        const remainingFallbacks = fallbackCities.filter(c => !cities.includes(c));
+        cities = [...cities, ...remainingFallbacks.slice(0, needed)];
+      }
+      
+      const formatted = cities.slice(0, 8).map(city => ({
+        title: city,
+        flightsCount: 'Available Hotels',
+        image: CITY_IMAGES[city] || `https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80`
+      }));
+      setDomesticHotels(formatted);
+
+      setInternationalHotels([]);
+    } catch (err) {
+      console.error('Failed to fetch destination hotels:', err);
+      // Fallback on error
+      const fallbackCities = [
+        "Phu Quoc", "Hanoi", "Da Nang", "Ho Chi Minh City", 
+        "Nha Trang", "Da Lat", "Vung Tau", "Hoi An"
+      ];
+      
+      const CITY_IMAGES = {
+        "Hanoi": "https://images.unsplash.com/photo-1599708153386-62bf0bd1bd86?auto=format&fit=crop&w=800&q=80",
+        "Ho Chi Minh City": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80",
+        "Da Nang": "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80",
+        "Phu Quoc": "https://images.unsplash.com/photo-1552834546-24e52514de1d?auto=format&fit=crop&w=800&q=80",
+        "Nha Trang": "https://images.unsplash.com/photo-1629853380486-13a893259975?auto=format&fit=crop&w=800&q=80",
+        "Da Lat": "https://images.unsplash.com/photo-1582294132474-5e1df1151608?auto=format&fit=crop&w=800&q=80",
+        "Vung Tau": "https://images.unsplash.com/photo-1588147608828-5696d5e0aab0?auto=format&fit=crop&w=800&q=80",
+        "Hoi An": "https://images.unsplash.com/photo-1559526323-cb2f2fe8274d?auto=format&fit=crop&w=800&q=80"
+      };
+
+      setDomesticHotels(fallbackCities.map(city => ({
+        title: city,
+        flightsCount: 'Available Hotels',
+        image: CITY_IMAGES[city] || `https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80`
+      })));
+      setInternationalHotels([]);
+    }
+  };
+
+  const airportMap = {
+    "HAN": { name: "Hanoi" },
+    "SGN": { name: "Ho Chi Minh City" },
+    "DAD": { name: "Da Nang" },
+    "PQC": { name: "Phu Quoc" },
+    "CXR": { name: "Nha Trang" },
+  };
 
   const recommendationGroups = [
     {
       links: [
-        { label: 'Hotels in Da Nang', url: '#' },
-        { label: 'Hotels in Hanoi', url: '#' },
-        { label: 'Hotels in Ho Chi Minh City', url: '#' },
-        { label: 'Hotels in Phu Quoc', url: '#' },
-        { label: 'Hotels in Nha Trang', url: '#' },
-        { label: 'Hotels in Da Lat', url: '#' },
-        { label: 'Hotels in Vung Tau', url: '#' },
+        { label: 'Hotels in Da Nang', url: '/hotels/search?city=Đà Nẵng' },
+        { label: 'Hotels in Hanoi', url: '/hotels/search?city=Hà Nội' },
+        { label: 'Hotels in Ho Chi Minh City', url: '/hotels/search?city=Ho Chi Minh' },
       ]
     },
-    {
-      links: [
-        { label: '5-star Hotels in Vietnam', url: '#' },
-        { label: 'Resorts with Private Pool', url: '#' },
-        { label: 'Budget Hotels for Solo Travelers', url: '#' },
-        { label: 'Family Friendly Resorts', url: '#' },
-        { label: 'Boutique Hotels in Hoi An', url: '#' },
-        { label: 'Pet Friendly Accommodations', url: '#' },
-        { label: 'Honeymoon Suites', url: '#' },
-      ]
-    },
-    {
-      links: [
-        { label: 'Hotels in Bangkok', url: '#' },
-        { label: 'Hotels in Singapore', url: '#' },
-        { label: 'Hotels in Tokyo', url: '#' },
-        { label: 'Hotels in Seoul', url: '#' },
-        { label: 'Hotels in Taipei', url: '#' },
-        { label: 'Hotels in Kuala Lumpur', url: '#' },
-        { label: 'Hotels in Bali', url: '#' },
-      ]
-    },
+    { links: [] },
+    { links: [] },
     { links: [] }
   ];
 
@@ -185,12 +218,29 @@ const HomepageHotel = () => {
       <div className="w-full max-w-[1200px] px-4 -mt-6 relative z-20">
 
         {/* Promos Title */}
-        <h2 className="text-xl font-bold text-[#1a2b49] mb-4 flex items-center">
-          <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-          Exclusive Hotel Deals
-        </h2>
+        <div className="w-full flex flex-col gap-1 mb-6 mt-12">
+          <div className="flex items-center gap-3">
+            <svg
+              width="35px"
+              height="35px"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-[#180B51]"
+            >
+              <path d="M3 21h18M3 7v14M21 7v14M6 21V7a2 2 0 012-2h8a2 2 0 012 2v14M9 11h2M9 15h2M13 11h2M13 15h2" />
+            </svg>
+            <h2 className="text-[#180B51] font-bold text-[25px]">
+              Exclusive Hotel Deals
+            </h2>
+          </div>
+          <p className="text-[#180B51] text-[16px] opacity-80 pl-1 mt-1">
+            Grab these limited-time offers and save on your next stay.
+          </p>
+        </div>
 
         {/* Promos */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">

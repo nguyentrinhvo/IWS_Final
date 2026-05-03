@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
-import { sortOptions } from '../../data/mockData';
+
+const sortOptions = [
+  { id: 'suggested', label: 'Hanuvivu suggests' },
+  { id: 'duration', label: 'Duration' },
+  { id: 'departure', label: 'Departure Date' },
+  { id: 'price_asc', label: 'Price: Low to High' },
+  { id: 'price_desc', label: 'Price: High to Low' }
+];
 
 export const SortIcon = () => (
   <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

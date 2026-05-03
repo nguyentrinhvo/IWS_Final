@@ -8,7 +8,7 @@ import {
   InfantIcon,
   FlightTakeoffIcon,
   FlightLandingIcon
-} from "../../pages/homepage/SearchIcons";
+} from "../../pages/HomePage/SearchIcons";
 
 import {
   getDaysInMonth,
@@ -95,6 +95,38 @@ const FlightSearchBox = () => {
     };
     fetchLocations();
   }, []);
+
+  const flightLocationCategories = [
+    {
+      titleKey: 'flightVietnam',
+      places: [
+        { name: 'Phu Quoc', airport: 'Phu Quoc International Airport' },
+        { name: 'Ha Long', airport: 'Van Don International Airport' },
+        { name: 'Da Nang', airport: 'Da Nang International Airport' },
+        { name: 'Da Lat', airport: 'Lien Khuong Airport' },
+      ]
+    },
+    {
+      titleKey: 'flightEurope',
+      places: [
+        { name: 'America', airport: 'John F. Kennedy International Airport' },
+        { name: 'Germany', airport: 'Frankfurt Airport' },
+      ]
+    },
+    {
+      titleKey: 'flightAsia',
+      places: [
+        { name: 'China', airport: 'Beijing Capital International Airport' },
+        { name: 'Singapore', airport: 'Changi Airport' },
+        { name: 'Australia', airport: 'Sydney Kingsford Smith Airport' },
+        { name: 'Laos', airport: 'Wattay International Airport' },
+        { name: 'Thai', airport: 'Suvarnabhumi Airport' },
+        { name: 'Cambodia', airport: 'Phnom Penh International Airport' },
+      ]
+    },
+  ];
+
+  const flightAllPlaces = dbLocations.length > 0 ? dbLocations : flightLocationCategories.flatMap(c => c.places);
 
   const flightFilters = [
     { id: "oneWayRoundTrip", label: t("oneWayRoundTrip") },
@@ -184,9 +216,9 @@ const FlightSearchBox = () => {
   } else {
     // multiCity
     searchParams.segments = multiCityFlights.map((seg) => ({
-      from: { name: seg.from.name, airport: seg.from.airport },
-      to: { name: seg.to.name, airport: seg.to.airport },
-      date: seg.date.toISOString(),
+      from: { name: seg.from?.name, airport: seg.from?.airport },
+      to: { name: seg.to?.name, airport: seg.to?.airport },
+      date: seg.date?.toISOString(),
     }));
   }
 
@@ -981,7 +1013,7 @@ const FlightSearchBox = () => {
                               if (isMcDateOpen) setMcDateOpen(null);
                             }}
                           >
-                            <span className="absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t("from")}</span>
+                            <span className="absolute -top-[25px] left-0 text-[#180B51]/60 font-bold text-[13px] whitespace-nowrap">{t("from")}</span>
                             <FlightTakeoffIcon className="md:w-6 md:h-6 xl:w-8 xl:h-8 text-[#007BFF] shrink-0" />
                             <div className="flex-1 flex flex-col min-w-0">
                               <input type="text"
@@ -1028,7 +1060,7 @@ const FlightSearchBox = () => {
                               if (isMcDateOpen) setMcDateOpen(null);
                             }}
                           >
-                            <span className="absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t("to")}</span>
+                            <span className="absolute -top-[25px] left-0 text-[#180B51]/60 font-bold text-[13px] whitespace-nowrap">{t("to")}</span>
                             <FlightLandingIcon className="md:w-6 md:h-6 xl:w-8 xl:h-8 text-[#007BFF] shrink-0" />
                             <div className="flex-1 flex flex-col min-w-0">
                               <input type="text"
@@ -1122,7 +1154,7 @@ const FlightSearchBox = () => {
                               }
                             }}
                           >
-                            <span className="absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t("departureDate")}</span>
+                            <span className="absolute -top-[25px] left-0 text-[#180B51]/60 font-bold text-[13px] whitespace-nowrap">{t("departureDate")}</span>
                             <CalendarIcon className="md:w-6 md:h-6 xl:w-8 xl:h-8 text-[#007BFF] shrink-0" />
                             <span className="text-[#180B51] md:text-sm xl:text-lg font-medium whitespace-nowrap truncate">
                               {flight.date ? formatDate(flight.date, locale) : formatDate(today, locale)}

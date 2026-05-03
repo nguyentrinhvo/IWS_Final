@@ -21,7 +21,7 @@ async function run() {
   try {
     await client.connect();
     const db = client.db('test'); // Push to 'test' database as requested
-    
+
     console.log("Connected to MongoDB (database: test)!");
 
     // 1. Seed Tours from tous.json
@@ -29,21 +29,21 @@ async function run() {
     if (fs.existsSync(toursFilePath)) {
       const toursCol = db.collection('tours');
       await toursCol.deleteMany({});
-      
+
       const rawData = fs.readFileSync(toursFilePath, 'utf8');
       const toursData = JSON.parse(rawData);
 
       const toursToInsert = toursData.map(t => {
-        let durationDays = 3; 
+        let durationDays = 3;
         if (t.duration) {
           const match = t.duration.match(/\d+/);
           if (match) durationDays = parseInt(match[0], 10);
         }
-        
+
         return {
-          _id: t.id.length === 24 ? new ObjectId(t.id) : undefined, // Let Mongo generate if not valid ObjectId
+          _id: (t.id && t.id.length === 24 && /^[0-9a-fA-F]{24}$/.test(t.id)) ? new ObjectId(t.id) : undefined, // Let Mongo generate if not valid ObjectId
           nameVi: t.title,
-          nameEn: t.title, 
+          nameEn: t.title,
           descriptionVi: t.description + (t.highlights ? "\nHighlights: " + t.highlights.join(", ") : ""),
           descriptionEn: t.description + (t.highlights ? "\nHighlights: " + t.highlights.join(", ") : ""),
           tourType: "domestic",
@@ -60,23 +60,23 @@ async function run() {
           totalReviews: t.reviewsCount || 100,
           isDeleted: false,
           images: t.images ? t.images.map((url, i) => ({ url, caption: "Tour image", isPrimary: i === 0 })) : (t.image ? [{ url: t.image, caption: "Primary", isPrimary: true }] : []),
-          itinerary: t.itinerary ? t.itinerary.map(it => ({ 
-            day: it.day, 
-            titleVi: it.title, 
-            titleEn: it.title, 
-            descriptionVi: `Meals: ${it.meals || 'N/A'}, Hotel: ${it.hotel || 'N/A'}`, 
-            descriptionEn: `Meals: ${it.meals || 'N/A'}, Hotel: ${it.hotel || 'N/A'}` 
+          itinerary: t.itinerary ? t.itinerary.map(it => ({
+            day: it.day,
+            titleVi: it.title,
+            titleEn: it.title,
+            descriptionVi: `Meals: ${it.meals || 'N/A'}, Hotel: ${it.hotel || 'N/A'}`,
+            descriptionEn: `Meals: ${it.meals || 'N/A'}, Hotel: ${it.hotel || 'N/A'}`
           })) : [],
-          departures: t.departureSchedules ? t.departureSchedules.map(sch => ({ 
-            departureDate: new Date(sch.departure), 
-            availableSeats: sch.seats, 
-            isActive: true 
+          departures: t.departureSchedules ? t.departureSchedules.map(sch => ({
+            departureDate: new Date(sch.departure),
+            availableSeats: sch.seats,
+            isActive: true
           })) : [],
           createdAt: new Date(),
           updatedAt: new Date()
         };
       });
-      
+
       await toursCol.insertMany(toursToInsert);
       console.log(`Seeded ${toursToInsert.length} tours from tous.json.`);
     }
@@ -223,36 +223,84 @@ async function run() {
     // 5. Seed Things To Do from things_to_do.json
     const ttdFilePath = path.join(__dirname, 'data', 'things_to_do.json');
     if (fs.existsSync(ttdFilePath)) {
-      const ttdCol = db.collection('things_to_do');
+      const ttdCol = db.collection('attractions');
       await ttdCol.deleteMany({});
 
       const ttdRaw = fs.readFileSync(ttdFilePath, 'utf8');
       const ttdData = JSON.parse(ttdRaw);
 
-      const ttdToInsert = ttdData.map(a => ({
-        activityId: a.id,
-        title: a.title,
-        category: a.category,
-        location: a.location,
-        price: a.price,
-        duration: a.duration || '',
-        avgRating: a.rating || 4.5,
-        totalReviews: a.reviewsCount || 0,
-        isFeatured: a.isFeatured || false,
-        description: a.description || '',
-        highlights: a.highlights || [],
-        inclusions: a.inclusions || [],
-        exclusions: a.exclusions || [],
-        availableDates: a.availableDates ? a.availableDates.map(d => new Date(d)) : [],
-        images: a.images ? a.images.map((url, i) => ({ url, caption: `Activity image ${i + 1}`, isPrimary: i === 0 })) : [],
-        ageRestriction: a.ageRestriction || '',
-        maxParticipants: a.maxParticipants || 0,
-        meetingPoint: a.meetingPoint || '',
-        terms: a.terms || '',
-        isDeleted: false,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }));
+      // Curated, stable Unsplash photo IDs for activity cards
+      const activityPhotoIds = [
+        'photo-1533130061792-64b345e4a833', // kayak
+        'photo-1544551763-46a013bb70d5', // ocean
+        'photo-1528127269322-539801943592', // ha long bay
+        'photo-1559592413-7cec4d0cae2b', // golden bridge
+        'photo-1476514525535-07fb3b4ae5f1', // nature
+        'photo-1551632811-561732d1e306', // theme park
+        'photo-1540206351-d7ce9f1ea434', // spa
+        'photo-1559526323-cb2f2fe8274d', // lanterns
+        'photo-1580228020478-f7b5ec4d1736', // sapa
+        'photo-1552834546-24e52514de1d', // phu quoc
+        'photo-1518182170546-076616fd6251', // cooking
+        'photo-1504609774780-12882f03f7e6', // food
+        'photo-1512453979798-5ea266f8880c', // dubai
+        'photo-1534430480872-3498386e7856', // city
+        'photo-1588147608828-5696d5e0aab0', // boat
+      ];
+
+      const ttdToInsert = ttdData.map((a, index) => {
+        let mappedType = 'nature';
+        if (a.category === 'experiences') mappedType = 'entertainment';
+        else if (a.category === 'essentials') mappedType = 'service';
+        
+        // Use stable Unsplash photo IDs
+        const photoId = activityPhotoIds[index % activityPhotoIds.length];
+        const imgUrl = `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=800&q=80`;
+        const imgUrl2 = `https://images.unsplash.com/${activityPhotoIds[(index + 1) % activityPhotoIds.length]}?auto=format&fit=crop&w=800&q=80`;
+
+        const imageUrls = [
+          { url: imgUrl, caption: a.title || 'Activity image' },
+          { url: imgUrl2, caption: `${a.title || 'Activity'} - view 2` },
+        ];
+        
+        return {
+          _id: a.id && a.id.length === 24 && /^[0-9a-fA-F]{24}$/.test(a.id) ? new ObjectId(a.id) : undefined,
+          nameVi: a.title,
+          nameEn: a.title,
+          location: a.location,
+          attractionType: mappedType,
+          descriptionVi: a.description || '',
+          descriptionEn: a.description || '',
+          thumbnailUrl: imgUrl,
+          images: imageUrls,
+          ticketTypes: [
+            { typeName: "Standard", price: a.price || 150000, description: "Standard admission", isAvailable: true, availableQuantity: null }
+          ],
+          openingHours: {
+            monday: "08:00 - 18:00",
+            tuesday: "08:00 - 18:00",
+            wednesday: "08:00 - 18:00",
+            thursday: "08:00 - 18:00",
+            friday: "08:00 - 18:00",
+            saturday: "08:00 - 20:00",
+            sunday: "08:00 - 20:00",
+            timezone: "GMT+7"
+          },
+          avgRating: a.rating || 4.5,
+          isActive: true,
+          duration: a.duration || '',
+          totalReviews: a.reviewsCount || 0,
+          isFeatured: a.isFeatured || false,
+          highlights: a.highlights || [],
+          inclusions: a.inclusions || [],
+          exclusions: a.exclusions || [],
+          ageRestriction: a.ageRestriction || '',
+          meetingPoint: a.meetingPoint || '',
+          terms: a.terms || '',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        };
+      });
 
       await ttdCol.insertMany(ttdToInsert);
       console.log(`Seeded ${ttdToInsert.length} activities from things_to_do.json.`);

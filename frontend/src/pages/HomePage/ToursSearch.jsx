@@ -7,13 +7,8 @@ import {
   ChildIcon,
   ToursDepartureIcon
 } from './SearchIcons';
-import {
-  getDaysInMonth,
-  getFirstDayOfMonth,
-  getWeekDays,
-  getMonthName,
-  formatDate
-} from '../../utils/SearchUtils';
+import { formatDate, getDaysInMonth, getFirstDayOfMonth, getMonthName, getWeekDays } from '../../utils/SearchUtils';
+import { getTours } from '../../services/tourService';
 import { useNavigate } from 'react-router-dom';
 
 const ToursSearch = ({ t, locale }) => {
@@ -38,6 +33,9 @@ const ToursSearch = ({ t, locale }) => {
   const [childAges, setChildAges] = useState(Array(6).fill(1));
   const [openAgeIndex, setOpenAgeIndex] = useState(null);
   const tourGuestsRef = useRef(null);
+
+  const [dbTourSuggestions, setDbTourSuggestions] = useState([]);
+  const [loadingTours, setLoadingTours] = useState(false);
 
   const tourDestinationsMock = [
     { id: 'china', label: t('china'), count: 120, image: 'https://images.unsplash.com/photo-1508804185872-d7bad1000cb7?auto=format&fit=crop&w=150&h=100' },
@@ -146,6 +144,34 @@ const ToursSearch = ({ t, locale }) => {
   };
 
   useEffect(() => {
+    if (!tourDestination.trim() || tourDestination.length < 2) {
+      setDbTourSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setLoadingTours(true);
+      try {
+        const data = await getTours({ keyword: tourDestination, page: 0, size: 5 });
+        const results = (data.content || []).map(t => ({
+          id: t.id,
+          label: t.title,
+          location: t.destination || t.city,
+          count: t.tourType,
+          image: t.thumbnailUrl || 'https://images.unsplash.com/photo-1508804185872-d7bad1000cb7?auto=format&fit=crop&w=100&h=100'
+        }));
+        setDbTourSuggestions(results);
+      } catch (error) {
+        console.error('Failed to fetch tour suggestions:', error);
+      } finally {
+        setLoadingTours(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [tourDestination]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (tourDestRef.current && !tourDestRef.current.contains(event.target)) setIsTourDestOpen(false);
       if (tourDateRef.current && !tourDateRef.current.contains(event.target)) setIsTourDateOpen(false);
@@ -200,26 +226,55 @@ const ToursSearch = ({ t, locale }) => {
                 </svg>
                 <h4 className="font-bold text-sm uppercase">{t('hotDestinations')}</h4>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[250px] overflow-y-auto pr-2 custom_scrollbar">
-                {tourDestinationsMock.map((dest) => (
-                  <div
-                    key={dest.id}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setTourDestination(dest.label);
-                      setIsTourDestOpen(false);
-                    }}
-                  >
-                    <img src={dest.image} alt={dest.label} className="w-12 h-12 rounded-md object-cover shrink-0" />
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-[#180B51] font-bold text-sm truncate">{dest.label}</span>
-                      <span className="text-[#180B51]/60 text-xs truncate">
-                        {t('toursCount').replace('{{count}}', dest.count)}
-                      </span>
+              <div className="grid grid-cols-1 gap-2 max-h-[250px] overflow-y-auto pr-2 custom_scrollbar">
+                {loadingTours ? (
+                  <div className="p-4 text-center text-gray-400 text-sm italic">Searching...</div>
+                ) : tourDestination.length >= 2 ? (
+                  dbTourSuggestions.length > 0 ? (
+                    dbTourSuggestions.map((dest) => (
+                      <div
+                        key={dest.id}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTourDestination(dest.label);
+                          setIsTourDestOpen(false);
+                        }}
+                      >
+                        <img src={dest.image} alt={dest.label} className="w-12 h-12 rounded-md object-cover shrink-0" />
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[#180B51] font-bold text-sm truncate">{dest.label}</span>
+                          <span className="text-[#180B51]/60 text-xs truncate">
+                            {dest.location} • {dest.count}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-gray-400 text-sm italic">No matching tours found.</div>
+                  )
+                ) : (
+                  // Default popular destinations
+                  tourDestinationsMock.map((dest) => (
+                    <div
+                      key={dest.id}
+                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setTourDestination(dest.label);
+                        setIsTourDestOpen(false);
+                      }}
+                    >
+                      <img src={dest.image} alt={dest.label} className="w-12 h-12 rounded-md object-cover shrink-0" />
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[#180B51] font-bold text-sm truncate">{dest.label}</span>
+                        <span className="text-[#180B51]/60 text-xs truncate">
+                          {t('toursCount').replace('{{count}}', dest.count)}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
           </div>

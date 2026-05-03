@@ -524,5 +524,18 @@
   "catAllActivities": "Tất cả các hoạt động",
   "registerSuccessTitle": "Đăng ký thành công!",
   "registerSuccessDesc": "Chào mừng bạn đến với Hanuvivu. Tài khoản của bạn đã được tạo thành công. Bây giờ bạn có thể đăng nhập để bắt đầu hành trình.",
-  "backToLoginBtn": "Quay lại Đăng nhập"
+  "backToLoginBtn": "Quay lại Đăng nhập",
+  "ttd_all_activities_title": "Tất cả hoạt động",
+  "ttd_all_activities_desc": "Khám phá hàng ngàn trải nghiệm độc đáo chờ bạn tận hưởng.",
+  "ttd_attractions_title": "Điểm tham quan nổi bật",
+  "ttd_attractions_desc": "Khám phá những địa danh nổi tiếng và tuyệt đẹp không thể bỏ lỡ.",
+  "ttd_experiences_title": "Trải nghiệm thú vị",
+  "ttd_experiences_desc": "Tham gia các hoạt động giải trí, thể thao và văn hóa độc đáo.",
+  "ttd_essentials_title": "Tiện ích cần thiết",
+  "ttd_essentials_desc": "Các dịch vụ thiết yếu giúp chuyến đi của bạn suôn sẻ và tiện lợi hơn.",
+  "ttd_empty_title": "Không tìm thấy hoạt động nào",
+  "ttd_empty_desc": "Chúng tôi đang tiếp tục cập nhật thêm nhiều trải nghiệm mới. Hãy quay lại sau nhé!",
+  "ttd_from_price": "Chỉ từ",
+  "ttd_free": "Miễn phí",
+  "ttd_featured_badge": "Nổi bật"
 }

@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AIRLINE_LOGOS = {
-  'Vietnam Airlines': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Vietnam_Airlines_logo.svg/200px-Vietnam_Airlines_logo.svg.png',
-  'VietJet Air': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/VietJet_Air_logo.svg/200px-VietJet_Air_logo.svg.png',
-  'Bamboo Airways': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Bamboo_Airways_Logo.svg/200px-Bamboo_Airways_Logo.svg.png',
-  'Pacific Airlines': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Pacific_Airlines_Logo.svg/200px-Pacific_Airlines_Logo.svg.png',
+  'vietnam airlines': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Vietnam_Airlines_logo.svg/200px-Vietnam_Airlines_logo.svg.png',
+  'vietjet air': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/VietJet_Air_logo.svg/200px-VietJet_Air_logo.svg.png',
+  'bamboo airways': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Bamboo_Airways_Logo.svg/200px-Bamboo_Airways_Logo.svg.png',
+  'pacific airlines': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Pacific_Airlines_Logo.svg/200px-Pacific_Airlines_Logo.svg.png',
+};
+
+const getAirlineLogo = (airlineName) => {
+  if (!airlineName) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png';
+  const nameStr = airlineName.toLowerCase().trim();
+  return AIRLINE_LOGOS[nameStr] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png';
 };
 
 const FlightCard = ({ flight, isCheapest, isFastest }) => {
@@ -45,10 +51,9 @@ const FlightCard = ({ flight, isCheapest, isFastest }) => {
         <div className="flex-shrink-0 flex items-center gap-3 lg:w-36">
           <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden p-1">
             <img
-              src={AIRLINE_LOGOS[flight.airline] || ''}
+              src={getAirlineLogo(flight.airline)}
               alt={flight.airline}
               className="w-full h-full object-contain"
-              onError={e => { e.target.style.display = 'none'; }}
             />
           </div>
           <div>

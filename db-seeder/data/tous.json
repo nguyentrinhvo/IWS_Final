@@ -11,11 +11,36 @@
     "isFeatured": true,
     "description": "Trải nghiệm văn hóa Bắc Bộ: phố cổ Hà Nội, vịnh Hạ Long kỳ quan, ruộng bậc thang Sapa.",
     "itinerary": [
-      { "day": 1, "title": "Hà Nội - Nhận khách - Tham quan phố cổ", "meals": "Sáng, Trưa", "hotel": "Hanoi Paradise Hotel" },
-      { "day": 2, "title": "Hà Nội - Hạ Long - Tàu ngủ đêm", "meals": "Sáng, Trưa, Tối", "hotel": "Cruise 5 sao" },
-      { "day": 3, "title": "Hạ Long - Hà Nội - Tàu hỏa đi Lào Cai", "meals": "Sáng, Trưa", "hotel": "Tàu hỏa" },
-      { "day": 4, "title": "Sapa - Y Tý - Thăm bản Mông", "meals": "Sáng, Trưa, Tối", "hotel": "Sapa Highland Resort" },
-      { "day": 5, "title": "Sapa - Hà Nội - Kết thúc tour", "meals": "Sáng", "hotel": "" }
+      {
+        "day": 1,
+        "title": "Hà Nội - Nhận khách - Tham quan phố cổ",
+        "meals": "Sáng, Trưa",
+        "hotel": "Hanoi Paradise Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Hà Nội - Hạ Long - Tàu ngủ đêm",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Cruise 5 sao"
+      },
+      {
+        "day": 3,
+        "title": "Hạ Long - Hà Nội - Tàu hỏa đi Lào Cai",
+        "meals": "Sáng, Trưa",
+        "hotel": "Tàu hỏa"
+      },
+      {
+        "day": 4,
+        "title": "Sapa - Y Tý - Thăm bản Mông",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Sapa Highland Resort"
+      },
+      {
+        "day": 5,
+        "title": "Sapa - Hà Nội - Kết thúc tour",
+        "meals": "Sáng",
+        "hotel": ""
+      }
     ],
     "highlights": [
       "Tham quan Văn Miếu - Quốc Tử Giám",
@@ -36,7 +61,12 @@
       "Tips cho HDV, lái xe",
       "Visa (nếu có)"
     ],
-    "availableDates": ["2026-06-10", "2026-06-18", "2026-06-25", "2026-07-02"],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-18",
+      "2026-06-25",
+      "2026-07-02"
+    ],
     "departure": "Hà Nội (có thể khởi hành từ HN hoặc sân bay Nội Bài)",
     "tourCode": "HAN-HLG-SAP-5D",
     "images": [
@@ -45,9 +75,27 @@
       "https://picsum.photos/seed/tour001_3/800/600"
     ],
     "departureSchedules": [
-      { "id": "schedule_001_1", "departure": "2026-06-10", "return": "2026-06-14", "seats": 12, "price": 5490000 },
-      { "id": "schedule_001_2", "departure": "2026-06-18", "return": "2026-06-22", "seats": 8, "price": 5690000 },
-      { "id": "schedule_001_3", "departure": "2026-06-25", "return": "2026-06-29", "seats": 15, "price": 5490000 }
+      {
+        "id": "schedule_001_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-14",
+        "seats": 12,
+        "price": 5490000
+      },
+      {
+        "id": "schedule_001_2",
+        "departure": "2026-06-18",
+        "return": "2026-06-22",
+        "seats": 8,
+        "price": 5690000
+      },
+      {
+        "id": "schedule_001_3",
+        "departure": "2026-06-25",
+        "return": "2026-06-29",
+        "seats": 15,
+        "price": 5490000
+      }
     ],
     "terms": "Hủy tour trước 15 ngày hoàn 100%, trước 7 ngày hoàn 50%, trước 3 ngày hoàn 0%."
   },
@@ -63,9 +111,24 @@
     "isFeatured": true,
     "description": "Khám phá thành phố đáng sống Đà Nẵng, phố cổ Hội An mộng mơ và cầu vàng Bà Nà Hills.",
     "itinerary": [
-      { "day": 1, "title": "Đà Nẵng - Nhận khách - Bán đảo Sơn Trà - Biển Mỹ Khê", "meals": "Trưa, Tối", "hotel": "Đà Nẵng Golden Hotel" },
-      { "day": 2, "title": "Bà Nà Hills - Cầu Vàng - Vườn hoa - Rời đi Hội An", "meals": "Sáng, Trưa, Tối", "hotel": "Hội An Ancient Town Hotel" },
-      { "day": 3, "title": "Tham quan phố cổ Hội An - Làng gốm Thanh Hà - Tiễn khách", "meals": "Sáng, Trưa", "hotel": "" }
+      {
+        "day": 1,
+        "title": "Đà Nẵng - Nhận khách - Bán đảo Sơn Trà - Biển Mỹ Khê",
+        "meals": "Trưa, Tối",
+        "hotel": "Đà Nẵng Golden Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Bà Nà Hills - Cầu Vàng - Vườn hoa - Rời đi Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Hội An Ancient Town Hotel"
+      },
+      {
+        "day": 3,
+        "title": "Tham quan phố cổ Hội An - Làng gốm Thanh Hà - Tiễn khách",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
     ],
     "highlights": [
       "Check-in cầu Vàng, vườn Pháp",
@@ -80,8 +143,17 @@
       "Vé cáp treo Bà Nà Hills",
       "Nước suối 0.5L/ngày"
     ],
-    "exclusions": ["Vé máy bay", "Bữa tối ngày 2 (tự do khám phá ẩm thực)", "Chi phí cá nhân"],
-    "availableDates": ["2026-06-05", "2026-06-12", "2026-06-19", "2026-06-26"],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 2 (tự do khám phá ẩm thực)",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-05",
+      "2026-06-12",
+      "2026-06-19",
+      "2026-06-26"
+    ],
     "departure": "Đà Nẵng (sân bay / ga tàu)",
     "tourCode": "DAD-HOI-3D",
     "images": [
@@ -90,9 +162,27 @@
       "https://picsum.photos/seed/tour002_3/800/600"
     ],
     "departureSchedules": [
-      { "id": "schedule_002_1", "departure": "2026-06-05", "return": "2026-06-07", "seats": 20, "price": 3750000 },
-      { "id": "schedule_002_2", "departure": "2026-06-12", "return": "2026-06-14", "seats": 15, "price": 3850000 },
-      { "id": "schedule_002_3", "departure": "2026-06-19", "return": "2026-06-21", "seats": 10, "price": 3950000 }
+      {
+        "id": "schedule_002_1",
+        "departure": "2026-06-05",
+        "return": "2026-06-07",
+        "seats": 20,
+        "price": 3750000
+      },
+      {
+        "id": "schedule_002_2",
+        "departure": "2026-06-12",
+        "return": "2026-06-14",
+        "seats": 15,
+        "price": 3850000
+      },
+      {
+        "id": "schedule_002_3",
+        "departure": "2026-06-19",
+        "return": "2026-06-21",
+        "seats": 10,
+        "price": 3950000
+      }
     ],
     "terms": "Hủy tour trước 7 ngày hoàn 100%, trước 3 ngày hoàn 50%, không hoàn trong ngày."
   },
@@ -108,17 +198,42 @@
     "isFeatured": false,
     "description": "Tìm hiểu lịch sử địa đạo Củ Chi, khám phá miền Tây sông nước Mỹ Tho.",
     "itinerary": [
-      { "day": 1, "title": "TP.HCM - Địa đạo Củ Chi - Chợ Bến Thành", "meals": "Sáng, Trưa", "hotel": "Saigon Central Hotel" },
-      { "day": 2, "title": "TP.HCM - Mỹ Tho - Tham quan làng nghề kẹo dừa", "meals": "Sáng, Trưa", "hotel": "" }
+      {
+        "day": 1,
+        "title": "TP.HCM - Địa đạo Củ Chi - Chợ Bến Thành",
+        "meals": "Sáng, Trưa",
+        "hotel": "Saigon Central Hotel"
+      },
+      {
+        "day": 2,
+        "title": "TP.HCM - Mỹ Tho - Tham quan làng nghề kẹo dừa",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
     ],
     "highlights": [
       "Trải nghiệm đường hầm Củ Chi",
       "Đi thuyền trên sông Tiền, thăm cù lao Thới Sơn",
       "Thưởng thức trái cây miệt vườn, kẹo dừa"
     ],
-    "inclusions": ["Xe tham quan", "Khách sạn 3 sao tiêu chuẩn", "Bữa sáng, 2 bữa chính", "Vé tham quan địa đạo", "Thuyền tham quan Mỹ Tho"],
-    "exclusions": ["Vé máy bay", "Bữa tối ngày 1", "Chi phí cá nhân", "Tips"],
-    "availableDates": ["2026-06-08", "2026-06-15", "2026-06-22"],
+    "inclusions": [
+      "Xe tham quan",
+      "Khách sạn 3 sao tiêu chuẩn",
+      "Bữa sáng, 2 bữa chính",
+      "Vé tham quan địa đạo",
+      "Thuyền tham quan Mỹ Tho"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 1",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-08",
+      "2026-06-15",
+      "2026-06-22"
+    ],
     "departure": "Hồ Chí Minh (trung tâm Q1)",
     "tourCode": "SGN-CCH-MTH-2D",
     "images": [
@@ -126,8 +241,20 @@
       "https://picsum.photos/seed/tour003_2/800/600"
     ],
     "departureSchedules": [
-      { "id": "schedule_003_1", "departure": "2026-06-08", "return": "2026-06-09", "seats": 25, "price": 1850000 },
-      { "id": "schedule_003_2", "departure": "2026-06-15", "return": "2026-06-16", "seats": 18, "price": 1950000 }
+      {
+        "id": "schedule_003_1",
+        "departure": "2026-06-08",
+        "return": "2026-06-09",
+        "seats": 25,
+        "price": 1850000
+      },
+      {
+        "id": "schedule_003_2",
+        "departure": "2026-06-15",
+        "return": "2026-06-16",
+        "seats": 18,
+        "price": 1950000
+      }
     ],
     "terms": "Hủy tour trước 3 ngày hoàn 100%."
   },
@@ -143,14 +270,48 @@
     "isFeatured": true,
     "description": "Nghỉ dưỡng tại thiên đường biển Nha Trang, trải nghiệm công viên VinWonders.",
     "itinerary": [
-      { "day": 1, "title": "Nha Trang - Nhận khách - Tham quan chùa Long Sơn - Tắm bùn", "meals": "Trưa, Tối", "hotel": "Nha Trang Beach Resort" },
-      { "day": 2, "title": "VinWonders - Cáp treo - Thủy cung - Công viên nước", "meals": "Sáng, Tối", "hotel": "Nha Trang Beach Resort" },
-      { "day": 3, "title": "Lặn ngắm san hô tại Hòn Mun - Tiễn khách", "meals": "Sáng, Trưa", "hotel": "" }
+      {
+        "day": 1,
+        "title": "Nha Trang - Nhận khách - Tham quan chùa Long Sơn - Tắm bùn",
+        "meals": "Trưa, Tối",
+        "hotel": "Nha Trang Beach Resort"
+      },
+      {
+        "day": 2,
+        "title": "VinWonders - Cáp treo - Thủy cung - Công viên nước",
+        "meals": "Sáng, Tối",
+        "hotel": "Nha Trang Beach Resort"
+      },
+      {
+        "day": 3,
+        "title": "Lặn ngắm san hô tại Hòn Mun - Tiễn khách",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
     ],
-    "highlights": ["Cáp treo vượt biển dài nhất thế giới", "Thủy cung khổng lồ", "Lặn ngắm san hô", "Tắm bùn khoáng nóng"],
-    "inclusions": ["Xe đưa đón", "Khách sạn 4 sao View biển", "Bữa sáng buffet", "Vé VinWonders + cáp treo", "Thuyền đi Hòn Mun"],
-    "exclusions": ["Vé máy bay", "Bữa trưa ngày 2 (tự do tại VinWonders)", "Chi phí cá nhân"],
-    "availableDates": ["2026-06-04", "2026-06-11", "2026-06-18"],
+    "highlights": [
+      "Cáp treo vượt biển dài nhất thế giới",
+      "Thủy cung khổng lồ",
+      "Lặn ngắm san hô",
+      "Tắm bùn khoáng nóng"
+    ],
+    "inclusions": [
+      "Xe đưa đón",
+      "Khách sạn 4 sao View biển",
+      "Bữa sáng buffet",
+      "Vé VinWonders + cáp treo",
+      "Thuyền đi Hòn Mun"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa trưa ngày 2 (tự do tại VinWonders)",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-04",
+      "2026-06-11",
+      "2026-06-18"
+    ],
     "departure": "Nha Trang (sân bay Cam Ranh / ga Nha Trang)",
     "tourCode": "NTR-VIN-3D",
     "images": [
@@ -158,8 +319,20 @@
       "https://picsum.photos/seed/tour004_2/800/600"
     ],
     "departureSchedules": [
-      { "id": "schedule_004_1", "departure": "2026-06-04", "return": "2026-06-06", "seats": 16, "price": 4250000 },
-      { "id": "schedule_004_2", "departure": "2026-06-11", "return": "2026-06-13", "seats": 10, "price": 4450000 }
+      {
+        "id": "schedule_004_1",
+        "departure": "2026-06-04",
+        "return": "2026-06-06",
+        "seats": 16,
+        "price": 4250000
+      },
+      {
+        "id": "schedule_004_2",
+        "departure": "2026-06-11",
+        "return": "2026-06-13",
+        "seats": 10,
+        "price": 4450000
+      }
     ],
     "terms": "Hủy trước 5 ngày hoàn 100%."
   },
@@ -175,14 +348,46 @@
     "isFeatured": false,
     "description": "Thành phố ngàn hoa, săn mây, check-in nhà thờ, ga xe lửa cổ.",
     "itinerary": [
-      { "day": 1, "title": "Đà Lạt - Thung lũng Tình yêu - Hồ Xuân Hương", "meals": "Trưa, Tối", "hotel": "Đà Lạt Tuyết Hoa Hotel" },
-      { "day": 2, "title": "Thác Pongour - Làng Cù Lần - Chợ Âm Phủ", "meals": "Sáng, Trưa, Tối", "hotel": "Đà Lạt Tuyết Hoa Hotel" },
-      { "day": 3, "title": "Nhà thờ Con Gà - Ga Đà Lạt - Kết thúc", "meals": "Sáng", "hotel": "" }
+      {
+        "day": 1,
+        "title": "Đà Lạt - Thung lũng Tình yêu - Hồ Xuân Hương",
+        "meals": "Trưa, Tối",
+        "hotel": "Đà Lạt Tuyết Hoa Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Thác Pongour - Làng Cù Lần - Chợ Âm Phủ",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Đà Lạt Tuyết Hoa Hotel"
+      },
+      {
+        "day": 3,
+        "title": "Nhà thờ Con Gà - Ga Đà Lạt - Kết thúc",
+        "meals": "Sáng",
+        "hotel": ""
+      }
     ],
-    "highlights": ["Săn mây tại Đà Lạt", "Khám phá thác Pongour hùng vĩ", "Chợ Âm Phủ - ẩm thực độc đáo", "Check-in ga xe lửa cổ nhất Đông Dương"],
-    "inclusions": ["Xe du lịch", "Khách sạn 3 sao trung tâm", "Bữa sáng, 3 bữa chính", "Vé tham quan các điểm"],
-    "exclusions": ["Vé máy bay", "Chi phí cá nhân"],
-    "availableDates": ["2026-06-06", "2026-06-13", "2026-06-20"],
+    "highlights": [
+      "Săn mây tại Đà Lạt",
+      "Khám phá thác Pongour hùng vĩ",
+      "Chợ Âm Phủ - ẩm thực độc đáo",
+      "Check-in ga xe lửa cổ nhất Đông Dương"
+    ],
+    "inclusions": [
+      "Xe du lịch",
+      "Khách sạn 3 sao trung tâm",
+      "Bữa sáng, 3 bữa chính",
+      "Vé tham quan các điểm"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-06",
+      "2026-06-13",
+      "2026-06-20"
+    ],
     "departure": "Đà Lạt (sân bay Liên Khương)",
     "tourCode": "DLT-PGN-3D",
     "images": [
@@ -190,8 +395,5752 @@
       "https://picsum.photos/seed/tour005_2/800/600"
     ],
     "departureSchedules": [
-      { "id": "schedule_005_1", "departure": "2026-06-06", "return": "2026-06-08", "seats": 22, "price": 3150000 },
-      { "id": "schedule_005_2", "departure": "2026-06-13", "return": "2026-06-15", "seats": 14, "price": 3250000 }
+      {
+        "id": "schedule_005_1",
+        "departure": "2026-06-06",
+        "return": "2026-06-08",
+        "seats": 22,
+        "price": 3150000
+      },
+      {
+        "id": "schedule_005_2",
+        "departure": "2026-06-13",
+        "return": "2026-06-15",
+        "seats": 14,
+        "price": 3250000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_HN_001",
+    "title": "Hà Nội City Walking Tour - Phố Cổ & Hoàn Kiếm 1 ngày",
+    "location": "Hà Nội",
+    "price": 890000,
+    "duration": "1 ngày",
+    "rating": 4.9,
+    "reviewsCount": 2341,
+    "image": "https://picsum.photos/seed/hanoi_walk/800/600",
+    "isFeatured": true,
+    "description": "Đi bộ khám phá 36 phố phường Hà Nội cổ kính, tìm hiểu lịch sử ngàn năm văn hiến qua từng con phố, ngõ nhỏ.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Hồ Hoàn Kiếm - Đền Ngọc Sơn - Phố cổ 36 phố phường - Nhà thờ Lớn - Phố Tạ Hiện",
+        "meals": "Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Tham quan Hồ Hoàn Kiếm & Đền Ngọc Sơn",
+      "Khám phá 36 phố phường - phố Hàng Mã, Hàng Đào, Hàng Bạc",
+      "Check-in Nhà thờ Lớn Hà Nội",
+      "Trải nghiệm văn hóa cà phê trứng tại Cà phê Giảng",
+      "Dạo phố Tạ Hiện sôi động về đêm"
+    ],
+    "inclusions": [
+      "Hướng dẫn viên song ngữ Việt-Anh",
+      "Bữa trưa phở Thìn Bờ Hồ",
+      "Cà phê trứng",
+      "Nước uống",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-01",
+      "2026-06-03",
+      "2026-06-05",
+      "2026-06-07",
+      "2026-06-09",
+      "2026-06-11"
+    ],
+    "departure": "Hà Nội (tập trung tại Bờ Hồ Hoàn Kiếm)",
+    "tourCode": "HAN-WALK-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_walk1/800/600",
+      "https://picsum.photos/seed/hanoi_walk2/800/600",
+      "https://picsum.photos/seed/hanoi_walk3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn1_1",
+        "departure": "2026-06-01",
+        "return": "2026-06-01",
+        "seats": 20,
+        "price": 890000
+      },
+      {
+        "id": "schedule_hn1_2",
+        "departure": "2026-06-05",
+        "return": "2026-06-05",
+        "seats": 20,
+        "price": 890000
+      },
+      {
+        "id": "schedule_hn1_3",
+        "departure": "2026-06-09",
+        "return": "2026-06-09",
+        "seats": 20,
+        "price": 890000
+      },
+      {
+        "id": "schedule_hn1_4",
+        "departure": "2026-06-11",
+        "return": "2026-06-11",
+        "seats": 15,
+        "price": 990000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_HN_002",
+    "title": "Hà Nội Street Food Tour - Ẩm thực đường phố 1 ngày",
+    "location": "Hà Nội",
+    "price": 750000,
+    "duration": "1 ngày",
+    "rating": 4.8,
+    "reviewsCount": 1876,
+    "image": "https://picsum.photos/seed/hanoi_food/800/600",
+    "isFeatured": true,
+    "description": "Hành trình thưởng thức 10+ món ẩm thực đường phố nổi tiếng nhất Hà Nội cùng hướng dẫn viên địa phương.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Phở sáng - Bún chả Hương Liên - Bánh cuốn Thanh Trì - Nem chua rán - Chè Bưởi - Bún đậu mắm tôm - Kem Tràng Tiền",
+        "meals": "Sáng, Trưa, Xế chiều",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Thưởng thức phở Hà Nội chính gốc",
+      "Bún chả Obama tại Bún chả Hương Liên",
+      "Bánh cuốn Thanh Trì nóng hổi",
+      "Bún đậu mắm tôm Hàng Khay",
+      "Kem Tràng Tiền huyền thoại",
+      "Tìm hiểu lịch sử ẩm thực Thăng Long"
+    ],
+    "inclusions": [
+      "Hướng dẫn viên ẩm thực",
+      "10+ món ăn thử",
+      "Nước uống",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Đồ uống có cồn",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-02",
+      "2026-06-04",
+      "2026-06-06",
+      "2026-06-08",
+      "2026-06-10"
+    ],
+    "departure": "Hà Nội (tập trung tại phố Lý Quốc Sư)",
+    "tourCode": "HAN-FOOD-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_food1/800/600",
+      "https://picsum.photos/seed/hanoi_food2/800/600",
+      "https://picsum.photos/seed/hanoi_food3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn2_1",
+        "departure": "2026-06-02",
+        "return": "2026-06-02",
+        "seats": 15,
+        "price": 750000
+      },
+      {
+        "id": "schedule_hn2_2",
+        "departure": "2026-06-06",
+        "return": "2026-06-06",
+        "seats": 15,
+        "price": 750000
+      },
+      {
+        "id": "schedule_hn2_3",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 850000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_HN_003",
+    "title": "Hà Nội - Ninh Bình - Tràng An - Bái Đính 2 ngày 1 đêm",
+    "location": "Hà Nội",
+    "price": 2450000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.7,
+    "reviewsCount": 1543,
+    "image": "https://picsum.photos/seed/hanoi_ninhbinh/800/600",
+    "isFeatured": true,
+    "description": "Hành trình khám phá di sản thế giới Tràng An, quần thể chùa Bái Đính và Hang Múa tại Ninh Bình.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Hà Nội - Ninh Bình - Tràng An (đi thuyền) - Hang Múa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Ninh Bình Hidden Charm Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Chùa Bái Đính - Cố đô Hoa Lư - Hà Nội",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Đi thuyền Tràng An - di sản UNESCO",
+      "Leo 500 bậc lên đỉnh Hang Múa ngắm toàn cảnh",
+      "Chiêm bái chùa Bái Đính - ngôi chùa lớn nhất Đông Nam Á",
+      "Tham quan cố đô Hoa Lư - kinh đô đầu tiên của Việt Nam",
+      "Thưởng thức dê núi Ninh Bình, cơm cháy"
+    ],
+    "inclusions": [
+      "Xe 16 chỗ đời mới",
+      "Khách sạn 4 sao",
+      "Bữa sáng buffet, 2 bữa chính",
+      "Vé thuyền Tràng An",
+      "Vé tham quan các điểm",
+      "HDV tiếng Việt/Anh"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 2",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-07",
+      "2026-06-14",
+      "2026-06-21",
+      "2026-06-28"
+    ],
+    "departure": "Hà Nội (đón tại khách sạn nội thành)",
+    "tourCode": "HAN-NB-2D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_nb1/800/600",
+      "https://picsum.photos/seed/hanoi_nb2/800/600",
+      "https://picsum.photos/seed/hanoi_nb3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn3_1",
+        "departure": "2026-06-07",
+        "return": "2026-06-08",
+        "seats": 18,
+        "price": 2450000
+      },
+      {
+        "id": "schedule_hn3_2",
+        "departure": "2026-06-14",
+        "return": "2026-06-15",
+        "seats": 14,
+        "price": 2550000
+      },
+      {
+        "id": "schedule_hn3_3",
+        "departure": "2026-06-21",
+        "return": "2026-06-22",
+        "seats": 20,
+        "price": 2450000
+      },
+      {
+        "id": "schedule_hn3_4",
+        "departure": "2026-06-28",
+        "return": "2026-06-29",
+        "seats": 10,
+        "price": 2650000
+      }
+    ],
+    "terms": "Hủy trước 5 ngày hoàn 100%, trước 3 ngày hoàn 50%."
+  },
+  {
+    "id": "TOUR_HN_004",
+    "title": "Hà Nội Heritage - Văn Miếu, Lăng Bác, Hoàng Thành 1 ngày",
+    "location": "Hà Nội",
+    "price": 980000,
+    "duration": "1 ngày",
+    "rating": 4.6,
+    "reviewsCount": 892,
+    "image": "https://picsum.photos/seed/hanoi_heritage/800/600",
+    "isFeatured": false,
+    "description": "Hành trình tìm hiểu lịch sử ngàn năm Thăng Long qua các di tích quan trọng nhất Hà Nội.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Lăng Chủ tịch Hồ Chí Minh - Chùa Một Cột - Hoàng Thành Thăng Long - Văn Miếu Quốc Tử Giám - Bảo tàng Lịch sử",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Viếng Lăng Chủ tịch Hồ Chí Minh",
+      "Tham quan Chùa Một Cột nghìn năm tuổi",
+      "Khám phá Hoàng Thành Thăng Long - di sản UNESCO",
+      "Văn Miếu - Quốc Tử Giám, trường đại học đầu tiên của Việt Nam",
+      "Bảo tàng Lịch sử Quốc gia"
+    ],
+    "inclusions": [
+      "Xe đưa đón",
+      "HDV song ngữ",
+      "Bữa sáng + trưa",
+      "Vé tham quan tất cả các điểm",
+      "Nước uống"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-03",
+      "2026-06-06",
+      "2026-06-10",
+      "2026-06-13",
+      "2026-06-17"
+    ],
+    "departure": "Hà Nội (đón tại khách sạn)",
+    "tourCode": "HAN-HRTG-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_hrtg1/800/600",
+      "https://picsum.photos/seed/hanoi_hrtg2/800/600",
+      "https://picsum.photos/seed/hanoi_hrtg3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn4_1",
+        "departure": "2026-06-03",
+        "return": "2026-06-03",
+        "seats": 25,
+        "price": 980000
+      },
+      {
+        "id": "schedule_hn4_2",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 25,
+        "price": 980000
+      },
+      {
+        "id": "schedule_hn4_3",
+        "departure": "2026-06-17",
+        "return": "2026-06-17",
+        "seats": 20,
+        "price": 1080000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_HN_005",
+    "title": "Hà Nội - Bát Tràng - Làng lụa Vạn Phúc 1 ngày",
+    "location": "Hà Nội",
+    "price": 650000,
+    "duration": "1 ngày",
+    "rating": 4.5,
+    "reviewsCount": 567,
+    "image": "https://picsum.photos/seed/hanoi_craft/800/600",
+    "isFeatured": false,
+    "description": "Trải nghiệm văn hóa làng nghề truyền thống Hà Nội: tự tay nặn gốm Bát Tràng và tìm hiểu nghề dệt lụa Vạn Phúc.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Làng gốm Bát Tràng (tham quan + trải nghiệm nặn gốm) - Làng lụa Vạn Phúc (tìm hiểu nghề dệt, mua sắm)",
+        "meals": "Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Tự tay nặn gốm tại làng nghề 700 năm tuổi Bát Tràng",
+      "Tham quan xưởng gốm truyền thống",
+      "Tìm hiểu nghề dệt lụa cổ truyền tại Vạn Phúc",
+      "Mua sản phẩm gốm sứ và lụa chính gốc làm quà"
+    ],
+    "inclusions": [
+      "Xe đưa đón từ trung tâm",
+      "HDV",
+      "Bữa trưa tại Bát Tràng",
+      "Phí trải nghiệm nặn gốm",
+      "Nước uống"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Sản phẩm mua thêm",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-04",
+      "2026-06-08",
+      "2026-06-12",
+      "2026-06-16",
+      "2026-06-20"
+    ],
+    "departure": "Hà Nội (tập trung tại Bờ Hồ)",
+    "tourCode": "HAN-CRAFT-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_craft1/800/600",
+      "https://picsum.photos/seed/hanoi_craft2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn5_1",
+        "departure": "2026-06-04",
+        "return": "2026-06-04",
+        "seats": 20,
+        "price": 650000
+      },
+      {
+        "id": "schedule_hn5_2",
+        "departure": "2026-06-08",
+        "return": "2026-06-08",
+        "seats": 20,
+        "price": 650000
+      },
+      {
+        "id": "schedule_hn5_3",
+        "departure": "2026-06-12",
+        "return": "2026-06-12",
+        "seats": 18,
+        "price": 650000
+      },
+      {
+        "id": "schedule_hn5_4",
+        "departure": "2026-06-16",
+        "return": "2026-06-16",
+        "seats": 15,
+        "price": 750000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_011",
+    "title": "Khám phá Hà Nội - Hạ Long - Sapa 5 ngày 4 đêm (Variation 11)",
+    "location": "Hà Nội",
+    "price": 5623439,
+    "duration": "5 ngày 4 đêm",
+    "rating": 4.5,
+    "reviewsCount": 332,
+    "image": "https://picsum.photos/seed/tour001/800/600",
+    "isFeatured": true,
+    "description": "Trải nghiệm văn hóa Bắc Bộ: phố cổ Hà Nội, vịnh Hạ Long kỳ quan, ruộng bậc thang Sapa.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Hà Nội - Nhận khách - Tham quan phố cổ",
+        "meals": "Sáng, Trưa",
+        "hotel": "Hanoi Paradise Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Hà Nội - Hạ Long - Tàu ngủ đêm",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Cruise 5 sao"
+      },
+      {
+        "day": 3,
+        "title": "Hạ Long - Hà Nội - Tàu hỏa đi Lào Cai",
+        "meals": "Sáng, Trưa",
+        "hotel": "Tàu hỏa"
+      },
+      {
+        "day": 4,
+        "title": "Sapa - Y Tý - Thăm bản Mông",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Sapa Highland Resort"
+      },
+      {
+        "day": 5,
+        "title": "Sapa - Hà Nội - Kết thúc tour",
+        "meals": "Sáng",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Tham quan Văn Miếu - Quốc Tử Giám",
+      "Cruise vịnh Hạ Long 2 ngày 1 đêm trên tàu 5 sao",
+      "Trekking bản Cát Cát, làng Mông",
+      "Thưởng thức đặc sản: phố cổ Hà Nội, chả mực Hạ Long, cơm lam Sapa"
+    ],
+    "inclusions": [
+      "Xe đưa đón sân bay/ga tàu",
+      "Khách sạn 3-4 sao (phòng đôi/twin)",
+      "Bữa sáng buffet, 3 bữa chính/ngày",
+      "Vé tham quan, cáp treo Fansipan",
+      "Hướng dẫn viên tiếng Việt/Anh"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Đồ uống, chi phí cá nhân",
+      "Tips cho HDV, lái xe",
+      "Visa (nếu có)"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-18",
+      "2026-06-25",
+      "2026-07-02"
+    ],
+    "departure": "Hà Nội (có thể khởi hành từ HN hoặc sân bay Nội Bài)",
+    "tourCode": "HAN-HLG-SAP-5D",
+    "images": [
+      "https://picsum.photos/seed/tour001_1/800/600",
+      "https://picsum.photos/seed/tour001_2/800/600",
+      "https://picsum.photos/seed/tour001_3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_001_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-14",
+        "seats": 12,
+        "price": 5490000
+      },
+      {
+        "id": "schedule_001_2",
+        "departure": "2026-06-18",
+        "return": "2026-06-22",
+        "seats": 8,
+        "price": 5690000
+      },
+      {
+        "id": "schedule_001_3",
+        "departure": "2026-06-25",
+        "return": "2026-06-29",
+        "seats": 15,
+        "price": 5490000
+      }
+    ],
+    "terms": "Hủy tour trước 15 ngày hoàn 100%, trước 7 ngày hoàn 50%, trước 3 ngày hoàn 0%."
+  },
+  {
+    "id": "TOUR_012",
+    "title": "Đà Nẵng - Hội An - Bà Nà Hills 3 ngày 2 đêm (Variation 12)",
+    "location": "Đà Nẵng",
+    "price": 3888285,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.4,
+    "reviewsCount": 26,
+    "image": "https://picsum.photos/seed/tour002/800/600",
+    "isFeatured": true,
+    "description": "Khám phá thành phố đáng sống Đà Nẵng, phố cổ Hội An mộng mơ và cầu vàng Bà Nà Hills.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Đà Nẵng - Nhận khách - Bán đảo Sơn Trà - Biển Mỹ Khê",
+        "meals": "Trưa, Tối",
+        "hotel": "Đà Nẵng Golden Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Bà Nà Hills - Cầu Vàng - Vườn hoa - Rời đi Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Hội An Ancient Town Hotel"
+      },
+      {
+        "day": 3,
+        "title": "Tham quan phố cổ Hội An - Làng gốm Thanh Hà - Tiễn khách",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Check-in cầu Vàng, vườn Pháp",
+      "Dạo phố cổ Hội An về đêm thả đèn hoa đăng",
+      "Tắm biển Mỹ Khê - top 10 biển đẹp nhất thế giới",
+      "Thưởng thức mì Quảng, cao lầu, bánh xèo"
+    ],
+    "inclusions": [
+      "Xe 16 chỗ đời mới",
+      "Khách sạn 3 sao trung tâm",
+      "Bữa sáng, 3 bữa chính",
+      "Vé cáp treo Bà Nà Hills",
+      "Nước suối 0.5L/ngày"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 2 (tự do khám phá ẩm thực)",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-05",
+      "2026-06-12",
+      "2026-06-19",
+      "2026-06-26"
+    ],
+    "departure": "Đà Nẵng (sân bay / ga tàu)",
+    "tourCode": "DAD-HOI-3D",
+    "images": [
+      "https://picsum.photos/seed/tour002_1/800/600",
+      "https://picsum.photos/seed/tour002_2/800/600",
+      "https://picsum.photos/seed/tour002_3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_002_1",
+        "departure": "2026-06-05",
+        "return": "2026-06-07",
+        "seats": 20,
+        "price": 3750000
+      },
+      {
+        "id": "schedule_002_2",
+        "departure": "2026-06-12",
+        "return": "2026-06-14",
+        "seats": 15,
+        "price": 3850000
+      },
+      {
+        "id": "schedule_002_3",
+        "departure": "2026-06-19",
+        "return": "2026-06-21",
+        "seats": 10,
+        "price": 3950000
+      }
+    ],
+    "terms": "Hủy tour trước 7 ngày hoàn 100%, trước 3 ngày hoàn 50%, không hoàn trong ngày."
+  },
+  {
+    "id": "TOUR_013",
+    "title": "TP.HCM - Củ Chi - Mỹ Tho 2 ngày 1 đêm (Variation 13)",
+    "location": "Hồ Chí Minh",
+    "price": 1904449,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.2,
+    "reviewsCount": 275,
+    "image": "https://picsum.photos/seed/tour003/800/600",
+    "isFeatured": false,
+    "description": "Tìm hiểu lịch sử địa đạo Củ Chi, khám phá miền Tây sông nước Mỹ Tho.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "TP.HCM - Địa đạo Củ Chi - Chợ Bến Thành",
+        "meals": "Sáng, Trưa",
+        "hotel": "Saigon Central Hotel"
+      },
+      {
+        "day": 2,
+        "title": "TP.HCM - Mỹ Tho - Tham quan làng nghề kẹo dừa",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đường hầm Củ Chi",
+      "Đi thuyền trên sông Tiền, thăm cù lao Thới Sơn",
+      "Thưởng thức trái cây miệt vườn, kẹo dừa"
+    ],
+    "inclusions": [
+      "Xe tham quan",
+      "Khách sạn 3 sao tiêu chuẩn",
+      "Bữa sáng, 2 bữa chính",
+      "Vé tham quan địa đạo",
+      "Thuyền tham quan Mỹ Tho"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 1",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-08",
+      "2026-06-15",
+      "2026-06-22"
+    ],
+    "departure": "Hồ Chí Minh (trung tâm Q1)",
+    "tourCode": "SGN-CCH-MTH-2D",
+    "images": [
+      "https://picsum.photos/seed/tour003_1/800/600",
+      "https://picsum.photos/seed/tour003_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_003_1",
+        "departure": "2026-06-08",
+        "return": "2026-06-09",
+        "seats": 25,
+        "price": 1850000
+      },
+      {
+        "id": "schedule_003_2",
+        "departure": "2026-06-15",
+        "return": "2026-06-16",
+        "seats": 18,
+        "price": 1950000
+      }
+    ],
+    "terms": "Hủy tour trước 3 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_014",
+    "title": "Nha Trang - Vinpearl Land - Lặn ngắm san hô 3 ngày 2 đêm (Variation 14)",
+    "location": "Khánh Hòa",
+    "price": 4691259,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.2,
+    "reviewsCount": 33,
+    "image": "https://picsum.photos/seed/tour004/800/600",
+    "isFeatured": true,
+    "description": "Nghỉ dưỡng tại thiên đường biển Nha Trang, trải nghiệm công viên VinWonders.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Nha Trang - Nhận khách - Tham quan chùa Long Sơn - Tắm bùn",
+        "meals": "Trưa, Tối",
+        "hotel": "Nha Trang Beach Resort"
+      },
+      {
+        "day": 2,
+        "title": "VinWonders - Cáp treo - Thủy cung - Công viên nước",
+        "meals": "Sáng, Tối",
+        "hotel": "Nha Trang Beach Resort"
+      },
+      {
+        "day": 3,
+        "title": "Lặn ngắm san hô tại Hòn Mun - Tiễn khách",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Cáp treo vượt biển dài nhất thế giới",
+      "Thủy cung khổng lồ",
+      "Lặn ngắm san hô",
+      "Tắm bùn khoáng nóng"
+    ],
+    "inclusions": [
+      "Xe đưa đón",
+      "Khách sạn 4 sao View biển",
+      "Bữa sáng buffet",
+      "Vé VinWonders + cáp treo",
+      "Thuyền đi Hòn Mun"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa trưa ngày 2 (tự do tại VinWonders)",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-04",
+      "2026-06-11",
+      "2026-06-18"
+    ],
+    "departure": "Nha Trang (sân bay Cam Ranh / ga Nha Trang)",
+    "tourCode": "NTR-VIN-3D",
+    "images": [
+      "https://picsum.photos/seed/tour004_1/800/600",
+      "https://picsum.photos/seed/tour004_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_004_1",
+        "departure": "2026-06-04",
+        "return": "2026-06-06",
+        "seats": 16,
+        "price": 4250000
+      },
+      {
+        "id": "schedule_004_2",
+        "departure": "2026-06-11",
+        "return": "2026-06-13",
+        "seats": 10,
+        "price": 4450000
+      }
+    ],
+    "terms": "Hủy trước 5 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_015",
+    "title": "Đà Lạt mộng mơ - Thác Pongour - Chợ Âm Phủ 3 ngày 2 đêm (Variation 15)",
+    "location": "Lâm Đồng",
+    "price": 3332060,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.4,
+    "reviewsCount": 195,
+    "image": "https://picsum.photos/seed/tour005/800/600",
+    "isFeatured": false,
+    "description": "Thành phố ngàn hoa, săn mây, check-in nhà thờ, ga xe lửa cổ.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Đà Lạt - Thung lũng Tình yêu - Hồ Xuân Hương",
+        "meals": "Trưa, Tối",
+        "hotel": "Đà Lạt Tuyết Hoa Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Thác Pongour - Làng Cù Lần - Chợ Âm Phủ",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Đà Lạt Tuyết Hoa Hotel"
+      },
+      {
+        "day": 3,
+        "title": "Nhà thờ Con Gà - Ga Đà Lạt - Kết thúc",
+        "meals": "Sáng",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Săn mây tại Đà Lạt",
+      "Khám phá thác Pongour hùng vĩ",
+      "Chợ Âm Phủ - ẩm thực độc đáo",
+      "Check-in ga xe lửa cổ nhất Đông Dương"
+    ],
+    "inclusions": [
+      "Xe du lịch",
+      "Khách sạn 3 sao trung tâm",
+      "Bữa sáng, 3 bữa chính",
+      "Vé tham quan các điểm"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-06",
+      "2026-06-13",
+      "2026-06-20"
+    ],
+    "departure": "Đà Lạt (sân bay Liên Khương)",
+    "tourCode": "DLT-PGN-3D",
+    "images": [
+      "https://picsum.photos/seed/tour005_1/800/600",
+      "https://picsum.photos/seed/tour005_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_005_1",
+        "departure": "2026-06-06",
+        "return": "2026-06-08",
+        "seats": 22,
+        "price": 3150000
+      },
+      {
+        "id": "schedule_005_2",
+        "departure": "2026-06-13",
+        "return": "2026-06-15",
+        "seats": 14,
+        "price": 3250000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_016",
+    "title": "Hà Nội City Walking Tour - Phố Cổ & Hoàn Kiếm 1 ngày (Variation 16)",
+    "location": "Hà Nội",
+    "price": 1057208,
+    "duration": "1 ngày",
+    "rating": 4.2,
+    "reviewsCount": 164,
+    "image": "https://picsum.photos/seed/hanoi_walk/800/600",
+    "isFeatured": true,
+    "description": "Đi bộ khám phá 36 phố phường Hà Nội cổ kính, tìm hiểu lịch sử ngàn năm văn hiến qua từng con phố, ngõ nhỏ.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Hồ Hoàn Kiếm - Đền Ngọc Sơn - Phố cổ 36 phố phường - Nhà thờ Lớn - Phố Tạ Hiện",
+        "meals": "Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Tham quan Hồ Hoàn Kiếm & Đền Ngọc Sơn",
+      "Khám phá 36 phố phường - phố Hàng Mã, Hàng Đào, Hàng Bạc",
+      "Check-in Nhà thờ Lớn Hà Nội",
+      "Trải nghiệm văn hóa cà phê trứng tại Cà phê Giảng",
+      "Dạo phố Tạ Hiện sôi động về đêm"
+    ],
+    "inclusions": [
+      "Hướng dẫn viên song ngữ Việt-Anh",
+      "Bữa trưa phở Thìn Bờ Hồ",
+      "Cà phê trứng",
+      "Nước uống",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-01",
+      "2026-06-03",
+      "2026-06-05",
+      "2026-06-07",
+      "2026-06-09",
+      "2026-06-11"
+    ],
+    "departure": "Hà Nội (tập trung tại Bờ Hồ Hoàn Kiếm)",
+    "tourCode": "HAN-WALK-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_walk1/800/600",
+      "https://picsum.photos/seed/hanoi_walk2/800/600",
+      "https://picsum.photos/seed/hanoi_walk3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn1_1",
+        "departure": "2026-06-01",
+        "return": "2026-06-01",
+        "seats": 20,
+        "price": 890000
+      },
+      {
+        "id": "schedule_hn1_2",
+        "departure": "2026-06-05",
+        "return": "2026-06-05",
+        "seats": 20,
+        "price": 890000
+      },
+      {
+        "id": "schedule_hn1_3",
+        "departure": "2026-06-09",
+        "return": "2026-06-09",
+        "seats": 20,
+        "price": 890000
+      },
+      {
+        "id": "schedule_hn1_4",
+        "departure": "2026-06-11",
+        "return": "2026-06-11",
+        "seats": 15,
+        "price": 990000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_017",
+    "title": "Hà Nội Street Food Tour - Ẩm thực đường phố 1 ngày (Variation 17)",
+    "location": "Hà Nội",
+    "price": 786041,
+    "duration": "1 ngày",
+    "rating": 3.5,
+    "reviewsCount": 180,
+    "image": "https://picsum.photos/seed/hanoi_food/800/600",
+    "isFeatured": true,
+    "description": "Hành trình thưởng thức 10+ món ẩm thực đường phố nổi tiếng nhất Hà Nội cùng hướng dẫn viên địa phương.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Phở sáng - Bún chả Hương Liên - Bánh cuốn Thanh Trì - Nem chua rán - Chè Bưởi - Bún đậu mắm tôm - Kem Tràng Tiền",
+        "meals": "Sáng, Trưa, Xế chiều",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Thưởng thức phở Hà Nội chính gốc",
+      "Bún chả Obama tại Bún chả Hương Liên",
+      "Bánh cuốn Thanh Trì nóng hổi",
+      "Bún đậu mắm tôm Hàng Khay",
+      "Kem Tràng Tiền huyền thoại",
+      "Tìm hiểu lịch sử ẩm thực Thăng Long"
+    ],
+    "inclusions": [
+      "Hướng dẫn viên ẩm thực",
+      "10+ món ăn thử",
+      "Nước uống",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Đồ uống có cồn",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-02",
+      "2026-06-04",
+      "2026-06-06",
+      "2026-06-08",
+      "2026-06-10"
+    ],
+    "departure": "Hà Nội (tập trung tại phố Lý Quốc Sư)",
+    "tourCode": "HAN-FOOD-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_food1/800/600",
+      "https://picsum.photos/seed/hanoi_food2/800/600",
+      "https://picsum.photos/seed/hanoi_food3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn2_1",
+        "departure": "2026-06-02",
+        "return": "2026-06-02",
+        "seats": 15,
+        "price": 750000
+      },
+      {
+        "id": "schedule_hn2_2",
+        "departure": "2026-06-06",
+        "return": "2026-06-06",
+        "seats": 15,
+        "price": 750000
+      },
+      {
+        "id": "schedule_hn2_3",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 850000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_018",
+    "title": "Hà Nội - Ninh Bình - Tràng An - Bái Đính 2 ngày 1 đêm (Variation 18)",
+    "location": "Hà Nội",
+    "price": 2787428,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.8,
+    "reviewsCount": 305,
+    "image": "https://picsum.photos/seed/hanoi_ninhbinh/800/600",
+    "isFeatured": true,
+    "description": "Hành trình khám phá di sản thế giới Tràng An, quần thể chùa Bái Đính và Hang Múa tại Ninh Bình.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Hà Nội - Ninh Bình - Tràng An (đi thuyền) - Hang Múa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Ninh Bình Hidden Charm Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Chùa Bái Đính - Cố đô Hoa Lư - Hà Nội",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Đi thuyền Tràng An - di sản UNESCO",
+      "Leo 500 bậc lên đỉnh Hang Múa ngắm toàn cảnh",
+      "Chiêm bái chùa Bái Đính - ngôi chùa lớn nhất Đông Nam Á",
+      "Tham quan cố đô Hoa Lư - kinh đô đầu tiên của Việt Nam",
+      "Thưởng thức dê núi Ninh Bình, cơm cháy"
+    ],
+    "inclusions": [
+      "Xe 16 chỗ đời mới",
+      "Khách sạn 4 sao",
+      "Bữa sáng buffet, 2 bữa chính",
+      "Vé thuyền Tràng An",
+      "Vé tham quan các điểm",
+      "HDV tiếng Việt/Anh"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 2",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-07",
+      "2026-06-14",
+      "2026-06-21",
+      "2026-06-28"
+    ],
+    "departure": "Hà Nội (đón tại khách sạn nội thành)",
+    "tourCode": "HAN-NB-2D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_nb1/800/600",
+      "https://picsum.photos/seed/hanoi_nb2/800/600",
+      "https://picsum.photos/seed/hanoi_nb3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn3_1",
+        "departure": "2026-06-07",
+        "return": "2026-06-08",
+        "seats": 18,
+        "price": 2450000
+      },
+      {
+        "id": "schedule_hn3_2",
+        "departure": "2026-06-14",
+        "return": "2026-06-15",
+        "seats": 14,
+        "price": 2550000
+      },
+      {
+        "id": "schedule_hn3_3",
+        "departure": "2026-06-21",
+        "return": "2026-06-22",
+        "seats": 20,
+        "price": 2450000
+      },
+      {
+        "id": "schedule_hn3_4",
+        "departure": "2026-06-28",
+        "return": "2026-06-29",
+        "seats": 10,
+        "price": 2650000
+      }
+    ],
+    "terms": "Hủy trước 5 ngày hoàn 100%, trước 3 ngày hoàn 50%."
+  },
+  {
+    "id": "TOUR_019",
+    "title": "Hà Nội Heritage - Văn Miếu, Lăng Bác, Hoàng Thành 1 ngày (Variation 19)",
+    "location": "Hà Nội",
+    "price": 1018258,
+    "duration": "1 ngày",
+    "rating": 3.9,
+    "reviewsCount": 107,
+    "image": "https://picsum.photos/seed/hanoi_heritage/800/600",
+    "isFeatured": false,
+    "description": "Hành trình tìm hiểu lịch sử ngàn năm Thăng Long qua các di tích quan trọng nhất Hà Nội.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Lăng Chủ tịch Hồ Chí Minh - Chùa Một Cột - Hoàng Thành Thăng Long - Văn Miếu Quốc Tử Giám - Bảo tàng Lịch sử",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Viếng Lăng Chủ tịch Hồ Chí Minh",
+      "Tham quan Chùa Một Cột nghìn năm tuổi",
+      "Khám phá Hoàng Thành Thăng Long - di sản UNESCO",
+      "Văn Miếu - Quốc Tử Giám, trường đại học đầu tiên của Việt Nam",
+      "Bảo tàng Lịch sử Quốc gia"
+    ],
+    "inclusions": [
+      "Xe đưa đón",
+      "HDV song ngữ",
+      "Bữa sáng + trưa",
+      "Vé tham quan tất cả các điểm",
+      "Nước uống"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-03",
+      "2026-06-06",
+      "2026-06-10",
+      "2026-06-13",
+      "2026-06-17"
+    ],
+    "departure": "Hà Nội (đón tại khách sạn)",
+    "tourCode": "HAN-HRTG-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_hrtg1/800/600",
+      "https://picsum.photos/seed/hanoi_hrtg2/800/600",
+      "https://picsum.photos/seed/hanoi_hrtg3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn4_1",
+        "departure": "2026-06-03",
+        "return": "2026-06-03",
+        "seats": 25,
+        "price": 980000
+      },
+      {
+        "id": "schedule_hn4_2",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 25,
+        "price": 980000
+      },
+      {
+        "id": "schedule_hn4_3",
+        "departure": "2026-06-17",
+        "return": "2026-06-17",
+        "seats": 20,
+        "price": 1080000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_020",
+    "title": "Hà Nội - Bát Tràng - Làng lụa Vạn Phúc 1 ngày (Variation 20)",
+    "location": "Hà Nội",
+    "price": 976854,
+    "duration": "1 ngày",
+    "rating": 3.7,
+    "reviewsCount": 190,
+    "image": "https://picsum.photos/seed/hanoi_craft/800/600",
+    "isFeatured": false,
+    "description": "Trải nghiệm văn hóa làng nghề truyền thống Hà Nội: tự tay nặn gốm Bát Tràng và tìm hiểu nghề dệt lụa Vạn Phúc.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Làng gốm Bát Tràng (tham quan + trải nghiệm nặn gốm) - Làng lụa Vạn Phúc (tìm hiểu nghề dệt, mua sắm)",
+        "meals": "Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Tự tay nặn gốm tại làng nghề 700 năm tuổi Bát Tràng",
+      "Tham quan xưởng gốm truyền thống",
+      "Tìm hiểu nghề dệt lụa cổ truyền tại Vạn Phúc",
+      "Mua sản phẩm gốm sứ và lụa chính gốc làm quà"
+    ],
+    "inclusions": [
+      "Xe đưa đón từ trung tâm",
+      "HDV",
+      "Bữa trưa tại Bát Tràng",
+      "Phí trải nghiệm nặn gốm",
+      "Nước uống"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Khách sạn",
+      "Sản phẩm mua thêm",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-04",
+      "2026-06-08",
+      "2026-06-12",
+      "2026-06-16",
+      "2026-06-20"
+    ],
+    "departure": "Hà Nội (tập trung tại Bờ Hồ)",
+    "tourCode": "HAN-CRAFT-1D",
+    "images": [
+      "https://picsum.photos/seed/hanoi_craft1/800/600",
+      "https://picsum.photos/seed/hanoi_craft2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_hn5_1",
+        "departure": "2026-06-04",
+        "return": "2026-06-04",
+        "seats": 20,
+        "price": 650000
+      },
+      {
+        "id": "schedule_hn5_2",
+        "departure": "2026-06-08",
+        "return": "2026-06-08",
+        "seats": 20,
+        "price": 650000
+      },
+      {
+        "id": "schedule_hn5_3",
+        "departure": "2026-06-12",
+        "return": "2026-06-12",
+        "seats": 18,
+        "price": 650000
+      },
+      {
+        "id": "schedule_hn5_4",
+        "departure": "2026-06-16",
+        "return": "2026-06-16",
+        "seats": 15,
+        "price": 750000
+      }
+    ],
+    "terms": "Hủy trước 1 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_021",
+    "title": "Khám phá Hà Nội - Hạ Long - Sapa 5 ngày 4 đêm (Variation 21)",
+    "location": "Hà Nội",
+    "price": 5504486,
+    "duration": "5 ngày 4 đêm",
+    "rating": 3.6,
+    "reviewsCount": 112,
+    "image": "https://picsum.photos/seed/tour001/800/600",
+    "isFeatured": true,
+    "description": "Trải nghiệm văn hóa Bắc Bộ: phố cổ Hà Nội, vịnh Hạ Long kỳ quan, ruộng bậc thang Sapa.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Hà Nội - Nhận khách - Tham quan phố cổ",
+        "meals": "Sáng, Trưa",
+        "hotel": "Hanoi Paradise Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Hà Nội - Hạ Long - Tàu ngủ đêm",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Cruise 5 sao"
+      },
+      {
+        "day": 3,
+        "title": "Hạ Long - Hà Nội - Tàu hỏa đi Lào Cai",
+        "meals": "Sáng, Trưa",
+        "hotel": "Tàu hỏa"
+      },
+      {
+        "day": 4,
+        "title": "Sapa - Y Tý - Thăm bản Mông",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Sapa Highland Resort"
+      },
+      {
+        "day": 5,
+        "title": "Sapa - Hà Nội - Kết thúc tour",
+        "meals": "Sáng",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Tham quan Văn Miếu - Quốc Tử Giám",
+      "Cruise vịnh Hạ Long 2 ngày 1 đêm trên tàu 5 sao",
+      "Trekking bản Cát Cát, làng Mông",
+      "Thưởng thức đặc sản: phố cổ Hà Nội, chả mực Hạ Long, cơm lam Sapa"
+    ],
+    "inclusions": [
+      "Xe đưa đón sân bay/ga tàu",
+      "Khách sạn 3-4 sao (phòng đôi/twin)",
+      "Bữa sáng buffet, 3 bữa chính/ngày",
+      "Vé tham quan, cáp treo Fansipan",
+      "Hướng dẫn viên tiếng Việt/Anh"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Đồ uống, chi phí cá nhân",
+      "Tips cho HDV, lái xe",
+      "Visa (nếu có)"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-18",
+      "2026-06-25",
+      "2026-07-02"
+    ],
+    "departure": "Hà Nội (có thể khởi hành từ HN hoặc sân bay Nội Bài)",
+    "tourCode": "HAN-HLG-SAP-5D",
+    "images": [
+      "https://picsum.photos/seed/tour001_1/800/600",
+      "https://picsum.photos/seed/tour001_2/800/600",
+      "https://picsum.photos/seed/tour001_3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_001_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-14",
+        "seats": 12,
+        "price": 5490000
+      },
+      {
+        "id": "schedule_001_2",
+        "departure": "2026-06-18",
+        "return": "2026-06-22",
+        "seats": 8,
+        "price": 5690000
+      },
+      {
+        "id": "schedule_001_3",
+        "departure": "2026-06-25",
+        "return": "2026-06-29",
+        "seats": 15,
+        "price": 5490000
+      }
+    ],
+    "terms": "Hủy tour trước 15 ngày hoàn 100%, trước 7 ngày hoàn 50%, trước 3 ngày hoàn 0%."
+  },
+  {
+    "id": "TOUR_022",
+    "title": "Đà Nẵng - Hội An - Bà Nà Hills 3 ngày 2 đêm (Variation 22)",
+    "location": "Đà Nẵng",
+    "price": 4172551,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.3,
+    "reviewsCount": 124,
+    "image": "https://picsum.photos/seed/tour002/800/600",
+    "isFeatured": true,
+    "description": "Khám phá thành phố đáng sống Đà Nẵng, phố cổ Hội An mộng mơ và cầu vàng Bà Nà Hills.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Đà Nẵng - Nhận khách - Bán đảo Sơn Trà - Biển Mỹ Khê",
+        "meals": "Trưa, Tối",
+        "hotel": "Đà Nẵng Golden Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Bà Nà Hills - Cầu Vàng - Vườn hoa - Rời đi Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Hội An Ancient Town Hotel"
+      },
+      {
+        "day": 3,
+        "title": "Tham quan phố cổ Hội An - Làng gốm Thanh Hà - Tiễn khách",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Check-in cầu Vàng, vườn Pháp",
+      "Dạo phố cổ Hội An về đêm thả đèn hoa đăng",
+      "Tắm biển Mỹ Khê - top 10 biển đẹp nhất thế giới",
+      "Thưởng thức mì Quảng, cao lầu, bánh xèo"
+    ],
+    "inclusions": [
+      "Xe 16 chỗ đời mới",
+      "Khách sạn 3 sao trung tâm",
+      "Bữa sáng, 3 bữa chính",
+      "Vé cáp treo Bà Nà Hills",
+      "Nước suối 0.5L/ngày"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 2 (tự do khám phá ẩm thực)",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-05",
+      "2026-06-12",
+      "2026-06-19",
+      "2026-06-26"
+    ],
+    "departure": "Đà Nẵng (sân bay / ga tàu)",
+    "tourCode": "DAD-HOI-3D",
+    "images": [
+      "https://picsum.photos/seed/tour002_1/800/600",
+      "https://picsum.photos/seed/tour002_2/800/600",
+      "https://picsum.photos/seed/tour002_3/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_002_1",
+        "departure": "2026-06-05",
+        "return": "2026-06-07",
+        "seats": 20,
+        "price": 3750000
+      },
+      {
+        "id": "schedule_002_2",
+        "departure": "2026-06-12",
+        "return": "2026-06-14",
+        "seats": 15,
+        "price": 3850000
+      },
+      {
+        "id": "schedule_002_3",
+        "departure": "2026-06-19",
+        "return": "2026-06-21",
+        "seats": 10,
+        "price": 3950000
+      }
+    ],
+    "terms": "Hủy tour trước 7 ngày hoàn 100%, trước 3 ngày hoàn 50%, không hoàn trong ngày."
+  },
+  {
+    "id": "TOUR_023",
+    "title": "TP.HCM - Củ Chi - Mỹ Tho 2 ngày 1 đêm (Variation 23)",
+    "location": "Hồ Chí Minh",
+    "price": 2290530,
+    "duration": "2 ngày 1 đêm",
+    "rating": 3.7,
+    "reviewsCount": 108,
+    "image": "https://picsum.photos/seed/tour003/800/600",
+    "isFeatured": false,
+    "description": "Tìm hiểu lịch sử địa đạo Củ Chi, khám phá miền Tây sông nước Mỹ Tho.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "TP.HCM - Địa đạo Củ Chi - Chợ Bến Thành",
+        "meals": "Sáng, Trưa",
+        "hotel": "Saigon Central Hotel"
+      },
+      {
+        "day": 2,
+        "title": "TP.HCM - Mỹ Tho - Tham quan làng nghề kẹo dừa",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đường hầm Củ Chi",
+      "Đi thuyền trên sông Tiền, thăm cù lao Thới Sơn",
+      "Thưởng thức trái cây miệt vườn, kẹo dừa"
+    ],
+    "inclusions": [
+      "Xe tham quan",
+      "Khách sạn 3 sao tiêu chuẩn",
+      "Bữa sáng, 2 bữa chính",
+      "Vé tham quan địa đạo",
+      "Thuyền tham quan Mỹ Tho"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa tối ngày 1",
+      "Chi phí cá nhân",
+      "Tips"
+    ],
+    "availableDates": [
+      "2026-06-08",
+      "2026-06-15",
+      "2026-06-22"
+    ],
+    "departure": "Hồ Chí Minh (trung tâm Q1)",
+    "tourCode": "SGN-CCH-MTH-2D",
+    "images": [
+      "https://picsum.photos/seed/tour003_1/800/600",
+      "https://picsum.photos/seed/tour003_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_003_1",
+        "departure": "2026-06-08",
+        "return": "2026-06-09",
+        "seats": 25,
+        "price": 1850000
+      },
+      {
+        "id": "schedule_003_2",
+        "departure": "2026-06-15",
+        "return": "2026-06-16",
+        "seats": 18,
+        "price": 1950000
+      }
+    ],
+    "terms": "Hủy tour trước 3 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_024",
+    "title": "Nha Trang - Vinpearl Land - Lặn ngắm san hô 3 ngày 2 đêm (Variation 24)",
+    "location": "Khánh Hòa",
+    "price": 4592816,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.4,
+    "reviewsCount": 56,
+    "image": "https://picsum.photos/seed/tour004/800/600",
+    "isFeatured": true,
+    "description": "Nghỉ dưỡng tại thiên đường biển Nha Trang, trải nghiệm công viên VinWonders.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Nha Trang - Nhận khách - Tham quan chùa Long Sơn - Tắm bùn",
+        "meals": "Trưa, Tối",
+        "hotel": "Nha Trang Beach Resort"
+      },
+      {
+        "day": 2,
+        "title": "VinWonders - Cáp treo - Thủy cung - Công viên nước",
+        "meals": "Sáng, Tối",
+        "hotel": "Nha Trang Beach Resort"
+      },
+      {
+        "day": 3,
+        "title": "Lặn ngắm san hô tại Hòn Mun - Tiễn khách",
+        "meals": "Sáng, Trưa",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Cáp treo vượt biển dài nhất thế giới",
+      "Thủy cung khổng lồ",
+      "Lặn ngắm san hô",
+      "Tắm bùn khoáng nóng"
+    ],
+    "inclusions": [
+      "Xe đưa đón",
+      "Khách sạn 4 sao View biển",
+      "Bữa sáng buffet",
+      "Vé VinWonders + cáp treo",
+      "Thuyền đi Hòn Mun"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Bữa trưa ngày 2 (tự do tại VinWonders)",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-04",
+      "2026-06-11",
+      "2026-06-18"
+    ],
+    "departure": "Nha Trang (sân bay Cam Ranh / ga Nha Trang)",
+    "tourCode": "NTR-VIN-3D",
+    "images": [
+      "https://picsum.photos/seed/tour004_1/800/600",
+      "https://picsum.photos/seed/tour004_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_004_1",
+        "departure": "2026-06-04",
+        "return": "2026-06-06",
+        "seats": 16,
+        "price": 4250000
+      },
+      {
+        "id": "schedule_004_2",
+        "departure": "2026-06-11",
+        "return": "2026-06-13",
+        "seats": 10,
+        "price": 4450000
+      }
+    ],
+    "terms": "Hủy trước 5 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_025",
+    "title": "Đà Lạt mộng mơ - Thác Pongour - Chợ Âm Phủ 3 ngày 2 đêm (Variation 25)",
+    "location": "Lâm Đồng",
+    "price": 3156671,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.6,
+    "reviewsCount": 184,
+    "image": "https://picsum.photos/seed/tour005/800/600",
+    "isFeatured": false,
+    "description": "Thành phố ngàn hoa, săn mây, check-in nhà thờ, ga xe lửa cổ.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Đà Lạt - Thung lũng Tình yêu - Hồ Xuân Hương",
+        "meals": "Trưa, Tối",
+        "hotel": "Đà Lạt Tuyết Hoa Hotel"
+      },
+      {
+        "day": 2,
+        "title": "Thác Pongour - Làng Cù Lần - Chợ Âm Phủ",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Đà Lạt Tuyết Hoa Hotel"
+      },
+      {
+        "day": 3,
+        "title": "Nhà thờ Con Gà - Ga Đà Lạt - Kết thúc",
+        "meals": "Sáng",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Săn mây tại Đà Lạt",
+      "Khám phá thác Pongour hùng vĩ",
+      "Chợ Âm Phủ - ẩm thực độc đáo",
+      "Check-in ga xe lửa cổ nhất Đông Dương"
+    ],
+    "inclusions": [
+      "Xe du lịch",
+      "Khách sạn 3 sao trung tâm",
+      "Bữa sáng, 3 bữa chính",
+      "Vé tham quan các điểm"
+    ],
+    "exclusions": [
+      "Vé máy bay",
+      "Chi phí cá nhân"
+    ],
+    "availableDates": [
+      "2026-06-06",
+      "2026-06-13",
+      "2026-06-20"
+    ],
+    "departure": "Đà Lạt (sân bay Liên Khương)",
+    "tourCode": "DLT-PGN-3D",
+    "images": [
+      "https://picsum.photos/seed/tour005_1/800/600",
+      "https://picsum.photos/seed/tour005_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "schedule_005_1",
+        "departure": "2026-06-06",
+        "return": "2026-06-08",
+        "seats": 22,
+        "price": 3150000
+      },
+      {
+        "id": "schedule_005_2",
+        "departure": "2026-06-13",
+        "return": "2026-06-15",
+        "seats": 14,
+        "price": 3250000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_1",
+    "title": "Tour Trăng mật Hạ Long 1 ngày",
+    "location": "Hạ Long",
+    "price": 7000000,
+    "duration": "1 ngày",
+    "rating": "4.2",
+    "reviewsCount": 62,
+    "image": "https://picsum.photos/seed/gen_1777815588697_1/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -TRĂ-1D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_1_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_1_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_1_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 13,
+        "price": 7000000
+      },
+      {
+        "id": "sch_1777815588697_1_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 19,
+        "price": 7200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_2",
+    "title": "Tour Trăng mật Hội An 5 ngày 4 đêm",
+    "location": "Hội An",
+    "price": 7000000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.4",
+    "reviewsCount": 1749,
+    "image": "https://picsum.photos/seed/gen_1777815588697_2/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hội An với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hội An",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HỘI-TRĂ-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_2_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_2_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_2_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 18,
+        "price": 7000000
+      },
+      {
+        "id": "sch_1777815588697_2_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 12,
+        "price": 7200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_3",
+    "title": "Tour Trăng mật Vũng Tàu 5 ngày 4 đêm",
+    "location": "Vũng Tàu",
+    "price": 3600000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.4",
+    "reviewsCount": 1382,
+    "image": "https://picsum.photos/seed/gen_1777815588697_3/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Vũng Tàu với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Vũng Tàu",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "VŨN-TRĂ-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_3_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_3_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_3_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 17,
+        "price": 3600000
+      },
+      {
+        "id": "sch_1777815588697_3_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 17,
+        "price": 3800000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_4",
+    "title": "Tour Mạo hiểm Hạ Long 1 ngày",
+    "location": "Hạ Long",
+    "price": 2300000,
+    "duration": "1 ngày",
+    "rating": "5.0",
+    "reviewsCount": 2544,
+    "image": "https://picsum.photos/seed/gen_1777815588697_4/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Mạo hiểm đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -MẠO-1D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_4_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_4_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_4_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 17,
+        "price": 2300000
+      },
+      {
+        "id": "sch_1777815588697_4_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 30,
+        "price": 2500000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_5",
+    "title": "Tour Gia đình Phú Quốc 2 ngày 1 đêm",
+    "location": "Phú Quốc",
+    "price": 6900000,
+    "duration": "2 ngày 1 đêm",
+    "rating": "4.3",
+    "reviewsCount": 733,
+    "image": "https://picsum.photos/seed/gen_1777815588697_5/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Phú Quốc với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Phú Quốc",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-GIA-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_5_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_5_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_5_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 13,
+        "price": 6900000
+      },
+      {
+        "id": "sch_1777815588697_5_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 30,
+        "price": 7100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_6",
+    "title": "Tour Gia đình Phú Quốc 5 ngày 4 đêm",
+    "location": "Phú Quốc",
+    "price": 2400000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.1",
+    "reviewsCount": 1007,
+    "image": "https://picsum.photos/seed/gen_1777815588697_6/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Phú Quốc với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Phú Quốc - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Phú Quốc"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Phú Quốc",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-GIA-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_6_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_6_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_6_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 21,
+        "price": 2400000
+      },
+      {
+        "id": "sch_1777815588697_6_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 16,
+        "price": 2600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_7",
+    "title": "Tour Gia đình Hạ Long 5 ngày 4 đêm",
+    "location": "Hạ Long",
+    "price": 7900000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.4",
+    "reviewsCount": 2319,
+    "image": "https://picsum.photos/seed/gen_1777815588697_7/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -GIA-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_7_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_7_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_7_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 19,
+        "price": 7900000
+      },
+      {
+        "id": "sch_1777815588697_7_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 24,
+        "price": 8100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_8",
+    "title": "Tour Gia đình Đà Lạt 3 ngày 2 đêm",
+    "location": "Đà Lạt",
+    "price": 2600000,
+    "duration": "3 ngày 2 đêm",
+    "rating": "4.7",
+    "reviewsCount": 2941,
+    "image": "https://picsum.photos/seed/gen_1777815588697_8/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Lạt với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Lạt",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -GIA-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_8_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_8_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_8_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 25,
+        "price": 2600000
+      },
+      {
+        "id": "sch_1777815588697_8_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 27,
+        "price": 2800000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_9",
+    "title": "Tour Văn hóa Hạ Long 2 ngày 1 đêm",
+    "location": "Hạ Long",
+    "price": 1500000,
+    "duration": "2 ngày 1 đêm",
+    "rating": "5.0",
+    "reviewsCount": 2977,
+    "image": "https://picsum.photos/seed/gen_1777815588697_9/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Văn hóa đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -VĂN-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_9_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_9_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_9_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 11,
+        "price": 1500000
+      },
+      {
+        "id": "sch_1777815588697_9_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 11,
+        "price": 1700000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_10",
+    "title": "Tour Trăng mật Hội An 2 ngày 1 đêm",
+    "location": "Hội An",
+    "price": 3000000,
+    "duration": "2 ngày 1 đêm",
+    "rating": "4.0",
+    "reviewsCount": 1926,
+    "image": "https://picsum.photos/seed/gen_1777815588697_10/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hội An với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hội An",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HỘI-TRĂ-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_10_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_10_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_10_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 3000000
+      },
+      {
+        "id": "sch_1777815588697_10_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 16,
+        "price": 3200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_11",
+    "title": "Tour Văn hóa Đà Lạt 5 ngày 4 đêm",
+    "location": "Đà Lạt",
+    "price": 3800000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.0",
+    "reviewsCount": 668,
+    "image": "https://picsum.photos/seed/gen_1777815588697_11/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Lạt với tour Văn hóa đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Lạt",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -VĂN-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_11_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_11_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_11_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 17,
+        "price": 3800000
+      },
+      {
+        "id": "sch_1777815588697_11_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 25,
+        "price": 4000000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_12",
+    "title": "Tour Khám phá Đà Nẵng 1 ngày",
+    "location": "Đà Nẵng",
+    "price": 5400000,
+    "duration": "1 ngày",
+    "rating": "4.6",
+    "reviewsCount": 2520,
+    "image": "https://picsum.photos/seed/gen_1777815588697_12/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Nẵng với tour Khám phá đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Nẵng",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -KHÁ-1D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_12_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_12_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_12_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 17,
+        "price": 5400000
+      },
+      {
+        "id": "sch_1777815588697_12_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 17,
+        "price": 5600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_13",
+    "title": "Tour Văn hóa Nha Trang 1 ngày",
+    "location": "Nha Trang",
+    "price": 2300000,
+    "duration": "1 ngày",
+    "rating": "4.1",
+    "reviewsCount": 1928,
+    "image": "https://picsum.photos/seed/gen_1777815588697_13/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Nha Trang với tour Văn hóa đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Nha Trang - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Nha Trang",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "NHA-VĂN-1D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_13_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_13_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_13_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 23,
+        "price": 2300000
+      },
+      {
+        "id": "sch_1777815588697_13_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 15,
+        "price": 2500000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_14",
+    "title": "Tour Gia đình Huế 3 ngày 2 đêm",
+    "location": "Huế",
+    "price": 5200000,
+    "duration": "3 ngày 2 đêm",
+    "rating": "4.7",
+    "reviewsCount": 2249,
+    "image": "https://picsum.photos/seed/gen_1777815588697_14/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Huế với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Huế",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HUẾ-GIA-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_14_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_14_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_14_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 29,
+        "price": 5200000
+      },
+      {
+        "id": "sch_1777815588697_14_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 22,
+        "price": 5400000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_15",
+    "title": "Tour Gia đình Huế 4 ngày 3 đêm",
+    "location": "Huế",
+    "price": 5200000,
+    "duration": "4 ngày 3 đêm",
+    "rating": "5.0",
+    "reviewsCount": 461,
+    "image": "https://picsum.photos/seed/gen_1777815588697_15/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Huế với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Huế",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HUẾ-GIA-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_15_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_15_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_15_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 30,
+        "price": 5200000
+      },
+      {
+        "id": "sch_1777815588697_15_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 19,
+        "price": 5400000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_16",
+    "title": "Tour Trăng mật Đà Nẵng 5 ngày 4 đêm",
+    "location": "Đà Nẵng",
+    "price": 1500000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.8",
+    "reviewsCount": 2168,
+    "image": "https://picsum.photos/seed/gen_1777815588697_16/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Nẵng với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Nẵng",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -TRĂ-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_16_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_16_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_16_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 18,
+        "price": 1500000
+      },
+      {
+        "id": "sch_1777815588697_16_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 20,
+        "price": 1700000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_17",
+    "title": "Tour Trăng mật Vũng Tàu 4 ngày 3 đêm",
+    "location": "Vũng Tàu",
+    "price": 3400000,
+    "duration": "4 ngày 3 đêm",
+    "rating": "4.2",
+    "reviewsCount": 1637,
+    "image": "https://picsum.photos/seed/gen_1777815588697_17/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Vũng Tàu với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Vũng Tàu",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "VŨN-TRĂ-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_17_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_17_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_17_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 28,
+        "price": 3400000
+      },
+      {
+        "id": "sch_1777815588697_17_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 26,
+        "price": 3600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_18",
+    "title": "Tour Mạo hiểm Đà Nẵng 1 ngày",
+    "location": "Đà Nẵng",
+    "price": 4300000,
+    "duration": "1 ngày",
+    "rating": "4.5",
+    "reviewsCount": 297,
+    "image": "https://picsum.photos/seed/gen_1777815588697_18/800/600",
+    "isFeatured": true,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Nẵng với tour Mạo hiểm đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Nẵng",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -MẠO-1D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_18_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_18_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_18_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 21,
+        "price": 4300000
+      },
+      {
+        "id": "sch_1777815588697_18_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 22,
+        "price": 4500000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_19",
+    "title": "Tour Văn hóa Vũng Tàu 5 ngày 4 đêm",
+    "location": "Vũng Tàu",
+    "price": 7400000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.3",
+    "reviewsCount": 194,
+    "image": "https://picsum.photos/seed/gen_1777815588697_19/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Vũng Tàu với tour Văn hóa đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Vũng Tàu - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Vũng Tàu"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Vũng Tàu",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "VŨN-VĂN-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_19_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_19_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_19_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 7400000
+      },
+      {
+        "id": "sch_1777815588697_19_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 21,
+        "price": 7600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_20",
+    "title": "Tour Nghỉ dưỡng Huế 3 ngày 2 đêm",
+    "location": "Huế",
+    "price": 4000000,
+    "duration": "3 ngày 2 đêm",
+    "rating": "4.6",
+    "reviewsCount": 1719,
+    "image": "https://picsum.photos/seed/gen_1777815588697_20/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Huế với tour Nghỉ dưỡng đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Huế - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Huế"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Huế",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HUẾ-NGH-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_20_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_20_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_20_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 24,
+        "price": 4000000
+      },
+      {
+        "id": "sch_1777815588697_20_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 15,
+        "price": 4200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_21",
+    "title": "Tour Nghỉ dưỡng Hạ Long 5 ngày 4 đêm",
+    "location": "Hạ Long",
+    "price": 5100000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.6",
+    "reviewsCount": 2333,
+    "image": "https://picsum.photos/seed/gen_1777815588697_21/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Nghỉ dưỡng đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -NGH-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_21_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_21_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_21_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 29,
+        "price": 5100000
+      },
+      {
+        "id": "sch_1777815588697_21_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 17,
+        "price": 5300000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_22",
+    "title": "Tour Trăng mật Đà Lạt 2 ngày 1 đêm",
+    "location": "Đà Lạt",
+    "price": 1200000,
+    "duration": "2 ngày 1 đêm",
+    "rating": "4.0",
+    "reviewsCount": 354,
+    "image": "https://picsum.photos/seed/gen_1777815588697_22/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Lạt với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Lạt",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -TRĂ-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_22_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_22_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_22_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 16,
+        "price": 1200000
+      },
+      {
+        "id": "sch_1777815588697_22_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 15,
+        "price": 1400000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_23",
+    "title": "Tour Khám phá Đà Nẵng 3 ngày 2 đêm",
+    "location": "Đà Nẵng",
+    "price": 4800000,
+    "duration": "3 ngày 2 đêm",
+    "rating": "4.4",
+    "reviewsCount": 409,
+    "image": "https://picsum.photos/seed/gen_1777815588697_23/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Nẵng với tour Khám phá đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Đà Nẵng - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Nẵng"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Nẵng",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -KHÁ-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_23_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_23_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_23_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 10,
+        "price": 4800000
+      },
+      {
+        "id": "sch_1777815588697_23_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 17,
+        "price": 5000000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_24",
+    "title": "Tour Nghỉ dưỡng Hạ Long 1 ngày",
+    "location": "Hạ Long",
+    "price": 5800000,
+    "duration": "1 ngày",
+    "rating": "4.3",
+    "reviewsCount": 2162,
+    "image": "https://picsum.photos/seed/gen_1777815588697_24/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Nghỉ dưỡng đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": ""
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -NGH-1D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_24_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_24_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_24_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 5800000
+      },
+      {
+        "id": "sch_1777815588697_24_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 10,
+        "price": 6000000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_25",
+    "title": "Tour Gia đình Nha Trang 4 ngày 3 đêm",
+    "location": "Nha Trang",
+    "price": 8000000,
+    "duration": "4 ngày 3 đêm",
+    "rating": "4.2",
+    "reviewsCount": 390,
+    "image": "https://picsum.photos/seed/gen_1777815588697_25/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Nha Trang với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Nha Trang - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Nha Trang"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Nha Trang - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Nha Trang"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Nha Trang - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Nha Trang"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Nha Trang - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Nha Trang"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Nha Trang",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "NHA-GIA-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_25_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_25_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_25_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 8000000
+      },
+      {
+        "id": "sch_1777815588697_25_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 20,
+        "price": 8200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_26",
+    "title": "Tour Nghỉ dưỡng Đà Lạt 4 ngày 3 đêm",
+    "location": "Đà Lạt",
+    "price": 3900000,
+    "duration": "4 ngày 3 đêm",
+    "rating": "5.0",
+    "reviewsCount": 291,
+    "image": "https://picsum.photos/seed/gen_1777815588697_26/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Đà Lạt với tour Nghỉ dưỡng đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Đà Lạt - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Đà Lạt"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Đà Lạt",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -NGH-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_26_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_26_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_26_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 23,
+        "price": 3900000
+      },
+      {
+        "id": "sch_1777815588697_26_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 15,
+        "price": 4100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_27",
+    "title": "Tour Gia đình Hội An 5 ngày 4 đêm",
+    "location": "Hội An",
+    "price": 7500000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.3",
+    "reviewsCount": 2391,
+    "image": "https://picsum.photos/seed/gen_1777815588697_27/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hội An với tour Gia đình đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hội An",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HỘI-GIA-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_27_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_27_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_27_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 24,
+        "price": 7500000
+      },
+      {
+        "id": "sch_1777815588697_27_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 27,
+        "price": 7700000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_28",
+    "title": "Tour Khám phá Hạ Long 5 ngày 4 đêm",
+    "location": "Hạ Long",
+    "price": 6700000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.0",
+    "reviewsCount": 2691,
+    "image": "https://picsum.photos/seed/gen_1777815588697_28/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Khám phá đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -KHÁ-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_28_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_28_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_28_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 20,
+        "price": 6700000
+      },
+      {
+        "id": "sch_1777815588697_28_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 27,
+        "price": 6900000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_29",
+    "title": "Tour Trăng mật Hạ Long 4 ngày 3 đêm",
+    "location": "Hạ Long",
+    "price": 1300000,
+    "duration": "4 ngày 3 đêm",
+    "rating": "4.5",
+    "reviewsCount": 354,
+    "image": "https://picsum.photos/seed/gen_1777815588697_29/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hạ Long với tour Trăng mật đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hạ Long - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hạ Long",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -TRĂ-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_29_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_29_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_29_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 10,
+        "price": 1300000
+      },
+      {
+        "id": "sch_1777815588697_29_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 13,
+        "price": 1500000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815588697_30",
+    "title": "Tour Văn hóa Hội An 5 ngày 4 đêm",
+    "location": "Hội An",
+    "price": 2500000,
+    "duration": "5 ngày 4 đêm",
+    "rating": "4.0",
+    "reviewsCount": 1159,
+    "image": "https://picsum.photos/seed/gen_1777815588697_30/800/600",
+    "isFeatured": false,
+    "description": "Khám phá vẻ đẹp tuyệt vời của Hội An với tour Văn hóa đặc sắc, mang lại những trải nghiệm khó quên.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5 tại Hội An - Tham quan và nghỉ ngơi",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn 4 sao Hội An"
+      }
+    ],
+    "highlights": [
+      "Trải nghiệm đặc sắc tại Hội An",
+      "Tham quan các địa danh nổi tiếng",
+      "Thưởng thức ẩm thực địa phương",
+      "Nghỉ dưỡng chuẩn 4 sao"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn 4 sao",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HỘI-VĂN-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815588697_30_1/800/600",
+      "https://picsum.photos/seed/gen_1777815588697_30_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815588697_30_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 10,
+        "price": 2500000
+      },
+      {
+        "id": "sch_1777815588697_30_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 10,
+        "price": 2700000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945413",
+    "title": "Văn hóa Hạ Long Tuyệt vời 3 ngày",
+    "location": "Hạ Long",
+    "price": 4900000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.1,
+    "reviewsCount": 1488,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_0/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình văn hóa tại Hạ Long mang lại cho bạn những trải nghiệm tuyệt vời và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Hạ Long",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Hạ Long",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hạ Long"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Hạ Long",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Hạ Long",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -VĂN-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_0_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_0_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_0_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 22,
+        "price": 4900000
+      },
+      {
+        "id": "sch_1777815945413_0_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 14,
+        "price": 5100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945414",
+    "title": "Mạo hiểm Quy Nhơn Độc đáo 5 ngày",
+    "location": "Quy Nhơn",
+    "price": 7900000,
+    "duration": "5 ngày 4 đêm",
+    "rating": 4.3,
+    "reviewsCount": 1196,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_1/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình mạo hiểm tại Quy Nhơn mang lại cho bạn những trải nghiệm độc đáo và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Quy Nhơn",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "QUY-MẠO-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_1_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_1_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_1_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 22,
+        "price": 7900000
+      },
+      {
+        "id": "sch_1777815945413_1_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 17,
+        "price": 8100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945415",
+    "title": "Mạo hiểm Phú Quốc Độc đáo 4 ngày",
+    "location": "Phú Quốc",
+    "price": 4100000,
+    "duration": "4 ngày 3 đêm",
+    "rating": 4.2,
+    "reviewsCount": 189,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_2/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình mạo hiểm tại Phú Quốc mang lại cho bạn những trải nghiệm độc đáo và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Phú Quốc",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-MẠO-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_2_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_2_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_2_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 12,
+        "price": 4100000
+      },
+      {
+        "id": "sch_1777815945413_2_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 23,
+        "price": 4300000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945416",
+    "title": "Khám phá Phú Quốc Độc đáo 3 ngày",
+    "location": "Phú Quốc",
+    "price": 6900000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.3,
+    "reviewsCount": 671,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_3/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình khám phá tại Phú Quốc mang lại cho bạn những trải nghiệm độc đáo và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Phú Quốc",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-KHÁ-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_3_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_3_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_3_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 25,
+        "price": 6900000
+      },
+      {
+        "id": "sch_1777815945413_3_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 17,
+        "price": 7100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945417",
+    "title": "Khám phá Nha Trang Hoang sơ 3 ngày",
+    "location": "Nha Trang",
+    "price": 1900000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.6,
+    "reviewsCount": 1055,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_4/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình khám phá tại Nha Trang mang lại cho bạn những trải nghiệm hoang sơ và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Nha Trang",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Nha Trang"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Nha Trang",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Nha Trang"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Nha Trang",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Nha Trang"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Nha Trang",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "NHA-KHÁ-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_4_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_4_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_4_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 26,
+        "price": 1900000
+      },
+      {
+        "id": "sch_1777815945413_4_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 16,
+        "price": 2100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945418",
+    "title": "Nghỉ dưỡng Hội An Hấp dẫn 3 ngày",
+    "location": "Hội An",
+    "price": 7500000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4,
+    "reviewsCount": 995,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_5/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình nghỉ dưỡng tại Hội An mang lại cho bạn những trải nghiệm hấp dẫn và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hội An"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hội An"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hội An"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Hội An",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HỘI-NGH-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_5_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_5_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_5_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 19,
+        "price": 7500000
+      },
+      {
+        "id": "sch_1777815945413_5_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 13,
+        "price": 7700000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945419",
+    "title": "Khám phá Đà Nẵng Kỳ thú 2 ngày",
+    "location": "Đà Nẵng",
+    "price": 6400000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.9,
+    "reviewsCount": 1725,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_6/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình khám phá tại Đà Nẵng mang lại cho bạn những trải nghiệm kỳ thú và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Đà Nẵng",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -KHÁ-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_6_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_6_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_6_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 23,
+        "price": 6400000
+      },
+      {
+        "id": "sch_1777815945413_6_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 29,
+        "price": 6600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945420",
+    "title": "Nghỉ dưỡng Đà Lạt Hấp dẫn 2 ngày",
+    "location": "Đà Lạt",
+    "price": 4700000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4,
+    "reviewsCount": 802,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_7/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình nghỉ dưỡng tại Đà Lạt mang lại cho bạn những trải nghiệm hấp dẫn và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Đà Lạt",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Lạt"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Đà Lạt",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Lạt"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Đà Lạt",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -NGH-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_7_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_7_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_7_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 20,
+        "price": 4700000
+      },
+      {
+        "id": "sch_1777815945413_7_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 22,
+        "price": 4900000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945421",
+    "title": "Văn hóa Hội An Kỳ vĩ 2 ngày",
+    "location": "Hội An",
+    "price": 2400000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.5,
+    "reviewsCount": 1045,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_8/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình văn hóa tại Hội An mang lại cho bạn những trải nghiệm kỳ vĩ và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hội An"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Hội An",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hội An"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Hội An",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HỘI-VĂN-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_8_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_8_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_8_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 16,
+        "price": 2400000
+      },
+      {
+        "id": "sch_1777815945413_8_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 21,
+        "price": 2600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945422",
+    "title": "Khám phá Hạ Long Thơ mộng 3 ngày",
+    "location": "Hạ Long",
+    "price": 3000000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.1,
+    "reviewsCount": 1127,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_9/800/600",
+    "isFeatured": true,
+    "description": "Một hành trình khám phá tại Hạ Long mang lại cho bạn những trải nghiệm thơ mộng và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Hạ Long",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hạ Long"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Hạ Long",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hạ Long"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Hạ Long",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Hạ Long"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Hạ Long",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HẠ -KHÁ-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_9_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_9_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_9_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 24,
+        "price": 3000000
+      },
+      {
+        "id": "sch_1777815945413_9_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 12,
+        "price": 3200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945423",
+    "title": "Khám phá Phú Quốc Kỳ thú 3 ngày",
+    "location": "Phú Quốc",
+    "price": 2000000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 5,
+    "reviewsCount": 142,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_10/800/600",
+    "isFeatured": true,
+    "description": "Một hành trình khám phá tại Phú Quốc mang lại cho bạn những trải nghiệm kỳ thú và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Phú Quốc",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-KHÁ-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_10_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_10_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_10_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 24,
+        "price": 2000000
+      },
+      {
+        "id": "sch_1777815945413_10_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 14,
+        "price": 2200000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945424",
+    "title": "Mạo hiểm Phú Yên Hoang sơ 5 ngày",
+    "location": "Phú Yên",
+    "price": 3900000,
+    "duration": "5 ngày 4 đêm",
+    "rating": 4.2,
+    "reviewsCount": 657,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_11/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình mạo hiểm tại Phú Yên mang lại cho bạn những trải nghiệm hoang sơ và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Phú Yên",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Yên"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Phú Yên",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Yên"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Phú Yên",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Yên"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4: Khám phá Phú Yên",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Yên"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5: Khám phá Phú Yên",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Yên"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Phú Yên",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-MẠO-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_11_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_11_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_11_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 13,
+        "price": 3900000
+      },
+      {
+        "id": "sch_1777815945413_11_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 28,
+        "price": 4100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945425",
+    "title": "Trải nghiệm Nha Trang Kỳ thú 2 ngày",
+    "location": "Nha Trang",
+    "price": 1900000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.5,
+    "reviewsCount": 627,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_12/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình trải nghiệm tại Nha Trang mang lại cho bạn những trải nghiệm kỳ thú và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Nha Trang",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Nha Trang"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Nha Trang",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Nha Trang"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Nha Trang",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "NHA-TRẢ-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_12_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_12_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_12_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 23,
+        "price": 1900000
+      },
+      {
+        "id": "sch_1777815945413_12_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 26,
+        "price": 2100000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945426",
+    "title": "Văn hóa Đà Nẵng Kỳ thú 3 ngày",
+    "location": "Đà Nẵng",
+    "price": 3200000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.4,
+    "reviewsCount": 1363,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_13/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình văn hóa tại Đà Nẵng mang lại cho bạn những trải nghiệm kỳ thú và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Đà Nẵng",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -VĂN-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_13_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_13_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_13_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 29,
+        "price": 3200000
+      },
+      {
+        "id": "sch_1777815945413_13_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 20,
+        "price": 3400000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945427",
+    "title": "Khám phá Sapa Tuyệt vời 2 ngày",
+    "location": "Sapa",
+    "price": 7800000,
+    "duration": "2 ngày 1 đêm",
+    "rating": 4.3,
+    "reviewsCount": 1178,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_14/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình khám phá tại Sapa mang lại cho bạn những trải nghiệm tuyệt vời và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Sapa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Sapa"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Sapa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Sapa"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Sapa",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "SAP-KHÁ-2D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_14_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_14_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_14_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 26,
+        "price": 7800000
+      },
+      {
+        "id": "sch_1777815945413_14_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 16,
+        "price": 8000000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945428",
+    "title": "Nghỉ dưỡng Phú Quốc Kỳ thú 4 ngày",
+    "location": "Phú Quốc",
+    "price": 7500000,
+    "duration": "4 ngày 3 đêm",
+    "rating": 4.5,
+    "reviewsCount": 789,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_15/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình nghỉ dưỡng tại Phú Quốc mang lại cho bạn những trải nghiệm kỳ thú và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4: Khám phá Phú Quốc",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Phú Quốc"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Phú Quốc",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "PHÚ-NGH-4D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_15_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_15_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_15_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 22,
+        "price": 7500000
+      },
+      {
+        "id": "sch_1777815945413_15_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 12,
+        "price": 7700000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945429",
+    "title": "Nghỉ dưỡng Đà Nẵng Hoang sơ 3 ngày",
+    "location": "Đà Nẵng",
+    "price": 1600000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.2,
+    "reviewsCount": 1108,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_16/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình nghỉ dưỡng tại Đà Nẵng mang lại cho bạn những trải nghiệm hoang sơ và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Đà Nẵng",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Đà Nẵng"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Đà Nẵng",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "ĐÀ -NGH-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_16_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_16_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_16_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 30,
+        "price": 1600000
+      },
+      {
+        "id": "sch_1777815945413_16_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 13,
+        "price": 1800000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945430",
+    "title": "Văn hóa Huế Độc đáo 5 ngày",
+    "location": "Huế",
+    "price": 7400000,
+    "duration": "5 ngày 4 đêm",
+    "rating": 4.3,
+    "reviewsCount": 1023,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_17/800/600",
+    "isFeatured": false,
+    "description": "Một hành trình văn hóa tại Huế mang lại cho bạn những trải nghiệm độc đáo và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Huế",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Huế"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Huế",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Huế"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Huế",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Huế"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4: Khám phá Huế",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Huế"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5: Khám phá Huế",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Huế"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Huế",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "HUẾ-VĂN-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_17_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_17_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_17_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 16,
+        "price": 7400000
+      },
+      {
+        "id": "sch_1777815945413_17_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 19,
+        "price": 7600000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945431",
+    "title": "Trải nghiệm Quy Nhơn Độc đáo 5 ngày",
+    "location": "Quy Nhơn",
+    "price": 4600000,
+    "duration": "5 ngày 4 đêm",
+    "rating": 4.6,
+    "reviewsCount": 124,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_18/800/600",
+    "isFeatured": true,
+    "description": "Một hành trình trải nghiệm tại Quy Nhơn mang lại cho bạn những trải nghiệm độc đáo và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 4,
+        "title": "Ngày 4: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      },
+      {
+        "day": 5,
+        "title": "Ngày 5: Khám phá Quy Nhơn",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Quy Nhơn"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Quy Nhơn",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "QUY-TRẢ-5D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_18_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_18_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_18_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 26,
+        "price": 4600000
+      },
+      {
+        "id": "sch_1777815945413_18_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 26,
+        "price": 4800000
+      }
+    ],
+    "terms": "Hủy trước 7 ngày hoàn 100%."
+  },
+  {
+    "id": "TOUR_GEN_1777815945432",
+    "title": "Nghỉ dưỡng Sapa Kỳ thú 3 ngày",
+    "location": "Sapa",
+    "price": 3700000,
+    "duration": "3 ngày 2 đêm",
+    "rating": 4.9,
+    "reviewsCount": 1971,
+    "image": "https://picsum.photos/seed/gen_tour_1777815945413_19/800/600",
+    "isFeatured": true,
+    "description": "Một hành trình nghỉ dưỡng tại Sapa mang lại cho bạn những trải nghiệm kỳ thú và khó quên cùng gia đình và người thân.",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Khám phá Sapa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Sapa"
+      },
+      {
+        "day": 2,
+        "title": "Ngày 2: Khám phá Sapa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Sapa"
+      },
+      {
+        "day": 3,
+        "title": "Ngày 3: Khám phá Sapa",
+        "meals": "Sáng, Trưa, Tối",
+        "hotel": "Khách sạn tại Sapa"
+      }
+    ],
+    "highlights": [
+      "Tham quan các điểm nổi tiếng tại Sapa",
+      "Thưởng thức ẩm thực địa phương đặc sắc",
+      "Nghỉ ngơi và thư giãn"
+    ],
+    "inclusions": [
+      "Xe đưa đón đời mới",
+      "Khách sạn tiêu chuẩn",
+      "Các bữa ăn theo chương trình",
+      "Hướng dẫn viên nhiệt tình",
+      "Bảo hiểm du lịch"
+    ],
+    "exclusions": [
+      "Vé máy bay khứ hồi",
+      "Chi phí cá nhân ngoài chương trình",
+      "VAT"
+    ],
+    "availableDates": [
+      "2026-06-10",
+      "2026-06-15",
+      "2026-06-20",
+      "2026-07-01",
+      "2026-07-15"
+    ],
+    "departure": "Hà Nội / TP. Hồ Chí Minh",
+    "tourCode": "SAP-NGH-3D",
+    "images": [
+      "https://picsum.photos/seed/gen_1777815945413_19_1/800/600",
+      "https://picsum.photos/seed/gen_1777815945413_19_2/800/600"
+    ],
+    "departureSchedules": [
+      {
+        "id": "sch_1777815945413_19_1",
+        "departure": "2026-06-10",
+        "return": "2026-06-10",
+        "seats": 16,
+        "price": 3700000
+      },
+      {
+        "id": "sch_1777815945413_19_2",
+        "departure": "2026-06-20",
+        "return": "2026-06-20",
+        "seats": 10,
+        "price": 3900000
+      }
     ],
     "terms": "Hủy trước 7 ngày hoàn 100%."
   }

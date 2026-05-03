@@ -1,18 +1,23 @@
-// src/pages/ThingsToDoPage/Attractions.jsx
 import React from 'react';
+import ActivityCard from './ActivityCard';
+import { useGlobal } from '../../context/GlobalContext';
 
 const Attractions = ({ data }) => {
+  const { t } = useGlobal();
+
+  if (!data || data.length === 0) return null;
+
   return (
-    <div className="attractions-section">
-      <h2>Điểm tham quan nổi bật</h2>
-      <div className="card-list">
+    <div className="py-8 w-full max-w-[1200px] mx-auto px-4 md:px-6">
+      <div className="flex flex-col mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{t('ttd_attractions_title')}</h2>
+        <p className="text-gray-600 text-sm md:text-base">{t('ttd_attractions_desc')}</p>
+        <div className="h-1 w-16 bg-[#007BFF] mt-3 rounded-full"></div>
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {data.map((item) => (
-          <div className="card" key={item.id}>
-            <h3>{item.name}</h3>
-            <p>⭐ {item.rating || 'Chưa có đánh giá'}</p>
-            <p>{item.price === 0 ? 'Miễn phí' : `₫${item.price}K`}</p>
-            {item.location && <p>📍 {item.location}</p>}
-          </div>
+          <ActivityCard key={item.id} item={item} />
         ))}
       </div>
     </div>

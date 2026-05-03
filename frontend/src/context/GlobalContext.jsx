@@ -41,10 +41,17 @@ export const GlobalProvider = ({ children }) => {
     getRates();
   }, [currency]);
 
-  const t = (key) => {
+  const t = (key, params) => {
     const langKey = language?.toUpperCase() || 'EN';
-    return translations[langKey]?.[key] || key;
+    let str = translations[langKey]?.[key] || key;
+    if (params && typeof params === 'object') {
+      Object.entries(params).forEach(([k, v]) => {
+        str = str.replace(new RegExp(`\\{\\{${k}\\}\\}`, 'g'), v);
+      });
+    }
+    return str;
   };
+
 
   return (
     <GlobalContext.Provider value={{ currency, setCurrency, language, setLanguage, rates, t }}>

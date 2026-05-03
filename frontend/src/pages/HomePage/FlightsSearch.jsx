@@ -15,6 +15,7 @@ import {
   formatDate
 } from '../../utils/SearchUtils';
 import { useNavigate } from 'react-router-dom';
+import flightService from '../../services/flightService';
 
 const FlightsSearch = ({ t, locale }) => {
   const navigate = useNavigate();
@@ -64,48 +65,84 @@ const FlightsSearch = ({ t, locale }) => {
   const mobileDateRef = useRef(null);
   const mobilePassengersRef = useRef(null);
   const mobileCabinRef = useRef(null);
+  const [dbLocations, setDbLocations] = useState([]);
 
-  const flightLocationCategories = [
-    {
-      titleKey: 'flightPopularCities',
-      places: [
-        { name: 'Hong Kong', airport: 'Hong Kong International Airport' },
-        { name: 'Korea', airport: 'Incheon International Airport' },
-        { name: 'China', airport: 'Beijing Capital International Airport' },
-        { name: 'Japan', airport: 'Narita International Airport' },
-        { name: 'Singapore', airport: 'Changi Airport' },
-      ]
-    },
-    {
-      titleKey: 'flightVietnam',
-      places: [
-        { name: 'Phu Quoc', airport: 'Phu Quoc International Airport' },
-        { name: 'Ha Long', airport: 'Van Don International Airport' },
-        { name: 'Da Nang', airport: 'Da Nang International Airport' },
-        { name: 'Da Lat', airport: 'Lien Khuong Airport' },
-      ]
-    },
-    {
-      titleKey: 'flightEurope',
-      places: [
-        { name: 'America', airport: 'John F. Kennedy International Airport' },
-        { name: 'Germany', airport: 'Frankfurt Airport' },
-      ]
-    },
-    {
-      titleKey: 'flightAsia',
-      places: [
-        { name: 'China', airport: 'Beijing Capital International Airport' },
-        { name: 'Singapore', airport: 'Changi Airport' },
-        { name: 'Australia', airport: 'Sydney Kingsford Smith Airport' },
-        { name: 'Laos', airport: 'Wattay International Airport' },
-        { name: 'Thai', airport: 'Suvarnabhumi Airport' },
-        { name: 'Cambodia', airport: 'Phnom Penh International Airport' },
-      ]
-    },
-  ];
+  const airportMap = {
+    "HAN": { name: "Hanoi", airport: "Noi Bai International Airport (HAN)" },
+    "SGN": { name: "Ho Chi Minh City", airport: "Tan Son Nhat International Airport (SGN)" },
+    "DAD": { name: "Da Nang", airport: "Da Nang International Airport (DAD)" },
+    "PQC": { name: "Phu Quoc", airport: "Phu Quoc International Airport (PQC)" },
+    "CXR": { name: "Nha Trang", airport: "Cam Ranh International Airport (CXR)" },
+  };
 
-  const flightAllPlaces = flightLocationCategories.flatMap(c => c.places);
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const locs = await flightService.getLocations();
+        const mapped = locs.map(code => airportMap[code] || { name: code, airport: code });
+        setDbLocations(mapped);
+      } catch (err) {
+        console.error("Failed to fetch flight locations", err);
+      }
+    };
+    fetchLocations();
+  }, []);
+
+  const flightLocationCategories = [];
+
+  const flightAllPlaces = dbLocations;
+
+  const handleSearch = () => {
+    const finalFrom = flightFrom || (flightFromQuery ? { name: flightFromQuery, airport: flightFromQuery } : null);
+    const finalTo = flightTo || (flightToQuery ? { name: flightToQuery, airport: flightToQuery } : null);
+
+    if (activeFlightFilter === "oneWayRoundTrip") {
+      if (!finalFrom || !finalTo) {
+        alert(t("pleaseSelectOriginAndDestination") || "Please select origin and destination");
+        return;
+      }
+      if (!flightDepartureDate) {
+        alert(t("pleaseSelectDepartureDate") || "Please select departure date");
+        return;
+      }
+    } else if (activeFlightFilter === "multiCity") {
+      const hasEmptySegment = multiCityFlights.some(
+        (seg) => !seg.from || !seg.to || !seg.date
+      );
+      if (hasEmptySegment) {
+        alert(t("pleaseCompleteAllMultiCityFlights") || "Please complete all multi-city segments");
+        return;
+      }
+    }
+
+    const searchParams = {
+      tripType: activeFlightFilter === "oneWayRoundTrip" ? (isReturnFlight ? "roundtrip" : "oneway") : "multicity",
+      directFlightsOnly: false, // Default or add state if needed
+      cabinClass: flightCabinClass,
+      adults: flightAdults,
+      children: flightChildren,
+      infants: flightInfants,
+      timestamp: new Date().toISOString(),
+    };
+
+    if (activeFlightFilter === "oneWayRoundTrip") {
+      searchParams.from = { name: finalFrom.name, airport: finalFrom.airport };
+      searchParams.to = { name: finalTo.name, airport: finalTo.airport };
+      searchParams.departureDate = flightDepartureDate.toISOString();
+      if (isReturnFlight && flightReturnDate) {
+        searchParams.returnDate = flightReturnDate.toISOString();
+      } else {
+        searchParams.returnDate = null;
+      }
+    } else {
+      searchParams.segments = multiCityFlights.map((seg) => ({
+        from: { name: seg.from?.name, airport: seg.from?.airport },
+        to: { name: seg.to?.name, airport: seg.to?.airport },
+        date: seg.date?.toISOString(),
+      }));
+    }
+    navigate("/flights/search", { state: { searchParams } });
+  };
 
   const flightFilters = [
     { id: 'oneWayRoundTrip', label: t('oneWayRoundTrip') },
@@ -428,31 +465,6 @@ const FlightsSearch = ({ t, locale }) => {
     </div>
   );
 
-  const renderMobileDateDropdown = () => (
-    <div className="p-3 flex flex-col" onClick={(e) => e.stopPropagation()}>
-      <div className="flex justify-between items-center mb-3 px-2">
-        <button
-          className={`p-2 rounded-full transition-colors ${flightCalendarMonth.getFullYear() === new Date().getFullYear() && flightCalendarMonth.getMonth() === new Date().getMonth() ? 'text-gray-300 cursor-not-allowed' : 'text-[#180B51] hover:bg-gray-100'}`}
-          onClick={() => {
-            const curr = new Date();
-            if (flightCalendarMonth.getFullYear() === curr.getFullYear() && flightCalendarMonth.getMonth() === curr.getMonth()) return;
-            setFlightCalendarMonth(new Date(flightCalendarMonth.getFullYear(), flightCalendarMonth.getMonth() - 1, 1));
-          }}
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
-        </button>
-        <span className="text-[#180B51] font-bold text-sm">{getMonthName(flightCalendarMonth, locale)}</span>
-        <button
-          className="p-2 rounded-full text-[#180B51] hover:bg-gray-100 transition-colors cursor-pointer"
-          onClick={() => setFlightCalendarMonth(new Date(flightCalendarMonth.getFullYear(), flightCalendarMonth.getMonth() + 1, 1))}
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
-        </button>
-      </div>
-      {renderFlightCalendarMonth(flightCalendarMonth)}
-    </div>
-  );
-
   const renderMobileMultiCityDateDropdown = (flightId, currentDate, minDate, onSelect) => {
     const mcCal = mcCalendarMonths[flightId] || new Date(new Date().getFullYear(), new Date().getMonth(), 1);
     return (
@@ -481,6 +493,30 @@ const FlightsSearch = ({ t, locale }) => {
     );
   };
 
+  const renderMobileDateDropdown = () => (
+    <div className="p-3 flex flex-col" onClick={(e) => e.stopPropagation()}>
+      <div className="flex justify-between items-center mb-3 px-2">
+        <button
+          className={`p-2 rounded-full transition-colors ${flightCalendarMonth.getFullYear() === new Date().getFullYear() && flightCalendarMonth.getMonth() === new Date().getMonth() ? 'text-gray-300 cursor-not-allowed' : 'text-[#180B51] hover:bg-gray-100'}`}
+          onClick={() => {
+            const curr = new Date();
+            if (flightCalendarMonth.getFullYear() === curr.getFullYear() && flightCalendarMonth.getMonth() === curr.getMonth()) return;
+            setFlightCalendarMonth(new Date(flightCalendarMonth.getFullYear(), flightCalendarMonth.getMonth() - 1, 1));
+          }}
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+        </button>
+        <span className="text-[#180B51] font-bold text-sm">{getMonthName(flightCalendarMonth, locale)}</span>
+        <button
+          className="p-2 rounded-full text-[#180B51] hover:bg-gray-100 transition-colors cursor-pointer"
+          onClick={() => setFlightCalendarMonth(new Date(flightCalendarMonth.getFullYear(), flightCalendarMonth.getMonth() + 1, 1))}
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+        </button>
+      </div>
+      {renderFlightCalendarMonth(flightCalendarMonth)}
+    </div>
+  );
   return (
     <>
       <div className="flights_filters_wrapper absolute top-[65px] left-[16px] right-[16px] md:left-[48px] md:right-[48px] flex items-center justify-between gap-2 z-20 flex-wrap xl:flex-nowrap">
@@ -711,7 +747,7 @@ const FlightsSearch = ({ t, locale }) => {
                 </div>
               </div>
               <div 
-                onClick={() => navigate('/flights/search')}
+                onClick={handleSearch}
                 className="flights_search_btn md:w-[60px] xl:w-[73px] h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-full shrink-0 transition-colors hover:bg-[#b57215]"
               >
                 <svg className="md:w-5 md:h-5 xl:w-7 xl:h-7 text-white font-bold" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
@@ -898,7 +934,7 @@ const FlightsSearch = ({ t, locale }) => {
                 </div>
               </div>
               <div 
-                onClick={() => navigate('/flights/search')}
+                onClick={handleSearch}
                 className="w-full h-[52px] md:h-[62px] bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl gap-2 hover:bg-[#b57215] transition-colors shadow-lg"
               >
                 <svg className="w-6 h-6 text-white shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
@@ -936,7 +972,7 @@ const FlightsSearch = ({ t, locale }) => {
                           if (isMcDateOpen) setMcDateOpen(null);
                         }}
                       >
-                        <span className="absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t('from')}</span>
+                        <span className="absolute -top-[25px] left-0 text-[#180B51]/60 font-bold text-[13px] whitespace-nowrap">{t('from')}</span>
                         <FlightTakeoffIcon className="md:w-6 md:h-6 xl:w-8 xl:h-8 text-[#007BFF] shrink-0" />
                         <div className="flex-1 flex flex-col min-w-0">
                           <input type="text" 
@@ -983,7 +1019,7 @@ const FlightsSearch = ({ t, locale }) => {
                           if (isMcDateOpen) setMcDateOpen(null);
                         }}
                       >
-                        <span className="absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t('to')}</span>
+                        <span className="absolute -top-[25px] left-0 text-[#180B51]/60 font-bold text-[13px] whitespace-nowrap">{t('to')}</span>
                         <FlightLandingIcon className="md:w-6 md:h-6 xl:w-8 xl:h-8 text-[#007BFF] shrink-0" />
                         <div className="flex-1 flex flex-col min-w-0">
                           <input type="text" 
@@ -1077,7 +1113,7 @@ const FlightsSearch = ({ t, locale }) => {
                           }
                         }}
                       >
-                        <span className="absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t('departureDate')}</span>
+                        <span className="absolute -top-[25px] left-0 text-[#180B51]/60 font-bold text-[13px] whitespace-nowrap">{t('departureDate')}</span>
                         <CalendarIcon className="md:w-6 md:h-6 xl:w-8 xl:h-8 text-[#007BFF] shrink-0" />
                         <span className="text-[#180B51] md:text-sm xl:text-lg font-medium whitespace-nowrap truncate">
                           {flight.date ? formatDate(flight.date, locale) : formatDate(today, locale)}
@@ -1137,7 +1173,7 @@ const FlightsSearch = ({ t, locale }) => {
                   <span className="text-[#180B51] text-[16px] font-bold whitespace-nowrap">{t('addAnotherFlight')}</span>
                 </div>
                 <div 
-                  onClick={() => navigate('/flights/search')}
+                  onClick={handleSearch}
                   className={`h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl shrink-0 transition-colors hover:bg-[#b57215] px-6 gap-3 ${multiCityFlights.length >= 3 ? 'mr-[61px]' : ''}`}
                 >
                   <svg className="w-6 h-6 text-white font-bold shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
@@ -1347,7 +1383,7 @@ const FlightsSearch = ({ t, locale }) => {
                   </div>
                 </div>
                 <div 
-                  onClick={() => navigate('/flights/search')}
+                  onClick={handleSearch}
                   className="w-full h-[52px] md:h-[62px] bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl gap-2 hover:bg-[#b57215] transition-colors shadow-lg"
                 >
                   <svg className="w-6 h-6 text-white shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">

@@ -1,50 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { hotelService } from '../../services/hotelService';
 
 const HotelSearchBox = () => {
   const navigate = useNavigate();
   const [destination, setDestination] = useState('');
+  const [isDestOpen, setIsDestOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const destRef = useRef(null);
+  
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState('2 Adults, 0 Children, 1 Room');
+  
+  // Guests & Rooms state
+  const [guests, setGuests] = useState({ adults: 2, children: 0, rooms: 1 });
+  const [isGuestsOpen, setIsGuestsOpen] = useState(false);
+  const guestsRef = useRef(null);
 
-  const tabs = [
-    { name: 'Tours', path: '/tours', icon: (
-      <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    )},
-    { name: 'Hotels', path: '/hotels', icon: (
-      <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-      </svg>
-    )},
-    { name: 'Flights', path: '/flights', icon: (
-      <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-      </svg>
-    )},
-    { name: 'Cars & Trains', path: '/transport', icon: (
-      <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-      </svg>
-    )},
-    { name: 'Things to Do', path: '/things-to-do', icon: (
-      <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    )},
-  ];
+  // Fetch suggestions from DB
+  useEffect(() => {
+    if (!destination.trim() || destination.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await hotelService.searchHotels(destination, null, null, null, 0, 5);
+        // Map hotels and unique cities
+        const hotels = (data.content || []).map(h => ({
+          id: h.id,
+          name: h.name,
+          region: h.city,
+          type: 'hotel',
+          image: h.thumbnailUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=100&h=100'
+        }));
+        setSuggestions(hotels);
+      } catch (error) {
+        console.error('Failed to fetch suggestions:', error);
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [destination]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (destRef.current && !destRef.current.contains(event.target)) {
+        setIsDestOpen(false);
+      }
+      if (guestsRef.current && !guestsRef.current.contains(event.target)) {
+        setIsGuestsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSearch = () => {
     const city = destination.trim() || 'Hà Nội';
+    setIsDestOpen(false);
+    setIsGuestsOpen(false);
     navigate('/hotels/search', {
       state: {
         location: city,
         city: city,
         checkIn,
         checkOut,
-        guests,
+        guests: `${guests.adults} Adults, ${guests.children} Children, ${guests.rooms} Room`,
       }
     });
   };
@@ -53,9 +80,16 @@ const HotelSearchBox = () => {
     if (e.key === 'Enter') handleSearch();
   };
 
+  const updateGuests = (type, delta) => {
+    setGuests(prev => {
+      const next = { ...prev, [type]: Math.max(type === 'adults' || type === 'rooms' ? 1 : 0, prev[type] + delta) };
+      return next;
+    });
+  };
+
   return (
     <div
-      className="relative w-full h-[500px] bg-cover bg-center flex flex-col justify-center items-center px-4"
+      className="relative w-full h-[500px] bg-cover bg-center flex flex-col justify-center items-center px-4 z-[40]"
       style={{
         backgroundImage: "url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')",
         backgroundColor: "#2d5a8b"
@@ -68,31 +102,15 @@ const HotelSearchBox = () => {
           Your Perfect Stay Awaits
         </h1>
 
-        {/* Tab Pills */}
-        <div className="bg-white/95 backdrop-blur-md rounded-full shadow-lg p-1.5 mb-4 flex overflow-x-auto hide-scrollbar max-w-full">
-          {tabs.map((tab) => (
-            <button
-              key={tab.name}
-              onClick={() => navigate(tab.path)}
-              className={`flex items-center px-4 md:px-6 py-2 rounded-full font-semibold text-[15px] transition-colors whitespace-nowrap ${
-                tab.name === 'Hotels'
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
-              }`}
-            >
-              <span className={tab.name === 'Hotels' ? 'text-blue-600' : 'text-gray-500'}>
-                {tab.icon}
-              </span>
-              {tab.name}
-            </button>
-          ))}
-        </div>
 
         {/* Search Box */}
-        <div className="bg-white rounded-2xl shadow-2xl p-6 w-full">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 w-full relative z-50">
           <div className="flex flex-col lg:flex-row gap-3">
             {/* Destination */}
-            <div className="flex-[2] flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors focus-within:border-blue-500">
+            <div 
+              ref={destRef}
+              className="flex-[2] flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors focus-within:border-blue-500 bg-white"
+            >
               <span className="text-[11px] text-gray-500 font-medium mb-0.5">City, hotel, or destination</span>
               <div className="flex items-center">
                 <svg className="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,15 +120,56 @@ const HotelSearchBox = () => {
                   type="text"
                   placeholder="Where are you going?"
                   value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
+                  onFocus={() => setIsDestOpen(true)}
+                  onChange={(e) => {
+                    setDestination(e.target.value);
+                    setIsDestOpen(true);
+                  }}
                   onKeyDown={handleKeyDown}
                   className="w-full focus:outline-none font-bold text-gray-900 text-[15px] p-0 border-0 bg-transparent placeholder:text-gray-300"
                 />
               </div>
+
+              {/* Suggestions Dropdown */}
+              {isDestOpen && (suggestions.length > 0 || loading) && (
+                <div className="absolute top-[110%] left-0 w-full min-w-[350px] bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] overflow-hidden">
+                  <div className="p-4">
+                    <h4 className="text-[11px] font-bold text-[#007BFF] uppercase mb-3 tracking-wider">
+                      {loading ? 'Searching...' : 'Database Suggestions'}
+                    </h4>
+                    <div className="flex flex-col gap-1">
+                      {suggestions.map((item) => (
+                        <div
+                          key={item.id}
+                          onClick={() => {
+                            setDestination(item.name);
+                            setIsDestOpen(false);
+                          }}
+                          className="flex items-center gap-4 p-3 rounded-xl hover:bg-blue-50 cursor-pointer transition-all group"
+                        >
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            className="w-12 h-12 rounded-lg object-cover shadow-sm group-hover:scale-105 transition-transform" 
+                          />
+                          <div className="flex flex-col">
+                            <span className="text-[#180B51] font-bold text-sm">{item.name}</span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[11px] text-gray-400 font-medium">{item.region}</span>
+                              <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                              <span className="text-[11px] text-[#7978E9] font-bold capitalize">{item.type}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Check-in */}
-            <div className="flex-1 flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors focus-within:border-blue-500">
+            <div className="flex-1 flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors focus-within:border-blue-500 bg-white">
               <span className="text-[11px] text-gray-500 font-medium mb-0.5">Check-in</span>
               <div className="flex items-center">
                 <svg className="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,7 +185,7 @@ const HotelSearchBox = () => {
             </div>
 
             {/* Check-out */}
-            <div className="flex-1 flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors focus-within:border-blue-500">
+            <div className="flex-1 flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors focus-within:border-blue-500 bg-white">
               <span className="text-[11px] text-gray-500 font-medium mb-0.5">Check-out</span>
               <div className="flex items-center">
                 <svg className="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -142,19 +201,72 @@ const HotelSearchBox = () => {
             </div>
 
             {/* Guests */}
-            <div className="flex-[1.5] flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors">
+            <div 
+              ref={guestsRef}
+              className="flex-[1.5] flex flex-col relative border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 transition-colors bg-white cursor-pointer"
+              onClick={() => setIsGuestsOpen(!isGuestsOpen)}
+            >
               <span className="text-[11px] text-gray-500 font-medium mb-0.5">Guests and Rooms</span>
               <div className="flex items-center">
                 <svg className="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <input
-                  type="text"
-                  readOnly
-                  value={guests}
-                  className="w-full focus:outline-none font-bold text-gray-900 text-[15px] p-0 border-0 bg-transparent cursor-pointer"
-                />
+                <span className="w-full font-bold text-gray-900 text-[15px] truncate">
+                  {guests.adults} Adults, {guests.children} Children, {guests.rooms} Room
+                </span>
               </div>
+
+              {/* Guests Dropdown */}
+              {isGuestsOpen && (
+                <div 
+                  className="absolute top-[110%] left-0 w-full min-w-[280px] bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] p-4"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="space-y-4">
+                    {/* Adults */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-gray-900 text-sm">Adults</span>
+                        <span className="text-[10px] text-gray-400">Age 13+</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => updateGuests('adults', -1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">-</button>
+                        <span className="font-bold text-sm w-4 text-center">{guests.adults}</span>
+                        <button onClick={() => updateGuests('adults', 1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">+</button>
+                      </div>
+                    </div>
+                    {/* Children */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-gray-900 text-sm">Children</span>
+                        <span className="text-[10px] text-gray-400">Age 0-12</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => updateGuests('children', -1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">-</button>
+                        <span className="font-bold text-sm w-4 text-center">{guests.children}</span>
+                        <button onClick={() => updateGuests('children', 1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">+</button>
+                      </div>
+                    </div>
+                    {/* Rooms */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-gray-900 text-sm">Rooms</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => updateGuests('rooms', -1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">-</button>
+                        <span className="font-bold text-sm w-4 text-center">{guests.rooms}</span>
+                        <button onClick={() => updateGuests('rooms', 1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">+</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setIsGuestsOpen(false)}
+                    className="w-full mt-4 bg-[#7978E9] text-white font-bold py-2 rounded-lg text-sm shadow-md"
+                  >
+                    Done
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Search Button */}

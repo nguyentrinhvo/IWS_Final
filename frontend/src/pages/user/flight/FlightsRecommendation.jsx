@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import flightService from '../../../services/flightService';
 
 const RecommendationIcon = () => (
   <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6,106 +7,63 @@ const RecommendationIcon = () => (
   </svg>
 );
 
-const popularRoutesList = [
-  "Hanoi (HAN) to Ho Chi Minh City (SGN)",
-  "Da Nang (DAD) to Ho Chi Minh City (SGN)",
-  "Hanoi (HAN) to Da Nang (DAD)",
-  "Ho Chi Minh City (SGN) to Phu Quoc (PQC)",
-  "Hanoi (HAN) to Phu Quoc (PQC)",
-  "Da Nang (DAD) to Hanoi (HAN)",
-  "Ho Chi Minh City (SGN) to Da Lat (DLI)",
-  "Hanoi (HAN) to Nha Trang (CXR)",
-  "Ho Chi Minh City (SGN) to Nha Trang (CXR)",
-  "Hanoi (HAN) to Hue (HUI)",
-  "Ho Chi Minh City (SGN) to Hanoi (HAN)",
-  "Da Nang (DAD) to Phu Quoc (PQC)",
-  "Hanoi (HAN) to Da Lat (DLI)",
-  "Ho Chi Minh City (SGN) to Hue (HUI)",
-  "Hanoi (HAN) to Thanh Hoa (THD)",
-  "Ho Chi Minh City (SGN) to Thanh Hoa (THD)",
-  "Da Nang (DAD) to Nha Trang (CXR)",
-  "Hanoi (HAN) to Hai Phong (HPH)",
-  "Ho Chi Minh City (SGN) to Hai Phong (HPH)",
-  "Hanoi (HAN) to Vinh (VII)"
-];
-
-const popularDestinationsList = [
-  "Ho Chi Minh City (SGN)",
-  "Hanoi (HAN)",
-  "Da Nang (DAD)",
-  "Phu Quoc (PQC)",
-  "Nha Trang (CXR)",
-  "Da Lat (DLI)",
-  "Hue (HUI)",
-  "Hai Phong (HPH)",
-  "Thanh Hoa (THD)",
-  "Vinh (VII)",
-  "Quy Nhon (UIH)",
-  "Tuy Hoa (TBB)",
-  "Buon Ma Thuot (BMV)",
-  "Pleiku (PXU)",
-  "Chu Lai (VCL)",
-  "Rach Gia (VKG)",
-  "Ca Mau (CAH)",
-  "Con Dao (VCS)",
-  "Ban Me Thuot (BMV)",
-  "Dong Hoi (VDH)"
-];
-
-const popularAirlineDestinationList = [
-  "Vietnam Airlines to Ho Chi Minh City",
-  "VietJet Air to Hanoi",
-  "Bamboo Airways to Da Nang",
-  "Vietnam Airlines to Phu Quoc",
-  "VietJet Air to Nha Trang",
-  "Bamboo Airways to Hue",
-  "Vietnam Airlines to Da Lat",
-  "VietJet Air to Hai Phong",
-  "Bamboo Airways to Thanh Hoa",
-  "Vietnam Airlines to Vinh",
-  "VietJet Air to Quy Nhon",
-  "Bamboo Airways to Tuy Hoa",
-  "Vietnam Airlines to Buon Ma Thuot",
-  "VietJet Air to Pleiku",
-  "Bamboo Airways to Chu Lai",
-  "Vietnam Airlines to Rach Gia",
-  "VietJet Air to Ca Mau",
-  "Bamboo Airways to Con Dao",
-  "Vietnam Airlines to Ban Me Thuot",
-  "VietJet Air to Dong Hoi"
-];
-
-const popularAirlineList = [
-  "Vietnam Airlines",
-  "VietJet Air",
-  "Bamboo Airways",
-  "Pacific Airlines",
-  "Vietravel Airlines",
-  "Vietnam Airlines - Business Class",
-  "VietJet Air - SkyBoss",
-  "Bamboo Airways - Premium",
-  "Vietnam Airlines - Economy",
-  "VietJet Air - Eco",
-  "Bamboo Airways - Economy Plus",
-  "Pacific Airlines - Flex",
-  "Vietravel Airlines - Deluxe",
-  "Vietnam Airlines to Bangkok",
-  "VietJet Air to Seoul",
-  "Bamboo Airways to Tokyo",
-  "Vietnam Airlines to Singapore",
-  "VietJet Air to Kuala Lumpur",
-  "Bamboo Airways to Taipei",
-  "Vietnam Airlines to London"
-];
-
 export default function FlightsRecommendation() {
   const [activeTab, setActiveTab] = useState('routes');
+  const [routes, setRoutes] = useState([]);
+  const [destinations, setDestinations] = useState([]);
+  const [airlineDests, setAirlineDests] = useState([]);
+  const [airlines, setAirlines] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const [locs, featured] = await Promise.all([
+          flightService.getLocations(),
+          flightService.getFeaturedFlights()
+        ]);
+
+        // Mapped Destinations
+        const airportMap = {
+          "HAN": "Hanoi", "SGN": "Ho Chi Minh City", "DAD": "Da Nang", 
+          "PQC": "Phu Quoc", "CXR": "Nha Trang", "DLI": "Da Lat", "HUI": "Hue"
+        };
+        setDestinations(locs.map(code => airportMap[code] ? `${airportMap[code]} (${code})` : code));
+
+        // Mapped Routes from Featured Flights
+        const routeSet = new Set();
+        featured.forEach(f => {
+          routeSet.add(`${f.departureCity || f.departureAirport} to ${f.arrivalCity || f.arrivalAirport}`);
+        });
+        setRoutes(Array.from(routeSet));
+
+        // Mapped Airlines
+        const airlineSet = new Set();
+        featured.forEach(f => airlineSet.add(f.airline));
+        setAirlines(Array.from(airlineSet));
+
+        // Mapped Airline Destinations
+        const adSet = new Set();
+        featured.forEach(f => adSet.add(`${f.airline} to ${f.arrivalCity || f.arrivalAirport}`));
+        setAirlineDests(Array.from(adSet));
+
+      } catch (err) {
+        console.error("Failed to fetch recommendations:", err);
+        setRoutes([]);
+        setDestinations([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const tabs = [
-    { id: 'routes', label: 'Popular Routes', data: popularRoutesList },
-    { id: 'destinations', label: 'Popular Destinations', data: popularDestinationsList },
-    { id: 'airlineDest', label: 'Popular Airline & Destination', data: popularAirlineDestinationList },
-    { id: 'airline', label: 'Popular Airline', data: popularAirlineList }
+    { id: 'routes', label: 'Popular Routes', data: routes },
+    { id: 'destinations', label: 'Popular Destinations', data: destinations },
+    { id: 'airlineDest', label: 'Popular Airline & Destination', data: airlineDests },
+    { id: 'airline', label: 'Popular Airline', data: airlines }
   ];
 
   const currentData = tabs.find(tab => tab.id === activeTab)?.data || [];

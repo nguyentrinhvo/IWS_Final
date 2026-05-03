@@ -8,6 +8,7 @@ import { searchTransportRoutes } from '../../../services/transportService';
 
 const TransportSearchResults = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('cheapest');
@@ -17,13 +18,13 @@ const TransportSearchResults = () => {
     maxPrice: 2000000,
   });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-
+  
   const searchInfo = {
-    from: searchParams.get('from') || 'Hanoi',
-    to: searchParams.get('to') || 'Da Nang',
-    departDate: searchParams.get('date') || '02 May 2026',
-    passengers: '1 Ticket',
-    tripType: 'One-way',
+    from: location.state?.from || searchParams.get('from') || 'Hanoi',
+    to: location.state?.to || searchParams.get('to') || 'Da Nang',
+    departDate: location.state?.departDate || searchParams.get('date') || '02 May 2026',
+    passengers: location.state?.passengers || '1 Ticket',
+    tripType: location.state?.type === 'train' ? 'Train' : 'Car',
   };
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const TransportSearchResults = () => {
       }
     };
     fetchRoutes();
-  }, [searchParams]);
+  }, [searchInfo.from, searchInfo.to, searchInfo.departDate]);
 
   const filtered = useMemo(() => {
     return routes.filter(r => {

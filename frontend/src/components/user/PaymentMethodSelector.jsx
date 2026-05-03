@@ -1,6 +1,10 @@
 import React from 'react';
 import PaymentMethodCard from './PaymentMethodCard';
-import { PAYMENT_METHODS } from '../../data/mockData';
+
+const PAYMENT_METHODS = [
+  { id: 'vnpay', name: 'VNPAY (ATM, Credit Card, VietQR)', icon: 'https://vnpay.vn/s1/statics.vnpay.vn/2023/6/0oxhzjmxbksr1686814746087.png' },
+  { id: 'paypal', name: 'PayPal', icon: 'https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg' }
+];
 
 const PaymentMethodSelector = ({ selectedMethod, onSelect }) => {
   const methods = PAYMENT_METHODS.map(m => ({

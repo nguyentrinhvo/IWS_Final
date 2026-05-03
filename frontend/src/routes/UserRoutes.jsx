@@ -30,6 +30,7 @@ import TourPayments from '../pages/TourPayments/TourPayments';
 import PaymentResult from '../pages/PaymentResult';
 import UserAccount from '../pages/PersonalProfile/UserAccount';
 import ThingsToDo from '../pages/ThingsToDo/ThingsToDo';
+import AttractionDetail from '../pages/ThingsToDo/AttractionDetail';
 import OAuth2RedirectHandler from '../pages/OAuth2RedirectHandler';
 import PrivateRoute from './PrivateRoute';
 import LoginRedirect from './LoginRedirect';
@@ -63,6 +64,7 @@ const UserRoutes = () => {
         <Route path="/flights/manage" element={<PrivateRoute><ManageBooking /></PrivateRoute>} />
         <Route path="/profile/:tab" element={<PrivateRoute><UserAccount /></PrivateRoute>} />
         <Route path="/things-to-do" element={<ThingsToDo />} />
+        <Route path="/things-to-do/:id" element={<AttractionDetail />} />
         <Route path="/auth/callback" element={<OAuth2RedirectHandler />} />
         <Route path="/payment-result" element={<PaymentResult />} />
         <Route path="/login" element={<LoginRedirect />} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   AttractionsIcon,
   SpaRelaxationIcon,
@@ -12,10 +12,53 @@ import {
   FlightsIcon,
   ToursIcon
 } from './SearchIcons';
+import { attractionService } from '../../services/attractionService';
 import { useNavigate } from 'react-router-dom';
 
 const ThingsToDoSearch = ({ t, locale }) => {
   const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+  const [isSuggestOpen, setIsSuggestOpen] = useState(false);
+  const [dbSuggestions, setDbSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const suggestRef = useRef(null);
+
+  useEffect(() => {
+    if (!query.trim() || query.length < 2) {
+      setDbSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await attractionService.searchAttractions({ keyword: query, page: 0, size: 5 });
+        const results = (data.content || []).map(a => ({
+          id: a.id,
+          label: a.nameVi || a.nameEn,
+          location: a.city,
+          image: a.thumbnailUrl || 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=100&h=100'
+        }));
+        setDbSuggestions(results);
+      } catch (error) {
+        console.error('Failed to fetch attractions:', error);
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (suggestRef.current && !suggestRef.current.contains(event.target)) {
+        setIsSuggestOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   const thingsToDoSuggestions = [
     { id: 'attractions', label: t('attractions'), icon: 'attractions' },
     { id: 'spaRelaxation', label: t('spaRelaxation'), icon: 'spaRelaxation' },
@@ -56,17 +99,56 @@ const ThingsToDoSearch = ({ t, locale }) => {
   return (
     <div className="w-full xl:w-[1403px] xl:mx-auto mt-[67px] flex flex-col relative z-10">
       <div className="flex w-full gap-4 h-[73px]">
-        <div className="things_to_do_input_wrapper flex-1 border-[5px] border-[#D9D9D9] rounded-xl flex relative bg-white">
+        <div ref={suggestRef} className="things_to_do_input_wrapper flex-1 border-[5px] border-[#D9D9D9] rounded-xl flex relative bg-white">
           <div className="flex-1 h-full flex items-center px-4 gap-4 relative">
             <svg className="w-8 h-8 text-[#180B51] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
             <input
               type="text"
+              value={query}
+              onFocus={() => setIsSuggestOpen(true)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setIsSuggestOpen(true);
+              }}
               placeholder={t('thingsToDoPlaceholder')}
               className="w-full h-full bg-transparent outline-none text-[#180B51] text-lg font-medium placeholder-[#180B51]/20"
             />
           </div>
+
+          {/* Suggestions Dropdown */}
+          {isSuggestOpen && (dbSuggestions.length > 0 || loading) && (
+            <div className="absolute top-[110%] left-0 w-full z-50 bg-white border border-[#D9D9D9] rounded-xl shadow-xl overflow-hidden transition-all duration-300">
+              <div className="p-4">
+                <h4 className="text-[11px] font-bold text-[#CC8118] uppercase mb-3 tracking-wider">
+                  {loading ? 'Searching...' : 'Attractions & Places'}
+                </h4>
+                <div className="flex flex-col gap-1">
+                  {dbSuggestions.map((item) => (
+                    <div
+                      key={item.id}
+                      onClick={() => {
+                        setQuery(item.label);
+                        setIsSuggestOpen(false);
+                      }}
+                      className="flex items-center gap-4 p-3 rounded-xl hover:bg-orange-50 cursor-pointer transition-all group"
+                    >
+                      <img 
+                        src={item.image} 
+                        alt={item.label} 
+                        className="w-12 h-12 rounded-lg object-cover shadow-sm group-hover:scale-105 transition-transform" 
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-[#180B51] font-bold text-sm">{item.label}</span>
+                        <span className="text-[11px] text-gray-400 font-medium">{item.location}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div 
             onClick={() => navigate('/things-to-do')}

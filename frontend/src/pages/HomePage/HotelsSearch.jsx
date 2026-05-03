@@ -5,13 +5,8 @@ import {
   AdultIcon,
   ChildIcon
 } from './SearchIcons';
-import {
-  getDaysInMonth,
-  getFirstDayOfMonth,
-  getWeekDays,
-  getMonthName,
-  formatDate
-} from '../../utils/SearchUtils';
+import { formatDate, getDaysInMonth, getFirstDayOfMonth, getMonthName, getWeekDays } from '../../utils/SearchUtils';
+import { hotelService } from '../../services/hotelService';
 import { useNavigate } from 'react-router-dom';
 
 const HotelsSearch = ({ t, locale }) => {
@@ -39,6 +34,9 @@ const HotelsSearch = ({ t, locale }) => {
 
   const [today, setToday] = useState(new Date());
   const [tomorrow, setTomorrow] = useState(new Date());
+
+  const [dbSuggestions, setDbSuggestions] = useState([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
 
   const hotelDestinationsMock = [
     { id: 'hoChiMinh', label: t('hoChiMinh'), count: 320, image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=150&h=100' },
@@ -177,6 +175,34 @@ const HotelsSearch = ({ t, locale }) => {
   };
 
   useEffect(() => {
+    if (!hotelDestination.trim() || hotelDestination.length < 2) {
+      setDbSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setLoadingSuggestions(true);
+      try {
+        const data = await hotelService.searchHotels(hotelDestination, null, null, null, 0, 5);
+        const results = (data.content || []).map(h => ({
+          id: h.id,
+          label: h.name,
+          city: h.city,
+          count: 'Price from ' + (h.roomTypes?.[0]?.pricePerNight || 'N/A'),
+          image: h.thumbnailUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=100&h=100'
+        }));
+        setDbSuggestions(results);
+      } catch (error) {
+        console.error('Failed to fetch suggestions:', error);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [hotelDestination]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (hotelDestRef.current && !hotelDestRef.current.contains(event.target)) setIsHotelDestOpen(false);
       if (hotelDateRef.current && !hotelDateRef.current.contains(event.target)) setIsHotelDateOpen(false);
@@ -262,21 +288,48 @@ const HotelsSearch = ({ t, locale }) => {
                   <h4 className="font-bold text-sm uppercase">{t('hotDestinations')}</h4>
                 </div>
                 <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-1 custom_scrollbar">
-                  {hotelDestinationsMock.map((dest) => (
-                    <div
-                      key={dest.id}
-                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setHotelDestination(dest.label);
-                        setIsHotelDestOpen(false);
-                      }}
-                    >
-                      <img src={dest.image} alt={dest.label} className="w-12 h-12 rounded-md object-cover shrink-0" />
-                      <span className="text-[#180B51] font-bold text-sm flex-1 truncate">{dest.label}</span>
-                      <span className="text-[#180B51]/60 text-xs shrink-0 whitespace-nowrap">{dest.count} {t('hotelsCount')} nearby</span>
-                    </div>
-                  ))}
+                  {loadingSuggestions ? (
+                    <div className="p-4 text-center text-gray-400 text-sm italic">Searching...</div>
+                  ) : hotelDestination.length >= 2 ? (
+                    dbSuggestions.length > 0 ? (
+                      dbSuggestions.map((dest) => (
+                        <div
+                          key={dest.id}
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setHotelDestination(dest.label);
+                            setIsHotelDestOpen(false);
+                          }}
+                        >
+                          <img src={dest.image} alt={dest.label} className="w-12 h-12 rounded-md object-cover shrink-0" />
+                          <div className="flex flex-col flex-1 truncate">
+                            <span className="text-[#180B51] font-bold text-sm truncate">{dest.label}</span>
+                            <span className="text-[#180B51]/60 text-[10px]">{dest.city}</span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-4 text-center text-gray-400 text-sm italic">No matching hotels found.</div>
+                    )
+                  ) : (
+                    // Default popular destinations when no query
+                    hotelDestinationsMock.map((dest) => (
+                      <div
+                        key={dest.id}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setHotelDestination(dest.label);
+                          setIsHotelDestOpen(false);
+                        }}
+                      >
+                        <img src={dest.image} alt={dest.label} className="w-12 h-12 rounded-md object-cover shrink-0" />
+                        <span className="text-[#180B51] font-bold text-sm flex-1 truncate">{dest.label}</span>
+                        <span className="text-[#180B51]/60 text-xs shrink-0 whitespace-nowrap">{dest.count} {t('hotelsCount')} nearby</span>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
