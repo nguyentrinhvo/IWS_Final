@@ -128,8 +128,8 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
             }
           }}
           className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${isPast ? 'text-[#180B51]/30 cursor-not-allowed' :
-              isSelected ? 'bg-[#180B51] text-white cursor-pointer' :
-                'text-[#180B51] hover:bg-gray-100 cursor-pointer'
+            isSelected ? 'bg-[#180B51] text-white cursor-pointer' :
+              'text-[#180B51] hover:bg-gray-100 cursor-pointer'
             }`}
         >
           {dayNum}
@@ -276,11 +276,10 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
           <div
             key={ctf.id}
             onClick={() => setActiveCarTrainFilter(ctf.id)}
-            className={`flex items-center gap-1.5 md:gap-2 xl:gap-2 px-3 md:px-4 xl:px-4 py-1.5 rounded-full cursor-pointer transition-colors border border-transparent ${
-              activeCarTrainFilter === ctf.id
+            className={`flex items-center gap-1.5 md:gap-2 xl:gap-2 px-3 md:px-4 xl:px-4 py-1.5 rounded-full cursor-pointer transition-colors border border-transparent ${activeCarTrainFilter === ctf.id
                 ? 'bg-[#7C70EB] text-white shadow-sm'
                 : 'bg-[#D9D9D9] text-[#180B51]'
-            }`}
+              }`}
           >
             {ctf.id === 'bookACar' && <BookACarIcon className="w-[1.1em] h-[1.1em]" />}
             {ctf.id === 'bookTrainTickets' && <BookTrainIcon className="w-[1.1em] h-[1.1em]" />}
@@ -342,8 +341,8 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
                   <div className="flex justify-between items-center mb-4 px-4">
                     <button
                       className={`p-2 rounded-full transition-colors ${carCalendarMonth.getFullYear() === new Date().getFullYear() && carCalendarMonth.getMonth() === new Date().getMonth()
-                          ? 'text-gray-300 cursor-not-allowed'
-                          : 'text-[#180B51] hover:bg-gray-100'
+                        ? 'text-gray-300 cursor-not-allowed'
+                        : 'text-[#180B51] hover:bg-gray-100'
                         }`}
                       onClick={() => {
                         const curr = new Date();
@@ -477,7 +476,7 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
               </div>
             </div>
 
-            <div 
+            <div
               onClick={() => navigate('/transport/search')}
               className="w-full h-[56px] xl:w-[65px] xl:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl xl:rounded-none xl:rounded-r-md shrink-0 transition-colors hover:bg-[#b57215] shadow-lg xl:shadow-none gap-2"
             >
@@ -489,13 +488,13 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
           </div>
         </div>
       )}
-      
+
       {activeCarTrainFilter === 'bookTrainTickets' && (
         <div className="w-full xl:w-[1403px] max-w-[1403px] min-w-min mt-[60px] md:mt-[134px] h-auto xl:h-[73px]">
           <div className="w-full h-auto xl:h-full flex flex-col xl:flex-row gap-4 p-3 xl:p-0 relative bg-transparent">
-            
+
             <div ref={trainLocRef} className="flex flex-col xl:flex-row flex-1 xl:border-[5px] border-transparent xl:border-[#D9D9D9] xl:rounded-xl relative bg-transparent xl:bg-white gap-4 xl:gap-0">
-              
+
               <div className="xl:hidden absolute top-1/2 left-[85%] -translate-y-1/2 w-8 h-8 bg-white border-[2px] border-[#D9D9D9] rounded-full flex items-center justify-center cursor-pointer z-10 hover:bg-gray-50 shadow-md" onClick={(e) => { e.stopPropagation(); const tmp = trainFrom; setTrainFrom(trainTo); setTrainTo(tmp); setTrainLocFocus(null); }}>
                 <svg className="w-4 h-4 text-[#180B51] rotate-90" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
               </div>
@@ -556,7 +555,7 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
             </div>
 
             <div ref={trainDateRef} className="flex flex-col xl:flex-row flex-1 xl:border-[5px] border-transparent xl:border-[#D9D9D9] xl:rounded-xl relative bg-transparent xl:bg-white gap-4 xl:gap-0">
-              
+
               <div className="w-full xl:w-1/2 h-[56px] xl:h-full bg-white border-[5px] border-[#D9D9D9] xl:border-0 xl:border-r-[5px] rounded-xl xl:rounded-none relative flex items-center px-4 gap-4 cursor-pointer shadow-lg xl:shadow-none" onClick={(e) => { e.stopPropagation(); if (isTrainDateOpen && trainDateFocus === 'departure') { setIsTrainDateOpen(false) } else { setIsTrainDateOpen(true); setTrainDateFocus('departure'); } setTrainLocFocus(null); }}>
                 <span className="hidden xl:block absolute -top-[30px] left-0 text-black font-bold text-[15px] whitespace-nowrap">{t('departureDate')}</span>
                 <CalendarIcon className="w-8 h-8 text-[#007BFF] shrink-0" />
@@ -604,7 +603,7 @@ const CarsAndTrainsSearch = ({ t, locale }) => {
               </div>
             </div>
 
-            <div 
+            <div
               onClick={() => navigate('/transport/search')}
               className="w-full h-[56px] xl:w-[73px] xl:h-full bg-[#CC8118] flex items-center justify-center cursor-pointer rounded-xl xl:rounded-full shrink-0 transition-colors hover:bg-[#b57215] shadow-lg xl:shadow-none gap-2"
             >
