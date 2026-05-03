@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import FlightSearchSummary from '../../../components/user/FlightSearchSummary';
 import FlightFiltersSidebar from '../../../components/user/FlightFiltersSidebar';
 import FlightSortBar from '../../../components/user/FlightSortBar';
@@ -141,16 +142,6 @@ const MOCK_FLIGHTS = [
   },
 ];
 
-const MOCK_SEARCH = {
-  from: { code: 'HAN', city: 'Hanoi' },
-  to: { code: 'SGN', city: 'Ho Chi Minh City' },
-  departDate: '02 May 2026',
-  returnDate: '09 May 2026',
-  passengers: '1 Adult',
-  cabinClass: 'Economy',
-  tripType: 'Round-trip',
-};
-
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const getHour = (timeStr) => parseInt(timeStr.split(':')[0]);
 
@@ -168,6 +159,77 @@ const matchesDepartureTime = (timeStr, slots) => {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 const FlightSearchResults = () => {
+  const location = useLocation();
+  const searchParams = location.state?.searchParams || {};
+
+  // Tạo đối tượng search summary từ dữ liệu thực tế (hoặc fallback)
+  const searchSummary = useMemo(() => {
+    if (searchParams.tripType === 'multicity') {
+      const firstSegment = searchParams.segments?.[0];
+      return {
+        from: { 
+          code: firstSegment?.from?.name?.slice(0, 3).toUpperCase() || 'HAN', 
+          city: firstSegment?.from?.name || 'Hanoi' 
+        },
+        to: { 
+          code: firstSegment?.to?.name?.slice(0, 3).toUpperCase() || 'SGN', 
+          city: firstSegment?.to?.name || 'Ho Chi Minh City' 
+        },
+        departDate: firstSegment?.date ? new Date(firstSegment.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '02 May 2026',
+        returnDate: null,
+        passengers: `${searchParams.adults || 1} Adult${searchParams.adults > 1 ? 's' : ''}`,
+        cabinClass: searchParams.cabinClass === 'economy' ? 'Economy' : 
+                    searchParams.cabinClass === 'business' ? 'Business' : 
+                    searchParams.cabinClass === 'firstClass' ? 'First Class' : 'Economy',
+        tripType: 'Multi-city',
+      };
+    } else {
+      // one-way hoặc round-trip
+      const fromName = searchParams.from?.name || 'Hanoi';
+      const toName = searchParams.to?.name || 'Ho Chi Minh City';
+      const departDateObj = searchParams.departureDate ? new Date(searchParams.departureDate) : new Date();
+      const returnDateObj = searchParams.returnDate ? new Date(searchParams.returnDate) : null;
+      
+      return {
+        from: { 
+          code: fromName.slice(0, 3).toUpperCase(), 
+          city: fromName 
+        },
+        to: { 
+          code: toName.slice(0, 3).toUpperCase(), 
+          city: toName 
+        },
+        departDate: departDateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        returnDate: returnDateObj ? returnDateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : null,
+        passengers: `${searchParams.adults || 1} Adult${searchParams.adults > 1 ? 's' : ''}`,
+        cabinClass: searchParams.cabinClass === 'economy' ? 'Economy' : 
+                    searchParams.cabinClass === 'business' ? 'Business' : 
+                    searchParams.cabinClass === 'firstClass' ? 'First Class' : 'Economy',
+        tripType: searchParams.returnDate ? 'Round-trip' : 'One-way',
+      };
+    }
+  }, [searchParams]);
+
+  // Lọc mock data theo tuyến bay (fromCode, toCode) nếu có trong searchParams
+  const relevantMockFlights = useMemo(() => {
+    if (searchParams.tripType === 'multicity') {
+      // Với multi-city, chỉ hiển thị segment đầu tiên (demo)
+      const first = searchParams.segments?.[0];
+      if (first?.from?.name && first?.to?.name) {
+        const fromCode = first.from.name.slice(0, 3).toUpperCase();
+        const toCode = first.to.name.slice(0, 3).toUpperCase();
+        return MOCK_FLIGHTS.filter(f => f.fromCode === fromCode && f.toCode === toCode);
+      }
+      return MOCK_FLIGHTS;
+    } else {
+      // Lọc theo điểm đi và đến
+      const fromCode = searchParams.from?.name?.slice(0, 3).toUpperCase() || 'HAN';
+      const toCode = searchParams.to?.name?.slice(0, 3).toUpperCase() || 'SGN';
+      return MOCK_FLIGHTS.filter(f => f.fromCode === fromCode && f.toCode === toCode);
+    }
+  }, [searchParams]);
+
+  // State filters và sort
   const [sort, setSort] = useState('cheapest');
   const [filters, setFilters] = useState({
     airlines: [],
@@ -178,8 +240,9 @@ const FlightSearchResults = () => {
   });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
+  // Áp dụng bộ lọc (airline, departure time, price, cabin, seats) lên relevantMockFlights
   const filtered = useMemo(() => {
-    return MOCK_FLIGHTS.filter(f => {
+    return relevantMockFlights.filter(f => {
       if (filters.airlines.length > 0 && !filters.airlines.includes(f.airline)) return false;
       if (!matchesDepartureTime(f.departTime, filters.departureTimes)) return false;
       if (f.price > filters.maxPrice) return false;
@@ -187,14 +250,15 @@ const FlightSearchResults = () => {
       if (filters.seatsAvail && f.seatsLeft === 0) return false;
       return true;
     });
-  }, [filters]);
+  }, [relevantMockFlights, filters]);
 
+  // Sắp xếp
   const sorted = useMemo(() => {
     const arr = [...filtered];
     if (sort === 'cheapest') return arr.sort((a, b) => a.price - b.price);
     if (sort === 'fastest') return arr.sort((a, b) => a.durationMinutes - b.durationMinutes);
     if (sort === 'earliest') return arr.sort((a, b) => a.departTime.localeCompare(b.departTime));
-    // best = score by price + duration normalised
+    // best = score based on price and duration
     return arr.sort((a, b) => (a.price / 1000000 + a.durationMinutes / 60) - (b.price / 1000000 + b.durationMinutes / 60));
   }, [filtered, sort]);
 
@@ -207,18 +271,12 @@ const FlightSearchResults = () => {
   });
 
   return (
-    // NOTE: UserLayout wraps this; it supplies max-w-[1320px] and px-4.
-    // We use negative margin trick (-mx-4) to break out for the summary bar,
-    // then a fresh inner container for the two-column layout.
     <div className="flex flex-col -mx-4 min-h-screen bg-gray-50">
+      {/* Search Summary Bar – hiển thị thông tin tìm kiếm thực tế */}
+      <FlightSearchSummary search={searchSummary} onEditSearch={() => {}} />
 
-      {/* Search Summary Bar – full width */}
-      <FlightSearchSummary search={MOCK_SEARCH} onEditSearch={() => {}} />
-
-      {/* Main content */}
       <div className="flex-1 max-w-[1200px] mx-auto w-full px-4 py-6">
-
-        {/* Mobile: Filter toggle */}
+        {/* Mobile filter toggle */}
         <div className="flex items-center justify-between mb-4 lg:hidden">
           <p className="text-sm text-gray-600">
             <span className="font-bold text-[#1a2b49]">{sorted.length}</span> flights
@@ -235,21 +293,18 @@ const FlightSearchResults = () => {
         </div>
 
         <div className="flex gap-6">
-          {/* Sidebar – desktop only */}
+          {/* Sidebar desktop */}
           <div className="hidden lg:block w-72 flex-shrink-0">
             <FlightFiltersSidebar filters={filters} onChange={setFilters} />
           </div>
 
           {/* Results column */}
           <div className="flex-1 min-w-0 space-y-4">
-            {/* Sort Bar */}
             <FlightSortBar
               activeSort={sort}
               onSortChange={setSort}
               totalResults={sorted.length}
             />
-
-            {/* List or Empty */}
             {sorted.length > 0 ? (
               <FlightList flights={sorted} isLoading={false} />
             ) : (
