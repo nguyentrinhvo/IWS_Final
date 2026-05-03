@@ -177,7 +177,7 @@
   "phanThietTitle": "Phan Thiet",
   "phuYenTitle": "Phu Yen",
   "hotelsCount": "Hotels",
-    "anGiangTitle": "An Giang",
+  "anGiangTitle": "An Giang",
   "baRiaVungTauTitle": "Ba Ria - Vung Tau",
   "bacGiangTitle": "Bac Giang",
   "bacKanTitle": "Bac Kan",
@@ -258,7 +258,7 @@
   "topFlights": "Top flights destination",
   "bestHotels": "Best hotels in Vietnam and around the world",
   "topThingsToDo": "Top Things to do",
-"user_logged_in_as": "Logged in as",
+  "user_logged_in_as": "Logged in as",
   "user_myAccount": "My Account",
   "user_myCards": "My Cards",
   "user_purchaseList": "Purchase List",
@@ -514,5 +514,12 @@
   "user_reasonPlaceholder": "Enter reason",
   "user_deleteAccountBtn": "Delete Account",
   "user_oldPasswordIncorrect": "Current password is incorrect",
-  "user_newPasswordMismatch": "New password does not match"
+  "user_newPasswordMismatch": "New password does not match",
+  "thingsToIn": "Things to do in",
+  "pickADestination": "Pick a destination",
+  "catExplore": "Explore",
+  "catAttractions": "Attractions",
+  "catExperiences": "Experiences",
+  "catEssentials": "Essentials",
+  "catAllActivities": "All Activities"
 }

@@ -1,4 +1,3 @@
-// ToursDetailPage.jsx
 import React from 'react';
 import Navbar from '../../layouts/UserLayout/Navbar';
 import Footer from '../../layouts/UserLayout/Footer';

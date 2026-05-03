@@ -31,7 +31,7 @@ export default function Navbar() {
   const [isOtpOpen, setIsOtpOpen] = useState(false);
   const [isRegisterOtpOpen, setIsRegisterOtpOpen] = useState(false);
   const [isAdditionalInfoOpen, setIsAdditionalInfoOpen] = useState(false);
-  
+
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isUserMenuClosing, setIsUserMenuClosing] = useState(false);
 
@@ -259,12 +259,12 @@ export default function Navbar() {
       `}</style>
       <div className="w-full flex flex-col bg-[#7C4A4A] relative z-[100]">
         <nav className="w-full h-[80px] border-b border-white/20 flex justify-center relative z-[100]">
-          <div className="w-full px-[16px] md:px-[24px] lg:px-4 lg:max-w-[1320px] mx-auto flex items-center justify-between h-full">
+          <div className="w-full px-[16px] md:px-[24px] xl:px-4 xl:max-w-[1320px] mx-auto flex items-center justify-between h-full">
             <Link to="/" className="flex-shrink-0 cursor-pointer h-full flex items-center">
               <img src="/images/logo_web.png" alt="Logo" className="max-h-[60px] w-auto object-contain" />
             </Link>
 
-            <ul className={`hidden lg:flex flex-1 justify-center items-center text-white font-medium text-[19px] whitespace-nowrap ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
+            <ul className={`hidden xl:flex flex-1 justify-center items-center text-white font-medium text-[19px] whitespace-nowrap ${language === 'EN' ? 'space-x-10' : 'space-x-5'}`}>
               <li><Link to="/tours" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('tours')}</Link></li>
               <li><Link to="/hotels" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('hotels')}</Link></li>
               <li><Link to="/flights" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('flights')}</Link></li>
@@ -272,7 +272,7 @@ export default function Navbar() {
               <li><Link to="/things-to-do" className="cursor-pointer px-4 py-2 rounded-lg hover:bg-black/20 transition-all block">{t('thingsToDo')}</Link></li>
             </ul>
 
-            <div className="hidden lg:flex flex-shrink-0 items-center space-x-4">
+            <div className="hidden xl:flex flex-shrink-0 items-center space-x-4">
               {currentUser ? (
                 <div className="relative" ref={userMenuRef}>
                   <button
@@ -351,7 +351,7 @@ export default function Navbar() {
                   >
                     <span>{t('logIn')}</span>
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11.75 12L4 12M7.75072 8L11.748 11.9999L7.75072 16M9.75 5.76562V4.25C9.75 3.42157 10.4216 2.75 11.25 2.75H17.25C18.0784 2.75 18.75 3.42157 18.75 4.25V19.75C18.75 20.5784 18.0784 21.25 17.25 21.25H11.25C10.4216 21.25 9.75 20.5784 9.75 19.75V18.2383" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M11.75 12L4 12M7.75072 8L11.748 11.9999L7.75072 16M9.75 5.76562V4.25C9.75 3.42157 10.4216 2.75 11.25 2.75H17.25C18.0784 2.75 18.75 3.42157 18.75 4.25V19.75C18.75 20.5784 18.0784 21.25 17.25 21.25H11.25C10.4216 21.25 9.75 20.5784 9.75 19.75V18.2383" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                   <button
@@ -364,7 +364,7 @@ export default function Navbar() {
               )}
             </div>
 
-            <div className="flex lg:hidden items-center space-x-5 text-white">
+            <div className="flex xl:hidden items-center space-x-5 text-white">
               <div className="relative" ref={mobileUserMenuRef}>
                 <button onClick={toggleMobileUserMenu} className="focus:outline-none flex items-center justify-center">
                   {currentUser ? (
@@ -381,7 +381,7 @@ export default function Navbar() {
                     </svg>
                   )}
                 </button>
-                
+
                 {isMobileUserMenuOpen && (
                   <div className="absolute top-full right-0 mt-4 w-max min-w-[200px] bg-white rounded-xl shadow-2xl py-2 z-[200] border border-gray-100 flex flex-col text-black animate-dropdown">
                     {currentUser ? (
@@ -428,19 +428,19 @@ export default function Navbar() {
           </div>
         </nav>
 
-        <nav className="hidden lg:flex w-full h-[40px] justify-center relative z-40">
-          <div className="w-full px-[16px] md:px-[24px] lg:px-4 lg:max-w-[1320px] mx-auto flex items-center justify-end h-full">
+        <nav className="hidden xl:flex w-full h-[40px] justify-center relative z-40">
+          <div className="w-full px-[16px] md:px-[24px] xl:px-4 xl:max-w-[1320px] mx-auto flex items-center justify-end h-full">
             <ul className="flex items-center space-x-4 text-white text-sm whitespace-nowrap">
               <li className="cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all">{t('partnership')}</li>
               <li className="relative" ref={supportRef}>
-                <button 
+                <button
                   onClick={() => {
                     if (isSupportOpen && !isSupportClosing) {
                       closeSupportMenu();
                     } else if (!isSupportOpen) {
                       setIsSupportOpen(true);
                     }
-                  }} 
+                  }}
                   className="flex items-center space-x-1 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-black/20 transition-all whitespace-nowrap"
                 >
                   <span>{t('support')}</span>
@@ -542,9 +542,9 @@ export default function Navbar() {
         </nav>
       </div>
 
-      <div className={`fixed inset-0 bg-black/50 z-[90] transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMobileMenuOpen(false)} />
-      
-      <div className={`fixed top-0 left-0 h-full w-[80vw] max-w-[320px] bg-white shadow-2xl z-[105] transition-transform duration-300 ease-in-out lg:hidden flex flex-col overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed inset-0 bg-black/50 z-[90] transition-opacity duration-300 xl:hidden ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMobileMenuOpen(false)} />
+
+      <div className={`fixed top-0 left-0 h-full w-[80vw] max-w-[320px] bg-white shadow-2xl z-[105] transition-transform duration-300 ease-in-out xl:hidden flex flex-col overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 pt-[80px] flex flex-col space-y-5 text-[#0B1E43]">
           <div onClick={() => { setIsMobileMenuOpen(false); navigate('/tours'); }} className="cursor-pointer font-medium text-[16px]">{t('tours')}</div>
           <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('hotels')}</div>
@@ -552,7 +552,7 @@ export default function Navbar() {
           <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('carsTrains')}</div>
           <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('thingsToDo')}</div>
           <div onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer font-medium text-[16px]">{t('partnership')}</div>
-          
+
           <div className="flex flex-col border-b border-gray-100 pb-3">
             <div className="flex justify-between items-center cursor-pointer font-medium text-[16px]" onClick={() => setMobileSupportExpanded(!mobileSupportExpanded)}>
               <span>{t('support')}</span>
@@ -596,7 +596,7 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
 

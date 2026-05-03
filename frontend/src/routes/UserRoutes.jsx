@@ -28,7 +28,7 @@ import Tour from '../pages/ToursDetailPage/Tour';
 import ToursBooking from '../pages/ToursBookingPage/ToursBooking';
 import TourPayments from '../pages/TourPayments/TourPayments';
 import UserAccount from '../pages/PersonalProfile/UserAccount';
-import ThingsToDoPage from '../pages/ThingsToDo/ThingsToDoPage';
+import ThingsToDo from '../pages/ThingsToDo/ThingsToDo';
 import OAuth2RedirectHandler from '../pages/OAuth2RedirectHandler';
 
 const UserRoutes = () => {
@@ -59,7 +59,7 @@ const UserRoutes = () => {
         <Route path="/flights/success" element={<FlightBookingSuccess />} />
         <Route path="/flights/manage" element={<ManageBooking />} />
         <Route path="/profile/:tab" element={<UserAccount />} />
-        <Route path="/things-to-do" element={<ThingsToDoPage />} />
+        <Route path="/things-to-do" element={<ThingsToDo />} />
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
       </Route>
       <Route path="/tours" element={<ToursPage />} />

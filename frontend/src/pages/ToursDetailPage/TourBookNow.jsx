@@ -1,4 +1,3 @@
-// TourBookNow.jsx
 import React, { useState, useMemo, useEffect } from 'react';
 import Button from '../../components/Button';
 import { mockData } from '../../data/mockData';
@@ -17,8 +16,8 @@ const CheckIcon = () => (
 );
 
 const DownArrowIcon = ({ isUp }) => (
-  <svg 
-    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" 
+  <svg
+    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
     strokeLinecap="round" strokeLinejoin="round"
     style={{ transform: isUp ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
   >
@@ -76,9 +75,9 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
     return () => window.removeEventListener('openDateSelection', handleOpenDate);
   }, []);
 
-  const selectedDateObj = useMemo(() => 
-    departureSchedules.find(d => d.id === selectedDateId) || null, 
-  [selectedDateId, departureSchedules]);
+  const selectedDateObj = useMemo(() =>
+    departureSchedules.find(d => d.id === selectedDateId) || null,
+    [selectedDateId, departureSchedules]);
 
   const adultPrice = selectedDateObj ? selectedDateObj.price : (departureSchedules[0]?.price || 0);
   const childPrice = adultPrice * 0.75;
@@ -258,9 +257,9 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
       </div>
 
       <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        
+
         <div>
-          <div 
+          <div
             onClick={activeStep !== 1 ? handleReopenDate : undefined}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: activeStep !== 1 ? 'pointer' : 'default', marginBottom: '16px' }}
           >
@@ -276,7 +275,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
               )}
               <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 'bold', color: '#000000' }}>Select your departure date</h3>
             </div>
-            
+
             {activeStep !== 1 && selectedDateObj && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#4b5563', fontWeight: '500' }}>
                 {getFormattedDate(new Date(selectedDateObj.departure))} - {getFormattedDate(new Date(selectedDateObj.return))}
@@ -298,7 +297,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
               {initialDates.map((item) => {
                 const isSelected = selectedDateId === item.id;
                 return (
-                  <div 
+                  <div
                     key={item.id}
                     onClick={() => handleDateSelect(item.id)}
                     className={`dates-grid-row ${isSelected ? 'selected' : ''}`}
@@ -338,7 +337,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
                     {hiddenDates.map((item) => {
                       const isSelected = selectedDateId === item.id;
                       return (
-                        <div 
+                        <div
                           key={item.id}
                           onClick={() => handleDateSelect(item.id)}
                           className={`dates-grid-row ${isSelected ? 'selected' : ''}`}
@@ -370,7 +369,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
               </div>
 
               {hiddenDates.length > 0 && (
-                <div 
+                <div
                   onClick={() => setShowAllDates(!showAllDates)}
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', cursor: 'pointer', color: '#2563EB', fontWeight: 'bold', marginTop: '8px' }}
                 >
@@ -385,7 +384,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
         <hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', margin: 0 }} />
 
         <div>
-          <div 
+          <div
             onClick={handleReopenGuests}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: (selectedDateId && activeStep !== 2) ? 'pointer' : 'default', marginBottom: '16px' }}
           >
@@ -432,12 +431,12 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
                           </div>
                         )}
                         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '4px 8px' }}>
-                          <button 
+                          <button
                             onClick={() => updateGuestCount(guestItem.type, -1)}
                             style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: '#4b5563', width: '24px' }}
                           >-</button>
                           <span style={{ minWidth: '20px', textAlign: 'center', fontWeight: 'bold' }}>{guests[guestItem.type]}</span>
-                          <button 
+                          <button
                             onClick={() => updateGuestCount(guestItem.type, 1)}
                             style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: '#4b5563', width: '24px' }}
                           >+</button>
@@ -461,7 +460,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
-                    <Button 
+                    <Button
                       onClick={handleConfirmGuests}
                       disabled={totalGuests === 0}
                       variant="primary"
@@ -488,24 +487,24 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
 
           {activeStep === 3 && selectedDateId && (
             <div style={{ paddingLeft: '44px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              
+
               <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
                 <div style={{ flex: 1, minWidth: '200px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ fontWeight: '500' }}>Full name <span style={{ color: 'red' }}>*</span></label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={form.fullName}
-                    onChange={(e) => setForm({...form, fullName: e.target.value})}
+                    onChange={(e) => setForm({ ...form, fullName: e.target.value })}
                     style={{ padding: '12px', borderRadius: '6px', border: `1px solid ${errors.fullName ? 'red' : '#d1d5db'}`, outline: 'none' }}
                   />
                   {errors.fullName && <span style={{ color: 'red', fontSize: '12px' }}>You must fill in this information.</span>}
                 </div>
                 <div style={{ flex: 1, minWidth: '200px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ fontWeight: '500' }}>Contact phone number <span style={{ color: 'red' }}>*</span></label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={form.phone}
-                    onChange={(e) => setForm({...form, phone: e.target.value})}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     style={{ padding: '12px', borderRadius: '6px', border: `1px solid ${errors.phone ? 'red' : '#d1d5db'}`, outline: 'none' }}
                   />
                   {errors.phone && <span style={{ color: 'red', fontSize: '12px' }}>You must fill in this information.</span>}
@@ -514,27 +513,27 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '500' }}>Email (optional)</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   value={form.email}
-                  onChange={(e) => setForm({...form, email: e.target.value})}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                   style={{ padding: '12px', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', width: '100%' }}
                 />
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '500' }}>Notes / Additional requests</label>
-                <textarea 
+                <textarea
                   placeholder="Examples include: vegetarian diet, history of allergies, etc."
                   value={form.notes}
-                  onChange={(e) => setForm({...form, notes: e.target.value})}
+                  onChange={(e) => setForm({ ...form, notes: e.target.value })}
                   style={{ padding: '12px', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', width: '100%', minHeight: '80px', resize: 'vertical', fontFamily: 'inherit' }}
                 />
               </div>
 
               <div style={{ backgroundColor: '#fefce8', padding: '24px', borderRadius: '8px', border: '1px solid #fef08a', marginTop: '16px' }}>
                 <h4 style={{ margin: '0 0 20px 0', fontSize: '18px', fontWeight: 'bold' }}>Tour booking summary</h4>
-                
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ color: '#4b5563', fontWeight: '500' }}>Departure date:</div>
@@ -542,7 +541,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
                       {getFormattedDate(new Date(selectedDateObj.departure))} - {getFormattedDate(new Date(selectedDateObj.return))}
                     </div>
                   </div>
-                  
+
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ color: '#4b5563', fontWeight: '500' }}>Number of guests:</div>
                     <div style={{ fontWeight: 'bold' }}>{generateGuestSummary()}</div>
@@ -560,7 +559,7 @@ const TourBookNow = ({ tourId = "TOUR001" }) => {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
-                <Button 
+                <Button
                   onClick={handleSubmit}
                   variant="primary"
                   size="lg"

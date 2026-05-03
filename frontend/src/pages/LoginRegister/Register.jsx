@@ -106,24 +106,9 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
         onClick={handleClose}
       >
         <div
-          className={`w-full max-w-[768px] h-auto max-h-[calc(100vh-2rem)] bg-white rounded-3xl relative flex flex-col md:flex-row overflow-hidden shadow-2xl ${isClosing ? 'modal-out' : 'modal-in'}`}
+          className={`w-full max-w-[500px] h-auto max-h-[calc(100vh-2rem)] bg-white rounded-3xl relative flex flex-col overflow-hidden shadow-2xl ${isClosing ? 'modal-out' : 'modal-in'}`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className="hidden md:block w-[300px] h-full flex-shrink-0 relative"
-            style={{
-              backgroundImage: `url('https://png.pngtree.com/background/20241009/original/pngtree-exploring-with-the-golden-compass-and-map-a-journey-of-travel-picture-image_10809502.jpg')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-8 left-6 right-6 text-white">
-              <h3 className="text-2xl font-black uppercase leading-tight mb-2">{t('registerImageTitle')}</h3>
-              <p className="text-sm text-white/80 leading-relaxed">{t('registerImageSubtitle')}</p>
-            </div>
-          </div>
-
           <div className="flex-1 flex flex-col px-6 py-6 sm:px-8 sm:py-8 overflow-y-auto">
             <button
               onClick={handleClose}
@@ -264,7 +249,7 @@ export default function Register({ isOpen, onClose, onSwitchToLogin, onSwitchToO
                 </span>
               </label>
 
-              <button 
+              <button
                 onClick={handleRegisterClick}
                 className="w-full bg-gradient-to-r from-[#9F4200] to-[#F57323] text-white font-bold py-3 sm:py-3.5 rounded-full shadow-lg shadow-orange-500/30 hover:opacity-90 transition-opacity cursor-pointer text-sm sm:text-base mt-2"
               >

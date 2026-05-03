@@ -76,9 +76,8 @@ const CalendarPicker = ({ viewDate, setViewDate, selectedDate, onSelect, locale 
                 e.stopPropagation();
                 onSelect(new Date(year, month, d));
               }}
-              className={`w-7 h-7 md:w-8 md:h-8 mx-auto flex items-center justify-center rounded-full transition-colors ${
-                isSelected ? 'bg-[#0194F3] text-white font-bold' : 'text-gray-700 hover:bg-gray-100'
-              }`}
+              className={`w-7 h-7 md:w-8 md:h-8 mx-auto flex items-center justify-center rounded-full transition-colors ${isSelected ? 'bg-[#0194F3] text-white font-bold' : 'text-gray-700 hover:bg-gray-100'
+                }`}
             >
               {d}
             </button>
@@ -93,20 +92,20 @@ export default function PurchaseList() {
   const { t, language } = useGlobal();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('past90');
-  
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedPayments, setSelectedPayments] = useState([]);
-  
+
   const [fromDate, setFromDate] = useState(new Date(2026, 3, 1));
   const [toDate, setToDate] = useState(new Date(2026, 3, 29));
   const [fromViewDate, setFromViewDate] = useState(new Date(2026, 3, 1));
   const [toViewDate, setToViewDate] = useState(new Date(2026, 3, 1));
-  
+
   const [isFromOpen, setIsFromOpen] = useState(false);
   const [isToOpen, setIsToOpen] = useState(false);
 
@@ -137,7 +136,7 @@ export default function PurchaseList() {
     const fetchBookings = async () => {
       setLoading(true);
       try {
-        const res = await getMyBookings(0, 50); // Get first page, 50 items
+        const res = await getMyBookings(0, 50);
         setBookings(res.content || []);
       } catch (err) {
         console.error('Failed to load bookings:', err);
@@ -217,16 +216,15 @@ export default function PurchaseList() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 min-w-max whitespace-nowrap px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-semibold transition-colors capitalize ${
-              activeTab === tab.id
+            className={`flex-1 min-w-max whitespace-nowrap px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-semibold transition-colors capitalize ${activeTab === tab.id
                 ? 'bg-[#0194F3] text-white'
                 : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
-            }`}
+              }`}
           >
             {tab.label}
           </button>
         ))}
-        
+
         <div className="relative flex-1 min-w-[100px]" ref={filterRef}>
           <button
             onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -236,13 +234,12 @@ export default function PurchaseList() {
           </button>
 
           <div
-            className={`absolute top-[calc(100%+8px)] right-0 w-[90vw] max-w-[400px] bg-white rounded-xl shadow-2xl border border-gray-100 z-50 transition-all duration-300 origin-top ${
-              isFilterOpen ? 'opacity-100 translate-y-0 scale-y-100' : 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
-            }`}
+            className={`absolute top-[calc(100%+8px)] right-0 w-[90vw] max-w-[400px] bg-white rounded-xl shadow-2xl border border-gray-100 z-50 transition-all duration-300 origin-top ${isFilterOpen ? 'opacity-100 translate-y-0 scale-y-100' : 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
+              }`}
           >
             <div className="p-4 flex justify-between items-center">
               <h3 className="font-bold text-gray-800 text-sm md:text-base">{t('user_showPurchases')}</h3>
-              <span 
+              <span
                 onClick={resetFilters}
                 className="text-[#0194F3] text-xs md:text-sm font-semibold cursor-pointer select-none"
               >
@@ -254,11 +251,11 @@ export default function PurchaseList() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {productTypes.map((item) => (
                   <label key={item} className="flex items-center gap-2 cursor-pointer">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       checked={selectedProducts.includes(item)}
                       onChange={() => toggleProduct(item)}
-                      className="w-4 h-4 rounded text-[#0194F3] cursor-pointer" 
+                      className="w-4 h-4 rounded text-[#0194F3] cursor-pointer"
                     />
                     <span className="text-xs md:text-sm text-gray-600 whitespace-nowrap">{item}</span>
                   </label>
@@ -270,11 +267,11 @@ export default function PurchaseList() {
               <div className="flex flex-col gap-3">
                 {paymentMethods.map((item) => (
                   <label key={item} className="flex items-center gap-2 cursor-pointer">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       checked={selectedPayments.includes(item)}
                       onChange={() => togglePayment(item)}
-                      className="w-4 h-4 rounded text-[#0194F3] cursor-pointer" 
+                      className="w-4 h-4 rounded text-[#0194F3] cursor-pointer"
                     />
                     <span className="text-xs md:text-sm text-gray-600 whitespace-nowrap">{item}</span>
                   </label>
@@ -287,9 +284,9 @@ export default function PurchaseList() {
 
       {activeTab === 'custom' && (
         <div className="bg-white rounded-xl shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] border border-gray-100 mb-6 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-200">
-          
+
           <div ref={fromRef} className="flex-1 relative">
-            <div 
+            <div
               onClick={() => setIsFromOpen(!isFromOpen)}
               className="flex items-center gap-3 md:gap-4 px-3 md:px-4 py-3 md:py-4 cursor-pointer hover:bg-gray-50 rounded-t-xl md:rounded-l-xl md:rounded-tr-none transition-colors"
             >
@@ -304,24 +301,23 @@ export default function PurchaseList() {
               </div>
             </div>
 
-            <div className={`absolute top-[calc(100%+8px)] left-0 w-full z-50 transition-all duration-300 origin-top ${
-              isFromOpen ? 'opacity-100 translate-y-0 scale-y-100' : 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
-            }`}>
-              <CalendarPicker 
-                viewDate={fromViewDate} 
-                setViewDate={setFromViewDate} 
-                selectedDate={fromDate} 
+            <div className={`absolute top-[calc(100%+8px)] left-0 w-full z-50 transition-all duration-300 origin-top ${isFromOpen ? 'opacity-100 translate-y-0 scale-y-100' : 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
+              }`}>
+              <CalendarPicker
+                viewDate={fromViewDate}
+                setViewDate={setFromViewDate}
+                selectedDate={fromDate}
                 locale={currentLocale}
                 onSelect={(date) => {
                   setFromDate(date);
                   setIsFromOpen(false);
-                }} 
+                }}
               />
             </div>
           </div>
 
           <div ref={toRef} className="flex-1 relative">
-            <div 
+            <div
               onClick={() => setIsToOpen(!isToOpen)}
               className="flex items-center gap-3 md:gap-4 px-3 md:px-4 py-3 md:py-4 cursor-pointer hover:bg-gray-50 rounded-b-xl md:rounded-r-xl md:rounded-bl-none transition-colors"
             >
@@ -336,18 +332,17 @@ export default function PurchaseList() {
               </div>
             </div>
 
-            <div className={`absolute top-[calc(100%+8px)] left-0 w-full z-50 transition-all duration-300 origin-top ${
-              isToOpen ? 'opacity-100 translate-y-0 scale-y-100' : 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
-            }`}>
-              <CalendarPicker 
-                viewDate={toViewDate} 
-                setViewDate={setToViewDate} 
-                selectedDate={toDate} 
+            <div className={`absolute top-[calc(100%+8px)] left-0 w-full z-50 transition-all duration-300 origin-top ${isToOpen ? 'opacity-100 translate-y-0 scale-y-100' : 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
+              }`}>
+              <CalendarPicker
+                viewDate={toViewDate}
+                setViewDate={setToViewDate}
+                selectedDate={toDate}
                 locale={currentLocale}
                 onSelect={(date) => {
                   setToDate(date);
                   setIsToOpen(false);
-                }} 
+                }}
               />
             </div>
           </div>

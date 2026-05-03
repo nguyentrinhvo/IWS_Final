@@ -177,7 +177,7 @@
   "phanThietTitle": "Phan Thiết",
   "phuYenTitle": "Phú Yên",
   "hotelsCount": "Khách sạn",
-    "anGiangTitle": "An Giang",
+  "anGiangTitle": "An Giang",
   "baRiaVungTauTitle": "Bà Rịa – Vũng Tàu",
   "bacGiangTitle": "Bắc Giang",
   "bacKanTitle": "Bắc Kạn",
@@ -258,7 +258,7 @@
   "topFlights": "Vé máy bay phổ biến",
   "bestHotels": "Khách sạn tốt nhất Việt Nam và thế giới",
   "topThingsToDo": "Hoạt động hàng đầu",
-"user_logged_in_as": "Đã đăng nhập với tư cách",
+  "user_logged_in_as": "Đã đăng nhập với tư cách",
   "user_myAccount": "Tài khoản của tôi",
   "user_myCards": "Thẻ của tôi",
   "user_purchaseList": "Danh sách giao dịch",
@@ -514,6 +514,12 @@
   "user_reasonPlaceholder": "Nhập lý do",
   "user_deleteAccountBtn": "Xóa tài khoản",
   "user_oldPasswordIncorrect": "Mật khẩu hiện tại không đúng",
-  "user_newPasswordMismatch": "Mật khẩu mới không khớp"
+  "user_newPasswordMismatch": "Mật khẩu mới không khớp",
+  "thingsToIn": "Hoạt động tại",
+  "pickADestination": "Chọn 1 điểm đến",
+  "catExplore": "Khám phá",
+  "catAttractions": "Điểm tham quan",
+  "catExperiences": "Tour & Hoạt động",
+  "catEssentials": "Cần thiết cho du lịch",
+  "catAllActivities": "Tất cả các hoạt động"
 }
-
