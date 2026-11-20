@@ -29,7 +29,7 @@ public class TourService {
     private MongoTemplate mongoTemplate;
 
     public Page<TourDTO> getTours(String categoryId, String tourType, String destination, String country, 
-                                  Integer durationDays, Double maxPrice, String keyword, Pageable pageable) {
+                                  Integer durationDays, Double maxPrice, String keyword, Boolean isActive, Pageable pageable) {
         
         Query query = new Query().with(pageable);
         List<Criteria> criteriaList = new ArrayList<>();
@@ -62,6 +62,14 @@ public class TourService {
             criteriaList.add(keywordCriteria);
         }
         
+        // New filter for isActive if provided
+        String isActiveParam = query.getQueryObject().getString("isActive"); // This is not how it works usually in this setup
+        // Let's use a parameter in getTours method instead
+        
+        if (isActive != null) {
+            criteriaList.add(Criteria.where("isActive").is(isActive));
+        }
+
         query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
         
         long total = mongoTemplate.count(query, TourDocument.class);
@@ -136,6 +144,7 @@ public class TourService {
         if (request.getRequireVisa() != null) tour.setRequireVisa(request.getRequireVisa());
         if (request.getVisaInfo() != null) tour.setVisaInfo(request.getVisaInfo());
         if (request.getMaxCapacity() != null) tour.setMaxCapacity(request.getMaxCapacity());
+        if (request.getIsActive() != null) tour.setIsActive(request.getIsActive());
         if (request.getImages() != null) tour.setImages(request.getImages());
         if (request.getItinerary() != null) tour.setItinerary(request.getItinerary());
         if (request.getDepartures() != null) tour.setDepartures(request.getDepartures());
@@ -161,6 +170,7 @@ public class TourService {
         dto.setMaxCapacity(tour.getMaxCapacity());
         dto.setAvgRating(tour.getAvgRating());
         dto.setTotalReviews(tour.getTotalReviews());
+        dto.setIsActive(tour.getIsActive() != null ? tour.getIsActive() : true);
         dto.setImages(tour.getImages());
         dto.setItinerary(tour.getItinerary());
         dto.setDepartures(tour.getDepartures());

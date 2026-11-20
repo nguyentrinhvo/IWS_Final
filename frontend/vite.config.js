@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  optimizeDeps: {
+    include: ['react-hot-toast'],
+  },
   server: {
     proxy: {
       '/api': {

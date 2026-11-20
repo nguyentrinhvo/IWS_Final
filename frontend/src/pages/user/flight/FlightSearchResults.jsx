@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import flightService from '../../../services/flightService';
 import FlightSearchSummary from '../../../components/user/FlightSearchSummary';
 import FlightFiltersSidebar from '../../../components/user/FlightFiltersSidebar';
 import FlightSortBar from '../../../components/user/FlightSortBar';
@@ -141,16 +143,6 @@ const MOCK_FLIGHTS = [
   },
 ];
 
-const MOCK_SEARCH = {
-  from: { code: 'HAN', city: 'Hanoi' },
-  to: { code: 'SGN', city: 'Ho Chi Minh City' },
-  departDate: '02 May 2026',
-  returnDate: '09 May 2026',
-  passengers: '1 Adult',
-  cabinClass: 'Economy',
-  tripType: 'Round-trip',
-};
-
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const getHour = (timeStr) => parseInt(timeStr.split(':')[0]);
 
@@ -168,6 +160,161 @@ const matchesDepartureTime = (timeStr, slots) => {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 const FlightSearchResults = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = location.state?.searchParams || {};
+
+  const searchSummary = useMemo(() => {
+    const getCode = (loc) => {
+      if (!loc) return null;
+      if (loc.airport) {
+        const match = loc.airport.match(/\(([A-Z]{3})\)/);
+        if (match) return match[1];
+      }
+      if (loc.name) return loc.name.slice(0, 3).toUpperCase();
+      return null;
+    };
+
+    if (searchParams.tripType === 'multicity') {
+      const firstSegment = searchParams.segments?.[0];
+      return {
+        from: { 
+          code: getCode(firstSegment?.from) || 'HAN', 
+          city: firstSegment?.from?.name || 'Hanoi' 
+        },
+        to: { 
+          code: getCode(firstSegment?.to) || 'SGN', 
+          city: firstSegment?.to?.name || 'Ho Chi Minh City' 
+        },
+        departDate: firstSegment?.date ? new Date(firstSegment.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '02 May 2026',
+        returnDate: null,
+        passengers: `${searchParams.adults || 1} Adult${searchParams.adults > 1 ? 's' : ''}`,
+        cabinClass: searchParams.cabinClass === 'economy' ? 'Economy' : 
+                    searchParams.cabinClass === 'business' ? 'Business' : 
+                    searchParams.cabinClass === 'firstClass' ? 'First Class' : 'Economy',
+        tripType: 'Multi-city',
+      };
+    } else {
+      // one-way hoặc round-trip
+      const fromName = searchParams.from?.name || 'Hanoi';
+      const toName = searchParams.to?.name || 'Ho Chi Minh City';
+      const departDateObj = searchParams.departureDate ? new Date(searchParams.departureDate) : new Date();
+      const returnDateObj = searchParams.returnDate ? new Date(searchParams.returnDate) : null;
+      
+      return {
+        from: { 
+          code: getCode(searchParams.from) || fromName.slice(0, 3).toUpperCase(), 
+          city: fromName 
+        },
+        to: { 
+          code: getCode(searchParams.to) || toName.slice(0, 3).toUpperCase(), 
+          city: toName 
+        },
+        departDate: departDateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        returnDate: returnDateObj ? returnDateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : null,
+        passengers: `${searchParams.adults || 1} Adult${searchParams.adults > 1 ? 's' : ''}`,
+        cabinClass: searchParams.cabinClass === 'economy' ? 'Economy' : 
+                    searchParams.cabinClass === 'business' ? 'Business' : 
+                    searchParams.cabinClass === 'firstClass' ? 'First Class' : 'Economy',
+        tripType: searchParams.returnDate ? 'Round-trip' : 'One-way',
+      };
+    }
+  }, [searchParams]);
+
+  const [flightsData, setFlightsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFlights = async () => {
+      setIsLoading(true);
+      try {
+        let fromCode = 'HAN';
+        let toCode = 'SGN';
+        let flightDateStr = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
+
+        const getCode = (loc) => {
+          if (!loc) return null;
+          if (loc.airport) {
+            const match = loc.airport.match(/\(([A-Z]{3})\)/);
+            if (match) return match[1];
+          }
+          if (loc.name) return loc.name.slice(0, 3).toUpperCase();
+          return null;
+        };
+
+        if (searchParams.tripType === 'multicity') {
+          const first = searchParams.segments?.[0];
+          if (first?.from) fromCode = getCode(first.from) || fromCode;
+          if (first?.to) toCode = getCode(first.to) || toCode;
+          if (first?.date) {
+            const d = new Date(first.date);
+            flightDateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          }
+        } else {
+          if (searchParams.from) fromCode = getCode(searchParams.from) || fromCode;
+          if (searchParams.to) toCode = getCode(searchParams.to) || toCode;
+          if (searchParams.departureDate) {
+            const d = new Date(searchParams.departureDate);
+            flightDateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          }
+        }
+
+        const response = await flightService.searchFlights({
+          departureAirport: fromCode,
+          arrivalAirport: toCode,
+          flightDate: flightDateStr
+        });
+        
+        const mapped = response.map(flight => {
+          const schedule = flight.schedules?.[0] || {};
+          
+          const formatTime = (timeStr, defaultTime) => {
+            if (!timeStr) return defaultTime;
+            try {
+              const d = new Date(timeStr);
+              if (isNaN(d.getTime())) return defaultTime;
+              return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+            } catch (e) {
+              return defaultTime;
+            }
+          };
+
+          return {
+            id: flight.id,
+            airline: flight.airline,
+            flightNo: flight.flightNumber,
+            aircraft: 'Airbus A320', 
+            fromCode: flight.departureAirport,
+            fromCity: flight.departureCity || flight.departureAirport, 
+            toCode: flight.arrivalAirport,
+            toCity: flight.arrivalCity || flight.arrivalAirport,
+            departTime: formatTime(schedule.departureTime, '06:00'),
+            arriveTime: formatTime(schedule.arrivalTime, '08:00'),
+            arrivalDayOffset: 0,
+            durationMinutes: flight.durationMinutes || 120,
+            stops: 0,
+            price: flight.basePrice || 0,
+            originalPrice: null,
+            cabinClass: flight.cabinClass || 'Economy',
+            seatsLeft: schedule.availableSeats || flight.totalSeats || 0,
+            baggage: '20kg included',
+            meal: 'Included',
+            refundable: true,
+          };
+        });
+        setFlightsData(mapped);
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+        setFlightsData([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFlights();
+  }, [searchParams]);
+
+  // State filters và sort
   const [sort, setSort] = useState('cheapest');
   const [filters, setFilters] = useState({
     airlines: [],
@@ -178,8 +325,9 @@ const FlightSearchResults = () => {
   });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
+  // Áp dụng bộ lọc (airline, departure time, price, cabin, seats) lên flightsData
   const filtered = useMemo(() => {
-    return MOCK_FLIGHTS.filter(f => {
+    return flightsData.filter(f => {
       if (filters.airlines.length > 0 && !filters.airlines.includes(f.airline)) return false;
       if (!matchesDepartureTime(f.departTime, filters.departureTimes)) return false;
       if (f.price > filters.maxPrice) return false;
@@ -187,14 +335,15 @@ const FlightSearchResults = () => {
       if (filters.seatsAvail && f.seatsLeft === 0) return false;
       return true;
     });
-  }, [filters]);
+  }, [flightsData, filters]);
 
+  // Sắp xếp
   const sorted = useMemo(() => {
     const arr = [...filtered];
     if (sort === 'cheapest') return arr.sort((a, b) => a.price - b.price);
     if (sort === 'fastest') return arr.sort((a, b) => a.durationMinutes - b.durationMinutes);
     if (sort === 'earliest') return arr.sort((a, b) => a.departTime.localeCompare(b.departTime));
-    // best = score by price + duration normalised
+    // best = score based on price and duration
     return arr.sort((a, b) => (a.price / 1000000 + a.durationMinutes / 60) - (b.price / 1000000 + b.durationMinutes / 60));
   }, [filtered, sort]);
 
@@ -207,18 +356,12 @@ const FlightSearchResults = () => {
   });
 
   return (
-    // NOTE: UserLayout wraps this; it supplies max-w-[1320px] and px-4.
-    // We use negative margin trick (-mx-4) to break out for the summary bar,
-    // then a fresh inner container for the two-column layout.
     <div className="flex flex-col -mx-4 min-h-screen bg-gray-50">
+      {/* Search Summary Bar – hiển thị thông tin tìm kiếm thực tế */}
+      <FlightSearchSummary search={searchSummary} onEditSearch={() => navigate('/flights')} />
 
-      {/* Search Summary Bar – full width */}
-      <FlightSearchSummary search={MOCK_SEARCH} onEditSearch={() => {}} />
-
-      {/* Main content */}
       <div className="flex-1 max-w-[1200px] mx-auto w-full px-4 py-6">
-
-        {/* Mobile: Filter toggle */}
+        {/* Mobile filter toggle */}
         <div className="flex items-center justify-between mb-4 lg:hidden">
           <p className="text-sm text-gray-600">
             <span className="font-bold text-[#1a2b49]">{sorted.length}</span> flights
@@ -235,22 +378,21 @@ const FlightSearchResults = () => {
         </div>
 
         <div className="flex gap-6">
-          {/* Sidebar – desktop only */}
+          {/* Sidebar desktop */}
           <div className="hidden lg:block w-72 flex-shrink-0">
             <FlightFiltersSidebar filters={filters} onChange={setFilters} />
           </div>
 
           {/* Results column */}
           <div className="flex-1 min-w-0 space-y-4">
-            {/* Sort Bar */}
             <FlightSortBar
               activeSort={sort}
               onSortChange={setSort}
               totalResults={sorted.length}
             />
-
-            {/* List or Empty */}
-            {sorted.length > 0 ? (
+            {isLoading ? (
+              <div className="flex justify-center p-8"><p>Loading flights...</p></div>
+            ) : sorted.length > 0 ? (
               <FlightList flights={sorted} isLoading={false} />
             ) : (
               <FlightEmptyState onReset={resetFilters} />

@@ -13,9 +13,14 @@ import {
   ShieldCheck,
   Plane
 } from 'lucide-react';
+import { createTour } from '../../../services/tourService';
+import { getCategories } from '../../../services/categoryService';
+import { toast } from 'react-hot-toast';
 
 const CreateTour = () => {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     nameVi: '',
     nameEn: '',
@@ -30,8 +35,25 @@ const CreateTour = () => {
     maxCapacity: '',
     tourType: 'Domestic',
     visaRequired: false,
-    visaInformation: ''
+    visaInformation: '',
+    categoryId: '',
+    isActive: true
   });
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+        if (data.length > 0) {
+          setFormData(prev => ({ ...prev, categoryId: data[0].id }));
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -41,12 +63,42 @@ const CreateTour = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
-    // Logic to save would go here
-    alert('Tour Details Saved Successfully!');
-    navigate('/admin/tours');
+    setLoading(true);
+    try {
+      // Map frontend fields to backend TourRequest
+      const tourRequest = {
+        nameVi: formData.nameVi,
+        nameEn: formData.nameEn,
+        descriptionVi: formData.descriptionVi,
+        descriptionEn: formData.descriptionEn,
+        tourType: formData.tourType,
+        priceAdult: parseFloat(formData.adultPrice),
+        priceChild: parseFloat(formData.childrenPrice) || 0,
+        durationDays: parseInt(formData.duration),
+        departureCity: formData.departureLocation,
+        destination: formData.destination,
+        country: formData.country,
+        requireVisa: formData.visaRequired,
+        visaInfo: formData.visaInformation,
+        maxCapacity: parseInt(formData.maxCapacity),
+        categoryId: formData.categoryId,
+        isActive: formData.isActive,
+        images: [], // Can add image upload logic later
+        itinerary: [],
+        departures: []
+      };
+
+      await createTour(tourRequest);
+      toast.success('Tour created successfully!');
+      navigate('/admin/tours');
+    } catch (error) {
+      console.error('Error creating tour:', error);
+      toast.error(error.response?.data?.message || 'Failed to create tour');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -255,6 +307,22 @@ const CreateTour = () => {
 
             <div className="space-y-6">
               <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest">Category</label>
+                <select 
+                  name="categoryId"
+                  value={formData.categoryId}
+                  onChange={handleChange}
+                  className="w-full bg-[#fafafa] border border-gray-100 text-sm font-bold text-slate-700 py-3 px-4 rounded-xl outline-none focus:ring-2 focus:ring-[#7C4A4A]/20 focus:border-[#7C4A4A] transition-all cursor-pointer"
+                  required
+                >
+                  <option value="" disabled>Select a category</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.nameEn} ({cat.nameVi})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2">
                 <label className="text-xs font-black text-gray-500 uppercase tracking-widest">Tour Type</label>
                 <select 
                   name="tourType"
@@ -303,13 +371,19 @@ const CreateTour = () => {
           <div className="flex flex-col space-y-3">
             <button 
               type="submit"
-              className="w-full bg-[#7C4A4A] hover:bg-[#633b3b] text-white py-4 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-[#7C4A4A]/20 flex items-center justify-center space-x-2 active:scale-[0.98]"
+              disabled={loading}
+              className={`w-full bg-[#7C4A4A] hover:bg-[#633b3b] text-white py-4 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-[#7C4A4A]/20 flex items-center justify-center space-x-2 active:scale-[0.98] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              <Save size={18} />
-              <span>Save Tour Details</span>
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <Save size={18} />
+              )}
+              <span>{loading ? 'Saving...' : 'Save Tour Details'}</span>
             </button>
             <button 
               type="button"
+              disabled={loading}
               onClick={() => navigate('/admin/tours')}
               className="w-full bg-white hover:bg-gray-50 text-gray-400 py-4 rounded-2xl text-sm font-bold uppercase tracking-widest border border-gray-100 transition-all flex items-center justify-center space-x-2 active:scale-[0.98]"
             >

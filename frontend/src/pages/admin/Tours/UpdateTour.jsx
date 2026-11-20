@@ -14,96 +14,58 @@ import {
   RefreshCcw
 } from 'lucide-react';
 
-// Mock data for simulation
-const mockTours = [
-  {
-    id: 'TOUR-7721',
-    nameVi: 'Khám Phá Bờ Biển Amalfi',
-    nameEn: 'Amalfi Coast Dream',
-    descriptionVi: 'Hành trình tuyệt đẹp dọc theo bờ biển Amalfi của Ý.',
-    descriptionEn: 'A breathtaking journey along Italy’s Amalfi Coast.',
-    departureLocation: 'Naples, Italy',
-    destination: 'Positano, Italy',
-    duration: '8',
-    country: 'Italy',
-    adultPrice: 4250,
-    childrenPrice: 3200,
-    maxCapacity: 15,
-    tourType: 'International',
-    visaRequired: true,
-    visaInformation: 'Schengen Visa required for non-EU citizens.'
-  },
-  {
-    id: 'TOUR-8842',
-    nameVi: 'Vườn Thiền Kyoto',
-    nameEn: 'Kyoto Zen Gardens',
-    descriptionVi: 'Trải nghiệm sự bình yên tại các ngôi đền cổ ở Kyoto.',
-    descriptionEn: 'Experience peace at the ancient temples of Kyoto.',
-    departureLocation: 'Osaka, Japan',
-    destination: 'Kyoto, Japan',
-    duration: '6',
-    country: 'Japan',
-    adultPrice: 3800,
-    childrenPrice: 2800,
-    maxCapacity: 12,
-    tourType: 'International',
-    visaRequired: true,
-    visaInformation: 'Electronic Visa required for most nationalities.'
-  },
-  {
-    id: 'TOUR-1209',
-    nameVi: 'Thám Hiểm Yosemite',
-    nameEn: 'Yosemite Expedition',
-    descriptionVi: 'Cuộc phiêu lưu vào trung tâm của Công viên Quốc gia Yosemite.',
-    descriptionEn: 'An adventure into the heart of Yosemite National Park.',
-    departureLocation: 'San Francisco, USA',
-    destination: 'California, USA',
-    duration: '4',
-    country: 'USA',
-    adultPrice: 1200,
-    childrenPrice: 800,
-    maxCapacity: 20,
-    tourType: 'Domestic',
-    visaRequired: false,
-    visaInformation: ''
-  }
-];
+import { getTourById, updateTour } from '../../../services/tourService';
+import { getCategories } from '../../../services/categoryService';
+import { toast } from 'react-hot-toast';
 
 const UpdateTour = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     nameVi: '',
     nameEn: '',
     descriptionVi: '',
     descriptionEn: '',
-    departureLocation: '',
+    departureCity: '',
     destination: '',
-    duration: '',
+    durationDays: '',
     country: '',
-    adultPrice: '',
-    childrenPrice: '',
+    priceAdult: '',
+    priceChild: '',
     maxCapacity: '',
     tourType: 'Domestic',
-    visaRequired: false,
-    visaInformation: ''
+    requireVisa: false,
+    visaInfo: '',
+    categoryId: '',
+    isActive: true
   });
 
   useEffect(() => {
-    // Simulate API fetch
-    const timer = setTimeout(() => {
-      const existingTour = mockTours.find(t => t.id === id);
-      if (existingTour) {
-        setFormData(existingTour);
-      } else {
-        alert('Tour not found!');
+    const fetchData = async () => {
+      try {
+        const [tourData, catsData] = await Promise.all([
+          getTourById(id),
+          getCategories()
+        ]);
+        setFormData({
+          ...tourData,
+          durationDays: tourData.durationDays?.toString() || '',
+          priceAdult: tourData.priceAdult?.toString() || '',
+          priceChild: tourData.priceChild?.toString() || '',
+          maxCapacity: tourData.maxCapacity?.toString() || ''
+        });
+        setCategories(catsData);
+      } catch (error) {
+        console.error("Error fetching tour details:", error);
+        toast.error("Failed to load tour details");
         navigate('/admin/tours');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
+    };
+    fetchData();
   }, [id, navigate]);
 
   const handleChange = (e) => {
@@ -114,11 +76,30 @@ const UpdateTour = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Updated:', formData);
-    alert('Tour Updated Successfully!');
-    navigate('/admin/tours');
+    setLoading(true);
+    try {
+      const tourRequest = {
+        ...formData,
+        priceAdult: parseFloat(formData.priceAdult),
+        priceChild: parseFloat(formData.priceChild) || 0,
+        durationDays: parseInt(formData.durationDays),
+        maxCapacity: parseInt(formData.maxCapacity),
+        images: formData.images || [],
+        itinerary: formData.itinerary || [],
+        departures: formData.departures || []
+      };
+
+      await updateTour(id, tourRequest);
+      toast.success('Tour updated successfully!');
+      navigate('/admin/tours');
+    } catch (error) {
+      console.error('Error updating tour:', error);
+      toast.error(error.response?.data?.message || 'Failed to update tour');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -219,8 +200,8 @@ const UpdateTour = () => {
                 </label>
                 <input 
                   type="text" 
-                  name="departureLocation"
-                  value={formData.departureLocation}
+                  name="departureCity"
+                  value={formData.departureCity}
                   onChange={handleChange}
                   placeholder="e.g. Ho Chi Minh City"
                   className="w-full bg-[#fafafa] border border-gray-100 text-sm font-medium text-slate-700 py-3 px-4 rounded-xl outline-none focus:ring-2 focus:ring-[#7C4A4A]/20 focus:border-[#7C4A4A] transition-all"
@@ -245,8 +226,8 @@ const UpdateTour = () => {
                 </label>
                 <input 
                   type="number" 
-                  name="duration"
-                  value={formData.duration}
+                  name="durationDays"
+                  value={formData.durationDays}
                   onChange={handleChange}
                   placeholder="e.g. 7"
                   className="w-full bg-[#fafafa] border border-gray-100 text-sm font-medium text-slate-700 py-3 px-4 rounded-xl outline-none focus:ring-2 focus:ring-[#7C4A4A]/20 focus:border-[#7C4A4A] transition-all"
@@ -287,8 +268,8 @@ const UpdateTour = () => {
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
                   <input 
                     type="number" 
-                    name="adultPrice"
-                    value={formData.adultPrice}
+                    name="priceAdult"
+                    value={formData.priceAdult}
                     onChange={handleChange}
                     placeholder="0.00"
                     className="w-full bg-[#fafafa] border border-gray-100 text-sm font-bold text-slate-700 py-3 pl-8 pr-4 rounded-xl outline-none focus:ring-2 focus:ring-[#7C4A4A]/20 focus:border-[#7C4A4A] transition-all"
@@ -301,8 +282,8 @@ const UpdateTour = () => {
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
                   <input 
                     type="number" 
-                    name="childrenPrice"
-                    value={formData.childrenPrice}
+                    name="priceChild"
+                    value={formData.priceChild}
                     onChange={handleChange}
                     placeholder="0.00"
                     className="w-full bg-[#fafafa] border border-gray-100 text-sm font-bold text-slate-700 py-3 pl-8 pr-4 rounded-xl outline-none focus:ring-2 focus:ring-[#7C4A4A]/20 focus:border-[#7C4A4A] transition-all"
@@ -336,6 +317,22 @@ const UpdateTour = () => {
 
             <div className="space-y-6">
               <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest">Category</label>
+                <select 
+                  name="categoryId"
+                  value={formData.categoryId}
+                  onChange={handleChange}
+                  className="w-full bg-[#fafafa] border border-gray-100 text-sm font-bold text-slate-700 py-3 px-4 rounded-xl outline-none focus:ring-2 focus:ring-[#7C4A4A]/20 focus:border-[#7C4A4A] transition-all cursor-pointer"
+                  required
+                >
+                  <option value="" disabled>Select a category</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.nameEn} ({cat.nameVi})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2">
                 <label className="text-xs font-black text-gray-500 uppercase tracking-widest">Tour Type</label>
                 <select 
                   name="tourType"
@@ -355,19 +352,19 @@ const UpdateTour = () => {
                     <label className="text-xs font-black text-gray-500 uppercase tracking-widest">Visa Required</label>
                     <button 
                       type="button"
-                      onClick={() => setFormData(prev => ({ ...prev, visaRequired: !prev.visaRequired }))}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${formData.visaRequired ? 'bg-[#7C4A4A]' : 'bg-gray-200'}`}
+                      onClick={() => setFormData(prev => ({ ...prev, requireVisa: !prev.requireVisa }))}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${formData.requireVisa ? 'bg-[#7C4A4A]' : 'bg-gray-200'}`}
                     >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.visaRequired ? 'translate-x-6' : 'translate-x-1'}`} />
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.requireVisa ? 'translate-x-6' : 'translate-x-1'}`} />
                     </button>
                   </div>
 
-                  {formData.visaRequired && (
+                  {formData.requireVisa && (
                     <div className="space-y-2 animate-in fade-in duration-300">
                       <label className="text-xs font-black text-gray-500 uppercase tracking-widest">Visa Information</label>
                       <textarea 
-                        name="visaInformation"
-                        value={formData.visaInformation}
+                        name="visaInfo"
+                        value={formData.visaInfo}
                         onChange={handleChange}
                         rows={3}
                         placeholder="Detail visa requirements..."
@@ -384,13 +381,19 @@ const UpdateTour = () => {
           <div className="flex flex-col space-y-3">
             <button 
               type="submit"
-              className="w-full bg-[#7C4A4A] hover:bg-[#633b3b] text-white py-4 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-[#7C4A4A]/20 flex items-center justify-center space-x-2 active:scale-[0.98]"
+              disabled={loading}
+              className={`w-full bg-[#7C4A4A] hover:bg-[#633b3b] text-white py-4 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-[#7C4A4A]/20 flex items-center justify-center space-x-2 active:scale-[0.98] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              <Save size={18} />
-              <span>Update Tour</span>
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <Save size={18} />
+              )}
+              <span>{loading ? 'Updating...' : 'Update Tour'}</span>
             </button>
             <button 
               type="button"
+              disabled={loading}
               onClick={() => navigate('/admin/tours')}
               className="w-full bg-white hover:bg-gray-50 text-gray-400 py-4 rounded-2xl text-sm font-bold uppercase tracking-widest border border-gray-100 transition-all flex items-center justify-center space-x-2 active:scale-[0.98]"
             >

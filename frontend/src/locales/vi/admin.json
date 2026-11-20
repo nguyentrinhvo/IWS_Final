@@ -14,9 +14,7 @@
     "transport": "PHƯƠNG TIỆN",
     "attractions": "ĐIỂM ĐẾN",
     "categories": "DANH MỤC",
-    "reviews": "ĐÁNH GIÁ",
-    "chat": "TIN NHẮN",
-    "reports": "BÁO CÁO"
+    "reviews": "ĐÁNH GIÁ"
   },
   "header": {
     "admin": "Quản trị",

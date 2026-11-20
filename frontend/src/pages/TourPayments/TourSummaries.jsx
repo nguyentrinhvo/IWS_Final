@@ -1,8 +1,9 @@
 import React from 'react';
-import { mockData } from '../../data/mockData';
+import { useAuth } from '../../context/AuthContext';
 
 const TourSummaries = ({ tour, schedule, passengers }) => {
-  const user = mockData?.users?.[0] || {};
+  const { currentUser } = useAuth();
+  const user = currentUser || {};
   const guestsCount = (passengers?.adults || 0) + (passengers?.children || 0) + (passengers?.infants || 0);
 
   const formatDate = (dateString) => {

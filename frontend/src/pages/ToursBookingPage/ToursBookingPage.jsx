@@ -97,6 +97,7 @@ const ToursBookingPage = ({
             totalResults={totalResults}
             onSortChange={onSortChange}
             currentSort={sortBy}
+            currentLocation={filters.location}
           />
         </div>
 

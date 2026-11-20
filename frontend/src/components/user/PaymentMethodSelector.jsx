@@ -1,21 +1,20 @@
 import React from 'react';
 import PaymentMethodCard from './PaymentMethodCard';
 
+const PAYMENT_METHODS = [
+  { id: 'vnpay', name: 'VNPAY (ATM, Credit Card, VietQR)', icon: 'https://vnpay.vn/s1/statics.vnpay.vn/2023/6/0oxhzjmxbksr1686814746087.png' },
+  { id: 'paypal', name: 'PayPal', icon: 'https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg' }
+];
+
 const PaymentMethodSelector = ({ selectedMethod, onSelect }) => {
-  const methods = [
-    {
-      id: 'vnpay',
-      name: 'VNPay',
-      description: 'Pay via VNPay gateway (Credit Card, Bank Transfer, QR Code)',
-      logo: 'https://vnpay.vn/wp-content/uploads/2020/07/Logo-VNPAY-QR.png'
-    },
-    {
-      id: 'paypal',
-      name: 'PayPal',
-      description: 'Pay safely and easily with your PayPal account or Credit Card',
-      logo: 'https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_266x142.png'
-    }
-  ];
+  const methods = PAYMENT_METHODS.map(m => ({
+    id: m.id,
+    name: m.name,
+    description: m.id === 'vnpay' 
+      ? 'Pay via VNPay gateway (Credit Card, Bank Transfer, QR Code)'
+      : 'Pay safely and easily with your PayPal account or Credit Card',
+    logo: m.icon
+  }));
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">

@@ -82,13 +82,13 @@ const ToursDetailPage = ({ data, loading, error, onRetry, locale = 'vi' }) => {
             <TourInclusions data={data.inclusions} />
             <TourExclusions data={data.exclusions} />
             <TourTerms data={data.terms} />
-            <TourBookNow data={data.bookNow} />
+            <TourBookNow data={data} />
             <TourReviews data={data.reviews} tourTitle={data.header?.title || ''} />
           </div>
 
           {/* Right column: only TourSchedulePrice */}
           <div className="sidebar">
-            <TourSchedulePrice data={data.schedulePrice} tourId={data.header?.tourCode || "TOUR001"} />
+            <TourSchedulePrice data={data} tourId={data.header?.tourCode} />
           </div>
         </div>
       </main>

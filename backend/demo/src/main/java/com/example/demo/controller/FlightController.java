@@ -36,6 +36,18 @@ public class FlightController {
         return ResponseEntity.ok(flights);
     }
 
+    // PUBLIC: Get all flight locations
+    @GetMapping("/locations")
+    public ResponseEntity<List<String>> getLocations() {
+        return ResponseEntity.ok(flightService.getAllLocations());
+    }
+
+    // PUBLIC: Get featured flights
+    @GetMapping("/featured")
+    public ResponseEntity<List<FlightDTO>> getFeaturedFlights() {
+        return ResponseEntity.ok(flightService.getFeaturedFlights());
+    }
+
     // PUBLIC: Get Flight By ID
     @GetMapping("/{id}")
     public ResponseEntity<FlightDTO> getFlightById(@PathVariable String id) {

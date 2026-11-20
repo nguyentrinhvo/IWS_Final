@@ -524,5 +524,18 @@
   "catAllActivities": "All Activities",
   "registerSuccessTitle": "Registration Successful!",
   "registerSuccessDesc": "Welcome to Hanuvivu. Your account has been created successfully. You can now log in to start your journey.",
-  "backToLoginBtn": "Back to Login"
+  "backToLoginBtn": "Back to Login",
+  "ttd_all_activities_title": "All Activities",
+  "ttd_all_activities_desc": "Discover thousands of unique experiences waiting for you to enjoy.",
+  "ttd_attractions_title": "Top Attractions",
+  "ttd_attractions_desc": "Explore famous and beautiful landmarks you can't miss.",
+  "ttd_experiences_title": "Exciting Experiences",
+  "ttd_experiences_desc": "Join unique entertainment, sports, and cultural activities.",
+  "ttd_essentials_title": "Essential Services",
+  "ttd_essentials_desc": "Essential services to make your trip smoother and more convenient.",
+  "ttd_empty_title": "No activities found",
+  "ttd_empty_desc": "We are continuing to update more new experiences. Please come back later!",
+  "ttd_from_price": "From",
+  "ttd_free": "Free",
+  "ttd_featured_badge": "Featured"
 }

@@ -139,4 +139,10 @@ public class AttractionController {
         attractionService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getStats() {
+        return ResponseEntity.ok(attractionService.getStats());
+    }
 }

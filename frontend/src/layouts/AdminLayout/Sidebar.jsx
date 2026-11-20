@@ -17,12 +17,20 @@ import {
   Menu,
   ChevronLeft
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = ({ isMobileOpen, setIsMobileOpen, isCollapsed, setIsCollapsed }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { t } = useTranslation();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   const navItems = [
     { icon: LayoutDashboard, label: t('sidebar.dashboard', 'DASHBOARD'), path: '/admin/dashboard' },
@@ -36,8 +44,6 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen, isCollapsed, setIsCollapsed })
     { icon: Tent, label: t('sidebar.attractions', 'ATTRACTIONS'), path: '/admin/attractions' },
     { icon: Grid, label: t('sidebar.categories', 'CATEGORIES'), path: '/admin/categories' },
     { icon: Star, label: t('sidebar.reviews', 'REVIEWS'), path: '/admin/reviews' },
-    { icon: MessageSquare, label: t('sidebar.chat', 'CHAT'), path: '/admin/chat' },
-    { icon: BarChart3, label: t('sidebar.reports', 'REPORTS'), path: '/admin/reports' },
   ];
 
   return (
@@ -100,7 +106,18 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen, isCollapsed, setIsCollapsed })
           })}
         </ul>
       </nav>
-      
+
+      {/* Logout Button */}
+      <div className="p-4 border-t border-white/10 mt-auto">
+        <button
+          onClick={handleLogout}
+          className={`w-full flex items-center ${isCollapsed ? 'justify-center px-0' : 'space-x-3 px-4'} py-3 rounded-lg text-gray-300 hover:bg-red-500/20 hover:text-white transition-all group`}
+          title={isCollapsed ? t('logout', 'LOGOUT') : undefined}
+        >
+          <LogOut className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform" />
+          {!isCollapsed && <span className="text-sm font-bold tracking-widest uppercase">{t('logout', 'LOGOUT')}</span>}
+        </button>
+      </div>
     </aside>
   );
 };

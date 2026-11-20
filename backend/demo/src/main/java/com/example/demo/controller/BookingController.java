@@ -124,12 +124,6 @@ public class BookingController {
         return ResponseEntity.ok(Map.of("message", "E-ticket has been sent to your email."));
     }
 
-    @PutMapping("/admin/bookings/{id}/confirm")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<BookingDTO> confirmBooking(@PathVariable String id) {
-        BookingDTO booking = bookingService.confirmBooking(id);
-        return ResponseEntity.ok(booking);
-    }
 
     @PutMapping("/bookings/{id}/cancel")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")

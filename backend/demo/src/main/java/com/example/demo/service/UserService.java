@@ -28,6 +28,10 @@ public class UserService {
     public UserDTO getMyProfile(String email) {
         UserDocument user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        user.setLastActiveAt(new Date());
+        userRepository.save(user);
+        
         return convertToDTO(user);
     }
 
@@ -65,6 +69,10 @@ public class UserService {
 
     // ── Admin methods ─────────────────────────────────────────────
 
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
+        return getAllUsers(null, pageable);
+    }
+
     public Page<UserDTO> getAllUsers(String keyword, Pageable pageable) {
         Page<UserDocument> users;
         if (keyword != null && !keyword.isEmpty()) {
@@ -87,6 +95,26 @@ public class UserService {
         return new MessageResponse("User " + status + " successfully");
     }
 
+    public UserDTO adminCreateUser(com.example.demo.dto.admin.CreateUserRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new BadRequestException("Email already exists");
+        }
+
+        UserDocument user = new UserDocument();
+        user.setEmail(request.getEmail());
+        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
+        user.setFullName(request.getFullName());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setRole(request.getRole() != null ? request.getRole().toUpperCase() : "CUSTOMER");
+        user.setIsLocked(false);
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
+        user.setProvider("local");
+
+        userRepository.save(user);
+        return convertToDTO(user);
+    }
+
     private UserDTO convertToDTO(UserDocument user) {
         return UserDTO.builder()
                 .id(user.getId())
@@ -100,6 +128,20 @@ public class UserService {
                 .dateOfBirth(user.getDateOfBirth())
                 .city(user.getCity())
                 .provider(user.getProvider())
+                .createdAt(user.getCreatedAt())
+                .isLocked(user.getIsLocked())
+                .lastActiveAt(user.getLastActiveAt())
                 .build();
+    }
+
+    public MessageResponse changeUserRole(String id, String role) {
+        UserDocument user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        user.setRole(role.toUpperCase());
+        user.setUpdatedAt(new Date());
+        userRepository.save(user);
+        
+        return new MessageResponse("User role updated to " + role.toUpperCase());
     }
 }

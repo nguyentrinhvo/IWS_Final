@@ -31,10 +31,11 @@ public class TourController {
             @RequestParam(required = false) Integer durationDays,
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Boolean isActive,
             @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         
         Page<TourDTO> tours = tourService.getTours(categoryId, tourType, destination, country, 
-                                                   durationDays, maxPrice, keyword, pageable);
+                                                   durationDays, maxPrice, keyword, isActive, pageable);
         return ResponseEntity.ok(tours);
     }
 

@@ -87,4 +87,10 @@ public class BusTrainRouteController {
         service.deleteRoute(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getStats() {
+        return ResponseEntity.ok(service.getStats());
+    }
 }

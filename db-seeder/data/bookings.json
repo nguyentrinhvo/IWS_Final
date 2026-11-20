@@ -1,0 +1,56 @@
+[
+  {
+    "id": "6634d0000000000000000001",
+    "userId": "6634c0000000000000000002",
+    "serviceId": "TOUR_001",
+    "serviceType": "tour",
+    "numAdults": 2,
+    "numChildren": 1,
+    "totalPrice": 14823000,
+    "status": "confirmed",
+    "snapshotName": "Khám phá Hà Nội - Hạ Long - Sapa 5 ngày 4 đêm",
+    "snapshotPrice": 5490000.0,
+    "payment": {
+      "provider": "VNPAY",
+      "paymentStatus": "success",
+      "method": "VNPAY",
+      "paidAt": "2024-05-01T10:05:00Z"
+    },
+    "createdAt": "2024-05-01T10:00:00Z"
+  },
+  {
+    "id": "6634d0000000000000000002",
+    "userId": "6634c0000000000000000002",
+    "serviceId": "FLIGHT_001",
+    "serviceType": "flight",
+    "quantity": 1,
+    "totalPrice": 1250000,
+    "status": "pending",
+    "snapshotName": "Vietnam Airlines VN123 (HAN - SGN)",
+    "snapshotPrice": 1250000.0,
+    "payment": {
+      "provider": "PayPal",
+      "paymentStatus": "pending",
+      "method": "PayPal"
+    },
+    "createdAt": "2024-05-02T15:30:00Z"
+  },
+  {
+    "id": "6634d0000000000000000003",
+    "userId": "6634c0000000000000000002",
+    "serviceId": "HOTEL_001",
+    "serviceType": "hotel",
+    "quantity": 1,
+    "totalPrice": 2500000,
+    "status": "confirmed",
+    "snapshotName": "Hanoi Paradise Hotel - Deluxe Room",
+    "snapshotPrice": 1250000.0,
+    "payment": {
+      "provider": "VNPAY",
+      "paymentStatus": "success",
+      "method": "VNPAY",
+      "paidAt": "2024-05-03T08:05:00Z"
+    },
+    "createdAt": "2024-05-03T08:00:00Z"
+  }
+]

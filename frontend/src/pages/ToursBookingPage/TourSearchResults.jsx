@@ -158,39 +158,43 @@ const TourHighlightsRow = ({ highlights }) => {
 };
 
 const TourSearchResults = ({ tours }) => {
-  if (!tours || tours.length === 0) return null;
+  if (!tours || tours.length === 0) return (
+    <div className="py-10 text-center text-gray-500">
+      Không tìm thấy tour phù hợp.
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-[20px] w-full">
       {tours.map((tour) => {
-        const hasDiscount = tour.bookNow?.originalPrice && tour.bookNow.originalPrice > tour.price;
-        const currentPrice = tour.price;
-        const originalPrice = tour.bookNow?.originalPrice;
-        const departureDate = tour.availableDates?.[0] || tour.departureSchedules?.[0]?.departure;
+        const currentPrice = tour.priceAdult;
+        const originalPrice = tour.priceAdult * 1.2; // Mock original price if not in API
+        const hasDiscount = true;
+        const departureDate = tour.departures?.[0]?.departureDate;
         const highlights = tour.highlights || [];
 
         return (
           <div
             key={tour.id}
-            className="group flex flex-col lg:flex-row w-full h-[500px] md:h-auto lg:h-[225px] bg-white rounded-xl border-2 border-orange-500 cursor-pointer transition-all duration-300 hover:shadow-[0_0_15px_rgba(249,115,22,0.5)] overflow-hidden"
+            className="group flex flex-col lg:flex-row w-full h-auto lg:h-[225px] bg-white rounded-xl border-2 border-orange-500 cursor-pointer transition-all duration-300 hover:shadow-[0_0_15px_rgba(249,115,22,0.5)] overflow-hidden"
           >
-            <div className="w-full lg:w-[200px] h-[220px] md:h-[250px] lg:h-full flex-shrink-0 relative">
+            <div className="w-full lg:w-[200px] h-[220px] lg:h-full flex-shrink-0 relative">
               <img
-                src={tour.image}
-                alt={tour.title}
+                src={tour.images?.[0]?.url || 'https://picsum.photos/seed/tour/800/600'}
+                alt={tour.nameVi}
                 className="w-full h-full object-cover lg:rounded-l-xl lg:rounded-tr-none rounded-t-xl"
               />
             </div>
 
             <div className="flex-1 flex flex-col p-4 overflow-hidden">
               <div className="flex items-center gap-1 mb-2 text-sm shrink-0">
-                <span className="text-blue-600 font-bold">{tour.rating}</span>
+                <span className="text-blue-600 font-bold">{tour.avgRating || 4.5}</span>
                 <span className="text-black">/5</span>
-                <span className="text-black ml-1">({tour.reviewsCount} reviews)</span>
+                <span className="text-black ml-1">({tour.totalReviews || 0} reviews)</span>
               </div>
 
               <h2 className="text-black text-xl lg:text-2xl font-bold mb-3 break-words line-clamp-2 shrink-0">
-                {tour.title}
+                {tour.nameVi}
               </h2>
 
               <div className="flex flex-row items-center gap-6 mb-4 text-sm shrink-0">
@@ -199,14 +203,14 @@ const TourSearchResults = ({ tours }) => {
                     <path d="M12 8V12L14.5 14.5" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"></path>
                   </svg>
-                  <span className="text-black">{tour.duration}</span>
+                  <span className="text-black">{tour.durationDays} ngày</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <svg height="18px" width="18px" version="1.1" viewBox="0 0 512 512" xmlSpace="preserve" fill="#000000">
                     <path fill="#000000" d="M255.996,0C145.058,0,55.138,89.929,55.138,200.866c0,68.454,34.648,128.363,86.55,165.174 c47.356,33.594,57.811,41.609,74.462,73.4c13.174,25.147,34.541,69.279,34.541,69.279c1.004,2.008,3.052,3.281,5.306,3.281 c2.244,0,4.31-1.274,5.313-3.281c0,0,21.368-44.132,34.541-69.279c16.642-31.791,27.106-39.806,74.454-73.4 c51.91-36.811,86.558-96.72,86.558-165.174C456.862,89.929,366.925,0,255.996,0z M255.996,335.473 c-74.331,0-134.599-60.268-134.599-134.608c0-74.339,60.268-134.607,134.599-134.607c74.339,0,134.606,60.268,134.606,134.607 C390.602,275.205,330.335,335.473,255.996,335.473z"></path>
                   </svg>
-                  <span className="text-black">{tour.departure}</span>
+                  <span className="text-black">{tour.departureCity}</span>
                 </div>
               </div>
 
@@ -215,7 +219,7 @@ const TourSearchResults = ({ tours }) => {
               </div>
             </div>
 
-            <div className="w-full lg:w-[200px] h-[75px] md:h-auto lg:h-full flex-shrink-0 flex flex-col justify-center lg:justify-between items-start lg:items-end px-4 py-2 lg:p-4 lg:bg-[#f2f7fa] border-t border-gray-100 lg:border-t-0 bg-white lg:rounded-r-xl lg:rounded-bl-none rounded-b-xl">
+            <div className="w-full lg:w-[220px] h-auto lg:h-full flex-shrink-0 flex flex-col justify-center lg:justify-between items-start lg:items-end px-4 py-4 lg:p-4 lg:bg-[#f2f7fa] border-t border-gray-100 lg:border-t-0 bg-white lg:rounded-r-xl">
               <div className="flex flex-col lg:items-end w-full">
                 <div className="flex flex-row lg:flex-col items-center lg:items-end gap-2 lg:gap-0 w-full lg:mb-2">
                   <span className="text-gray-500 text-sm whitespace-nowrap">Giá chỉ</span>

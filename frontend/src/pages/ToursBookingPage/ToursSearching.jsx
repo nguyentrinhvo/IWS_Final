@@ -15,7 +15,18 @@ import {
   getMonthName,
   formatDate
 } from '../../utils/SearchUtils';
-import { getTourDestinations, getTourOrigins } from '../../data/mockData';
+
+const VN_PROVINCES = ["An Giang","Bà Rịa - Vũng Tàu","Bắc Giang","Bắc Kạn","Bạc Liêu","Bắc Ninh","Bến Tre","Bình Dương","Bình Định","Bình Phước","Bình Thuận","Cà Mau","Cần Thơ","Cao Bằng","Đà Nẵng","Đắk Lắk","Đắk Nông","Điện Biên","Đồng Nai","Đồng Tháp","Gia Lai","Hà Giang","Hà Nam","Hà Nội","Hà Tĩnh","Hải Dương","Hải Phòng","Hậu Giang","Hòa Bình","Hưng Yên","Khánh Hòa","Kiên Giang","Kon Tum","Lai Châu","Lạng Sơn","Lào Cai","Lâm Đồng","Long An","Nam Định","Nghệ An","Ninh Bình","Ninh Thuận","Phú Thọ","Phú Yên","Quảng Bình","Quảng Nam","Quảng Ngãi","Quảng Ninh","Quảng Trị","Sóc Trăng","Sơn La","Tây Ninh","Thái Bình","Thái Nguyên","Thanh Hóa","Thừa Thiên Huế","Tiền Giang","Hồ Chí Minh","Trà Vinh","Tuyên Quang","Vĩnh Long","Vĩnh Phúc","Yên Bái"];
+const INT_LOCATIONS = ["South Korea","China","Japan","Malaysia","Laos","Cambodia","Singapore","Thailand","Taiwan","France","USA","Australia"];
+const ALL_LOCATIONS = [...VN_PROVINCES, ...INT_LOCATIONS];
+
+const getTourDestinations = (t) => [
+  { id: 'hanoi', label: 'Hà Nội', count: 1, image: 'https://picsum.photos/seed/hanoi/400/400' },
+  { id: 'danang', label: 'Đà Nẵng', count: 1, image: 'https://picsum.photos/seed/danang/400/400' },
+  { id: 'hcm', label: 'Hồ Chí Minh', count: 1, image: 'https://picsum.photos/seed/hcm/400/400' }
+];
+
+const getTourOrigins = (t) => [t ? t('all') : 'Tất cả', ...ALL_LOCATIONS];
 
 export default function ToursSearching() {
   const navigate = useNavigate();

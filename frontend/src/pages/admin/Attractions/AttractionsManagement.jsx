@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Map, Ticket, CheckCircle2, DollarSign, Filter, Plus, MapPin
+  Map, Ticket, CheckCircle2, DollarSign, Filter, Plus, MapPin, Pencil, Trash2
 } from 'lucide-react';
 import DashboardCard from '../../../components/admin/DashboardCard';
 import AdminTable from '../../../components/admin/AdminTable';
@@ -14,21 +14,8 @@ import FilterBar, { FilterLabel, AdminSelect } from '../../../components/admin/F
 import AdminPrimaryButton from '../../../components/admin/AdminPrimaryButton';
 import AdminModal from '../../../components/admin/AdminModal';
 import ConfirmModal from '../../../components/admin/ConfirmModal';
-
-// ─── Mock Data ───────────────────────────────────────────────────────────────
-const MOCK_ATTRACTIONS = [
-  { id: 1, ten_vi: 'VinWonders Phú Quốc', ten_en: 'VinWonders Phu Quoc', dia_diem: 'Phu Quoc, Vietnam', loai_hinh: 'Entertainment', trang_thai: 'Active', mo_ta: 'Largest theme park in Vietnam.', anh_dai_dien: '' },
-  { id: 2, ten_vi: 'Vịnh Hạ Long', ten_en: 'Ha Long Bay', dia_diem: 'Quang Ninh, Vietnam', loai_hinh: 'Nature', trang_thai: 'Active', mo_ta: 'UNESCO World Heritage site with stunning islands.', anh_dai_dien: '' },
-  { id: 3, ten_vi: 'Phố cổ Hội An', ten_en: 'Hoi An Ancient Town', dia_diem: 'Quang Nam, Vietnam', loai_hinh: 'Culture', trang_thai: 'Inactive', mo_ta: 'Well-preserved ancient trading port.', anh_dai_dien: '' },
-  { id: 4, ten_vi: 'Bà Nà Hills', ten_en: 'Ba Na Hills', dia_diem: 'Da Nang, Vietnam', loai_hinh: 'Entertainment', trang_thai: 'Active', mo_ta: 'Mountaintop resort and theme park.', anh_dai_dien: '' },
-];
-
-const MOCK_TICKETS = [
-  { id: 1, name: 'Standard Admission', attraction: 'VinWonders Phu Quoc', price: 950000, status: 'Active', description: 'Full day access to all zones' },
-  { id: 2, name: 'Cruise Day Tour', attraction: 'Ha Long Bay', price: 1200000, status: 'Active', description: '6-hour cruise with lunch' },
-  { id: 3, name: 'Night Tour & Lanterns', attraction: 'Hoi An Ancient Town', price: 200000, status: 'Active', description: 'Guided walking tour at night' },
-  { id: 4, name: 'Cable Car Round Trip', attraction: 'Ba Na Hills', price: 850000, status: 'Active', description: 'Round trip cable car ticket' },
-];
+import { attractionService } from '../../../services/attractionService';
+import { toast } from 'react-hot-toast';
 
 const TABS = ['Attractions', 'Tickets & Pricing'];
 const ATTRACTION_COLUMNS = ['Name', 'Location', 'Type', 'Status', 'Actions'];
@@ -36,31 +23,105 @@ const TICKET_COLUMNS = ['Ticket Name', 'Attraction', 'Price', 'Status', 'Descrip
 
 const AttractionsManagement = () => {
   const [activeTab, setActiveTab] = useState('Attractions');
+  const [loading, setLoading] = useState(true);
   
   // ─── States for Attractions ──────────────────────────────────────────────────
-  const [attractions, setAttractions] = useState(MOCK_ATTRACTIONS);
+  const [attractions, setAttractions] = useState([]);
   const [attrSearch, setAttrSearch] = useState('');
   const [attrType, setAttrType] = useState('All');
   const [attrStatus, setAttrStatus] = useState('All');
-  const [attrPage, setAttrPage] = useState(1);
+  const [pagination, setPagination] = useState({ page: 0, size: 10, totalElements: 0 });
 
   // ─── States for Tickets ──────────────────────────────────────────────────────
-  const [tickets, setTickets] = useState(MOCK_TICKETS);
+  const [tickets, setTickets] = useState([]);
   const [ticketSearch, setTicketSearch] = useState('');
   const [ticketAttraction, setTicketAttraction] = useState('All');
-  const [ticketPage, setTicketPage] = useState(1);
 
   // ─── Modal States ────────────────────────────────────────────────────────────
   const [attrModal, setAttrModal] = useState({ isOpen: false, type: 'add', data: null });
+  const [attrFormData, setAttrFormData] = useState({
+    nameVi: '',
+    nameEn: '',
+    location: '',
+    attractionType: 'Entertainment',
+    descriptionVi: '',
+    descriptionEn: '',
+    isActive: true,
+    thumbnailUrl: ''
+  });
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
 
-  // ─── Filter Logic ────────────────────────────────────────────────────────────
+  const [ticketFormData, setTicketFormData] = useState({
+    typeName: '',
+    price: 0,
+    description: '',
+    attractionId: ''
+  });
+  const [ticketModal, setTicketModal] = useState({ isOpen: false, type: 'add', data: null });
+
+  // ─── Summary Stats ───────────────────────────────────────────────────────────
+  const [stats, setStats] = useState({
+    totalAttractions: 0,
+    activeAttractions: 0,
+    totalTickets: 0,
+    avgTicketPrice: 0
+  });
+
+  const fetchStats = async () => {
+    try {
+      const data = await attractionService.getAttractionStats();
+      setStats(data);
+    } catch (error) {
+      console.error("Error fetching stats:", error);
+    }
+  };
+
+  const fetchAttractions = async () => {
+    setLoading(true);
+    try {
+      // For admin, we can use search with empty params or specialized admin endpoint
+      const data = await attractionService.getAllAttractionsAdmin(
+        pagination.page, 
+        pagination.size,
+        'id,desc'
+      );
+      setAttractions(data.content);
+      setPagination(prev => ({ ...prev, totalElements: data.totalElements }));
+      
+      // Flatten tickets
+      const allTickets = data.content.flatMap(a => 
+        (a.ticketTypes || []).map(t => ({
+          ...t,
+          id: `${a.id}-${t.typeName}`,
+          attractionId: a.id,
+          attraction: a.nameVi,
+          name: t.typeName,
+          price: t.price,
+          status: a.isActive ? 'Active' : 'Inactive',
+          description: t.description
+        }))
+      );
+      setTickets(allTickets);
+    } catch (error) {
+      console.error("Error fetching attractions:", error);
+      toast.error("Failed to load attractions");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAttractions();
+    fetchStats();
+  }, [pagination.page]);
+
+  // ─── Filter Logic (Client-side for now for simplicity, or we can use backend search) ────────────────
   const filteredAttractions = attractions.filter(a => {
     const matchSearch = attrSearch === '' || 
-      a.ten_vi.toLowerCase().includes(attrSearch.toLowerCase()) || 
-      a.ten_en.toLowerCase().includes(attrSearch.toLowerCase());
-    const matchType = attrType === 'All' || a.loai_hinh === attrType;
-    const matchStatus = attrStatus === 'All' || a.trang_thai === attrStatus;
+      a.nameVi.toLowerCase().includes(attrSearch.toLowerCase()) || 
+      a.nameEn.toLowerCase().includes(attrSearch.toLowerCase());
+    const matchType = attrType === 'All' || a.attractionType === attrType;
+    const matchStatus = attrStatus === 'All' || (attrStatus === 'Active' ? a.isActive : !a.isActive);
     return matchSearch && matchType && matchStatus;
   });
 
@@ -70,56 +131,134 @@ const AttractionsManagement = () => {
     return matchSearch && matchAttraction;
   });
 
-  // ─── Pagination Logic ────────────────────────────────────────────────────────
-  const ITEMS_PER_PAGE = 5;
-  const paginatedAttractions = filteredAttractions.slice((attrPage - 1) * ITEMS_PER_PAGE, attrPage * ITEMS_PER_PAGE);
-  const paginatedTickets = filteredTickets.slice((ticketPage - 1) * ITEMS_PER_PAGE, ticketPage * ITEMS_PER_PAGE);
-
-  // ─── Summary Stats ───────────────────────────────────────────────────────────
-  const totalAttractions = attractions.length;
-  const activeAttractions = attractions.filter(a => a.trang_thai === 'Active').length;
-  const totalTickets = tickets.length;
-  const avgTicketPrice = totalTickets > 0 ? tickets.reduce((sum, t) => sum + t.price, 0) / totalTickets : 0;
-
   // ─── Handlers for Attractions ────────────────────────────────────────────────
-  const openAddAttr = () => setAttrModal({ isOpen: true, type: 'add', data: null });
-  const openEditAttr = (attr) => setAttrModal({ isOpen: true, type: 'edit', data: attr });
+  const openAddAttr = () => {
+    setAttrFormData({
+      nameVi: '',
+      nameEn: '',
+      location: '',
+      attractionType: 'Entertainment',
+      descriptionVi: '',
+      descriptionEn: '',
+      isActive: true,
+      thumbnailUrl: ''
+    });
+    setAttrModal({ isOpen: true, type: 'add', data: null });
+  };
+
+  const openEditAttr = (attr) => {
+    setAttrFormData({
+      nameVi: attr.nameVi,
+      nameEn: attr.nameEn,
+      location: attr.location,
+      attractionType: attr.attractionType,
+      descriptionVi: attr.descriptionVi || '',
+      descriptionEn: attr.descriptionEn || '',
+      isActive: attr.isActive,
+      thumbnailUrl: attr.thumbnailUrl || ''
+    });
+    setAttrModal({ isOpen: true, type: 'edit', data: attr });
+  };
+
   const closeAttrModal = () => setAttrModal({ isOpen: false, type: 'add', data: null });
 
-  const handleSaveAttr = (e) => {
+  const handleSaveAttr = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const newAttr = {
-      id: attrModal.type === 'edit' ? attrModal.data.id : Date.now(),
-      ten_vi: formData.get('ten_vi'),
-      ten_en: formData.get('ten_en'),
-      dia_diem: formData.get('dia_diem'),
-      loai_hinh: formData.get('loai_hinh'),
-      trang_thai: formData.get('trang_thai'),
-      mo_ta: formData.get('mo_ta'),
-      anh_dai_dien: formData.get('anh_dai_dien')
-    };
-
-    if (attrModal.type === 'edit') {
-      setAttractions(prev => prev.map(a => (a.id === newAttr.id ? newAttr : a)));
-    } else {
-      setAttractions(prev => [newAttr, ...prev]);
+    try {
+      if (attrModal.type === 'add') {
+        await attractionService.createAttraction(attrFormData);
+        toast.success("Attraction created");
+      } else {
+        await attractionService.updateAttraction(attrModal.data.id, attrFormData);
+        toast.success("Attraction updated");
+      }
+      fetchAttractions();
+      fetchStats();
+      closeAttrModal();
+    } catch (error) {
+      toast.error("Failed to save attraction");
     }
-    closeAttrModal();
   };
 
   const openDeleteAttr = (id) => setDeleteModal({ isOpen: true, id });
   const closeDeleteModal = () => setDeleteModal({ isOpen: false, id: null });
-  const confirmDeleteAttr = () => {
-    setAttractions(prev => prev.filter(a => a.id !== deleteModal.id));
+  const confirmDeleteAttr = async () => {
+    try {
+      await attractionService.deleteAttraction(deleteModal.id);
+      toast.success("Attraction deleted");
+      fetchAttractions();
+      fetchStats();
+    } catch (error) {
+      toast.error("Failed to delete attraction");
+    }
     closeDeleteModal();
   };
 
   // ─── Handlers for Tickets (Unchanged dummy implementations) ─────────────────
-  const handleEditTicket = (id) => console.log('Edit ticket', id);
-  const handleDeleteTicket = (id) => {
+  const [ticketPage, setTicketPage] = useState(1);
+  const [attrPage, setAttrPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
+
+  const paginatedAttractions = filteredAttractions.slice((attrPage - 1) * ITEMS_PER_PAGE, attrPage * ITEMS_PER_PAGE);
+  const paginatedTickets = filteredTickets.slice((ticketPage - 1) * ITEMS_PER_PAGE, ticketPage * ITEMS_PER_PAGE);
+
+  const openAddTicket = () => {
+    setTicketFormData({ typeName: '', price: 0, description: '', attractionId: '' });
+    setTicketModal({ isOpen: true, type: 'add', data: null });
+  };
+
+  const handleEditTicket = (ticket) => {
+    setTicketFormData({ ...ticket, typeName: ticket.name });
+    setTicketModal({ isOpen: true, type: 'edit', data: ticket });
+  };
+
+  const handleSaveTicket = async (e) => {
+    e.preventDefault();
+    try {
+      const attraction = attractions.find(a => a.id === (ticketModal.data?.attractionId || ticketFormData.attractionId));
+      if (!attraction) {
+        toast.error("Please select an attraction first");
+        return;
+      }
+
+      let updatedTickets;
+      if (ticketModal.type === 'edit') {
+        updatedTickets = attraction.ticketTypes.map(t => 
+          t.typeName === ticketModal.data.name ? { ...ticketFormData } : t
+        );
+      } else {
+        updatedTickets = [...(attraction.ticketTypes || []), { ...ticketFormData }];
+      }
+
+      await attractionService.updateAttraction(attraction.id, {
+        ...attraction,
+        ticketTypes: updatedTickets
+      });
+
+      toast.success("Ticket saved");
+      fetchAttractions();
+      setTicketModal({ isOpen: false, type: 'add', data: null });
+    } catch (error) {
+      toast.error("Failed to save ticket");
+    }
+  };
+
+  const handleDeleteTicket = async (ticket) => {
     if (window.confirm('Are you sure you want to delete this ticket?')) {
-      setTickets(prev => prev.filter(t => t.id !== id));
+      try {
+        const attraction = attractions.find(a => a.id === ticket.attractionId);
+        const updatedTickets = attraction.ticketTypes.filter(t => t.typeName !== ticket.name);
+        
+        await attractionService.updateAttraction(attraction.id, {
+          ...attraction,
+          ticketTypes: updatedTickets
+        });
+        
+        toast.success("Ticket deleted");
+        fetchAttractions();
+      } catch (error) {
+        toast.error("Failed to delete ticket");
+      }
     }
   };
 
@@ -136,23 +275,21 @@ const AttractionsManagement = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardCard 
           title="TOTAL ATTRACTIONS" 
-          value={totalAttractions} 
+          value={stats.totalAttractions} 
           icon={Map} 
-          trend="up" 
-          trendValue="+3" 
+          trend="stable" 
         />
         <DashboardCard 
           title="ACTIVE ATTRACTIONS" 
-          value={activeAttractions} 
+          value={stats.activeAttractions} 
           icon={CheckCircle2} 
-          trend="up" 
-          trendValue="+1" 
+          trend="stable" 
           iconBgColor="bg-[#eefcf2]" 
           iconColor="text-[#22a85a]" 
         />
         <DashboardCard 
           title="TOTAL TICKETS" 
-          value={totalTickets} 
+          value={stats.totalTickets} 
           icon={Ticket} 
           trend="stable" 
           iconBgColor="bg-[#eff6ff]" 
@@ -160,10 +297,9 @@ const AttractionsManagement = () => {
         />
         <DashboardCard 
           title="AVG TICKET PRICE" 
-          value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(avgTicketPrice)} 
+          value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(stats.avgTicketPrice)} 
           icon={DollarSign} 
-          trend="up" 
-          trendValue="+5%" 
+          trend="stable" 
           iconBgColor="bg-[#fffaeb]" 
           iconColor="text-[#f59e0b]" 
         />
@@ -228,22 +364,22 @@ const AttractionsManagement = () => {
                 <tr key={attr.id} className="hover:bg-[#faf8f7] transition-colors group">
                   <td className="py-4 px-5">
                     <div>
-                      <p className="text-sm font-bold text-slate-800">{attr.ten_vi}</p>
-                      <p className="text-[11px] font-semibold text-gray-400">{attr.ten_en}</p>
+                      <p className="text-sm font-bold text-slate-800">{attr.nameVi}</p>
+                      <p className="text-[11px] font-semibold text-gray-400">{attr.nameEn}</p>
                     </div>
                   </td>
                   <td className="py-4 px-5 text-sm font-semibold text-gray-600">
                     <div className="flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-gray-400" />
-                      {attr.dia_diem}
+                      {attr.location}
                     </div>
                   </td>
                   <td className="py-4 px-5">
                     <span className="px-2 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded-md">
-                      {attr.loai_hinh}
+                      {attr.attractionType}
                     </span>
                   </td>
-                  <td className="py-4 px-5"><StatusBadge status={attr.trang_thai} /></td>
+                  <td className="py-4 px-5"><StatusBadge isActive={attr.isActive} /></td>
                   <td className="py-4 px-5">
                     <ActionButtons onEdit={() => openEditAttr(attr)} onDelete={() => openDeleteAttr(attr.id)} />
                   </td>
@@ -303,7 +439,7 @@ const AttractionsManagement = () => {
             </FilterBar>
 
             <div className="flex justify-start">
-              <AdminPrimaryButton icon={Plus}>Add Ticket</AdminPrimaryButton>
+              <AdminPrimaryButton icon={Plus} onClick={openAddTicket}>Add Ticket</AdminPrimaryButton>
             </div>
 
             <AdminTable columns={TICKET_COLUMNS} minWidth="min-w-[900px]" emptyMessage="No tickets match your filters.">
@@ -324,7 +460,7 @@ const AttractionsManagement = () => {
                     {ticket.description}
                   </td>
                   <td className="py-4 px-5">
-                    <ActionButtons onEdit={() => handleEditTicket(ticket.id)} onDelete={() => handleDeleteTicket(ticket.id)} />
+                    <ActionButtons onEdit={() => handleEditTicket(ticket)} onDelete={() => handleDeleteTicket(ticket)} />
                   </td>
                 </tr>
               ))}
@@ -349,24 +485,49 @@ const AttractionsManagement = () => {
       >
         <form onSubmit={handleSaveAttr} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Name (Vietnamese)</label>
-              <input type="text" name="ten_vi" defaultValue={attrModal.data?.ten_vi} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter Vietnamese name" required />
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Name (Vietnamese)</label>
+              <input 
+                type="text" 
+                value={attrFormData.nameVi}
+                onChange={(e) => setAttrFormData({...attrFormData, nameVi: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                placeholder="Enter Vietnamese name" 
+                required 
+              />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Name (English)</label>
-              <input type="text" name="ten_en" defaultValue={attrModal.data?.ten_en} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter English name" required />
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Name (English)</label>
+              <input 
+                type="text" 
+                value={attrFormData.nameEn}
+                onChange={(e) => setAttrFormData({...attrFormData, nameEn: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                placeholder="Enter English name" 
+                required 
+              />
             </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Location</label>
-              <input type="text" name="dia_diem" defaultValue={attrModal.data?.dia_diem} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter location" required />
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Location</label>
+              <input 
+                type="text" 
+                value={attrFormData.location}
+                onChange={(e) => setAttrFormData({...attrFormData, location: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                placeholder="Enter location" 
+                required 
+              />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Type</label>
-              <select name="loai_hinh" defaultValue={attrModal.data?.loai_hinh || "Entertainment"} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all">
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Type</label>
+              <select 
+                value={attrFormData.attractionType}
+                onChange={(e) => setAttrFormData({...attrFormData, attractionType: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A]"
+              >
                 <option value="Entertainment">Entertainment</option>
                 <option value="Nature">Nature</option>
                 <option value="Culture">Culture</option>
@@ -377,22 +538,37 @@ const AttractionsManagement = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Image URL</label>
-              <input type="text" name="anh_dai_dien" defaultValue={attrModal.data?.anh_dai_dien} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter image URL" />
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Image URL</label>
+              <input 
+                type="text" 
+                value={attrFormData.thumbnailUrl}
+                onChange={(e) => setAttrFormData({...attrFormData, thumbnailUrl: e.target.value})}
+                className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A]" 
+                placeholder="Enter image URL" 
+              />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Status</label>
-              <select name="trang_thai" defaultValue={attrModal.data?.trang_thai || "Active"} className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all">
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
+            <div className="flex items-center gap-2 pt-6">
+              <input 
+                type="checkbox" 
+                id="isActiveAttr"
+                checked={attrFormData.isActive}
+                onChange={(e) => setAttrFormData({...attrFormData, isActive: e.target.checked})}
+                className="w-4 h-4 text-[#7C4A4A] border-gray-300 rounded focus:ring-[#7C4A4A]"
+              />
+              <label htmlFor="isActiveAttr" className="text-sm font-semibold text-slate-700">Active</label>
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Description</label>
-            <textarea name="mo_ta" defaultValue={attrModal.data?.mo_ta} rows="3" className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" placeholder="Enter description..."></textarea>
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Description (Vi)</label>
+            <textarea 
+              value={attrFormData.descriptionVi}
+              onChange={(e) => setAttrFormData({...attrFormData, descriptionVi: e.target.value})}
+              rows="3" 
+              className="w-full px-4 py-2 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] resize-none" 
+              placeholder="Enter description..."
+            ></textarea>
           </div>
 
           <div className="flex gap-3 pt-4 border-t border-gray-100">
@@ -400,6 +576,67 @@ const AttractionsManagement = () => {
             <button type="submit" className="flex-1 py-2.5 rounded-lg bg-[#7C4A4A] hover:bg-[#633b3b] text-white text-sm font-bold transition-all shadow-md active:scale-95">
               {attrModal.type === 'add' ? 'Save Attraction' : 'Update Attraction'}
             </button>
+          </div>
+        </form>
+      </AdminModal>
+
+      {/* ─── Ticket Form Modal ───────────────────────────────────────────────── */}
+      <AdminModal
+        isOpen={ticketModal.isOpen}
+        onClose={() => setTicketModal({ isOpen: false, type: 'add', data: null })}
+        title={ticketModal.type === 'add' ? 'Add Ticket' : 'Edit Ticket'}
+      >
+        <form onSubmit={handleSaveTicket} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Ticket Name</label>
+            <input 
+              type="text" 
+              value={ticketFormData.typeName} 
+              onChange={(e) => setTicketFormData({...ticketFormData, typeName: e.target.value})}
+              className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+              placeholder="e.g., Adult Ticket" 
+              required 
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Attraction</label>
+            <select 
+              value={ticketModal.data?.attractionId || ticketFormData.attractionId} 
+              onChange={(e) => setTicketFormData({...ticketFormData, attractionId: e.target.value})}
+              className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm font-semibold text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+              required
+              disabled={ticketModal.type === 'edit'}
+            >
+              <option value="" disabled>Select Attraction</option>
+              {attractions.map(a => (
+                <option key={a.id} value={a.id}>{a.nameVi}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Price</label>
+            <input 
+              type="number" 
+              value={ticketFormData.price} 
+              onChange={(e) => setTicketFormData({...ticketFormData, price: parseFloat(e.target.value)})}
+              className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all" 
+              placeholder="Price (VND)" 
+              required 
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Description</label>
+            <textarea 
+              value={ticketFormData.description} 
+              onChange={(e) => setTicketFormData({...ticketFormData, description: e.target.value})}
+              rows="2"
+              className="w-full px-4 py-2.5 bg-[#fafafa] border border-gray-100 rounded-lg text-sm text-slate-700 outline-none focus:border-[#7C4A4A] transition-all resize-none" 
+              placeholder="Ticket details..." 
+            />
+          </div>
+          <div className="flex gap-3 pt-4 border-t border-gray-100">
+            <button type="button" onClick={() => setTicketModal({ isOpen: false, type: 'add', data: null })} className="flex-1 py-2.5 rounded-lg border border-gray-200 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all">Cancel</button>
+            <button type="submit" className="flex-1 py-2.5 rounded-lg bg-[#7C4A4A] hover:bg-[#633b3b] text-white text-sm font-bold transition-all shadow-md active:scale-95">Save Ticket</button>
           </div>
         </form>
       </AdminModal>

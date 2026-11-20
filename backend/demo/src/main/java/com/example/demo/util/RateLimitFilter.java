@@ -64,9 +64,6 @@ public class RateLimitFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String clientIp = getClientIp(request);
-
-        System.out.println("RateLimitFilter đang kiểm tra IP: " + clientIp);
-
         Bucket bucket = resolveBucket(clientIp);
 
         if (bucket.tryConsume(1)) {

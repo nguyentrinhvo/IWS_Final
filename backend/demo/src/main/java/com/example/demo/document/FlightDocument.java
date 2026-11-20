@@ -30,6 +30,13 @@ public class FlightDocument {
 
     @Indexed
     private String arrivalAirport;
+    
+    private String departureCity;
+    private String arrivalCity;
+    private String departureAirportName;
+    private String arrivalAirportName;
+    
+    private String imageUrl;
 
     @Indexed
     private String cabinClass;       // "economy" | "business" | "first"

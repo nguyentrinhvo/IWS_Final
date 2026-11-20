@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 public class BookingDTO {
     private String id;
     private String userId;
+    private String userName;
+    private String userEmail;
     private String serviceId;
     private String serviceType;
     private Integer numAdults;

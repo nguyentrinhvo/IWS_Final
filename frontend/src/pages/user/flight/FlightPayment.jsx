@@ -1,35 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BookingStepper from '../../../components/user/BookingStepper';
 import BookingSummary from '../../../components/user/BookingSummary';
 import ContactForm from '../../../components/user/ContactForm';
 import PaymentMethodSelector from '../../../components/user/PaymentMethodSelector';
+import * as bookingService from '../../../services/bookingService';
+import * as paymentService from '../../../services/paymentService';
 
 const FlightPayment = () => {
   const navigate = useNavigate();
-
-  // ─── Mock Data ──────────────────────────────────────────────────────────────
-  const mockFlight = {
-    airline: 'Vietnam Airlines',
-    airlineLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Vietnam_Airlines_logo.svg/200px-Vietnam_Airlines_logo.svg.png',
-    fromCode: 'HAN',
-    toCode: 'SGN',
-    date: 'Thu, 02 May 2026',
-    price: 1250000,
-  };
-
-  const mockPassengers = [
-    { firstName: 'John', lastName: 'Doe' }
-  ];
+  const location = useLocation();
+  const { flight, contactInfo, passengers, addons, totalAmount } = location.state || {};
 
   // ─── State ──────────────────────────────────────────────────────────────────
   const [selectedMethod, setSelectedMethod] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [billingInfo, setBillingInfo] = useState({
-    fullName: 'John Doe',
-    email: 'john@example.com',
-    phone: '+84 123 456 789',
+  const [billingInfo, setBillingInfo] = useState(contactInfo || {
+    fullName: '',
+    email: '',
+    phone: '',
   });
 
   useEffect(() => {
@@ -37,7 +27,7 @@ const FlightPayment = () => {
   }, []);
 
   // ─── Handlers ───────────────────────────────────────────────────────────────
-  const handlePayNow = () => {
+  const handlePayNow = async () => {
     if (!selectedMethod) {
       alert('Please select a payment method');
       return;
@@ -48,14 +38,41 @@ const FlightPayment = () => {
     }
 
     setIsProcessing(true);
-
-    // Mock payment processing delay
-    setTimeout(() => {
+    try {
+      const bookingRequest = {
+        serviceId: flight.id,
+        numAdults: passengers.length,
+        numChildren: 0,
+        note: `Contact: ${billingInfo.fullName}, ${billingInfo.phone}`,
+        passengers: passengers.map(p => ({
+          firstName: p.firstName,
+          lastName: p.lastName,
+          idNumber: p.idNumber,
+          nationality: p.nationality,
+          dob: p.dob,
+          gender: p.gender
+        })),
+        paymentProvider: selectedMethod
+      };
+      const bookingResponse = await bookingService.createFlightBooking(bookingRequest);
+      const bookingId = bookingResponse.id;
+      let paymentData;
+      if (selectedMethod === 'vnpay') {
+        paymentData = await paymentService.createVnPayPayment(bookingId);
+      } else if (selectedMethod === 'paypal') {
+        paymentData = await paymentService.createPayPalPayment(bookingId);
+      }
+      if (paymentData && paymentData.paymentUrl) {
+        window.location.href = paymentData.paymentUrl;
+      } else {
+        throw new Error('Failed to generate payment URL.');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert(error.response?.data?.message || 'Error processing payment.');
+    } finally {
       setIsProcessing(false);
-      console.log('Payment Successful via', selectedMethod);
-      alert('Payment successful! Redirecting to confirmation page...');
-      // navigate('/flights/success');
-    }, 2500);
+    }
   };
 
   return (
@@ -143,10 +160,11 @@ const FlightPayment = () => {
           {/* Sidebar (Right) */}
           <div className="lg:w-[350px] flex-shrink-0">
             <BookingSummary 
-              flight={mockFlight} 
-              passengers={mockPassengers}
-              addons={{}}
-              onContinue={handlePayNow} // Summary's CTA will trigger our payment logic
+              mode="flight"
+              data={flight || {}} 
+              subData={passengers || []}
+              addons={addons || {}}
+              onContinue={handlePayNow} 
             />
           </div>
         </div>

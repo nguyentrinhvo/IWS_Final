@@ -5,8 +5,20 @@ import PopularDestinations from './PopularDestinations';
 import OverseasDestinations from './OverseasDestinations';
 import SuggestionThings from './SuggestionThings';
 import Recommendations from './Recommendations';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useEffect } from 'react';
 
 export default function HomePage() {
+  const location = useLocation();
+  const { setIsLoginModalOpen } = useAuth();
+
+  useEffect(() => {
+    if (location.state?.requireLogin) {
+      setIsLoginModalOpen(true);
+    }
+  }, [location.state, setIsLoginModalOpen]);
+
   return (
     <div className="w-full flex flex-col mb-20">
       <SearchHomepage />

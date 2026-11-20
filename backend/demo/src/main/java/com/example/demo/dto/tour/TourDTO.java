@@ -27,6 +27,7 @@ public class TourDTO {
     private Integer maxCapacity;
     private Double avgRating;
     private Integer totalReviews;
+    private Boolean isActive;
     private List<TourImage> images;
     private List<Itinerary> itinerary;
     private List<Departure> departures;

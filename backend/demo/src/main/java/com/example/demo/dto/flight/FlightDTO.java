@@ -17,6 +17,11 @@ public class FlightDTO {
     private String flightNumber;
     private String departureAirport;
     private String arrivalAirport;
+    private String departureCity;
+    private String arrivalCity;
+    private String departureAirportName;
+    private String arrivalAirportName;
+    private String imageUrl;
     private String cabinClass;
     private Double basePrice;
     private Integer durationMinutes;
