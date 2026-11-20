@@ -1,112 +1,157 @@
-# Dự Án Hệ Thống Internet & Web Service (IWS)
+# Travel Booking Platform — Hệ Thống Đặt Dịch Vụ Du Lịch Trực Tuyến
 
-Đây là dự án mẫu sử dụng mô hình Fullstack với React và Spring Boot, được thiết kế cho làm việc nhóm (4 thành viên).
+Nền tảng đặt dịch vụ du lịch trực tuyến (Fullstack Web Application) hỗ trợ tìm kiếm, đặt chỗ, thanh toán trực tuyến và quản lý vé điện tử cho đa dạng loại hình dịch vụ: **Chuyến bay (Flights)**, **Khách sạn (Hotels)**, **Tour du lịch (Tours)**, **Điểm tham quan (Attractions)** và **Xe khách / Tàu hỏa (Bus & Train)**.
+
+---
+
+## ✨ Tính Năng Chính
+
+### Dành cho Khách hàng (User)
+- **Tìm kiếm & Lọc nâng cao:** Tra cứu chuyến bay, khách sạn, tour, điểm tham quan và tuyến xe/tàu theo điểm đến, giá, thời gian, danh mục.
+- **Đặt dịch vụ & Quản lý Booking:** Đặt chỗ trực tuyến, theo dõi lịch sử đặt vé, hủy vé và gửi lại vé điện tử (E-ticket) qua email.
+- **Thanh toán trực tuyến:** Tích hợp cổng thanh toán **VNPay** và **PayPal**, tự động cập nhật trạng thái đơn hàng và gửi email xác nhận.
+- **Xác thực & Bảo mật:** Đăng ký, đăng nhập bằng **JWT**, đăng nhập nhanh qua **OAuth2**, quên/đặt lại mật khẩu qua email.
+- **Đa ngôn ngữ & Đánh giá:** Hỗ trợ chuyển đổi ngôn ngữ (`i18n`), quy đổi tỷ giá và đánh giá dịch vụ (Reviews).
+
+### Dành cho Quản trị viên (Admin)
+- **Quản lý danh mục & dịch vụ:** Thêm, sửa, xóa (CRUD) Tour, Khách sạn, Chuyến bay, Điểm tham quan, Tuyến xe/tàu và Nhà cung cấp.
+- **Quản lý đơn đặt & Thanh toán:** Theo dõi toàn bộ booking, xem lịch sử giao dịch và xử lý hoàn tiền (Refund).
+- **Quản lý người dùng:** Phân quyền (`CUSTOMER` / `ADMIN`) và quản trị tài khoản.
+
+---
 
 ## 🚀 Công Nghệ Sử Dụng
-- **Frontend**: React (Vite) + **Tailwind CSS v4** (Engine mới nhất)
-- **Backend**: **Spring Boot 3.2** (Java 17, Maven)
-- **Database**: **PostgreSQL (Supabase)**
+
+| Thành phần | Công nghệ |
+| :--- | :--- |
+| **Frontend** | React, Vite, Tailwind CSS v4, Axios, React Router, i18next |
+| **Backend** | Java 17, Spring Boot 3, Spring Security (JWT & OAuth2), Maven |
+| **Database** | MongoDB (Spring Data MongoDB) |
+| **Payment Gateways** | VNPay, PayPal REST SDK |
+| **API Docs & Testing** | Swagger / OpenAPI 3 (`springdoc-openapi`), Postman Collections |
+| **Khác** | Bucket4j (Rate Limiting), JavaMailSender (Gửi E-ticket & thông báo) |
 
 ---
 
-## 👥 Thành Viên Nhóm
-1. [Họ tên SV 1] 
-2. [Họ tên SV 2]
-3. [Họ tên SV 3]
-4. [Họ tên SV 4]
+## 📂 Cấu Trúc Thư Mục
+
+```text
+IWS_Final/
+├── backend/demo/             # Mã nguồn Backend (Spring Boot + MongoDB)
+│   └── src/main/java/com/example/demo/
+│       ├── config/           # Cấu hình Security, CORS, MongoDB, VNPay, PayPal, Swagger
+│       ├── controller/       # REST API Controllers
+│       ├── document/         # MongoDB Documents & Embedded models
+│       ├── dto/              # Data Transfer Objects (Request/Response)
+│       ├── exception/        # Xử lý ngoại lệ tập trung
+│       ├── repository/       # Spring Data MongoDB Repositories
+│       ├── security/         # JWT Filter, OAuth2 Handler, UserDetails
+│       ├── service/          # Xử lý nghiệp vụ (Business Logic)
+│       └── util/             # Tiện ích & RateLimitFilter
+├── frontend/                 # Mã nguồn Frontend (React + Vite + Tailwind v4)
+│   └── src/
+│       ├── components/       # UI Components tái sử dụng
+│       ├── context/          # Quản lý State toàn cục
+│       ├── layouts/          # Layout cho User & Admin
+│       ├── pages/            # Các trang chức năng (Flight, Hotel, Tour, Transport, Admin...)
+│       ├── routes/           # Cấu hình định tuyến & phân quyền (PrivateRoute)
+│       ├── services/         # Lớp gọi REST API (Axios)
+│       ├── ui/               # Base UI primitives (Button, Card, Table, Pagination...)
+│       └── utils/            # Hàm tiện ích
+├── db-seeder/                # Script khởi tạo dữ liệu mẫu cho MongoDB
+└── postman/                  # Bộ Postman Collections kiểm thử API
+```
 
 ---
 
-## 🛠 Hướng Dẫn Cho Thành Viên Mới
+## 🛠️ Yêu Cầu Môi Trường
 
-### 1. Lấy code về máy lần đầu
-Mở terminal và chạy lệnh:
+- **JDK 17** trở lên
+- **Node.js v18** trở lên & `npm`
+- **Maven** (hoặc sử dụng Maven Wrapper `./mvnw` có sẵn)
+- **MongoDB** (Local hoặc MongoDB Atlas)
+
+---
+
+## 💻 Hướng Dẫn Cài Đặt & Chạy Ứng Dụng
+
+### 1. Clone dự án
 ```bash
 git clone https://github.com/nguyentrinhvo/IWS_Final.git
 cd IWS_Final
 ```
 
-### 2. Cài đặt môi trường
-- **Cài đặt Node.js** (Phiên bản v18 trở lên).
-- **Cài đặt JDK 17** (Bắt buộc để chạy Backend).
-- **Cài đặt Maven** (Nếu dùng dòng lệnh).
+### 2. Cấu hình & Chạy Backend (Spring Boot)
+Di chuyển vào thư mục `backend/demo` và tạo file `.env` với các biến môi trường cần thiết (MongoDB URI, JWT Secret, Mail SMTP, VNPay, PayPal, OAuth2, Frontend URL):
 
-### 3. Quy trình làm việc (Bắt buộc)
-Để tránh xung đột code, tất cả thành viên **KHÔNG** push trực tiếp vào nhánh `main`.
-
-**Bước 1: Cập nhật code mới nhất từ nhóm**
 ```bash
-git checkout main
-git pull origin main
+cd backend/demo
 ```
 
-**Bước 2: Tạo nhánh mới để làm tính năng của mình**
-```bash
-git checkout -b feature/ten-cua-ban_tinh-nang
-# Ví dụ: git checkout -b feature/bao_login-page
-```
-
-**Bước 3: Code và Lưu lại**
-```bash
-git add .
-git commit -m "Mô tả ngắn gọn việc bạn đã làm"
-git push origin feature/ten-cua-ban_tinh-nang
-```
-
-**Bước 4: Tạo Pull Request**
-- Lên GitHub, nhấn **Compare & pull request**.
-- Tag các thành viên khác để review. Sau khi được duyệt mới gộp vào `main`.
-
----
-
-## 💻 Cách Chạy Ứng Dụng
-
-### 🟢 Chạy Backend (Spring Boot)
-1. Di chuyển vào thư mục backend: `cd backend`
-2. Chạy lệnh: `mvn spring-boot:run`
-*Mặc định chạy tại: http://localhost:8080*
-
-#### 🔑 Cấu hình Environment Variables (Quan trọng)
-Trong thư mục `backend`, bạn cần có file `.env` với các thông số sau để kết nối Database:
+Ví dụ cấu trúc biến môi trường trong `backend/demo/.env`:
 ```env
-DB_URL=jdbc:postgresql://db.ircvbdskqkvhtimvjhph.supabase.co:5432/postgres
-DB_USERNAME=postgres
-DB_PASSWORD=your_password_here
+MONGODB_URI=mongodb://localhost:27017/travel_booking
+JWT_SECRET=your_jwt_secret_key
+APP_FRONTEND_URL=http://localhost:5173
+APP_CORS_ALLOWED_ORIGINS=http://localhost:5173
+
+# Payment (VNPay / PayPal)
+VNPAY_TMN_CODE=your_tmn_code
+VNPAY_HASH_SECRET=your_hash_secret
+PAYPAL_CLIENT_ID=your_paypal_client_id
+PAYPAL_CLIENT_SECRET=your_paypal_client_secret
+
+# Mail (SMTP)
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
 ```
+
 > [!IMPORTANT]
-> Đừng bao giờ push file `.env` chứa mật khẩu thực tế lên GitHub. Hãy copy file `.env.example` (nếu có) và điền thông tin cá nhân.
+> Không bao giờ commit file `.env` chứa thông tin nhạy cảm lên repository.
 
-### 🔵 Chạy Frontend (React + Tailwind v4)
-1. Di chuyển vào thư mục frontend: `cd frontend`
-2. Cài đặt thư viện: `npm install`
-3. Chạy lệnh: `npm run dev`
-*Mặc định chạy tại: http://localhost:5173*
+Khởi chạy Backend:
+```bash
+./mvnw spring-boot:run
+```
+- **API Base URL:** `http://localhost:8080`
+- **Swagger UI:** `http://localhost:8080/swagger-ui.html`
 
----
-
-## 📂 Cấu Trúc Thư Mục
-- `/backend`: Toàn bộ mã nguồn Java Spring Boot.
-  - `src/main/java/com/example/demo/`
-    - `config/`: Các file cấu hình (Security, CORS, Bean).
-    - `controller/`: Nơi tiếp nhận các Request từ Frontend (API endpoints).
-    - `service/`: Nơi xử lý Logic nghiệp vụ (Business Logic).
-    - `repository/`: Nơi thực hiện các câu lệnh truy vấn Database (Data Access).
-    - `entity/`: Các Object đại diện cho bảng trong Database.
-    - `dto/`: Các Object dùng để truyền tải dữ liệu giữa các lớp.
-    - `exception/`: Xử lý các lỗi ngoại lệ của ứng dụng.
-- `/frontend`: Toàn bộ mã nguồn React và cấu hình Tailwind v4.
-  - `src/`
-    - `assets/`: Hình ảnh, icons, fonts...
-    - `components/`: Các component dùng chung (Button, Card, Input...).
-    - `pages/`: Các trang chính của ứng dụng (Home, Login, Dashboard...).
-    - `layouts/`: Các khung giao diện (Navbar, Sidebar wrappers).
-    - `services/`: Xử lý gọi API (Axios, Fetch).
-    - `hooks/`: Các Custom Hooks tự định nghĩa.
-    - `context/`: Quản lý State toàn cục (Context API).
-    - `utils/`: Các hàm tiện ích bổ trợ.
-- `.gitignore`: Đã được cấu hình để bỏ qua `node_modules` và `target/`.
+### 3. Chạy Frontend (React + Vite)
+Mở terminal mới tại thư mục gốc của dự án:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+- **Frontend URL:** `http://localhost:5173` (Vite proxy tự động chuyển tiếp `/api` sang `http://localhost:8080/api`).
 
 ---
 
-## ⚠️ Lưu ý về Tailwind v4
-Dự án sử dụng **Tailwind v4**, bạn không cần tìm file `tailwind.config.js`. Mọi cấu hình (variables, theme) sẽ được thực hiện trực tiếp trong file `frontend/src/index.css` bằng CSS thuần.
+## 🧪 Kiểm Thử API
+
+Dự án cung cấp sẵn bộ **Postman Collections** trong thư mục [`postman/`](./postman) bao gồm các nhóm API:
+- Flights, Hotels, Attractions, Bus & Train
+- My Tickets & Dashboard
+- Payment (VNPay & PayPal)
+
+---
+
+## 🔀 Quy Trình Đóng Góp (Git Workflow)
+
+1. Cập nhật nhánh `main` mới nhất:
+   ```bash
+   git checkout main && git pull origin main
+   ```
+2. Tạo nhánh tính năng mới:
+   ```bash
+   git checkout -b feature/<ten-tinh-nang>
+   ```
+3. Commit thay đổi với thông điệp rõ ràng và đẩy lên remote:
+   ```bash
+   git add .
+   git commit -m "feat: mô tả ngắn gọn thay đổi"
+   git push origin feature/<ten-tinh-nang>
+   ```
+4. Tạo **Pull Request** vào nhánh `main` để review trước khi merge.
